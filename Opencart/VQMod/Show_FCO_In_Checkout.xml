@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+    <id>Show FCO in Checkout</id>
+    <version>2.0.0</version>
+    <vqmver>2.4.1</vqmver>
+    <author>Multisafepay</author>
+        
+    <file name="catalog/controller/checkout/checkout.php">
+        <operation>
+              
+            <search position="after"><![CDATA[
+                public function index() {
+                ]]></search>
+                        
+            <add><![CDATA[
+				//Adding fastcheckout
+				if ($this->config->get('multisafepay_account_type') == 'fastcheckout') {
+					$data['multisafepay_fastcheckout'] = $this->url->link('payment/multisafepay-fastcheckout');
+				} else {
+					$data['multisafepay_fastcheckout'] = '';
+				}
+				if ($this->config->get('multisafepay_enable_checkout_button_connect') == 'true') {
+					$data['enable_checkout_button_connect'] = true;
+					$data['multisafepay_fastcheckout'] = $this->url->link('payment/multisafepay-fastcheckout');
+				} else {
+					$data['enable_checkout_button_connect'] = false;
+				}
+				//Ending Fastcheckout
+                ]]></add>
+                        
+        </operation>
+    </file> 
+</modification>

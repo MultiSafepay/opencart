@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+    <id>Show FCO in Checkout.tpl</id>
+    <version>2.0.0</version>
+    <vqmver>2.4.1</vqmver>
+    <author>Multisafepay</author>
+        
+    <file name="catalog/view/theme/default/template/checkout/checkout.tpl">
+        <operation>
+              
+            <search position="before"><![CDATA[
+                 <h1><?php echo $heading_title; ?>
+                ]]></search>
+                        
+            <add><![CDATA[
+				 <?php if (!empty($multisafepay_fastcheckout) || $enable_checkout_button_connect) { ?>
+					<div class="right">
+						<a href="<?php echo $multisafepay_fastcheckout; ?>" id="fastcheckout-link"> 
+							<img src="image/msp/button.png" width="219" height="59" style="float: right;margin-bottom:15px;" hspace="6" alt="MultiSafepay fast checkout" title="Multisafepay fast checkout" border="0" />
+						</a>
+					</div>
+				<?php } ?>
+                ]]></add>
+                        
+        </operation>
+    </file> 
+</modification>
