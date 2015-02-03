@@ -1,7 +1,5 @@
 <?php
 
-error_reporting(1);
-
 class Controllerpaymentmultisafepayfastcheckout extends Controller {
 
     public function index() {
