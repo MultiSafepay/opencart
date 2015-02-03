@@ -114,35 +114,6 @@
                         </div>
                     </div>
 
-                    <!--fee-->
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label" for="fee"><span><?php echo $entry_paymentfee; ?></span></label>
-                        <div class="col-sm-10">
-                            <input type="text" name="multisafepay_payafter_paymentfee" value="<?php echo $multisafepay_payafter_paymentfee; ?>" id="fee" class="form-control" />
-                        </div>
-                    </div>
-
-
-                    <!--tax class -->
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label" for="taxclass"><?php echo $entry_multisafepay_payafter_tax; ?></label>
-                        <div class="col-sm-10">
-                            <select name="multisafepay_payafter_tax"" id="taxclass" class="form-control">
-                                <option value=""><?php echo $text_none; ?></option>
-                                <?php foreach ($tax_classes as $tax_class) { ?>
-                                <?php if ($tax_class['tax_class_id'] == $multisafepay_payafter_tax) { ?>
-                                <option value="<?php echo $tax_class['tax_class_id']; ?>" selected="selected"><?php echo $tax_class['title']; ?></option>
-                                <?php } else { ?>
-                                <option value="<?php echo $tax_class['tax_class_id']; ?>"><?php echo $tax_class['title']; ?></option>
-                                <?php } ?>
-                                <?php } ?>
-                            </select>
-                        </div>
-                    </div>
-
-
-
-
                     <div class="form-group">
                         <label class="col-sm-2 control-label" for="input-geo-zone"><?php echo $text_all_zones; ?></label>
                         <div class="col-sm-10">
