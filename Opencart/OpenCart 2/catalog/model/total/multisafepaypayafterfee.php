@@ -18,7 +18,7 @@ class ModelTotalMultisafepayPayafterFee extends Model {
 				'sort_order' => $fee[$iso]['sort_order']
 			);
 	
-	    }
+	    
 
 
 	    $tax_rates = $this->tax->getRates($fee[$iso]['fee'], $fee[$iso]['tax_class_id']);
@@ -32,6 +32,7 @@ class ModelTotalMultisafepayPayafterFee extends Model {
 			}
 
 			$total += $fee[$iso]['fee'];
+		}
     }
 
 }

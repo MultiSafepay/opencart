@@ -47,6 +47,12 @@ class ControllerPaymentMultiSafePayPayafter extends Controller {
         }
     }
 
+    public function validateVersion() {
+        //default 1.5
+        $version = 1.5;
+        return $version;
+    }
+
     public function multisafepayProcess() {
         $this->load->language('payment/multisafepay');
         $db = new DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
@@ -105,7 +111,6 @@ class ControllerPaymentMultiSafePayPayafter extends Controller {
         if (!empty($order_info['telephone'])) {
             $msp->customer['phone'] = $order_info['telephone'];
         }
-        $msp->customer['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
         $msp->customer['country'] = $order_info['payment_iso_code_2'];
         $msp->parseCustomerAddress($order_info['payment_address_1']);
         $msp->transaction['id'] = $order_info['order_id'];
@@ -265,11 +270,24 @@ class ControllerPaymentMultiSafePayPayafter extends Controller {
 
 
         // Payment fee
-        if ($this->config->get('multisafepay_payafter_paymentfee')) {
-            $feetaxrate = $this->_getRate($this->config->get('multisafepay_payafter_tax'));
-            $fee = $this->_getAmount($order_info, $this->session->data['multisafepaypayafterfee']['fee']);
+        
+        $fee = $this->config->get('multisafepaypayafterfee');
+        
+   
+        
+        if ($fee['NLD']['status']) {
+	        
+	        $tax_rates = $this->tax->getRates($fee['NLD']['fee'], $fee['NLD']['tax_class_id']);
+	        
+	        
+            $feetaxrate = $this->_getRate($fee['NLD']['tax_class_id']);
+            $fee = $this->_getAmount($order_info, $fee['NLD']['fee']);
 
 
+
+			//$btw= $fee/ (100+$feetaxrate)*$feetaxrate;
+			//$fee= $fee -$btw;
+			
 
             $c_item = new MspItem($this->language->get('entry_paymentfee'), 'Fee', '1', $fee, 'KG', '0');
             $c_item->merchant_item_id = 'payment fee';
@@ -311,7 +329,7 @@ class ControllerPaymentMultiSafePayPayafter extends Controller {
         $msp->transaction['amount'] = $this->currency->format($order_info['total'], 'EUR', '', FALSE) * 100;
 
         $url = $msp->startCheckout();
-
+print_r($msp);exit;
         /* echo '<pre>';	
           print_r($msp);
           echo '</pre>';exit; */
