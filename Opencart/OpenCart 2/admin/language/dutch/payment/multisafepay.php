@@ -35,6 +35,7 @@ $_['bno_multisafepay_merchantid'] = 'Account ID';
 $_['bno_multisafepay_siteid'] = 'Site ID';
 $_['bno_multisafepay_secure_code'] = 'Site Code';
 $_['entry_environment'] = 'Type account:';
+$_['entry_multisafepay_b2b'] = 'Toon Bedrijfsnaam veld tijdens FastCheckout registratie.';
 $_['entry_multisafepay_redirect_url'] = 'Automatische Doorschakeling:';
 $_['entry_multisafepay_gateway_selection'] = 'Selecteer de gewenste betaalmethode:&nbsp;&nbsp;&nbsp;';
 $_['text_set_fco_shipping'] = 'Fast Checkout verzendopties';

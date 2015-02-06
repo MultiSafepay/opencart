@@ -38,7 +38,8 @@ class MultiSafepay {
         'user_agent' => '',
         'referrer' => '',
         'bankaccount' => '',
-        'birthday' => ''
+        'birthday' => '',
+        'company' => ''
     );
     // customer-delivery data
     var $delivery = array(
@@ -619,11 +620,13 @@ class MultiSafepay {
         }
 
         if ($this->transaction['gateway'] != "") {
-
             $trans_type = 'redirecttransaction';
         } else {
-
             $trans_type = 'checkouttransaction';
+        }
+        
+        if ($this->customer['company'] != "") {
+            $set_company = '<company>' . $this->xmlEscape($this->customer['company']) . '</company>';
         }
 
 
@@ -663,6 +666,7 @@ class MultiSafepay {
 				<email>' . $this->xmlEscape($this->customer['email']) . '</email>
 				<referrer>' . $this->xmlEscape($this->customer['referrer']) . '</referrer>
 				<user_agent>' . $this->xmlEscape($this->customer['user_agent']) . '</user_agent>
+                                '.$set_company.'
 			</customer>
 			<customer-delivery>
 				<firstname>' . $this->xmlEscape($this->delivery['firstname']) . '</firstname>

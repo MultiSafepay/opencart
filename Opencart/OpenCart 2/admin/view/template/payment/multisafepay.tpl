@@ -118,6 +118,22 @@
                             <input type="text" name="multisafepay_days_active" value="<?php echo $multisafepay_days_active; ?>" id="daysactive" class="form-control" />
                         </div>
                     </div>
+                    
+                    
+                    
+                    <!--FCO B2B-->
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="b2b"><?php echo $entry_multisafepay_b2b; ?></label>
+                        <div class="col-sm-10">
+                            <select name="multisafepay_b2b" id="b2b" class="form-control">
+                                <option value="true" <?php if($multisafepay_b2b == 'true') echo 'selected'; ?>>Enabled</option>
+                                <option value="false" <?php if($multisafepay_b2b == 'false') echo 'selected'; ?>>Disabled</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    
+                    
 
                     <!--fco tax percentage-->
                     <div class="form-group">

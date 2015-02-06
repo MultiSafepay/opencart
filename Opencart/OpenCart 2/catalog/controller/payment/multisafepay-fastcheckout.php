@@ -85,7 +85,9 @@ class Controllerpaymentmultisafepayfastcheckout extends Controller {
 
         // Create products array (will be used later)
         $products = $this->cart->getProducts();
-
+        if($this->config->get('multisafepay_b2b') != 'false'){
+            $msp->customer['company'] = $this->config->get('multisafepay_b2b');
+        }
 
 
         $customerid = 0;

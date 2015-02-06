@@ -41,6 +41,7 @@ $_['bno_multisafepay_siteid'] = 'Webseite ID';
 $_['bno_multisafepay_secure_code'] = 'Webseite sicherheits kode';
 $_['entry_environment'] = 'Kontotyp:';
 $_['entry_multisafepay_redirect_url'] = 'Automatisch umschalten:';
+$_['entry_multisafepay_b2b'] = 'Enable company field for FastCheckout Registration (B2B)';
 $_['entry_multisafepay_gateway_selection'] = 'Pre-Gateway Auswahl';
 $_['yes'] = 'Yes';
 $_['no'] = 'No';

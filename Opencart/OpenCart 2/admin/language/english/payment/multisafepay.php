@@ -18,6 +18,7 @@ $_['text_successful'] = 'On - Always Successful';
 $_['text_declined'] = 'On - Always Declined';
 $_['text_off'] = 'Off';
 $_['text_none'] = 'None';
+$_['entry_multisafepay_b2b'] = 'Enable company field for FastCheckout Registration (B2B)';
 $_['entry_multisafepay_storeid'] = 'Store ID (configuration below will be used for this store)';
 $_['entry_multisafepay_days_active'] = 'Days active';
 $_['text_set_order_status'] = 'Set Order Status';

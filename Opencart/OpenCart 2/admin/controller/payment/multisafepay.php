@@ -51,6 +51,7 @@ class ControllerPaymentMultiSafePay extends Controller {
         $data['no'] = $this->language->get('no');
         $data['select_methods'] = $this->language->get('select_methods');
         $data['entry_multisafepay_redirect_url'] = $this->language->get('entry_multisafepay_redirect_url');
+        $data['entry_multisafepay_b2b'] = $this->language->get('entry_multisafepay_b2b');
         $data['entry_multisafepay_gateway_selection'] = $this->language->get('entry_multisafepay_gateway_selection');
         $data['entry_multisafepay_order_status_id_initialized'] = $this->language->get('entry_multisafepay_order_status_id_initialized');
         $data['entry_multisafepay_order_status_id_completed'] = $this->language->get('entry_multisafepay_order_status_id_completed');
@@ -331,6 +332,16 @@ class ControllerPaymentMultiSafePay extends Controller {
         } else {
             $data['multisafepay_redirect_url'] = $this->config->get('multisafepay_redirect_url');
         }
+        
+        
+        
+        if (isset($this->request->post['multisafepay_b2b'])) {
+            $data['multisafepay_b2b'] = $this->request->post['multisafepay_b2b'];
+        } else {
+            $data['multisafepay_b2b'] = $this->config->get('multisafepay_b2b');
+        }
+        
+        
 
         if (isset($this->request->post['multisafepay_gateway_selection'])) {
             $data['multisafepay_gateway_selection'] = $this->request->post['multisafepay_gateway_selection'];
