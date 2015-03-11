@@ -318,7 +318,8 @@ class ControllerPaymentMultiSafePay extends Controller {
                 $c_item->SetTaxTableSelector($shipping_select); //shipping.... $this->session->data['shipping_method']['tax_class_id']
             }
             $msp->transaction['daysactive'] = $this->config->get('multisafepay_days_active');
-            $msp->transaction['amount'] = round($order_info['total'] * 100);
+            //$msp->transaction['amount'] = round($order_info['total'] * 100);
+            $msp->transaction['amount'] = round(($order_info['total']*$order_info['currency_value'])*100);//FIXES PLGOPN-14
             $msp->plugin_name = 'OpenCart';
             $msp->version = '(2.0.0)';
 
