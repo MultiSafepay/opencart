@@ -329,7 +329,7 @@ class ControllerPaymentMultiSafePayPayafter extends Controller {
         $msp->transaction['amount'] = $this->currency->format($order_info['total'], 'EUR', '', FALSE) * 100;
 
         $url = $msp->startCheckout();
-print_r($msp);exit;
+
         /* echo '<pre>';	
           print_r($msp);
           echo '</pre>';exit; */
