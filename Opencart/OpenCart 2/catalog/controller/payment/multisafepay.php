@@ -1077,6 +1077,7 @@ class ControllerPaymentMultiSafePay extends Controller {
         //sanitize before using any MySQL database queries
         //this will escape quotes in the input.
         //$data = mysql_real_escape_string($data);
+        $data =$this->db->escape($data);
         return $data;
     }
 
