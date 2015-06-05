@@ -727,7 +727,11 @@ class ControllerPaymentMultiSafePay extends Controller {
                 $shippers = array();
                 $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "country WHERE iso_code_2 = '" . $this->sanitize($countrycode) . "' AND status = '1'");
                 $country = $query->row;
-                $country_id = $country['country_id'];
+                $country_id= 0;
+                
+                if(array_key_exists('country_id',$country)){
+                    $country_id = $country['country_id'];
+                }
 
                 $shippers = $this->getShippingOptions($country_id);
 
