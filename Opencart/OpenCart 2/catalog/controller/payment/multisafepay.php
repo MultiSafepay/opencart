@@ -331,7 +331,7 @@ class ControllerPaymentMultiSafePay extends Controller {
             $msp->plugin['shop_root_url'] = '';
 
 
-            if ($gateway == 'IDEAL' && isset($this->request->post['issuer'])) {
+            if ($gateway == 'IDEAL' && isset($this->request->post['issuer']) && !empty($this->request->post['issuer'])) {
                 $msp->extravars = $this->request->post['issuer'];
                 $url = $msp->startDirectXMLTransaction();
             } else {
