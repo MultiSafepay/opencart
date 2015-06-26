@@ -706,7 +706,8 @@ class ControllerPaymentMultiSafePay extends Controller {
             if ($msp->error) {
                 echo 'Error: ' . $msp->error;
             } else {
-                $this->redirect($url);
+                //$this->redirect($url);
+                $this->response->redirect($url);
             }
         }
     }
