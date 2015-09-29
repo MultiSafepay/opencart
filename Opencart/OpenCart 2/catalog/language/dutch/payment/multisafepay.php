@@ -33,6 +33,7 @@ $_['text_title_paypal'] = 'PayPal';
 $_['text_title_dirdeb'] = 'Direct Debit';
 $_['text_title_mastercard'] = 'Mastercard';
 $_['text_title_payafter'] = 'Betaal na Ontvangst';
+$_['text_title_klarna'] = 'Klarna';
 $_['text_title_wallet'] = 'MultiSafepay Wallet';
 $_['text_response'] = 'Bericht van MultiSafepay:';
 $_['text_success'] = '... uw betaling is in goede orde ontvangen.';

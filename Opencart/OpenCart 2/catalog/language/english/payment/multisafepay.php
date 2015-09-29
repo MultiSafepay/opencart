@@ -9,13 +9,14 @@
  */
 // Heading
 // Text
-$_['text_title'] = 'MultiSafepay iDeal, Visa, MasterCard, Mistercash, BankTransfer';
-$_['text_title_amex'] = 'American Express';
+$_['text_title'] = 'MultiSafepay iDeal, Visa, MasterCard, Mistercash, Overboeking';
 $_['text_title_ideal'] = 'iDEAL';
-$_['text_title_banktrans'] = 'Bank Transfer';
 $_['text_title_visa'] = 'VISA';
+$_['text_title_amex'] = 'American Express';
+$_['text_title_banktrans'] = 'Bank Overschrijving';
+$_['text_title_giropay'] = 'GiroPay';
 $_['text_title_mistercash'] = 'MisterCash';
-$_['text_title_wallet'] = 'MultiSafepay Wallet';
+$_['text_title_maestro'] = 'Maestro';
 $_['text_title_directbank'] = 'SOFORT Banking';
 $_['text_title_babygiftcard'] = 'Babygiftcard';
 $_['text_title_boekenbon'] = 'Boekenbon';
@@ -30,25 +31,24 @@ $_['text_title_webshopgiftcard'] = 'Webshopgiftcard';
 $_['text_title_lief'] = 'Lief cadeaukaart';
 $_['text_title_paypal'] = 'PayPal';
 $_['text_title_dirdeb'] = 'Direct Debit';
-$_['text_title_maestro'] = 'Maestro';
-$_['text_title_giropay'] = 'GiroPay';
 $_['text_title_mastercard'] = 'Mastercard';
-$_['text_title_payafter'] = 'Pay After Delivery';
-$_['text_response'] = 'Response from MultiSafepay:';
-$_['text_success'] = '... your payment was successfully received.';
-$_['text_success_wait'] = '<b><span style="color: #FF0000">Please wait...</span></b> whilst we finish processing your order.<br>If you are not automatically re-directed in 10 seconds, please click <a href="%s">here</a>.';
-$_['text_failure'] = '... Your payment has been cancelled!';
-$_['text_failure_wait'] = 'There was a problem processing your transaction. Please go back to the store to try again';
-$_['text_banktransfer'] = 'Wiretransfer';
-$_['text_paymentmethod'] = 'Paymentmethod';
-$_['text_dirdeb'] = 'Direct Debit';
-$_['text_select_payment_method'] = 'Select your payment method:';
-$_['text_select_bank'] = 'Select your bank:';
-$_['text_pay'] = 'Pay now';
-$_['text_bno_fee'] = 'Payment Fee';
-$_['entry_paymentfee'] = 'Pay After Delivery fee';
-$_['entry_multisafepay_payafter_tax'] = 'Payment Fee tax';
+$_['text_title_payafter'] = 'Betaal na Ontvangst';
+$_['text_title_klarna'] = 'Klarna';
+$_['text_title_wallet'] = 'MultiSafepay Wallet';
+$_['text_response'] = 'Bericht van MultiSafepay:';
+$_['text_success'] = '... uw betaling is in goede orde ontvangen.';
+$_['text_success_wait'] = '<b><span style="color: #FF0000">Een ogenblik alstublieft...</span></b> uw bestelling wordt op dit moment verwerkt.<br>Als u binnen 10 seconden niet automatisch wordt doorgestuurd, klik dan <a href="%s">hier</a>.';
+$_['text_failure'] = '... uw betaling is mislukt!';
+$_['text_failure_wait'] = 'Er is iets mis gegaan met uw transactie, keer a.u.b. terug naar de webwinkel om het opnieuw te proberen.';
+$_['text_banktransfer'] = 'Overboeking';
+$_['text_paymentmethod'] = 'Betaalmethode';
+$_['text_dirdeb'] = 'Automatisch Incasso';
+$_['text_select_payment_method'] = 'Selecteer de gewenste betaalmethode:';
+$_['text_select_bank'] = 'Kies uw bank:';
+$_['text_pay'] = 'Betalen';
+$_['text_bno_fee'] = 'Toeslag';
+$_['entry_paymentfee'] = 'Betaal na Ontvangst kosten';
+$_['entry_multisafepay_payafter_tax'] = 'Betaal na Ontvangst B.T.W';
 $_['entry_multisafepay_storeid'] = 'Store ID (configuration below will be used for this store)';
-$_['back_to_store'] = 'Back to the store';
+$_['back_to_store'] = 'Terug naar de webwinkel';
 ?>
-

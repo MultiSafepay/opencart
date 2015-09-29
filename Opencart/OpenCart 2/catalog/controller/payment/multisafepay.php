@@ -175,6 +175,19 @@ class ControllerPaymentMultiSafePay extends Controller {
                  */
                 $msp->transaction['gateway'] = 'PAYAFTER';
             }
+            
+            if ($gateway == 'MSP_KLARNA') {
+                $msp->test = $this->config->get('klarna_multisafepay_environment');
+                $msp->merchant['account_id'] = $this->config->get('klarna_multisafepay_merchant_id');
+                $msp->merchant['site_id'] = $this->config->get('klarna_multisafepay_site_id');
+                $msp->merchant['site_code'] = $this->config->get('klarna_multisafepay_secure_code');
+
+                /*
+                 * 	Start Pay after Delivery
+                 */
+                $msp->transaction['gateway'] = 'KLARNA';
+            }
+            
             $msp->gatewayinfo['email'] = $this->customer->getEmail();
             $msp->gatewayinfo['phone'] = ''; //not available
             $msp->gatewayinfo['bankaccount'] = ''; //not available
@@ -184,7 +197,7 @@ class ControllerPaymentMultiSafePay extends Controller {
 
 
 
-            if ($gateway == 'MSP_PAYAFTER') {
+            if ($gateway == 'MSP_PAYAFTER' || $gateway == 'MSP_KLARNA') {
 
                 $products = $this->cart->getProducts();
 
