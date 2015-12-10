@@ -18,7 +18,7 @@ class ControllerPaymentMultiSafepayKlarna extends Controller {
         $order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
         $data['gateway'] = 'KLARNA';
         $data['MSP_CARTID'] = $this->session->data['order_id'];
-        $this->load->library('encryption');
+        //$this->load->library('encryption');
         $data['action'] = $this->url->link('payment/multisafepay_klarna/multisafepayProcess', '', 'SSL');
         $data['back'] = $this->url->link('checkout/payment', '', 'SSL');
         $data['order_id'] = $order_info['order_id'];

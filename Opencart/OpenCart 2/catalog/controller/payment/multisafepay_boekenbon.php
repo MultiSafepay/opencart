@@ -16,7 +16,7 @@ class ControllerPaymentMultiSafePayBoekenbon extends Controller {
         $this->load->model('checkout/order');
         $order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
-        $this->load->library('encryption');
+        //$this->load->library('encryption');
         $data['action'] = $this->url->link('payment/multisafepay/multisafepayProcess', '', 'SSL');
         $data['back'] = $this->url->link('checkout/payment', '', 'SSL');
         $data['gateway'] = 'BOEKENBON';
