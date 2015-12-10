@@ -130,7 +130,7 @@ class ControllerPaymentMultiSafePay extends Controller {
             }
 
 			$msp->customer['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
-            $msp->transaction['id'] = $order_info['order_id'];
+            $msp->transaction['id'] = round($order_info['total'] * $order_info['currency_value'] * 100);
             $msp->transaction['currency'] = $order_info['currency_code']; //MSP only supports EUR at the moment  ->  $order_info['currency_code'];
 
             $msp->transaction['description'] = 'Order #' . $msp->transaction['id'];
