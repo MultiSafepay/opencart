@@ -3,6 +3,9 @@
 class ModelPaymentMultiSafePayPayafter extends Model {
 
     public function getMethod($address, $total) {
+        if($total == 0){
+	        return false;
+        }
         if ($this->currency->getCode() != 'EUR') {
             return false;
         }
