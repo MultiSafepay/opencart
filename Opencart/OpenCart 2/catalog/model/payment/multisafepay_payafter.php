@@ -6,7 +6,7 @@ class ModelPaymentMultiSafePayPayafter extends Model {
         if($total == 0){
 	        return false;
         }
-        if ($this->currency->getCode() != 'EUR') {
+        if ($this->session->data['currency'] != 'EUR') {
             return false;
         }
 

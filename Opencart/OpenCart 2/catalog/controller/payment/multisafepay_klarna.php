@@ -361,7 +361,7 @@ class ControllerPaymentMultiSafepayKlarna extends Controller {
             } else {
                 echo $this->load->view('default/template/payment/multisafepay_failure.tpl', $data);
             }*/
-            return $this->load->view('payment/multisafepay_failure.tpl', $data);
+            echo $this->load->view('payment/multisafepay_failure.tpl', $data);
             exit;
         }
     }
