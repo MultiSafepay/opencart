@@ -627,6 +627,8 @@ class MultiSafepay {
         
         if ($this->customer['company'] != "") {
             $set_company = '<company>' . $this->xmlEscape($this->customer['company']) . '</company>';
+        }else{
+	        $set_company = '';
         }
 
 

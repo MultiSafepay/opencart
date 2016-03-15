@@ -18,7 +18,7 @@ class ControllerPaymentMultiSafePayIdeal extends Controller {
 
         //$this->load->library('encryption');
         $data['action'] = $this->url->link('payment/multisafepay/multisafepayProcess', '', 'SSL');
-        $data['back'] = $this->url->link('checkout/payment', '', 'SSL');
+        $data['back'] = $this->url->link('checkout/checkout', '', 'SSL');
         $data['gateway'] = 'IDEAL';
         $data['MSP_CARTID'] = $this->session->data['order_id'];
 
@@ -55,11 +55,12 @@ class ControllerPaymentMultiSafePayIdeal extends Controller {
         $data['ISSUER_SELECT'] = $idealselect;
 
 
-        if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/multisafepay_ideal.tpl')) {
+        /*if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/multisafepay_ideal.tpl')) {
             return $this->load->view($this->config->get('config_template') . '/template/payment/multisafepay_ideal.tpl', $data);
         } else {
             return $this->load->view('default/template/payment/multisafepay_ideal.tpl', $data);
-        }
+        }*/
+        return $this->load->view('payment/multisafepay_ideal.tpl', $data);
     }
 
 }

@@ -18,7 +18,7 @@ class ControllerPaymentMultiSafePayMaestro extends Controller {
 
         //$this->load->library('encryption');
         $data['action'] = $this->url->link('payment/multisafepay/multisafepayProcess', '', 'SSL');
-        $data['back'] = $this->url->link('checkout/payment', '', 'SSL');
+        $data['back'] = $this->url->link('checkout/checkout', '', 'SSL');
         $data['gateway'] = 'MAESTRO';
         $data['MSP_CARTID'] = $this->session->data['order_id'];
 
@@ -26,11 +26,12 @@ class ControllerPaymentMultiSafePayMaestro extends Controller {
 
         $data['order_id'] = $this->session->data['order_id'];
 
-        if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/multisafepay_default.tpl')) {
+        /*if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/multisafepay_default.tpl')) {
             return $this->load->view($this->config->get('config_template') . '/template/payment/multisafepay_default.tpl', $data);
         } else {
             return $this->load->view('default/template/payment/multisafepay_default.tpl', $data);
-        }
+        }*/
+        return $this->load->view('payment/multisafepay_default.tpl', $data);
     }
 
 }
