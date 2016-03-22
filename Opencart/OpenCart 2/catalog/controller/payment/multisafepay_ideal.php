@@ -53,14 +53,15 @@ class ControllerPaymentMultiSafePayIdeal extends Controller {
         $idealselect .= '</select></div>';
         //END ideal issuers request data
         $data['ISSUER_SELECT'] = $idealselect;
-
-
-        /*if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/multisafepay_ideal.tpl')) {
-            return $this->load->view($this->config->get('config_template') . '/template/payment/multisafepay_ideal.tpl', $data);
-        } else {
-            return $this->load->view('default/template/payment/multisafepay_ideal.tpl', $data);
-        }*/
-        return $this->load->view('payment/multisafepay_ideal.tpl', $data);
+        
+        
+        if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/multisafepay_ideal.tpl')) {
+            return $this->load->view($this->config->get('config_template') . '/payment/multisafepay_ideal.tpl', $data);
+        } elseif(file_exists(DIR_TEMPLATE . 'default/template/payment/multisafepay_ideal.tpl')) {
+            return $this->load->view('/payment/multisafepay_ideal.tpl', $data);
+        }else{
+            return $this->load->view('payment/multisafepay_ideal.tpl', $data);
+        }
     }
 
 }

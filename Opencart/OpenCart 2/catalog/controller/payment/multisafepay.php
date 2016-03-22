@@ -37,12 +37,13 @@ class ControllerPaymentMultiSafePay extends Controller {
 
         $data['order_id'] = $this->session->data['order_id'];
 
-        /*if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/multisafepay_default.tpl')) {
-            return $this->load->view($this->config->get('config_template') . '/template/payment/multisafepay_default.tpl', $data);
-        } else {
-            return $this->load->view('default/template/payment/multisafepay_default.tpl', $data);
-        }*/
-        return $this->load->view('payment/multisafepay_default.tpl', $data);
+        if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/multisafepay_default.tpl')) {
+            return $this->load->view($this->config->get('config_template') . '/payment/multisafepay_default.tpl', $data);
+        } elseif(file_exists(DIR_TEMPLATE . 'default/template/payment/multisafepay_default.tpl')) {
+            return $this->load->view('/payment/multisafepay_default.tpl', $data);
+        }else{
+            return $this->load->view('payment/multisafepay_default.tpl', $data);
+        }
     }
 
     public function multisafepayProcess() {
@@ -62,7 +63,12 @@ class ControllerPaymentMultiSafePay extends Controller {
 
         $loc1 = explode(',', $language_string);
 
-        $locale = $loc1[1];
+        if (!isset($loc1[1])) {
+            $locale = $loc1[0];
+        }
+        else {
+            $locale = $loc1[1];
+        }
 
 
 
@@ -375,13 +381,14 @@ class ControllerPaymentMultiSafePay extends Controller {
                 $data['button_continue'] = $this->language->get('button_continue');
                 $data['continue'] = $this->url->link('checkout/checkout', '', 'SSL');
 
-                /*if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/multisafepay_failure.tpl')) {
-                    echo $this->load->view($this->config->get('config_template') . '/template/payment/multisafepay_failure.tpl', $data);
-                } else {
-                    echo $this->load->view('default/template/payment/multisafepay_failure.tpl', $data);
-                }*/
-                echo $this->load->view('payment/multisafepay_failure.tpl', $data);
                 
+                if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/multisafepay_failure.tpl')) {
+                    echo $this->load->view($this->config->get('config_template') . '/payment/multisafepay_failure.tpl', $data);
+                } elseif(file_exists(DIR_TEMPLATE . 'default/template/payment/multisafepay_failure.tpl')) {
+                    echo $this->load->view('/payment/multisafepay_failure.tpl', $data);
+                }else{
+                    echo $this->load->view('payment/multisafepay_failure.tpl', $data);
+                }
                 exit;
             }
         } else {
@@ -1366,12 +1373,13 @@ class ControllerPaymentMultiSafePay extends Controller {
         $data['button_continue'] = $this->language->get('button_continue');
         $data['continue'] = $this->url->link('checkout/checkout', '', 'SSL');
 
-        /*if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/multisafepay_failure.tpl')) {
-            $this->template = $this->config->get('config_template') . '/template/payment/multisafepay_failure.tpl';
-        } else {
-            $this->template = 'default/template/payment/multisafepay_failure.tpl';
-        }*/
-        return $this->load->view('payment/multisafepay_failure.tpl', $data);
+        if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/multisafepay_failure.tpl')) {
+                    echo $this->load->view($this->config->get('config_template') . '/payment/multisafepay_failure.tpl', $data);
+                } elseif(file_exists(DIR_TEMPLATE . 'default/template/payment/multisafepay_failure.tpl')) {
+                    echo $this->load->view('/payment/multisafepay_failure.tpl', $data);
+                }else{
+                    echo $this->load->view('payment/multisafepay_failure.tpl', $data);
+                }
         $this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
     }
 
