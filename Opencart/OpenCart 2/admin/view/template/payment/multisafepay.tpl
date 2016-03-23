@@ -29,7 +29,7 @@
 	                <ul class="nav nav-tabs" id="tabs">
                         <li class="active"><a href="#tab-default" data-toggle="tab">Default Store</a></li>
                         <?php foreach ($stores as $store) { ?>
-                        	<li><a href="#tab-store-<?php echo $store['store_id']; ?>" data-toggle="tab"><?php echo $store['name']; ?></a></li>
+                        	<li><a href="#tab-store-<?php echo $store['store_id']; ?>" data-toggle="tab">Store <?php echo $store['name']; ?></a></li>
                         <?php }?>
                     </ul>
                     
