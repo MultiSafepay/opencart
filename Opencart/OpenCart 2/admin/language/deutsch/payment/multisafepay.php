@@ -58,7 +58,15 @@ $_['entry_multisafepay_order_status_id_partial_refunded'] = 'Set partial refunde
 $_['entry_status'] = 'Gateway Status:';
 $_['select_methods'] = 'Zahlungsart ausw�hlen';
 $_['enable_checkout_button'] = 'Enable Fastcheckout button with connect account';
-
+$_['text_min_klarna_amount'] = 'Minimal ordertotal for Klarna, in cents';
+$_['text_max_klarna_amount'] = 'Maximale ordertotal for Klarna, in cents';
+$_['text_set_klarna_data'] = 'Klarna settings';
+$_['text_klarna_ip_validation_option'] = 'Enable IP validation';
+$_['text_klarna_ip_validation_address'] = 'IP addresses, seperated by ;';
+$_['text_klarna_fee'] = 'Payment Fee';
+$_['klarna_multisafepay_merchantid'] = 'Account ID';
+$_['klarna_multisafepay_siteid'] = 'Site ID';
+$_['klarna_multisafepay_secure_code'] = 'Site Code';
 // Entry
 
 $_['text_min_amount'] = 'Minimal ordertotal in cents';
