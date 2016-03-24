@@ -13,6 +13,7 @@ class Controllerpaymentmultisafepayfastcheckout extends Controller {
     }
 
     public function process() {
+	    $storeid = $this->config->get('config_store_id');
         include_once('MultiSafepay.combined.php');
         $msp = new MultiSafepay();
         $this->load->model('total/coupon');
@@ -73,10 +74,10 @@ class Controllerpaymentmultisafepayfastcheckout extends Controller {
 
         $locale = $loc1[0];
 
-        $msp->test = $this->config->get('multisafepay_environment');
-        $msp->merchant['account_id'] = $this->config->get('multisafepay_merchant_id');
-        $msp->merchant['site_id'] = $this->config->get('multisafepay_site_id');
-        $msp->merchant['site_code'] = $this->config->get('multisafepay_secure_code');
+        $msp->test = $this->config->get('multisafepay_environment_'.$storeid);
+        $msp->merchant['account_id'] = $this->config->get('multisafepay_merchant_id_'.$storeid);
+        $msp->merchant['site_id'] = $this->config->get('multisafepay_site_id_'.$storeid);
+        $msp->merchant['site_code'] = $this->config->get('multisafepay_secure_code_'.$storeid);
         $msp->merchant['notification_url'] = $this->url->link('payment/multisafepay/fastcheckout&type=initial');
         $msp->merchant['redirect_url'] = $this->url->link('checkout/success', '', 'SSL');
         $msp->merchant['cancel_url'] = $this->url->link('checkout/cart');
@@ -85,8 +86,8 @@ class Controllerpaymentmultisafepayfastcheckout extends Controller {
 
         // Create products array (will be used later)
         $products = $this->cart->getProducts();
-        if($this->config->get('multisafepay_b2b') != 'false'){
-            $msp->customer['company'] = $this->config->get('multisafepay_b2b');
+        if($this->config->get('multisafepay_b2b_'.$storeid) != 'false'){
+            $msp->customer['company'] = $this->config->get('multisafepay_b2b_'.$storeid);
         }
 
 
@@ -142,8 +143,8 @@ class Controllerpaymentmultisafepayfastcheckout extends Controller {
 
         $correct_rate = round($rate, 2) / 100;
 
-        if ($this->config->get('multisafepay_fco_tax_percent') != '') {
-            $rule = new MspDefaultTaxRule($this->config->get('multisafepay_fco_tax_percent'), 'true'); // Tax rate, shipping taxed
+        if ($this->config->get('multisafepay_fco_tax_percent_'.$storeid) != '') {
+            $rule = new MspDefaultTaxRule($this->config->get('multisafepay_fco_tax_percent_'.$storeid), 'true'); // Tax rate, shipping taxed
         } else {
             $rule = new MspDefaultTaxRule(0, 'true'); // Tax rate, shipping taxed
         }
@@ -553,10 +554,10 @@ class Controllerpaymentmultisafepayfastcheckout extends Controller {
         $msp = new MultiSafepay();
 
         // Basic info
-        $msp->test = $this->config->get('multisafepayoc_test');
-        $msp->merchant['account_id'] = $this->config->get('multisafepayoc_account_id');
-        $msp->merchant['site_id'] = $this->config->get('multisafepayoc_site_id');
-        $msp->merchant['site_code'] = $this->config->get('multisafepayoc_site_security_code');
+        $msp->test = $this->config->get('multisafepayoc_test_'.$storeid);
+        $msp->merchant['account_id'] = $this->config->get('multisafepayoc_account_id_'.$storeid);
+        $msp->merchant['site_id'] = $this->config->get('multisafepayoc_site_id_'.$storeid);
+        $msp->merchant['site_code'] = $this->config->get('multisafepayoc_site_security_code_'.$storeid);
         $msp->transaction['id'] = (int) $transactionid;
 
         // Get status from MSP

@@ -7,13 +7,14 @@ class ModelPaymentMultiSafePayErotiekbon extends Model {
 	        return false;
         }
         $this->load->language('payment/multisafepay');
+        $storeid = $this->config->get('config_store_id');
 
-        $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int) $this->config->get('multisafepay_erotiekbon_geo_zone_id') . "' AND country_id = '" . (int) $address['country_id'] . "' AND (zone_id = '" . (int) $address['zone_id'] . "' OR zone_id = '0')");
+        $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int) $this->config->get('multisafepay_erotiekbon_geo_zone_id_'.$storeid) . "' AND country_id = '" . (int) $address['country_id'] . "' AND (zone_id = '" . (int) $address['zone_id'] . "' OR zone_id = '0')");
 
         /* if ($this->config->get('multisafepay_total') > 0 && $this->config->get('multisafepay_total') > $total) {
           $status = false;
           } else */
-        if (!$this->config->get('multisafepay_erotiekbon_geo_zone_id')) {
+        if (!$this->config->get('multisafepay_erotiekbon_geo_zone_id_'.$storeid)) {
             $status = true;
         } elseif ($query->num_rows) {
             $status = true;
@@ -24,10 +25,10 @@ class ModelPaymentMultiSafePayErotiekbon extends Model {
         $totalcents = $total * 100;
 
         if ($total) {
-            if ($this->config->get('multisafepay_erotiekbon_min_amount') && $totalcents < $this->config->get('multisafepay_erotiekbon_min_amount')) {
+            if ($this->config->get('multisafepay_erotiekbon_min_amount_'.$storeid) && $totalcents < $this->config->get('multisafepay_erotiekbon_min_amount_'.$storeid)) {
                 return false;
             }
-            if ($this->config->get('multisafepay_erotiekbon_max_amount') && $totalcents > $this->config->get('multisafepay_erotiekbon_max_amount')) {
+            if ($this->config->get('multisafepay_erotiekbon_max_amount_'.$storeid) && $totalcents > $this->config->get('multisafepay_erotiekbon_max_amount_'.$storeid)) {
                 return false;
             }
         }
@@ -39,7 +40,7 @@ class ModelPaymentMultiSafePayErotiekbon extends Model {
                 'code' => 'multisafepay_erotiekbon',
                 'title' => $this->language->get('text_title_erotiekbon'),
                 'terms' => '',
-                'sort_order' => $this->config->get('multisafepay_erotiekbon_sort_order')
+                'sort_order' => $this->config->get('multisafepay_erotiekbon_sort_order_'.$storeid)
             );
         }
 

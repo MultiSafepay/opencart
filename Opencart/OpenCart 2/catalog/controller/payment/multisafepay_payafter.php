@@ -59,6 +59,7 @@ class ControllerPaymentMultiSafePayPayafter extends Controller {
     }
 
     public function multisafepayProcess() {
+	    $storeid = $this->config->get('config_store_id');
         $this->load->language('payment/multisafepay');
         $db = new DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
         // Language Detection
@@ -83,7 +84,7 @@ class ControllerPaymentMultiSafePayPayafter extends Controller {
 
 
 
-        $multisafepay_redirect_url = $this->config->get('multisafepay_redirect_url');
+        $multisafepay_redirect_url = $this->config->get('multisafepay_redirect_url_'.$storeid);
         if ($multisafepay_redirect_url == 1) {
             $redirect_url = true;
         } else {
@@ -104,14 +105,14 @@ class ControllerPaymentMultiSafePayPayafter extends Controller {
         //MSP SET DATA FOR TRANSACTION REQUEST
         require_once(dirname(__FILE__) . '/MultiSafepay.combined.php');
         $msp = new MultiSafepay();
-        $msp->test = $this->config->get('multisafepay_payafter_environment');
-        $msp->merchant['account_id'] = $this->config->get('multisafepay_payafter_merchant_id');
-        $msp->merchant['site_id'] = $this->config->get('multisafepay_payafter_site_id');
-        $msp->merchant['site_code'] = $this->config->get('multisafepay_payafter_secure_code');
+        $msp->test = $this->config->get('multisafepay_payafter_environment_'.$storeid);
+        $msp->merchant['account_id'] = $this->config->get('multisafepay_payafter_merchant_id_'.$storeid);
+        $msp->merchant['site_id'] = $this->config->get('multisafepay_payafter_site_id_'.$storeid);
+        $msp->merchant['site_code'] = $this->config->get('multisafepay_payafter_secure_code_'.$storeid);
         $msp->merchant['notification_url'] = $this->url->link('payment/multisafepay/fastcheckout&type=initial', '', 'SSL');
         $msp->merchant['cancel_url'] = $this->url->link('checkout/checkout', '', 'SSL');
         $msp->merchant['redirect_url'] = $this->url->link('checkout/success', '', 'SSL');
-        $msp->merchant['close_window'] = $this->config->get('multisafepay_redirect_url');
+        $msp->merchant['close_window'] = $this->config->get('multisafepay_redirect_url_'.$storeid);
         $msp->customer['locale'] = $locale;
         $msp->customer['firstname'] = $order_info['payment_firstname'];
         $msp->customer['lastname'] = $order_info['payment_lastname'];
@@ -346,7 +347,7 @@ class ControllerPaymentMultiSafePayPayafter extends Controller {
 
         if (!isset($msp->error)) {
             $this->load->model('checkout/order');
-            $this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('multisafepay_order_status_id_initialized'), '', true);
+            $this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('multisafepay_order_status_id_initialized_'.$storeid), '', true);
 
             header('Location: ' . $url);
             exit;
