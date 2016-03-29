@@ -26,7 +26,58 @@
             </div>
             <div class="panel-body">
                 <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-multisafepay" class="form-horizontal">
+					<ul class="nav nav-tabs" id="tabs">
+                        <li class="active"><a href="#tab-default" data-toggle="tab">Default Store</a></li>
+                        <?php foreach ($stores as $store) { ?>
+                        	<li><a href="#tab-store-<?php echo $store['store_id']; ?>" data-toggle="tab">Store <?php echo $store['name']; ?></a></li>
+                        <?php }?>
+                    </ul>
+                    
+                    <div class="tab-content">
+					 <?php foreach ($stores as $store) { ?>
+					 		<div class="tab-pane" id="tab-store-<?php echo $store['store_id']; ?>">
+					 			<div class="form-group">
+                        <label class="col-sm-2 control-label" for="minamount"><span><?php echo $text_min_amount; ?></span></label>
+                        <div class="col-sm-10">
+                            <input type="text" name="multisafepay_gezondheidsbon_min_amount_<?php echo $store['store_id'];?>" value="<?php echo ${'multisafepay_gezondheidsbon_min_amount_'.$store['store_id']}; ?>" id="minamount" class="form-control" />
+                        </div>
+                    </div>
 
+                    <!--fco tax percentage-->
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="maxamount"><span><?php echo $text_max_amount; ?></span></label>
+                        <div class="col-sm-10">
+                            <input type="text" name="multisafepay_gezondheidsbon_max_amount_<?php echo $store['store_id'];?>" value="<?php echo ${'multisafepay_gezondheidsbon_max_amount_'.$store['store_id']}; ?>" id="maxamount" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="input-geo-zone"><?php echo $text_all_zones; ?></label>
+                        <div class="col-sm-10">
+                            <select name="multisafepay_gezondheidsbon_geo_zone_id_<?php echo $store['store_id'];?>" id="input-geo-zone" class="form-control">
+                                <option value="0"><?php echo $text_all_zones; ?></option>
+                                <?php foreach ($geo_zones as $geo_zone) { ?>
+                                <?php if ($geo_zone['geo_zone_id'] == ${'multisafepay_gezondheidsbon_geo_zone_id_'.$store['store_id']}) { ?>
+                                <option value="<?php echo $geo_zone['geo_zone_id']; ?>" selected="selected"><?php echo $geo_zone['name']; ?></option>
+                                <?php } else { ?>
+                                <option value="<?php echo $geo_zone['geo_zone_id']; ?>"><?php echo $geo_zone['name']; ?></option>
+                                <?php } ?>
+                                <?php } ?>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!--Sorting-->
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
+                        <div class="col-sm-10">
+                            <input type="text" name="multisafepay_gezondheidsbon_sort_order_<?php echo $store['store_id'];?>" value="<?php echo ${'multisafepay_gezondheidsbon_sort_order_'.$store['store_id']}; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="form-control" />
+                        </div>
+                    </div>
+					 		</div>
+					 <?php } ?>
+					 
+					 <div class="tab-pane active" id="tab-default">
                     <!--Module status-->
                     <div class="form-group">
                         <label class="col-sm-2 control-label" for="input-status"><?php echo $entry_status; ?></label>
@@ -46,7 +97,7 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label" for="minamount"><span><?php echo $text_min_amount; ?></span></label>
                         <div class="col-sm-10">
-                            <input type="text" name="multisafepay_gezondheidsbon_min_amount" value="<?php echo $multisafepay_gezondheidsbon_min_amount; ?>" id="minamount" class="form-control" />
+                            <input type="text" name="multisafepay_gezondheidsbon_min_amount_0" value="<?php echo $multisafepay_gezondheidsbon_min_amount; ?>" id="minamount" class="form-control" />
                         </div>
                     </div>
 
@@ -54,14 +105,14 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label" for="maxamount"><span><?php echo $text_max_amount; ?></span></label>
                         <div class="col-sm-10">
-                            <input type="text" name="multisafepay_gezondheidsbon_max_amount" value="<?php echo $multisafepay_gezondheidsbon_max_amount; ?>" id="maxamount" class="form-control" />
+                            <input type="text" name="multisafepay_gezondheidsbon_max_amount_0" value="<?php echo $multisafepay_gezondheidsbon_max_amount; ?>" id="maxamount" class="form-control" />
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label class="col-sm-2 control-label" for="input-geo-zone"><?php echo $text_all_zones; ?></label>
                         <div class="col-sm-10">
-                            <select name="multisafepay_gezondheidsbon_geo_zone_id" id="input-geo-zone" class="form-control">
+                            <select name="multisafepay_gezondheidsbon_geo_zone_id_0" id="input-geo-zone" class="form-control">
                                 <option value="0"><?php echo $text_all_zones; ?></option>
                                 <?php foreach ($geo_zones as $geo_zone) { ?>
                                 <?php if ($geo_zone['geo_zone_id'] == $multisafepay_gezondheidsbon_geo_zone_id) { ?>
@@ -78,8 +129,10 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
                         <div class="col-sm-10">
-                            <input type="text" name="multisafepay_gezondheidsbon_sort_order" value="<?php echo $multisafepay_gezondheidsbon_sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="form-control" />
+                            <input type="text" name="multisafepay_gezondheidsbon_sort_order_0" value="<?php echo $multisafepay_gezondheidsbon_sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="form-control" />
                         </div>
+                    </div>
+					 </div>
                     </div>
                 </form>
             </div>

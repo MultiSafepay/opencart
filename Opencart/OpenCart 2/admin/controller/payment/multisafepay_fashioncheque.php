@@ -23,6 +23,9 @@ class ControllerPaymentMultiSafePayFashioncheque extends Controller {
             $this->session->data['success'] = $this->language->get('text_success');
             $this->response->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'));
         }
+        
+        $this->load->model('setting/store');
+		$data['stores'] = $this->model_setting_store->getStores();
 
         $data['text_edit'] = $this->language->get('text_edit');
         $data['text_enabled'] = $this->language->get('text_enabled');
@@ -31,11 +34,7 @@ class ControllerPaymentMultiSafePayFashioncheque extends Controller {
         // Geo Zone
         $this->load->model('localisation/geo_zone');
         $data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
-        if (isset($this->request->post['multisafepay_fashioncheque_geo_zone_id'])) {
-            $data['multisafepay_fashioncheque_geo_zone_id'] = $this->request->post['multisafepay_fashioncheque_geo_zone_id'];
-        } else {
-            $data['multisafepay_fashioncheque_geo_zone_id'] = $this->config->get('multisafepay_fashioncheque_geo_zone_id');
-        }
+        
 
         $data['action'] = $this->setup_link('payment/multisafepay_fashioncheque');
         $data['cancel'] = $this->setup_link('extension/payment');
@@ -44,30 +43,59 @@ class ControllerPaymentMultiSafePayFashioncheque extends Controller {
         $data['entry_status'] = $this->language->get('entry_status');
         $data['entry_sort_order'] = $this->language->get('entry_sort_order');
 
+
+		$data['text_min_amount'] = $this->language->get('text_min_amount');
+        $data['text_max_amount'] = $this->language->get('text_max_amount');
+        
+        
+		if (isset($this->request->post['multisafepay_fashioncheque_geo_zone_id_0'])) {
+            $data['multisafepay_fashioncheque_geo_zone_id'] = $this->request->post['multisafepay_fashioncheque_geo_zone_id_0'];
+        } else {
+            $data['multisafepay_fashioncheque_geo_zone_id'] = $this->config->get('multisafepay_fashioncheque_geo_zone_id_0');
+        }
         if (isset($this->request->post['multisafepay_fashioncheque_status'])) {
             $data['multisafepay_fashioncheque_status'] = $this->request->post['multisafepay_fashioncheque_status'];
         } else {
             $data['multisafepay_fashioncheque_status'] = $this->config->get('multisafepay_fashioncheque_status');
         }
-
-        if (isset($this->request->post['multisafepay_fashioncheque_sort_order'])) {
-            $data['multisafepay_fashioncheque_sort_order'] = $this->request->post['multisafepay_fashioncheque_sort_order'];
+        if (isset($this->request->post['multisafepay_fashioncheque_sort_order_0'])) {
+            $data['multisafepay_fashioncheque_sort_order'] = $this->request->post['multisafepay_fashioncheque_sort_order_0'];
         } else {
-            $data['multisafepay_fashioncheque_sort_order'] = $this->config->get('multisafepay_fashioncheque_sort_order');
+            $data['multisafepay_fashioncheque_sort_order'] = $this->config->get('multisafepay_fashioncheque_sort_order_0');
         }
-
-        $data['text_min_amount'] = $this->language->get('text_min_amount');
-        $data['text_max_amount'] = $this->language->get('text_max_amount');
-        if (isset($this->request->post['multisafepay_fashioncheque_max_amount'])) {
-            $data['multisafepay_fashioncheque_max_amount'] = $this->request->post['multisafepay_fashioncheque_max_amount'];
+        if (isset($this->request->post['multisafepay_fashioncheque_max_amount_0'])) {
+            $data['multisafepay_fashioncheque_max_amount'] = $this->request->post['multisafepay_fashioncheque_max_amount_0'];
         } else {
-            $data['multisafepay_fashioncheque_max_amount'] = $this->config->get('multisafepay_fashioncheque_max_amount');
+            $data['multisafepay_fashioncheque_max_amount'] = $this->config->get('multisafepay_fashioncheque_max_amount_0');
         }
-        if (isset($this->request->post['multisafepay_fashioncheque_min_amount'])) {
-            $data['multisafepay_fashioncheque_min_amount'] = $this->request->post['multisafepay_fashioncheque_min_amount'];
+        if (isset($this->request->post['multisafepay_fashioncheque_min_amount_0'])) {
+            $data['multisafepay_fashioncheque_min_amount'] = $this->request->post['multisafepay_fashioncheque_min_amount_0'];
         } else {
-            $data['multisafepay_fashioncheque_min_amount'] = $this->config->get('multisafepay_fashioncheque_min_amount');
+            $data['multisafepay_fashioncheque_min_amount'] = $this->config->get('multisafepay_fashioncheque_min_amount_0');
         }
+        
+        foreach($this->model_setting_store->getStores() as $store ){
+	       	if (isset($this->request->post['multisafepay_fashioncheque_geo_zone_id_'.$store['store_id'].''])) {
+	            $data['multisafepay_fashioncheque_geo_zone_id_'.$store['store_id'].''] = $this->request->post['multisafepay_fashioncheque_geo_zone_id_'.$store['store_id'].''];
+	        } else {
+	            $data['multisafepay_fashioncheque_geo_zone_id_'.$store['store_id'].''] = $this->config->get('multisafepay_fashioncheque_geo_zone_id_'.$store['store_id']);
+	        }
+	        if (isset($this->request->post['multisafepay_fashioncheque_sort_order_'.$store['store_id'].''])) {
+	            $data['multisafepay_fashioncheque_sort_order_'.$store['store_id'].''] = $this->request->post['multisafepay_fashioncheque_sort_order_'.$store['store_id'].''];
+	        } else {
+	            $data['multisafepay_fashioncheque_sort_order_'.$store['store_id'].''] = $this->config->get('multisafepay_fashioncheque_sort_order_'.$store['store_id']);
+	        }
+	        if (isset($this->request->post['multisafepay_fashioncheque_max_amount_'.$store['store_id'].''])) {
+	            $data['multisafepay_fashioncheque_max_amount_'.$store['store_id'].''] = $this->request->post['multisafepay_fashioncheque_max_amount_'.$store['store_id'].''];
+	        } else {
+	            $data['multisafepay_fashioncheque_max_amount_'.$store['store_id'].''] = $this->config->get('multisafepay_fashioncheque_max_amount_'.$store['store_id']);
+	        }
+	        if (isset($this->request->post['multisafepay_fashioncheque_min_amount_'.$store['store_id'].''])) {
+	            $data['multisafepay_fashioncheque_min_amount_'.$store['store_id'].''] = $this->request->post['multisafepay_fashioncheque_min_amount_'.$store['store_id'].''];
+	        } else {
+	            $data['multisafepay_fashioncheque_min_amount_'.$store['store_id'].''] = $this->config->get('multisafepay_fashioncheque_min_amount_'.$store['store_id']);
+	        } 
+	    }
 
         $data['button_save'] = $this->language->get('button_save');
         $data['button_cancel'] = $this->language->get('button_cancel');
