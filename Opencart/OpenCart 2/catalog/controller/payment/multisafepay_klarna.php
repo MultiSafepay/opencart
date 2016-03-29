@@ -58,6 +58,19 @@ class ControllerPaymentMultiSafepayKlarna extends Controller {
     }
 
     public function multisafepayProcess() {
+	    
+	    if(isset($_POST['gender'])){
+		    $gender = $_POST['gender'];
+	    }else{
+		    $gender ='';
+	    }
+	    
+	    if(isset($_POST['phone_no'])){
+		    $phone_no = $_POST['phone_no'];
+	    }else{
+		    $phone_no ='';
+	    }
+	    
 	    $storeid = $this->config->get('config_store_id');
         $this->load->language('payment/multisafepay');
         $db = new DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
@@ -119,7 +132,9 @@ class ControllerPaymentMultiSafepayKlarna extends Controller {
         $msp->customer['city'] = $order_info['payment_city'];
         $msp->customer['email'] = $order_info['email'];
         if (!empty($order_info['telephone'])) {
-            $msp->customer['phone'] = $order_info['telephone'];
+            ///$msp->customer['phone'] = $order_info['telephone'];
+            $msp->customer['phone'] = $phone_no;
+
         }
         $msp->customer['country'] = $order_info['payment_iso_code_2'];
         $msp->parseCustomerAddress($order_info['payment_address_1']);
@@ -149,6 +164,11 @@ class ControllerPaymentMultiSafepayKlarna extends Controller {
         $msp->gatewayinfo['referrer'] = $_SERVER['HTTP_REFERER'];
         $msp->gatewayinfo['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
         $msp->gatewayinfo['birthday'] = ''; //not available
+        $msp->customer['gender'] = $gender;
+        $msp->gatewayinfo['gender'] = $gender;
+        $msp->gatewayinfo['phone'] = $phone_no;
+        
+        
         $products = $this->cart->getProducts();
 
         // Tax for products
