@@ -27,12 +27,13 @@ class ControllerPaymentMultiSafePayVisa extends Controller {
         $data['order_id'] = $this->session->data['order_id'];
 
         if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/multisafepay_default.tpl')) {
-            return $this->load->view($this->config->get('config_template') . '/payment/multisafepay_default.tpl', $data);
-        } elseif(file_exists(DIR_TEMPLATE . 'default/template/payment/multisafepay_default.tpl')) {
-            return $this->load->view('/payment/multisafepay_default.tpl', $data);
-        }else{
-            return $this->load->view('payment/multisafepay_default.tpl', $data);
-        }
+			return $this->load->view($this->config->get('config_template') . '/template/payment/multisafepay_default.tpl', $data);
+			
+		} elseif(file_exists(DIR_TEMPLATE . 'default/template/payment/multisafepay_default.tpl') && VERSION < '2.2.0.0') {
+			return $this->load->view('default/template/payment/multisafepay_default.tpl', $data);
+		}else{
+			return $this->load->view('payment/multisafepay_default', $data);
+		}
     }
 
 }

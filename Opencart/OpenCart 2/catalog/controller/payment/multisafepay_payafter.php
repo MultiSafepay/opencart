@@ -39,16 +39,15 @@ class ControllerPaymentMultiSafePayPayafter extends Controller {
 
 
         $data['order_id'] = $this->session->data['order_id'];
-
-        
         
         if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/multisafepay_payafter.tpl')) {
-            return $this->load->view($this->config->get('config_template') . '/payment/multisafepay_payafter.tpl', $data);
-        } elseif(file_exists(DIR_TEMPLATE . 'default/template/payment/multisafepay_payafter.tpl')) {
-            return $this->load->view('/payment/multisafepay_payafter.tpl', $data);
-        }else{
-            return $this->load->view('payment/multisafepay_payafter.tpl', $data);
-        }
+			return $this->load->view($this->config->get('config_template') . '/template/payment/multisafepay_payafter.tpl', $data);
+			
+		} elseif(file_exists(DIR_TEMPLATE . 'default/template/payment/multisafepay_payafter.tpl') && VERSION < '2.2.0.0') {
+			return $this->load->view('default/template/payment/multisafepay_payafter.tpl', $data);
+		}else{
+			return $this->load->view('payment/multisafepay_payafter', $data);
+		}
         
     }
 
@@ -370,13 +369,16 @@ class ControllerPaymentMultiSafePayPayafter extends Controller {
 
  
             
+           
+            
             if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/multisafepay_failure.tpl')) {
-                echo $this->load->view($this->config->get('config_template') . '/payment/multisafepay_failure.tpl', $data);
-            } elseif(file_exists(DIR_TEMPLATE . 'default/template/payment/multisafepay_failure.tpl')) {
-                echo $this->load->view('/payment/multisafepay_failure.tpl', $data);
-            }else{
-                echo $this->load->view('payment/multisafepay_failure.tpl', $data);
-            }
+			echo $this->load->view($this->config->get('config_template') . '/template/payment/multisafepay_failure.tpl', $data);
+			
+		} elseif(file_exists(DIR_TEMPLATE . 'default/template/payment/multisafepay_failure.tpl') && VERSION < '2.2.0.0') {
+			echo $this->load->view('default/template/payment/multisafepay_failure.tpl', $data);
+		}else{
+			echo $this->load->view('payment/multisafepay_failure', $data);
+		}
             
             exit;
         }
