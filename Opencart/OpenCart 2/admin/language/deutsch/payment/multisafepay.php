@@ -28,6 +28,7 @@ $_['text_bno_product_fee_id'] = 'Product id of the Pay after Delivery fee produc
 $_['text_bno_ip_validation_option'] = 'Enable IP validation';
 $_['text_bno_ip_validation_address'] = 'IP addresses, seperated by ;';
 $_['text_bno_fee'] = 'Payment Fee';
+$_['entry_confirm_order'] = 'When to confirm the order?';
 $_['text_set_fco_shipping'] = 'Set Fast Checkout Shipping options';
 $_['entry_multisafepay_fco_tax'] = 'Set Shipping tax percentage enter 6% as 0.06';
 $_['entry_multisafepay_fco_free_ship'] = 'Set free shipping amount';

@@ -30,6 +30,7 @@ $_['text_bno_product_fee_id'] = 'Product id of the Pay after Delivery fee produc
 $_['text_bno_ip_validation_option'] = 'Enable IP validation';
 $_['text_bno_ip_validation_address'] = 'IP addresses, seperated by ;';
 $_['text_bno_fee'] = 'Payment Fee';
+$_['entry_confirm_order'] = 'When to confirm the order?';
 
 
 

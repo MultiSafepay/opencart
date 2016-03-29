@@ -366,7 +366,9 @@ class ControllerPaymentMultiSafepayKlarna extends Controller {
 
         if (!isset($msp->error)) {
             $this->load->model('checkout/order');
-            $this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('multisafepay_order_status_id_initialized_'.$storeid), '', true);
+            if(!$this->config->get('multisafepay_confirm_order_'.$storeid)){
+	               $this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('multisafepay_order_status_id_initialized_'.$storeid), '', true); 
+                }
 
             header('Location: ' . $url);
             exit;

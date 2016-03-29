@@ -49,6 +49,7 @@ class ControllerPaymentMultiSafePay extends Controller {
         $data['entry_multisafepay_siteid'] = $this->language->get('bno_multisafepay_siteid');
         $data['entry_multisafepay_secure_code'] = $this->language->get('bno_multisafepay_secure_code');
         $data['entry_environment'] = $this->language->get('entry_environment');
+        $data['entry_confirm_order'] = $this->language->get('entry_confirm_order');
         $data['yes'] = $this->language->get('yes');
         $data['no'] = $this->language->get('no');
         $data['select_methods'] = $this->language->get('select_methods');
@@ -93,6 +94,14 @@ class ControllerPaymentMultiSafePay extends Controller {
         } else {
             $data['multisafepay_max_amount'] = $this->config->get('multisafepay_max_amount_0');
         }
+        
+        if (isset($this->request->post['multisafepay_confirm_order_0'])) {
+            $data['multisafepay_confirm_order'] = $this->request->post['multisafepay_confirm_order_0'];
+        } else {
+            $data['multisafepay_confirm_order'] = $this->config->get('multisafepay_confirm_order_0');
+        }
+        
+        
         if (isset($this->request->post['multisafepay_min_amount_0'])) {
             $data['multisafepay_min_amount'] = $this->request->post['multisafepay_min_amount_0'];
         } else {
@@ -261,6 +270,13 @@ class ControllerPaymentMultiSafePay extends Controller {
 		*Start multistore configuration
 	    */
 	    foreach($this->model_setting_store->getStores() as $store ){
+            
+            if (isset($this->request->post['multisafepay_confirm_order_'.$store['store_id'].''])) {
+            $data['multisafepay_confirm_order_'.$store['store_id'].''] = $this->request->post['multisafepay_confirm_order_'.$store['store_id'].''];
+        } else {
+            $data['multisafepay_confirm_order_'.$store['store_id'].''] = $this->config->get('multisafepay_confirm_order_'.$store['store_id']);
+        }
+            
 		    if (isset($this->request->post['multisafepay_max_amount_'.$store['store_id'].''])) {
 			 	$data['multisafepay_max_amount_'.$store['store_id'].''] = $this->request->post['multisafepay_max_amount_'.$store['store_id'].''];
 	        } else {

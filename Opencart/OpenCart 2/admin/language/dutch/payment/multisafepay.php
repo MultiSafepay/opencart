@@ -16,6 +16,7 @@ $_['text_payment'] = 'Betaling';
 $_['text_success'] = 'Gelukt: De instellingen zijn gewijzigd!';
 $_['text_successful'] = 'Aan - altijd succesvol';
 $_['text_declined'] = 'Aan - altijd afwijzen';
+$_['entry_confirm_order'] = 'Wanneer de order bevestigen?';
 $_['entry_multisafepay_storeid'] = 'Store ID (configuration below will be used for this store)';
 $_['text_off'] = 'Uit';
 $_['text_none'] = 'Geen';

@@ -121,6 +121,18 @@
                             <input type="text" name="multisafepay_secure_code_<?php echo $store['store_id'];?>" value="<?php echo ${'multisafepay_secure_code_'.$store['store_id']}; ?>" id="sitesecurecode" class="form-control" />
                         </div>
                     </div>
+                    
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="environment"><?php echo $entry_confirm_order; ?></label>
+                        <div class="col-sm-10">
+                            <select name="multisafepay_confirm_order_<?php echo $store['store_id'];?>" id="environment" class="form-control">
+                                <option value="0" <?php if(${'multisafepay_confirm_order_'.$store['store_id']} == 0) echo 'selected'; ?>>Before transaction</option>
+                                <option value="1" <?php if(${'multisafepay_confirm_order_'.$store['store_id']} == 1) echo 'selected'; ?>>After paid transaction</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    
                     <!--fco tax percentage-->
                     <div class="form-group">
                         <label class="col-sm-2 control-label" for="daysactive"><span><?php echo $entry_multisafepay_days_active; ?></span></label>
@@ -454,6 +466,22 @@
                             <input type="text" name="multisafepay_secure_code_0" value="<?php echo $multisafepay_secure_code; ?>" id="sitesecurecode" class="form-control" />
                         </div>
                     </div>
+                    
+                    
+                    
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="environment"><?php echo $entry_confirm_order; ?></label>
+                        <div class="col-sm-10">
+                            <select name="multisafepay_confirm_order_0" id="environment" class="form-control">
+                                <option value="0" <?php if($multisafepay_confirm_order == 0) echo 'selected'; ?>>Before transaction</option>
+                                <option value="1" <?php if($multisafepay_confirm_order == 1) echo 'selected'; ?>>After paid transaction</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    
+                    
+                    
                     <!--fco tax percentage-->
                     <div class="form-group">
                         <label class="col-sm-2 control-label" for="daysactive"><span><?php echo $entry_multisafepay_days_active; ?></span></label>
