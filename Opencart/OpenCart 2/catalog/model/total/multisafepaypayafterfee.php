@@ -2,7 +2,7 @@
 
 class ModelTotalMultisafepayPayafterFee extends Model {
 
-    public function getTotal(&$total_data, &$total, &$taxes) {
+    public function getTotal($total) {
         $this->load->language('payment/multisafepay');
 
 	
@@ -11,7 +11,7 @@ class ModelTotalMultisafepayPayafterFee extends Model {
 
 		
         if (isset($this->session->data['payment_method']) && $this->session->data['payment_method']['code'] == 'multisafepay_payafter') {
-			$total_data[] = array(
+			$total['totals'][] = array(
 				'code'       => 'multisafepaypayafterfee',
 				'title' 	=> $this->language->get('entry_paymentfee'),
 				'value'      => $fee[$iso]['fee'],
@@ -23,15 +23,22 @@ class ModelTotalMultisafepayPayafterFee extends Model {
 
 	    $tax_rates = $this->tax->getRates($fee[$iso]['fee'], $fee[$iso]['tax_class_id']);
 
-			foreach ($tax_rates as $tax_rate) {
+			/*foreach ($tax_rates as $tax_rate) {
 				if (!isset($taxes[$tax_rate['tax_rate_id']])) {
 					$taxes[$tax_rate['tax_rate_id']] = $tax_rate['amount'];
 				} else {
 					$taxes[$tax_rate['tax_rate_id']] += $tax_rate['amount'];
 				}
+			}*/
+			foreach ($tax_rates as $tax_rate) {
+				if (!isset($total['taxes'][$tax_rate['tax_rate_id']])) {
+					$total['taxes'][$tax_rate['tax_rate_id']] = $tax_rate['amount'];
+				} else {
+					$total['taxes'][$tax_rate['tax_rate_id']] += $tax_rate['amount'];
+				}
 			}
 
-			$total += $fee[$iso]['fee'];
+			$total['total'] += $fee[$iso]['fee'];
 		}
     }
 
