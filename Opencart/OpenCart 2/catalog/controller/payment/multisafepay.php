@@ -459,9 +459,21 @@ class ControllerPaymentMultiSafePay extends Controller {
                 $msp->customer['zipcode'] = $addr['postcode'];
                 $msp->customer['city'] = $addr['city'];
                 $msp->customer['country'] = $msp->customer['locale']; // iso code
-                $msp->customer['referrer'] = $_SERVER['HTTP_REFERER'];
-                $msp->customer['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
-                $msp->customer['ipaddress'] = $_SERVER['REMOTE_ADDR'];
+                
+                if(isset($_SERVER['HTTP_REFERER'])){
+                    $msp->customer['referrer'] = $_SERVER['HTTP_REFERER'];
+                }
+                
+                if(isset($_SERVER['HTTP_USER_AGENT'])){
+                    $msp->customer['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
+                }
+                
+                if(isset($_SERVER['REMOTE_ADDR'])){
+                   $msp->customer['ipaddress'] = $_SERVER['REMOTE_ADDR']; 
+                }
+
+                
+                
 
                 //Added 2-1-12. Process store credit if positive balance. This is added as a negative product amount like we did with the coupon.
                 if ($this->customer->getBalance() > 0) {
