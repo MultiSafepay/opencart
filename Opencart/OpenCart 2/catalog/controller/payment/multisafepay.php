@@ -803,8 +803,6 @@ class ControllerPaymentMultiSafePay extends Controller {
             }
 
             require_once(dirname(__FILE__) . '/MultiSafepay.combined.php');
-            $msp = new MultiSafepay();
-            $msp->test = $this->config->get('multisafepay_environment_'.$storeid);
             $order_number = $_GET['transactionid'];
 
             $this->load->model('checkout/order');
@@ -818,10 +816,12 @@ class ControllerPaymentMultiSafePay extends Controller {
                 $storeid = $_GET['site'];
             }
 
+            $msp = new MultiSafepay();
+            $msp->test = $this->config->get('multisafepay_environment_'.$storeid);
 
-                $msp->merchant['account_id'] = $this->config->get('multisafepay_merchant_id_'.$storeid);
-                $msp->merchant['site_id'] = $this->config->get('multisafepay_site_id_'.$storeid);
-                $msp->merchant['site_code'] = $this->config->get('multisafepay_secure_code_'.$storeid);
+            $msp->merchant['account_id'] = $this->config->get('multisafepay_merchant_id_'.$storeid);
+            $msp->merchant['site_id'] = $this->config->get('multisafepay_site_id_'.$storeid);
+            $msp->merchant['site_code'] = $this->config->get('multisafepay_secure_code_'.$storeid);
 
             $msp->transaction['id'] = $_GET['transactionid'];
             $details = $msp->details;
