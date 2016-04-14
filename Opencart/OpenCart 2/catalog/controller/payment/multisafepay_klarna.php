@@ -71,6 +71,12 @@ class ControllerPaymentMultiSafepayKlarna extends Controller {
 	    }else{
 		    $phone_no ='';
 	    }
+        
+        if(isset($_POST['birthday'])){
+		    $birthday = $_POST['birthday'];
+	    }else{
+		    $birthday ='';
+	    }
 	    
 	    $storeid = $this->config->get('config_store_id');
         $this->load->language('payment/multisafepay');
@@ -164,11 +170,11 @@ class ControllerPaymentMultiSafepayKlarna extends Controller {
         $msp->gatewayinfo['bankaccount'] = ''; //not available
         $msp->gatewayinfo['referrer'] = $_SERVER['HTTP_REFERER'];
         $msp->gatewayinfo['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
-        $msp->gatewayinfo['birthday'] = ''; //not available
+        $msp->customer['birthday'] = $birthday; //not available
         $msp->customer['gender'] = $gender;
         $msp->gatewayinfo['gender'] = $gender;
         $msp->gatewayinfo['phone'] = $phone_no;
-        
+        $msp->gatewayinfo['birthday'] = $birthday;
         
         $products = $this->cart->getProducts();
 
@@ -405,8 +411,8 @@ class ControllerPaymentMultiSafepayKlarna extends Controller {
        
         $amt = $this->currency->format($amount, $order_info['currency_code'], $order_info['currency_value'], false);
         
-        if ($this->currency->getCode() != 'EUR') {
-            $amt = $this->currency->convert($amt, $this->currency->getCode(), 'EUR');
+        if ($this->session->data['currency'] != 'EUR') {
+            $amt = $this->currency->convert($amt, $this->session->data['currency'], 'EUR');
         }
         return $amt;
     }

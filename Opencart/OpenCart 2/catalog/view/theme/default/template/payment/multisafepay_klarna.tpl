@@ -14,12 +14,20 @@
           Female</label>
       </div>
     </div>
-  <br style="clear:both"/>
+    <br style="clear:both"/>
 
     <div class="form-group required">
       <label class="col-sm-2 control-label" for="input-phone-no">Phonenumber</label>
       <div class="col-sm-10">
         <input type="text" name="phone_no" value="" id="input-phone-no" class="form-control" />
+      </div>
+    </div>
+    <br style="clear:both"/>
+
+    <div class="form-group required">
+      <label class="col-sm-2 control-label" for="input-birthday">Birthday</label>
+      <div class="col-sm-10">
+        <input type="text" name="birthday" value="" id="input-birthday" class="form-control" />
       </div>
     </div>
  

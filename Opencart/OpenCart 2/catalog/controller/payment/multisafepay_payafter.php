@@ -388,8 +388,8 @@ class ControllerPaymentMultiSafePayPayafter extends Controller {
        
         $amt = $this->currency->format($amount, $order_info['currency_code'], $order_info['currency_value'], false);
         
-        if ($this->currency->getCode() != 'EUR') {
-            $amt = $this->currency->convert($amt, $this->currency->getCode(), 'EUR');
+        if ($this->session->data['currency'] != 'EUR') {
+            $amt = $this->currency->convert($amt, $this->session->data['currency'], 'EUR');
         }
         return $amt;
     }
