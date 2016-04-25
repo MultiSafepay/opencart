@@ -125,9 +125,12 @@ class ControllerPaymentMultiSafePayPayafter extends Controller {
         $msp->parseCustomerAddress($order_info['payment_address_1']);
         $msp->transaction['id'] = $order_info['order_id'];
         $msp->transaction['currency'] = 'EUR'; //MSP only supports EUR at the moment  ->  $order_info['currency_code'];
+        //PLGOPN-48 test
+        $msp->transaction['currency'] = $order_info['currency_code'];
         $msp->transaction['description'] = 'Order #' . $msp->transaction['id'];
-        $msp->transaction['amount'] = $this->currency->format($order_info['total'], 'EUR', '', FALSE) * 100;
-
+        //$msp->transaction['amount'] = $this->currency->format($order_info['total'], 'EUR', '', FALSE) * 100;
+        //PLGOPN-48 test
+        $msp->transaction['amount'] = round(($order_info['total']*$order_info['currency_value'])*100);  
         $msp->plugin_name = 'OpenCart ' . VERSION;
         $msp->version = '(2.0.0)';
         $msp->transaction['items'] = $html;
