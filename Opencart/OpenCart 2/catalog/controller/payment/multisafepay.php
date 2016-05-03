@@ -1372,6 +1372,7 @@ class ControllerPaymentMultiSafePay extends Controller {
 
     // Try to guess shipping costs, see also controller/total/shipping.php
     private function getShippingOptions($country_id) {
+	    $storeid = $this->config->get('config_store_id');
         $address_data = array(
             'firstname' => '',
             'lastname' => '',
@@ -1427,7 +1428,7 @@ class ControllerPaymentMultiSafePay extends Controller {
                             'title' => $this->language->get('text_description'),
                             'cost' => 0.00,
                             'tax_class_id' => 0,
-                            'text' => $this->currency->format(0.00)
+                            'text' => 0.00
                         );
 
                         $quote_data['weight'] = array(
