@@ -132,11 +132,11 @@ class ControllerPaymentMultiSafePayPayafter extends Controller {
         //PLGOPN-48 test
         $msp->transaction['amount'] = round(($order_info['total']*$order_info['currency_value'])*100);  
         $msp->plugin_name = 'OpenCart ' . VERSION;
-        $msp->version = '(2.0.0)';
+        $msp->version = '(2.0.1)';
         $msp->transaction['items'] = $html;
         $msp->plugin['shop'] = 'OpenCart';
         $msp->plugin['shop_version'] = VERSION;
-        $msp->plugin['plugin_version'] = '2.0.0';
+        $msp->plugin['plugin_version'] = '2.0.1';
         $msp->plugin['partner'] = '';
         $msp->plugin['shop_root_url'] = '';
 
