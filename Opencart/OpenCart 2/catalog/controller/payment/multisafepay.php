@@ -956,14 +956,25 @@ class ControllerPaymentMultiSafePay extends Controller {
             }
 
             $data = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_total` WHERE order_id='" . $msp->transaction['id'] . "' AND code='total'");
-            $order_total_id_tax = $data->row['order_total_id'];
-            $this->db->query("UPDATE `" . DB_PREFIX . "order_total` SET value='" . $msp->details['order-total']['total'] . "' WHERE order_total_id='" . $order_total_id_tax . "'");
-
+            
+            
+             if (empty($data->row['order_total_id'])) {
+			 	$this->db->query("INSERT INTO `" . DB_PREFIX . "order_total` (order_id, code, title, value, sort_order) VALUES ('" . $msp->transaction['id'] . "', 'total', 'Total', '" . $msp->details['order-total']['total'] . "', '9')");
+			 }else{
+				 $order_total_id_tax = $data->row['order_total_id'];
+				 $this->db->query("UPDATE `" . DB_PREFIX . "order_total` SET value='" . $msp->details['order-total']['total'] . "' WHERE order_total_id='" . $order_total_id_tax . "'");
+			 }
+			 
+			 
             //tax totals update
             //$this->db->query("INSERT INTO `" . DB_PREFIX . "order_total` (order_id, code, value) VALUES ('".$msp->transaction['id']."', 'tax', '".$msp->details['total-tax']['total']."')");
             $data = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_total` WHERE order_id='" . $msp->transaction['id'] . "' AND code='tax'");
-            $order_total_id_tax = $data->row['order_total_id'];
-            $this->db->query("UPDATE `" . DB_PREFIX . "order_total` SET value='" . $msp->details['total-tax']['total'] . "' WHERE order_total_id='" . $order_total_id_tax . "'");
+            if (empty($data->row['order_total_id'])) {
+	            $this->db->query("INSERT INTO `" . DB_PREFIX . "order_total` (order_id, code, title, value, sort_order) VALUES ('" . $msp->transaction['id'] . "', 'tax', 'Tax', '" . $msp->details['total-tax']['total'] . "', '5')");
+	        }else{    
+           	 	$order_total_id_tax = $data->row['order_total_id'];
+		   	 	$this->db->query("UPDATE `" . DB_PREFIX . "order_total` SET value='" . $msp->details['total-tax']['total'] . "' WHERE order_total_id='" . $order_total_id_tax . "'");
+			}
 
 
             if (isset($details['transaction']['var1'])) {
