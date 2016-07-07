@@ -1325,7 +1325,7 @@ class ControllerPaymentMultiSafePay extends Controller {
             if ($status != 'shipped') {
                 if ($order['order_status_id'] != $newStatus && $order['order_status_id'] != '3') {
 
-                    if ($order['order_status_id'] != $this->config->get('multisafepay_order_status_id_completed_'.$storeid) && $status == 'completed') {
+                    if ($order['order_status_id'] != $this->config->get('multisafepay_order_status_id_completed_'.$storeid)) {
                         // $this->model_checkout_order->update($orderid, $newStatus, $message, false);
                         $this->model_checkout_order->addOrderHistory($orderid, $newStatus, $message, true);
                     }
