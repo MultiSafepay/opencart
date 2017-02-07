@@ -1419,7 +1419,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
         $this->load->model('extension/extension');
         //$this->load->model('setting/extension'); 
 
-        $amount = $_REQUEST['amount'] / 100;
+        $amount = $_REQUEST['amount'];
         $results = $this->model_extension_extension->getExtensions('shipping');
 
 
