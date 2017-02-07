@@ -14,6 +14,7 @@ $_['text_title_ideal'] = 'iDEAL';
 $_['text_title_visa'] = 'VISA';
 $_['text_title_amex'] = 'American Express';
 $_['text_title_banktrans'] = 'Bank Overschrijving';
+$_['text_title_dotpay'] = 'Dotpay';
 $_['text_title_giropay'] = 'GiroPay';
 $_['text_title_mistercash'] = 'MisterCash';
 $_['text_title_maestro'] = 'Maestro';
