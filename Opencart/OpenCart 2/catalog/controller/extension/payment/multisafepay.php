@@ -212,7 +212,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
                     }
                 }
 
-                $unique_taxes = array_unique($taxes);
+                $unique_taxes = array_unique($taxes, SORT_REGULAR);
                 foreach ($unique_taxes as $tax) {
                     $taxname = $tax['name'];
                     $taxtable = new MspAlternateTaxTable($tax['name'], 'true');
@@ -793,7 +793,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
                     }
                 }
 
-                $shippers = array_unique($shippers);
+                $shippers = array_unique($shippers, SORT_REGULAR);
                 $v = 0;
                 while (isset($shippers[$v])) {
                     $xml .= $shippers[$v];
