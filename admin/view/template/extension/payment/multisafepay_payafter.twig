@@ -1,0 +1,257 @@
+{{ header }}{{ column_left }}
+<div id="content">
+    <div class="page-header">
+        <div class="container-fluid">
+            <div class="pull-right">
+                <button type="submit" form="form-multisafepay_payafter" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
+                <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a>
+            </div>
+            <h1>{{ heading_title }}</h1>
+            <ul class="breadcrumb">
+                {% for breadcrumb in breadcrumbs %}
+                <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <div class="container-fluid">
+        {% if error_warning %}
+        <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+        </div>
+        {% endif %}
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_edit }}</h3>
+            </div>
+            <div class="panel-body">
+
+                <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-multisafepay_payafter" class="form-horizontal">
+	                <ul class="nav nav-tabs" id="tabs">
+                        <li class="active"><a href="#tab-default" data-toggle="tab">Default Store</a></li>
+                        {% for store in stores %}
+                        	<li><a href="#tab-store-{{ store.store_id }}" data-toggle="tab">Store {{ store.name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                    
+                    <div class="tab-content">
+					 {% for store in stores %}
+					 		<div class="tab-pane" id="tab-store-{{ store.store_id }}">
+					 			<!--MultiSafepay environment-->
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="environment">{{ entry_environment }}</label>
+                        <div class="col-sm-10">
+                            <select name="multisafepay_payafter_environment_{{ store.store_id }}" id="environment" class="form-control">
+                                <option value="0" {% if%}'payment_multisafepay_payafter_environment_'~store.store_id{% endfor %}{% endif %}  is  0 {{ 'selected' }}>Live account</option>
+                                <option value="1" {% if%}'payment_multisafepay_payafter_environment_'~store.store_id{% endif %}  is  1 {{ 'selected' }}>Test account</option>
+                            </select>
+                        </div>
+                    </div>
+
+
+                    <!--Account settings-->
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="accountid"><span>{{ entry_multisafepay_merchantid }}</span></label>
+                        <div class="col-sm-10">
+                            <input type="text" name="multisafepay_payafter_merchant_id_{{ store.store_id }}" value="{{ }}'payment_multisafepay_payafter_merchant_id_'~store.store_id" id="accountid" class="form-control" />
+                        </div>
+                    </div>
+
+                    <!--siteid settings-->
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="siteid"><span>{{ entry_multisafepay_siteid }}</span></label>
+                        <div class="col-sm-10">
+                            <input type="text" name="multisafepay_payafter_site_id_{{ store.store_id }}" value="{{ }}'payment_multisafepay_payafter_site_id_'~store.store_id" id="siteid" class="form-control" />
+                        </div>
+                    </div>
+
+                    <!--site secure code-->
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="sitesecurecode"><span>{{ entry_multisafepay_secure_code }}</span></label>
+                        <div class="col-sm-10">
+                            <input type="text" name="multisafepay_payafter_secure_code_{{ store.store_id }}" value="{{ }}'payment_multisafepay_payafter_secure_code_'~store.store_id" id="sitesecurecode" class="form-control" />
+                        </div>
+                    </div>
+
+                    <!--fco tax percentage-->
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="minamount"><span>{{ text_multisafepay_payafter_min_amount }}</span></label>
+                        <div class="col-sm-10">
+                            <input type="text" name="multisafepay_payafter_min_amount_{{ store.store_id }}" value="{{ }}'payment_multisafepay_payafter_min_amount_'~store.store_id" id="minamount" class="form-control" />
+                        </div>
+                    </div>
+
+                    <!--fco tax percentage-->
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="maxamount"><span>{{ text_multisafepay_payafter_max_amount }}</span></label>
+                        <div class="col-sm-10">
+                            <input type="text" name="multisafepay_payafter_max_amount_{{ store.store_id }}" value="{{ }}'payment_multisafepay_payafter_max_amount_'~store.store_id" id="maxamount" class="form-control" />
+                        </div>
+                    </div>
+
+                    <!--IP validation -->
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="ipvalidation">{{ text_multisafepay_payafter_ip_validation_option }}</label>
+                        <div class="col-sm-10">
+                            <select name="multisafepay_payafter_ip_validation_enabler_{{ store.store_id }}" id="ipvalidation" class="form-control">
+                                <option value="0" {% if%}'payment_multisafepay_payafter_ip_validation_enabler_'~store.store_id{% endif %}  is  0 {{ 'selected' }}>Disabled</option>
+                                <option value="1" {% if%}'payment_multisafepay_payafter_ip_validation_enabler_'~store.store_id{% endif %}  is  1 {{ 'selected' }}>Enabled</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!--aip addresses-->
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="ipaddresses"><span>{{ text_multisafepay_payafter_ip_validation_address }}</span></label>
+                        <div class="col-sm-10">
+                            <input type="text" name="multisafepay_payafter_ip_validation_address_{{ store.store_id }}" value="{{ }}'payment_multisafepay_payafter_ip_validation_address_'~store.store_id" id="ipaddresses" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="input-geo-zone">{{ text_all_zones }}</label>
+                        <div class="col-sm-10">
+                            <select name="multisafepay_payafter_geo_zone_id_{{ store.store_id }}" id="input-geo-zone" class="form-control">
+                                <option value="0">{{ text_all_zones }}</option>
+                                {% for geo_zone in geo_zones %}
+                                {% if geo_zone.geo_zone_id  is  %}'payment_multisafepay_payafter_geo_zone_id_'~store.store_id{% endfor %}{% endif %}
+                                <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
+                                 {% else %}
+                                <option value="{{ geo_zone.geo_zone_id }}">{{ geo_zone.name }}</option>
+
+
+                            </select>
+                        </div>
+                    </div>
+
+                    <!--Sorting-->
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="input-sort-order">{{ entry_sort_order }}</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="multisafepay_payafter_sort_order_{{ store.store_id }}" value="{{ }}'payment_multisafepay_payafter_sort_order_'~store.store_id" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control" />
+                        </div>
+                    </div>
+					 		</div>
+					 		
+					
+					 
+					 <div class="tab-pane active" id="tab-default">
+	                
+                    <!--Module status-->
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
+                        <div class="col-sm-10">
+                            <select name="multisafepay_payafter_status" id="input-status" class="form-control">
+                                {% if multisafepay_payafter_status %}
+                                <option value="1" selected="selected">Enabled</option>
+                                <option value="0">Disabled</option>
+                                {% endif %} {% else %}
+                                <option value="1">Enabled</option>
+                                <option value="0" selected="selected">Disabled</option>
+
+                            </select>
+                        </div>
+                    </div>
+
+                    <!--MultiSafepay environment-->
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="environment">{{ entry_environment }}</label>
+                        <div class="col-sm-10">
+                            <select name="multisafepay_payafter_environment_0" id="environment" class="form-control">
+                                <option value="0" {% ifmultisafepay_payafter_environment  is  0 {{ 'selected' }}%}>Live account</option>
+                                <option value="1" {% ifmultisafepay_payafter_environment  is  1 {{ 'selected' }}%}>Test account</option>
+                            </select>
+                        </div>
+                    </div>
+
+
+                    <!--Account settings-->
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="accountid"><span>{{ entry_multisafepay_merchantid }}</span></label>
+                        <div class="col-sm-10">
+                            <input type="text" name="multisafepay_payafter_merchant_id_0" value="{{ multisafepay_payafter_merchant_id }}" id="accountid" class="form-control" />
+                        </div>
+                    </div>
+
+                    <!--siteid settings-->
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="siteid"><span>{{ entry_multisafepay_siteid }}</span></label>
+                        <div class="col-sm-10">
+                            <input type="text" name="multisafepay_payafter_site_id_0" value="{{ multisafepay_payafter_site_id }}" id="siteid" class="form-control" />
+                        </div>
+                    </div>
+
+                    <!--site secure code-->
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="sitesecurecode"><span>{{ entry_multisafepay_secure_code }}</span></label>
+                        <div class="col-sm-10">
+                            <input type="text" name="multisafepay_payafter_secure_code_0" value="{{ multisafepay_payafter_secure_code }}" id="sitesecurecode" class="form-control" />
+                        </div>
+                    </div>
+
+                    <!--fco tax percentage-->
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="minamount"><span>{{ text_multisafepay_payafter_min_amount }}</span></label>
+                        <div class="col-sm-10">
+                            <input type="text" name="multisafepay_payafter_min_amount_0" value="{{ multisafepay_payafter_min_amount }}" id="minamount" class="form-control" />
+                        </div>
+                    </div>
+
+                    <!--fco tax percentage-->
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="maxamount"><span>{{ text_multisafepay_payafter_max_amount }}</span></label>
+                        <div class="col-sm-10">
+                            <input type="text" name="multisafepay_payafter_max_amount_0" value="{{ multisafepay_payafter_max_amount }}" id="maxamount" class="form-control" />
+                        </div>
+                    </div>
+
+                    <!--IP validation -->
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="ipvalidation">{{ text_multisafepay_payafter_ip_validation_option }}</label>
+                        <div class="col-sm-10">
+                            <select name="multisafepay_payafter_ip_validation_enabler_0" id="ipvalidation" class="form-control">
+                                <option value="0" {% ifmultisafepay_payafter_ip_validation_enabler  is  0 {{ 'selected' }}%}>Disabled</option>
+                                <option value="1" {% ifmultisafepay_payafter_ip_validation_enabler  is  1 {{ 'selected' }}%}>Enabled</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!--aip addresses-->
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="ipaddresses"><span>{{ text_multisafepay_payafter_ip_validation_address }}</span></label>
+                        <div class="col-sm-10">
+                            <input type="text" name="multisafepay_payafter_ip_validation_address_0" value="{{ multisafepay_payafter_ip_validation_address }}" id="ipaddresses" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="input-geo-zone">{{ text_all_zones }}</label>
+                        <div class="col-sm-10">
+                            <select name="multisafepay_payafter_geo_zone_id_0" id="input-geo-zone" class="form-control">
+                                <option value="0">{{ text_all_zones }}</option>
+                                {% for geo_zone in geo_zones %}
+                                {% if geo_zone.geo_zone_id  is  multisafepay_payafter_geo_zone_id %}
+                                <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
+                                {% endfor %}{% endif %} {% else %}
+                                <option value="{{ geo_zone.geo_zone_id }}">{{ geo_zone.name }}</option>
+                                {% endif %}
+                                {% endif %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <!--Sorting-->
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="input-sort-order">{{ entry_sort_order }}</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="multisafepay_payafter_sort_order_0" value="{{ multisafepay_payafter_sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control" />
+                        </div>
+                    </div>
+                    </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{{ footer }}

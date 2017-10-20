@@ -1,0 +1,111 @@
+{{ header }}{{ column_left }}
+
+<div id="content">
+    <div class="page-header">
+        <div class="container-fluid">
+            <div class="pull-right">
+                <button type="submit" form="form-multisafepay" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
+                <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a>
+            </div>
+            <h1>{{ heading_title }}</h1>
+            <ul class="breadcrumb">
+                {% for breadcrumb in breadcrumbs %}
+                    <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+                {% endfor %}
+            </ul>
+         </div>
+    </div>
+
+
+    <div class="container-fluid">
+        {% if error_warning %}
+            <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+            </div>
+        {% endif %}
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_edit }}</h3>
+            </div>
+
+            <div class="panel-body">
+                <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-multisafepay" class="form-horizontal">
+                <ul class="nav nav-tabs" id="tabs">
+                    {% for store in stores %}
+                        <li><a href="#tab-store-{{ store.store_id }}" data-toggle="tab">{{ store.name }}</a></li>
+                    {% endfor %}
+                </ul>
+
+                <div class="tab-content">
+                    {% for store in stores %}
+                        <div class="tab-pane" id="tab-store-{{ store.store_id }}">
+
+
+                            {# -- Module status -- #}
+                            {% if store.store_id == 0 %}
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label" for="input-status">{{ entry_multisafepay_gateway_status }}</label>
+                                    <div class="col-sm-10">
+                                        {% set name  = 'payment_multisafepay_paysafecard_status' %}
+                                        {% set value = attribute(_context, name) %}
+
+                                        <select name="{{ name }}" id="input-status" class="form-control">
+                                            <option value="0" {% if value == 0 %}selected{% endif %}>{{ text_disabled }}</option>
+                                            <option value="1" {% if value == 1 %}selected{% endif %}>{{ text_enabled }}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            {% endif %}
+
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" for="minamount">{{ entry_multisafepay_min_amount }}</label>
+                                <div class="col-sm-10">
+                                    {% set name  = 'payment_multisafepay_paysafecard_min_amount_'~store.store_id %}
+                                    {% set value = attribute(_context, name) %}
+                                    <input type="text" name= "{{ name }}"  value= "{{ value }}"  id="minamount" class="form-control" />
+                                </div>
+
+                                <label class="col-sm-2 control-label" for="maxamount_">{{ entry_multisafepay_max_amount }}</label>
+                                <div class="col-sm-10">
+                                    {% set name  = 'payment_multisafepay_paysafecard_max_amount_'~store.store_id %}
+                                    {% set value = attribute(_context, name) %}
+                                    <input type="text" name= "{{ name }}"  value= "{{ value }}"  id="maxamount" class="form-control" />
+                                </div>
+
+                                {# -- Geo-Zone -- #}
+                                <label class="col-sm-2 control-label" for="input-geo-zone">{{ text_all_zones }}</label>
+                                <div class="col-sm-10">
+                                    {% set name  = 'payment_multisafepay_paysafecard_geo_zone_id_'~store.store_id %}
+                                    {% set value = attribute(_context, name) %}
+
+                                    <select name= "{{ name }}" id="input-geo-zone" class="form-control">
+                                        <option value="0">{{ text_all_zones }}</option>
+                                        {% for geo_zone in geo_zones %}
+                                            <option value="{{ geo_zone.geo_zone_id }}" {% if value == geo_zone.geo_zone_id %}selected{% endif %}>{{ geo_zone.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+
+                                {# -- Sorting -- #}
+                                <label class="col-sm-2 control-label" for="input-sort-order">{{ entry_multisafepay_sort_order }}</label>
+                                <div class="col-sm-10">
+                                    {% set name  = 'payment_multisafepay_paysafecard_sort_order_'~store.store_id %}
+                                    {% set value = attribute(_context, name) %}
+                                    <input type="text" name= "{{ name }}" value= "{{ value }}"  id="input-sort-order" class="form-control" />
+                                </div>
+
+                            </div>
+
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript"><!--
+$('#tab a:first').tab('show');
+//--></script>
+{{ footer }}
