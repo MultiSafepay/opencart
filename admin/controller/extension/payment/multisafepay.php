@@ -36,7 +36,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
         $this->load->model('localisation/geo_zone');
 
         if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-            $this->model_setting_setting->editSetting('multisafepay', $this->request->post);
+            $this->model_setting_setting->editSetting('payment_multisafepay', $this->request->post);
 
             $this->session->data['success'] = $this->language->get('text_success');
 
