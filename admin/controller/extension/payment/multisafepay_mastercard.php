@@ -135,7 +135,7 @@ class ControllerExtensionPaymentMultiSafePayMastercard extends Controller
         );
 
 
-        $this->template = 'extension/payment/multisafepay_mastercard.tpl';
+        $this->template = 'extension/payment/multisafepay_mastercard';
         if (isset($this->error['warning'])) {
             $data['error_warning'] = $this->error['warning'];
         } else {

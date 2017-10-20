@@ -139,7 +139,7 @@ class ControllerExtensionPaymentMultiSafePayMaestro extends Controller
         );
 
 
-        $this->template = 'extension/payment/multisafepay_maestro.tpl';
+        $this->template = 'extension/payment/multisafepay_maestro';
         if (isset($this->error['warning'])) {
             $data['error_warning'] = $this->error['warning'];
         } else {

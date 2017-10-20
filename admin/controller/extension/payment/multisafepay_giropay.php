@@ -136,7 +136,7 @@ class ControllerExtensionPaymentMultiSafePayGiropay extends Controller
         );
 
 
-        $this->template = 'extension/payment/multisafepay_giropay.tpl';
+        $this->template = 'extension/payment/multisafepay_giropay';
         if (isset($this->error['warning'])) {
             $data['error_warning'] = $this->error['warning'];
         } else {

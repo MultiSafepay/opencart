@@ -140,7 +140,7 @@ class ControllerExtensionPaymentMultiSafePayDirdeb extends Controller
         );
 
 
-        $this->template = 'extension/payment/multisafepay_dirdeb.tpl';
+        $this->template = 'extension/payment/multisafepay_dirdeb';
         if (isset($this->error['warning'])) {
             $data['error_warning'] = $this->error['warning'];
         } else {

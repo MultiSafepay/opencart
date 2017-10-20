@@ -138,7 +138,7 @@ class ControllerExtensionPaymentMultiSafePayMistercash extends Controller
         );
 
 
-        $this->template = 'extension/payment/multisafepay_mistercash.tpl';
+        $this->template = 'extension/payment/multisafepay_mistercash';
         if (isset($this->error['warning'])) {
             $data['error_warning'] = $this->error['warning'];
         } else {

@@ -137,7 +137,7 @@ class ControllerExtensionPaymentMultiSafePayDirectbank extends Controller
         );
 
 
-        $this->template = 'extension/payment/multisafepay_directbank.tpl';
+        $this->template = 'extension/payment/multisafepay_directbank';
         if (isset($this->error['warning'])) {
             $data['error_warning'] = $this->error['warning'];
         } else {

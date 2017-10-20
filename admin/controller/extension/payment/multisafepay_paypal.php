@@ -136,7 +136,7 @@ class ControllerExtensionPaymentMultiSafePayPaypal extends Controller
         );
 
 
-        $this->template = 'extension/payment/multisafepay_paypal.tpl';
+        $this->template = 'extension/payment/multisafepay_paypal';
         if (isset($this->error['warning'])) {
             $data['error_warning'] = $this->error['warning'];
         } else {

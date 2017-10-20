@@ -51,7 +51,7 @@
                 ]]></add>
     </operation>
   </file>
-  <file name="catalog/view/theme/*/template/checkout/cart.tpl">
+  <file name="catalog/view/theme/*/template/checkout/cart">
     <operation>
       <search position="before"><![CDATA[
                  <h1><?php echo $heading_title; ?>
@@ -68,7 +68,7 @@
                 ]]></add>
     </operation>
   </file>
-  <file name="catalog/view/theme/*/template/checkout/checkout.tpl">
+  <file name="catalog/view/theme/*/template/checkout/checkout">
     <operation>
       <search position="before"><![CDATA[
                 <h1><?php echo $heading_title; ?></h1>

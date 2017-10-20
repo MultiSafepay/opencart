@@ -140,7 +140,7 @@ class ControllerExtensionPaymentMultiSafePayGezondheidsbon extends Controller
         );
 
 
-        $this->template = 'extension/payment/multisafepay_gezondheidsbon.tpl';
+        $this->template = 'extension/payment/multisafepay_gezondheidsbon';
         $data['header'] = $this->load->controller('common/header');
         $data['column_left'] = $this->load->controller('common/column_left');
         $data['footer'] = $this->load->controller('common/footer');

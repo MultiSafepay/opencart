@@ -41,10 +41,10 @@ class ControllerExtensionPaymentMultiSafePayGezondheidsbon extends Controller
 
         $data['order_id'] = $this->session->data['order_id'];
 
-        if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/extension/payment/multisafepay_default.tpl')) {
-            return $this->load->view($this->config->get('config_template') . '/template/extension/payment/multisafepay_default.tpl', $data);
-        } elseif (file_exists(DIR_TEMPLATE . 'default/template/extension/payment/multisafepay_default.tpl') && VERSION < '2.2.0.0') {
-            return $this->load->view('default/template/extension/payment/multisafepay_default.tpl', $data);
+        if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/extension/payment/multisafepay_default')) {
+            return $this->load->view($this->config->get('config_template') . '/template/extension/payment/multisafepay_default', $data);
+        } elseif (file_exists(DIR_TEMPLATE . 'default/template/extension/payment/multisafepay_default') && VERSION < '2.2.0.0') {
+            return $this->load->view('default/template/extension/payment/multisafepay_default', $data);
         } else {
             return $this->load->view('extension/payment/multisafepay_default', $data);
         }

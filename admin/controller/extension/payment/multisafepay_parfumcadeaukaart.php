@@ -140,7 +140,7 @@ class ControllerExtensionPaymentMultiSafePayParfumcadeaukaart extends Controller
         );
 
 
-        $this->template = 'extension/payment/multisafepay_parfumcadeaukaart.tpl';
+        $this->template = 'extension/payment/multisafepay_parfumcadeaukaart';
         $data['header'] = $this->load->controller('common/header');
         $data['column_left'] = $this->load->controller('common/column_left');
         $data['footer'] = $this->load->controller('common/footer');

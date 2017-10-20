@@ -57,10 +57,10 @@ class ControllerExtensionPaymentMultiSafepayKlarna extends Controller
         $data['order_id'] = $this->session->data['order_id'];
 
 
-        if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/extension/payment/multisafepay_klarna.tpl')) {
-            return $this->load->view($this->config->get('config_template') . '/template/extension/payment/multisafepay_klarna.tpl', $data);
-        } elseif (file_exists(DIR_TEMPLATE . 'default/template/extension/payment/multisafepay_klarna.tpl') && VERSION < '2.2.0.0') {
-            return $this->load->view('default/template/extension/payment/multisafepay_klarna.tpl', $data);
+        if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/extension/payment/multisafepay_klarna')) {
+            return $this->load->view($this->config->get('config_template') . '/template/extension/payment/multisafepay_klarna', $data);
+        } elseif (file_exists(DIR_TEMPLATE . 'default/template/extension/payment/multisafepay_klarna') && VERSION < '2.2.0.0') {
+            return $this->load->view('default/template/extension/payment/multisafepay_klarna', $data);
         } else {
             return $this->load->view('extension/payment/multisafepay_klarna', $data);
         }
@@ -414,10 +414,10 @@ class ControllerExtensionPaymentMultiSafepayKlarna extends Controller
 
 
 
-            if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/extension/payment/multisafepay_failure.tpl')) {
-                echo $this->load->view($this->config->get('config_template') . '/template/extension/payment/multisafepay_failure.tpl', $data);
-            } elseif (file_exists(DIR_TEMPLATE . 'default/template/extension/payment/multisafepay_failure.tpl') && VERSION < '2.2.0.0') {
-                echo $this->load->view('default/template/extension/payment/multisafepay_failure.tpl', $data);
+            if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/extension/payment/multisafepay_failure')) {
+                echo $this->load->view($this->config->get('config_template') . '/template/extension/payment/multisafepay_failure', $data);
+            } elseif (file_exists(DIR_TEMPLATE . 'default/template/extension/payment/multisafepay_failure') && VERSION < '2.2.0.0') {
+                echo $this->load->view('default/template/extension/payment/multisafepay_failure', $data);
             } else {
                 echo $this->load->view('extension/payment/multisafepay_failure', $data);
             }

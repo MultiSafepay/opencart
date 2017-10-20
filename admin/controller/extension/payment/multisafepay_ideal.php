@@ -142,7 +142,7 @@ class ControllerExtensionPaymentMultiSafePayIdeal extends Controller
         );
 
 
-        $this->template = 'extension/payment/multisafepay_ideal.tpl';
+        $this->template = 'extension/payment/multisafepay_ideal';
         if (isset($this->error['warning'])) {
             $data['error_warning'] = $this->error['warning'];
         } else {
