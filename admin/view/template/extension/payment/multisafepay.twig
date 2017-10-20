@@ -27,7 +27,7 @@
             </div>
             <div class="panel-body">
                 <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-multisafepay" class="form-horizontal">
-	                <ul class="nav nav-tabs" id="tabs">
+	            <ul class="nav nav-tabs" id="tabs">
                         <li class="active"><a href="#tab-default" data-toggle="tab">Default Store</a></li>
                         {% for store in stores %}
                         	<li><a href="#tab-store-{{ store.store_id }}" data-toggle="tab">Store {{ store.name }}</a></li>
@@ -37,7 +37,6 @@
                     <div class="tab-content">
                         {% for store in stores %}
                             <div class="tab-pane" id="tab-store-{{ store.store_id }}">
-                                <!--Module status-->
                    
                                 <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
                                 <div class="col-sm-10">
@@ -51,7 +50,7 @@
                                     {% endif %}
                                     </select>
                                 </div>
-                            </div>-->
+                            </div>
 
 					
                             <!--MultiSafepay environment-->
