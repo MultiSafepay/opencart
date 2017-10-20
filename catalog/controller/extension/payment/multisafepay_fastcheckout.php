@@ -295,7 +295,7 @@ class ControllerExtensionPaymentmultisafepayfastcheckout extends Controller
         }
 
         // Totals
-        $this->load->model('extension/extension');
+        $this->load->model('marketplace/extension');
 
         $total_data = array();
         $totalamount = 0;

@@ -40,7 +40,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
 
             $this->session->data['success'] = $this->language->get('text_success');
 
-            $this->response->redirect($this->url->link('extension/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', 'SSL'));
+            $this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', 'SSL'));
         }
 
         $data['heading_title'] = $this->language->get('heading_title');
@@ -497,7 +497,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('text_payment'),
-            'href' => $this->url->link('extension/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', 'SSL')
+            'href' => $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', 'SSL')
         );
 
         $data['breadcrumbs'][] = array(
@@ -506,7 +506,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
         );
 
         $data['action'] = $this->url->link('extension/payment/multisafepay', 'user_token=' . $this->session->data['user_token'], 'SSL');
-        $data['cancel'] = $this->url->link('extension/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', 'SSL');
+        $data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', 'SSL');
 
         $data['header'] = $this->load->controller('common/header');
         $data['column_left'] = $this->load->controller('common/column_left');

@@ -1438,7 +1438,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
         $quote_data = array();
 
         // Load interface for getting extension information
-        $this->load->model('extension/extension');
+        $this->load->model('marketplace/extension');
         //$this->load->model('setting/extension'); 
 
         $amount = $_REQUEST['amount'];

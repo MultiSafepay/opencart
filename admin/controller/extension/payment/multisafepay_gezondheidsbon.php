@@ -36,7 +36,7 @@ class ControllerExtensionPaymentMultiSafePayGezondheidsbon extends Controller
             $this->load->model('setting/setting');
             $this->model_setting_setting->editSetting('payment_multisafepay_gezondheidsbon', $this->request->post);
             $this->session->data['success'] = $this->language->get('text_success');
-            $this->response->redirect($this->url->link('extension/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', 'SSL'));
+            $this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', 'SSL'));
         }
 
         $this->load->model('setting/store');
@@ -52,7 +52,7 @@ class ControllerExtensionPaymentMultiSafePayGezondheidsbon extends Controller
 
 
         $data['action'] = $this->setup_link('extension/payment/multisafepay_gezondheidsbon');
-        $data['cancel'] = $this->setup_link('extension/extension');
+        $data['cancel'] = $this->setup_link('marketplace/extension');
         $data['text_set_order_status'] = $this->language->get('text_set_order_status');
         $data['heading_title'] = $this->language->get('heading_title');
         $data['entry_status'] = $this->language->get('entry_status');
@@ -124,7 +124,7 @@ class ControllerExtensionPaymentMultiSafePayGezondheidsbon extends Controller
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('text_payment'),
-            'href' => $this->setup_link('extension/extension'),
+            'href' => $this->setup_link('marketplace/extension'),
             'separator' => ' :: '
         );
         if (isset($this->error['warning'])) {
