@@ -36,7 +36,7 @@ class ControllerExtensionPaymentMultiSafePayIdeal extends Controller
             $this->load->model('setting/setting');
             $this->model_setting_setting->editSetting('multisafepay_ideal', $this->request->post);
             $this->session->data['success'] = $this->language->get('text_success');
-            $this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=payment', 'SSL'));
+            $this->response->redirect($this->url->link('extension/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', 'SSL'));
         }
 
         $this->load->model('setting/store');
@@ -61,7 +61,7 @@ class ControllerExtensionPaymentMultiSafePayIdeal extends Controller
         $data['breadcrumbs'] = array();
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('text_home'),
-            'href' => $this->setup_link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
+            'href' => $this->setup_link('common/home', 'user_token=' . $this->session->data['user_token'], 'SSL'),
             'separator' => false
         );
 
@@ -158,7 +158,7 @@ class ControllerExtensionPaymentMultiSafePayIdeal extends Controller
 
     private function setup_link($route)
     {
-        return $link = $this->url->link($route, 'token=' . $this->session->data['token'] . '&type=payment', 'SSL');
+        return $link = $this->url->link($route, 'user_token=' . $this->session->data['user_token'] . '&type=payment', 'SSL');
     }
 
 }

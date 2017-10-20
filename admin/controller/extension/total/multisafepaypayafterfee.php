@@ -39,7 +39,7 @@ class ControllerExtensionTotalMultiSafepayPayAfterFee extends Controller
 
             $this->session->data['success'] = $this->language->get('text_success');
 
-            $this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=total', 'SSL'));
+            $this->response->redirect($this->url->link('extension/extension', 'user_token=' . $this->session->data['user_token'] . '&type=total', 'SSL'));
         }
 
 
@@ -69,22 +69,22 @@ class ControllerExtensionTotalMultiSafepayPayAfterFee extends Controller
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('text_home'),
-            'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
+            'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], 'SSL')
         );
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('text_total'),
-            'href' => $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=total', 'SSL')
+            'href' => $this->url->link('extension/extension', 'user_token=' . $this->session->data['user_token'] . '&type=total', 'SSL')
         );
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('heading_title'),
-            'href' => $this->url->link('extension/total/multisafepaypayafterfee', 'token=' . $this->session->data['token'], 'SSL')
+            'href' => $this->url->link('extension/total/multisafepaypayafterfee', 'user_token=' . $this->session->data['user_token'], 'SSL')
         );
 
-        $data['action'] = $this->url->link('extension/total/multisafepaypayafterfee', 'token=' . $this->session->data['token'], 'SSL');
+        $data['action'] = $this->url->link('extension/total/multisafepaypayafterfee', 'user_token=' . $this->session->data['user_token'], 'SSL');
 
-        $data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=total', 'SSL');
+        $data['cancel'] = $this->url->link('extension/extension', 'user_token=' . $this->session->data['user_token'] . '&type=total', 'SSL');
 
 
         if (isset($this->request->post['multisafepaypayafterfee'])) {
