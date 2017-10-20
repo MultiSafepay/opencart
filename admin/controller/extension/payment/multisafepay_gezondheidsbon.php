@@ -34,7 +34,7 @@ class ControllerExtensionPaymentMultiSafePayGezondheidsbon extends Controller
 
         if (($this->request->server['REQUEST_METHOD'] == 'POST')) {
             $this->load->model('setting/setting');
-            $this->model_setting_setting->editSetting('multisafepay_gezondheidsbon', $this->request->post);
+            $this->model_setting_setting->editSetting('payment_multisafepay_gezondheidsbon', $this->request->post);
             $this->session->data['success'] = $this->language->get('text_success');
             $this->response->redirect($this->url->link('extension/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', 'SSL'));
         }
@@ -61,53 +61,53 @@ class ControllerExtensionPaymentMultiSafePayGezondheidsbon extends Controller
         $data['text_max_amount'] = $this->language->get('text_max_amount');
 
 
-        if (isset($this->request->post['multisafepay_gezondheidsbon_status'])) {
-            $data['multisafepay_gezondheidsbon_status'] = $this->request->post['multisafepay_gezondheidsbon_status'];
+        if (isset($this->request->post['payment_multisafepay_gezondheidsbon_status'])) {
+            $data['payment_multisafepay_gezondheidsbon_status'] = $this->request->post['payment_multisafepay_gezondheidsbon_status'];
         } else {
-            $data['multisafepay_gezondheidsbon_status'] = $this->config->get('multisafepay_gezondheidsbon_status');
+            $data['payment_multisafepay_gezondheidsbon_status'] = $this->config->get('payment_multisafepay_gezondheidsbon_status');
         }
-        if (isset($this->request->post['multisafepay_gezondheidsbon_geo_zone_id_0'])) {
-            $data['multisafepay_gezondheidsbon_geo_zone_id'] = $this->request->post['multisafepay_gezondheidsbon_geo_zone_id_0'];
+        if (isset($this->request->post['payment_multisafepay_gezondheidsbon_geo_zone_id_0'])) {
+            $data['payment_multisafepay_gezondheidsbon_geo_zone_id'] = $this->request->post['payment_multisafepay_gezondheidsbon_geo_zone_id_0'];
         } else {
-            $data['multisafepay_gezondheidsbon_geo_zone_id'] = $this->config->get('multisafepay_gezondheidsbon_geo_zone_id_0');
+            $data['payment_multisafepay_gezondheidsbon_geo_zone_id'] = $this->config->get('payment_multisafepay_gezondheidsbon_geo_zone_id_0');
         }
-        if (isset($this->request->post['multisafepay_gezondheidsbon_sort_order_0'])) {
-            $data['multisafepay_gezondheidsbon_sort_order'] = $this->request->post['multisafepay_gezondheidsbon_sort_order_0'];
+        if (isset($this->request->post['payment_multisafepay_gezondheidsbon_sort_order_0'])) {
+            $data['payment_multisafepay_gezondheidsbon_sort_order'] = $this->request->post['payment_multisafepay_gezondheidsbon_sort_order_0'];
         } else {
-            $data['multisafepay_gezondheidsbon_sort_order'] = $this->config->get('multisafepay_gezondheidsbon_sort_order_0');
+            $data['payment_multisafepay_gezondheidsbon_sort_order'] = $this->config->get('payment_multisafepay_gezondheidsbon_sort_order_0');
         }
-        if (isset($this->request->post['multisafepay_gezondheidsbon_max_amount_0'])) {
-            $data['multisafepay_gezondheidsbon_max_amount'] = $this->request->post['multisafepay_gezondheidsbon_max_amount_0'];
+        if (isset($this->request->post['payment_multisafepay_gezondheidsbon_max_amount_0'])) {
+            $data['payment_multisafepay_gezondheidsbon_max_amount'] = $this->request->post['payment_multisafepay_gezondheidsbon_max_amount_0'];
         } else {
-            $data['multisafepay_gezondheidsbon_max_amount'] = $this->config->get('multisafepay_gezondheidsbon_max_amount_0');
+            $data['payment_multisafepay_gezondheidsbon_max_amount'] = $this->config->get('payment_multisafepay_gezondheidsbon_max_amount_0');
         }
-        if (isset($this->request->post['multisafepay_gezondheidsbon_min_amount_0'])) {
-            $data['multisafepay_gezondheidsbon_min_amount'] = $this->request->post['multisafepay_gezondheidsbon_min_amount_0'];
+        if (isset($this->request->post['payment_multisafepay_gezondheidsbon_min_amount_0'])) {
+            $data['payment_multisafepay_gezondheidsbon_min_amount'] = $this->request->post['payment_multisafepay_gezondheidsbon_min_amount_0'];
         } else {
-            $data['multisafepay_gezondheidsbon_min_amount'] = $this->config->get('multisafepay_gezondheidsbon_min_amount_0');
+            $data['payment_multisafepay_gezondheidsbon_min_amount'] = $this->config->get('payment_multisafepay_gezondheidsbon_min_amount_0');
         }
 
 
         foreach ($this->model_setting_store->getStores() as $store) {
-            if (isset($this->request->post['multisafepay_gezondheidsbon_geo_zone_id_' . $store['store_id'] . ''])) {
-                $data['multisafepay_gezondheidsbon_geo_zone_id_' . $store['store_id'] . ''] = $this->request->post['multisafepay_gezondheidsbon_geo_zone_id_' . $store['store_id'] . ''];
+            if (isset($this->request->post['payment_multisafepay_gezondheidsbon_geo_zone_id_' . $store['store_id'] . ''])) {
+                $data['payment_multisafepay_gezondheidsbon_geo_zone_id_' . $store['store_id'] . ''] = $this->request->post['payment_multisafepay_gezondheidsbon_geo_zone_id_' . $store['store_id'] . ''];
             } else {
-                $data['multisafepay_gezondheidsbon_geo_zone_id_' . $store['store_id'] . ''] = $this->config->get('multisafepay_gezondheidsbon_geo_zone_id_' . $store['store_id']);
+                $data['payment_multisafepay_gezondheidsbon_geo_zone_id_' . $store['store_id'] . ''] = $this->config->get('payment_multisafepay_gezondheidsbon_geo_zone_id_' . $store['store_id']);
             }
-            if (isset($this->request->post['multisafepay_gezondheidsbon_sort_order_' . $store['store_id'] . ''])) {
-                $data['multisafepay_gezondheidsbon_sort_order_' . $store['store_id'] . ''] = $this->request->post['multisafepay_gezondheidsbon_sort_order_' . $store['store_id'] . ''];
+            if (isset($this->request->post['payment_multisafepay_gezondheidsbon_sort_order_' . $store['store_id'] . ''])) {
+                $data['payment_multisafepay_gezondheidsbon_sort_order_' . $store['store_id'] . ''] = $this->request->post['payment_multisafepay_gezondheidsbon_sort_order_' . $store['store_id'] . ''];
             } else {
-                $data['multisafepay_gezondheidsbon_sort_order_' . $store['store_id'] . ''] = $this->config->get('multisafepay_gezondheidsbon_sort_order_' . $store['store_id']);
+                $data['payment_multisafepay_gezondheidsbon_sort_order_' . $store['store_id'] . ''] = $this->config->get('payment_multisafepay_gezondheidsbon_sort_order_' . $store['store_id']);
             }
-            if (isset($this->request->post['multisafepay_gezondheidsbon_max_amount_' . $store['store_id'] . ''])) {
-                $data['multisafepay_gezondheidsbon_max_amount_' . $store['store_id'] . ''] = $this->request->post['multisafepay_gezondheidsbon_max_amount_' . $store['store_id'] . ''];
+            if (isset($this->request->post['payment_multisafepay_gezondheidsbon_max_amount_' . $store['store_id'] . ''])) {
+                $data['payment_multisafepay_gezondheidsbon_max_amount_' . $store['store_id'] . ''] = $this->request->post['payment_multisafepay_gezondheidsbon_max_amount_' . $store['store_id'] . ''];
             } else {
-                $data['multisafepay_gezondheidsbon_max_amount_' . $store['store_id'] . ''] = $this->config->get('multisafepay_gezondheidsbon_max_amount_' . $store['store_id']);
+                $data['payment_multisafepay_gezondheidsbon_max_amount_' . $store['store_id'] . ''] = $this->config->get('payment_multisafepay_gezondheidsbon_max_amount_' . $store['store_id']);
             }
-            if (isset($this->request->post['multisafepay_gezondheidsbon_min_amount_' . $store['store_id'] . ''])) {
-                $data['multisafepay_gezondheidsbon_min_amount_' . $store['store_id'] . ''] = $this->request->post['multisafepay_gezondheidsbon_min_amount_' . $store['store_id'] . ''];
+            if (isset($this->request->post['payment_multisafepay_gezondheidsbon_min_amount_' . $store['store_id'] . ''])) {
+                $data['payment_multisafepay_gezondheidsbon_min_amount_' . $store['store_id'] . ''] = $this->request->post['payment_multisafepay_gezondheidsbon_min_amount_' . $store['store_id'] . ''];
             } else {
-                $data['multisafepay_gezondheidsbon_min_amount_' . $store['store_id'] . ''] = $this->config->get('multisafepay_gezondheidsbon_min_amount_' . $store['store_id']);
+                $data['payment_multisafepay_gezondheidsbon_min_amount_' . $store['store_id'] . ''] = $this->config->get('payment_multisafepay_gezondheidsbon_min_amount_' . $store['store_id']);
             }
         }
 

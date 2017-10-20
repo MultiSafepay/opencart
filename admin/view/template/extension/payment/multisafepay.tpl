@@ -41,7 +41,7 @@
                    <label class="col-sm-2 control-label" for="input-status"><?php echo $entry_status; ?></label>
                    <div class="col-sm-10">
                        <select name="multisafepay_status_<?php echo $store['store_id'];?>" id="input-status" class="form-control">
-                           <?php if (${'multisafepay_status_'.$store['store_id']}) { ?>
+                           <?php if (${'payment_multisafepay_status_'.$store['store_id']}) { ?>
                            <option value="1" selected="selected">Enabled</option>
                            <option value="0">Disabled</option>
                            <?php } else { ?>
@@ -59,8 +59,8 @@
                 <label class="col-sm-2 control-label" for="environment"><?php echo $entry_environment; ?></label>
                 <div class="col-sm-10">
                   <select name="multisafepay_environment_<?php echo $store['store_id'];?>" id="environment" class="form-control">
-                    <option value="0" <?php if(${'multisafepay_environment_'.$store['store_id']} == 0) echo 'selected'; ?>>Live account</option>
-                    <option value="1" <?php if(${'multisafepay_environment_'.$store['store_id']} == 1) echo 'selected'; ?>>Test account</option>
+                    <option value="0" <?php if(${'payment_multisafepay_environment_'.$store['store_id']} == 0) echo 'selected'; ?>>Live account</option>
+                    <option value="1" <?php if(${'payment_multisafepay_environment_'.$store['store_id']} == 1) echo 'selected'; ?>>Test account</option>
                   </select>
                 </div>
               </div>
@@ -70,8 +70,8 @@
                 <label class="col-sm-2 control-label" for="account"><?php echo $entry_environment; ?></label>
                 <div class="col-sm-10">
                   <select name="multisafepay_account_type_<?php echo $store['store_id'];?>" id="account" class="form-control">
-                    <option value="connect" <?php if(${'multisafepay_account_type_'.$store['store_id']} == 'connect') echo 'selected'; ?>>Connect</option>
-                    <option value="fastcheckout" <?php if(${'multisafepay_account_type_'.$store['store_id']} == 'fastcheckout') echo 'selected'; ?>>FastCheckout</option>
+                    <option value="connect" <?php if(${'payment_multisafepay_account_type_'.$store['store_id']} == 'connect') echo 'selected'; ?>>Connect</option>
+                    <option value="fastcheckout" <?php if(${'payment_multisafepay_account_type_'.$store['store_id']} == 'fastcheckout') echo 'selected'; ?>>FastCheckout</option>
                   </select>
                 </div>
               </div>
@@ -81,8 +81,8 @@
                 <label class="col-sm-2 control-label" for="fcobutton"><?php echo $enable_checkout_button; ?></label>
                 <div class="col-sm-10">
                   <select name="multisafepay_enable_checkout_button_connect_<?php echo $store['store_id'];?>" id="fcobutton" class="form-control">
-                    <option value="true" <?php if(${'multisafepay_enable_checkout_button_connect_'.$store['store_id']} == 'true') echo 'selected'; ?>><?php echo $yes; ?></option>
-                    <option value="false" <?php if(${'multisafepay_enable_checkout_button_connect_'.$store['store_id']} == 'false') echo 'selected'; ?>><?php echo $no; ?></option>
+                    <option value="true" <?php if(${'payment_multisafepay_enable_checkout_button_connect_'.$store['store_id']} == 'true') echo 'selected'; ?>><?php echo $yes; ?></option>
+                    <option value="false" <?php if(${'payment_multisafepay_enable_checkout_button_connect_'.$store['store_id']} == 'false') echo 'selected'; ?>><?php echo $no; ?></option>
                   </select>
                 </div>
               </div>
@@ -92,8 +92,8 @@
                 <label class="col-sm-2 control-label" for="redirect"><?php echo $entry_multisafepay_redirect_url; ?></label>
                 <div class="col-sm-10">
                   <select name="multisafepay_redirect_url_<?php echo $store['store_id'];?>" id="redirect" class="form-control">
-                    <option value="true" <?php if(${'multisafepay_redirect_url_'.$store['store_id']} == 'true') echo 'selected'; ?>>Enabled</option>
-                    <option value="false" <?php if(${'multisafepay_redirect_url_'.$store['store_id']} == 'false') echo 'selected'; ?>>Disabled</option>
+                    <option value="true" <?php if(${'payment_multisafepay_redirect_url_'.$store['store_id']} == 'true') echo 'selected'; ?>>Enabled</option>
+                    <option value="false" <?php if(${'payment_multisafepay_redirect_url_'.$store['store_id']} == 'false') echo 'selected'; ?>>Disabled</option>
                   </select>
                 </div>
               </div>
@@ -102,7 +102,7 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="accountid"><span><?php echo $entry_multisafepay_merchantid; ?></span></label>
                 <div class="col-sm-10">
-                  <input type="text" name="multisafepay_merchant_id_<?php echo $store['store_id'];?>" value="<?php echo ${'multisafepay_merchant_id_'.$store['store_id']}; ?>" id="accountid" class="form-control" />
+                  <input type="text" name="multisafepay_merchant_id_<?php echo $store['store_id'];?>" value="<?php echo ${'payment_multisafepay_merchant_id_'.$store['store_id']}; ?>" id="accountid" class="form-control" />
                 </div>
               </div>
 
@@ -110,7 +110,7 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="siteid"><span><?php echo $entry_multisafepay_siteid; ?></span></label>
                 <div class="col-sm-10">
-                  <input type="text" name="multisafepay_site_id_<?php echo $store['store_id'];?>" value="<?php echo ${'multisafepay_site_id_'.$store['store_id']}; ?>" id="siteid" class="form-control" />
+                  <input type="text" name="multisafepay_site_id_<?php echo $store['store_id'];?>" value="<?php echo ${'payment_multisafepay_site_id_'.$store['store_id']}; ?>" id="siteid" class="form-control" />
                 </div>
               </div>
 
@@ -118,7 +118,7 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="sitesecurecode"><span><?php echo $entry_multisafepay_secure_code; ?></span></label>
                 <div class="col-sm-10">
-                  <input type="text" name="multisafepay_secure_code_<?php echo $store['store_id'];?>" value="<?php echo ${'multisafepay_secure_code_'.$store['store_id']}; ?>" id="sitesecurecode" class="form-control" />
+                  <input type="text" name="multisafepay_secure_code_<?php echo $store['store_id'];?>" value="<?php echo ${'payment_multisafepay_secure_code_'.$store['store_id']}; ?>" id="sitesecurecode" class="form-control" />
                 </div>
               </div>
 
@@ -126,8 +126,8 @@
                 <label class="col-sm-2 control-label" for="environment"><?php echo $entry_confirm_order; ?></label>
                 <div class="col-sm-10">
                   <select name="multisafepay_confirm_order_<?php echo $store['store_id'];?>" id="environment" class="form-control">
-                    <option value="0" <?php if(${'multisafepay_confirm_order_'.$store['store_id']} == 0) echo 'selected'; ?>>Before transaction</option>
-                    <option value="1" <?php if(${'multisafepay_confirm_order_'.$store['store_id']} == 1) echo 'selected'; ?>>After paid transaction</option>
+                    <option value="0" <?php if(${'payment_multisafepay_confirm_order_'.$store['store_id']} == 0) echo 'selected'; ?>>Before transaction</option>
+                    <option value="1" <?php if(${'payment_multisafepay_confirm_order_'.$store['store_id']} == 1) echo 'selected'; ?>>After paid transaction</option>
                   </select>
                 </div>
               </div>
@@ -137,7 +137,7 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="daysactive"><span><?php echo $entry_multisafepay_days_active; ?></span></label>
                 <div class="col-sm-10">
-                  <input type="text" name="multisafepay_days_active_<?php echo $store['store_id'];?>" value="<?php echo ${'multisafepay_days_active_'.$store['store_id']}?>" id="daysactive" class="form-control" />
+                  <input type="text" name="multisafepay_days_active_<?php echo $store['store_id'];?>" value="<?php echo ${'payment_multisafepay_days_active_'.$store['store_id']}?>" id="daysactive" class="form-control" />
                 </div>
               </div>
 
@@ -148,8 +148,8 @@
                 <label class="col-sm-2 control-label" for="b2b"><?php echo $entry_multisafepay_b2b; ?></label>
                 <div class="col-sm-10">
                   <select name="multisafepay_b2b_<?php echo $store['store_id'];?>" id="b2b" class="form-control">
-                    <option value="true" <?php if(${'multisafepay_b2b_'.$store['store_id']} == 'true') echo 'selected'; ?>>Enabled</option>
-                    <option value="false" <?php if(${'multisafepay_b2b_'.$store['store_id']} == 'false') echo 'selected'; ?>>Disabled</option>
+                    <option value="true" <?php if(${'payment_multisafepay_b2b_'.$store['store_id']} == 'true') echo 'selected'; ?>>Enabled</option>
+                    <option value="false" <?php if(${'payment_multisafepay_b2b_'.$store['store_id']} == 'false') echo 'selected'; ?>>Disabled</option>
                   </select>
                 </div>
               </div>
@@ -161,7 +161,7 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="fcotax"><span><?php echo $entry_multisafepay_fco_tax; ?></span></label>
                 <div class="col-sm-10">
-                  <input type="text" name="multisafepay_fco_tax_percent_<?php echo $store['store_id'];?>" value="<?php echo ${'multisafepay_fco_tax_percent_'.$store['store_id']}?>" id="fcotax" class="form-control" />
+                  <input type="text" name="multisafepay_fco_tax_percent_<?php echo $store['store_id'];?>" value="<?php echo ${'payment_multisafepay_fco_tax_percent_'.$store['store_id']}?>" id="fcotax" class="form-control" />
                 </div>
               </div>
 
@@ -169,13 +169,13 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="freeship"><span><?php echo $entry_multisafepay_fco_free_ship; ?></span></label>
                 <div class="col-sm-10">
-                  <input type="text" name="multisafepay_fco_free_ship_<?php echo $store['store_id'];?>" value="<?php echo ${'multisafepay_fco_free_ship_'.$store['store_id']}?>" id="freeship" class="form-control" />
+                  <input type="text" name="multisafepay_fco_free_ship_<?php echo $store['store_id'];?>" value="<?php echo ${'payment_multisafepay_fco_free_ship_'.$store['store_id']}?>" id="freeship" class="form-control" />
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="minamount_<?php echo $store['store_id'];?>"><span><?php echo $text_min_amount; ?></span></label>
                 <div class="col-sm-10">
-                  <input type="text" name="multisafepay_min_amount_<?php echo $store['store_id'];?>" value="<?php echo ${'multisafepay_min_amount_'.$store['store_id']}?>" id="minamount" class="form-control" />
+                  <input type="text" name="multisafepay_min_amount_<?php echo $store['store_id'];?>" value="<?php echo ${'payment_multisafepay_min_amount_'.$store['store_id']}?>" id="minamount" class="form-control" />
                 </div>
               </div>
 
@@ -183,7 +183,7 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="maxamount_<?php echo $store['store_id'];?>"><span><?php echo $text_max_amount; ?></span></label>
                 <div class="col-sm-10">
-                  <input type="text" name="multisafepay_max_amount_<?php echo $store['store_id'];?>" value="<?php echo ${'multisafepay_max_amount_'.$store['store_id']}?>" id="maxamount" class="form-control" />
+                  <input type="text" name="multisafepay_max_amount_<?php echo $store['store_id'];?>" value="<?php echo ${'payment_multisafepay_max_amount_'.$store['store_id']}?>" id="maxamount" class="form-control" />
                 </div>
               </div>
 
@@ -193,7 +193,7 @@
                 <div class="col-sm-10">
                   <select name="multisafepay_order_status_id_initialized_<?php echo $store['store_id'];?>" id="initialized" class="form-control">
                     <?php foreach ($order_statuses as $order_status) { ?>
-                    <?php if ($order_status['order_status_id'] == ${'multisafepay_order_status_id_initialized_'.$store['store_id']}) { ?>
+                    <?php if ($order_status['order_status_id'] == ${'payment_multisafepay_order_status_id_initialized_'.$store['store_id']}) { ?>
                     <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
                     <?php } else { ?>
                     <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
@@ -209,7 +209,7 @@
                 <div class="col-sm-10">
                   <select name="multisafepay_order_status_id_completed_<?php echo $store['store_id'];?>" id="completed" class="form-control">
                     <?php foreach ($order_statuses as $order_status) { ?>
-                    <?php if ($order_status['order_status_id'] == ${'multisafepay_order_status_id_completed_'.$store['store_id']}) { ?>
+                    <?php if ($order_status['order_status_id'] == ${'payment_multisafepay_order_status_id_completed_'.$store['store_id']}) { ?>
                     <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
                     <?php } else { ?>
                     <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
@@ -225,7 +225,7 @@
                 <div class="col-sm-10">
                   <select name="multisafepay_order_status_id_uncleared_<?php echo $store['store_id'];?>" id="uncleared" class="form-control">
                     <?php foreach ($order_statuses as $order_status) { ?>
-                    <?php if ($order_status['order_status_id'] == ${'multisafepay_order_status_id_uncleared_'.$store['store_id']}) { ?>
+                    <?php if ($order_status['order_status_id'] == ${'payment_multisafepay_order_status_id_uncleared_'.$store['store_id']}) { ?>
                     <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
                     <?php } else { ?>
                     <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
@@ -241,7 +241,7 @@
                 <div class="col-sm-10">
                   <select name="multisafepay_order_status_id_reserved_<?php echo $store['store_id'];?>" id="reserved" class="form-control">
                     <?php foreach ($order_statuses as $order_status) { ?>
-                    <?php if ($order_status['order_status_id'] == ${'multisafepay_order_status_id_reserved_'.$store['store_id']}) { ?>
+                    <?php if ($order_status['order_status_id'] == ${'payment_multisafepay_order_status_id_reserved_'.$store['store_id']}) { ?>
                     <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
                     <?php } else { ?>
                     <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
@@ -257,7 +257,7 @@
                 <div class="col-sm-10">
                   <select name="multisafepay_order_status_id_void_<?php echo $store['store_id'];?>" id="void" class="form-control">
                     <?php foreach ($order_statuses as $order_status) { ?>
-                    <?php if ($order_status['order_status_id'] == ${'multisafepay_order_status_id_void_'.$store['store_id']}) { ?>
+                    <?php if ($order_status['order_status_id'] == ${'payment_multisafepay_order_status_id_void_'.$store['store_id']}) { ?>
                     <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
                     <?php } else { ?>
                     <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
@@ -273,7 +273,7 @@
                 <div class="col-sm-10">
                   <select name="multisafepay_order_status_id_refunded_<?php echo $store['store_id'];?>" id="refunded" class="form-control">
                     <?php foreach ($order_statuses as $order_status) { ?>
-                    <?php if ($order_status['order_status_id'] == ${'multisafepay_order_status_id_refunded_'.$store['store_id']}) { ?>
+                    <?php if ($order_status['order_status_id'] == ${'payment_multisafepay_order_status_id_refunded_'.$store['store_id']}) { ?>
                     <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
                     <?php } else { ?>
                     <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
@@ -289,7 +289,7 @@
                 <div class="col-sm-10">
                   <select name="multisafepay_order_status_id_declined_<?php echo $store['store_id'];?>" id="declined" class="form-control">
                     <?php foreach ($order_statuses as $order_status) { ?>
-                    <?php if ($order_status['order_status_id'] == ${'multisafepay_order_status_id_declined_'.$store['store_id']}) { ?>
+                    <?php if ($order_status['order_status_id'] == ${'payment_multisafepay_order_status_id_declined_'.$store['store_id']}) { ?>
                     <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
                     <?php } else { ?>
                     <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
@@ -305,7 +305,7 @@
                 <div class="col-sm-10">
                   <select name="multisafepay_order_status_id_expired_<?php echo $store['store_id'];?>" id="expired" class="form-control">
                     <?php foreach ($order_statuses as $order_status) { ?>
-                    <?php if ($order_status['order_status_id'] == ${'multisafepay_order_status_id_expired_'.$store['store_id']}) { ?>
+                    <?php if ($order_status['order_status_id'] == ${'payment_multisafepay_order_status_id_expired_'.$store['store_id']}) { ?>
                     <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
                     <?php } else { ?>
                     <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
@@ -321,7 +321,7 @@
                 <div class="col-sm-10">
                   <select name="multisafepay_order_status_id_shipped_<?php echo $store['store_id'];?>" id="shipped" class="form-control">
                     <?php foreach ($order_statuses as $order_status) { ?>
-                    <?php if ($order_status['order_status_id'] == ${'multisafepay_order_status_id_shipped_'.$store['store_id']}) { ?>
+                    <?php if ($order_status['order_status_id'] == ${'payment_multisafepay_order_status_id_shipped_'.$store['store_id']}) { ?>
                     <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
                     <?php } else { ?>
                     <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
@@ -339,7 +339,7 @@
                 <div class="col-sm-10">
                   <select name="multisafepay_order_status_id_partial_refunded_<?php echo $store['store_id'];?>" id="partial_refunded" class="form-control">
                     <?php foreach ($order_statuses as $order_status) { ?>
-                    <?php if ($order_status['order_status_id'] == ${'multisafepay_order_status_id_partial_refunded_'.$store['store_id']}) { ?>
+                    <?php if ($order_status['order_status_id'] == ${'payment_multisafepay_order_status_id_partial_refunded_'.$store['store_id']}) { ?>
                     <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
                     <?php } else { ?>
                     <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
@@ -357,7 +357,7 @@
                   <select name="multisafepay_geo_zone_id_<?php echo $store['store_id'];?>" id="input-geo-zone" class="form-control">
                     <option value="0"><?php echo $text_all_zones; ?></option>
                     <?php foreach ($geo_zones as $geo_zone) { ?>
-                    <?php if ($geo_zone['geo_zone_id'] == ${'multisafepay_geo_zone_id_'.$store['store_id']}) { ?>
+                    <?php if ($geo_zone['geo_zone_id'] == ${'payment_multisafepay_geo_zone_id_'.$store['store_id']}) { ?>
                     <option value="<?php echo $geo_zone['geo_zone_id']; ?>" selected="selected"><?php echo $geo_zone['name']; ?></option>
                     <?php } else { ?>
                     <option value="<?php echo $geo_zone['geo_zone_id']; ?>"><?php echo $geo_zone['name']; ?></option>
@@ -371,7 +371,7 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
                 <div class="col-sm-10">
-                  <input type="text" name="multisafepay_sort_order_<?php echo $store['store_id'];?>" value="<?php echo ${'multisafepay_sort_order_'.$store['store_id']}; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="form-control" />
+                  <input type="text" name="multisafepay_sort_order_<?php echo $store['store_id'];?>" value="<?php echo ${'payment_multisafepay_sort_order_'.$store['store_id']}; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="form-control" />
                 </div>
               </div>
             </div>

@@ -31,7 +31,7 @@ class ModelExtensionTotalMultisafepayPayafterFee extends Model
         $iso = 'NLD';
 
 
-        if (isset($this->session->data['payment_method']) && $this->session->data['payment_method']['code'] == 'multisafepay_payafter') {
+        if (isset($this->session->data['payment_method']) && $this->session->data['payment_method']['code'] == 'payment_multisafepay_payafter') {
             $total['totals'][] = array(
                 'code' => 'multisafepaypayafterfee',
                 'title' => $this->language->get('entry_paymentfee'),

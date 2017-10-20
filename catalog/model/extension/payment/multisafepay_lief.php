@@ -30,12 +30,12 @@ class ModelExtensionPaymentMultiSafePayLief extends Model
         $this->load->language('extension/payment/multisafepay');
         $storeid = $this->config->get('config_store_id');
 
-        $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int) $this->config->get('multisafepay_lief_geo_zone_id_' . $storeid) . "' AND country_id = '" . (int) $address['country_id'] . "' AND (zone_id = '" . (int) $address['zone_id'] . "' OR zone_id = '0')");
+        $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int) $this->config->get('payment_multisafepay_lief_geo_zone_id_' . $storeid) . "' AND country_id = '" . (int) $address['country_id'] . "' AND (zone_id = '" . (int) $address['zone_id'] . "' OR zone_id = '0')");
 
-        /* if ($this->config->get('multisafepay_total') > 0 && $this->config->get('multisafepay_total') > $total) {
+        /* if ($this->config->get('payment_multisafepay_total') > 0 && $this->config->get('payment_multisafepay_total') > $total) {
           $status = false;
           } else */
-        if (!$this->config->get('multisafepay_lief_geo_zone_id_' . $storeid)) {
+        if (!$this->config->get('payment_multisafepay_lief_geo_zone_id_' . $storeid)) {
             $status = true;
         } elseif ($query->num_rows) {
             $status = true;
@@ -46,10 +46,10 @@ class ModelExtensionPaymentMultiSafePayLief extends Model
         $totalcents = $total * 100;
 
         if ($total) {
-            if ($this->config->get('multisafepay_lief_min_amount_' . $storeid) && $totalcents < $this->config->get('multisafepay_lief_min_amount_' . $storeid)) {
+            if ($this->config->get('payment_multisafepay_lief_min_amount_' . $storeid) && $totalcents < $this->config->get('payment_multisafepay_lief_min_amount_' . $storeid)) {
                 return false;
             }
-            if ($this->config->get('multisafepay_lief_max_amount_' . $storeid) && $totalcents > $this->config->get('multisafepay_lief_max_amount_' . $storeid)) {
+            if ($this->config->get('payment_multisafepay_lief_max_amount_' . $storeid) && $totalcents > $this->config->get('payment_multisafepay_lief_max_amount_' . $storeid)) {
                 return false;
             }
         }
@@ -58,10 +58,10 @@ class ModelExtensionPaymentMultiSafePayLief extends Model
 
         if ($status) {
             $method_data = array(
-                'code' => 'multisafepay_lief',
+                'code' => 'payment_multisafepay_lief',
                 'title' => $this->language->get('text_title_lief'),
                 'terms' => '',
-                'sort_order' => $this->config->get('multisafepay_lief_sort_order_' . $storeid)
+                'sort_order' => $this->config->get('payment_multisafepay_lief_sort_order_' . $storeid)
             );
         }
 

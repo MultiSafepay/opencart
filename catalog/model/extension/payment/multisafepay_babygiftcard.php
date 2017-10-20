@@ -32,12 +32,12 @@ class ModelExtensionPaymentMultiSafePayBabygiftcard extends Model
         $storeid = $this->config->get('config_store_id');
 
 
-        $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int) $this->config->get('multisafepay_babygiftcard_geo_zone_id_' . $storeid) . "' AND country_id = '" . (int) $address['country_id'] . "' AND (zone_id = '" . (int) $address['zone_id'] . "' OR zone_id = '0')");
+        $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int) $this->config->get('payment_multisafepay_babygiftcard_geo_zone_id_' . $storeid) . "' AND country_id = '" . (int) $address['country_id'] . "' AND (zone_id = '" . (int) $address['zone_id'] . "' OR zone_id = '0')");
 
-        /* if ($this->config->get('multisafepay_total') > 0 && $this->config->get('multisafepay_total') > $total) {
+        /* if ($this->config->get('payment_multisafepay_total') > 0 && $this->config->get('payment_multisafepay_total') > $total) {
           $status = false;
           } else */
-        if (!$this->config->get('multisafepay_babygiftcard_geo_zone_id_' . $storeid)) {
+        if (!$this->config->get('payment_multisafepay_babygiftcard_geo_zone_id_' . $storeid)) {
             $status = true;
         } elseif ($query->num_rows) {
             $status = true;
@@ -49,10 +49,10 @@ class ModelExtensionPaymentMultiSafePayBabygiftcard extends Model
         $totalcents = $total * 100;
 
         if ($total) {
-            if ($this->config->get('multisafepay_babygiftcard_min_amount_' . $storeid) && $totalcents < $this->config->get('multisafepay_babygiftcard_min_amount_' . $storeid)) {
+            if ($this->config->get('payment_multisafepay_babygiftcard_min_amount_' . $storeid) && $totalcents < $this->config->get('payment_multisafepay_babygiftcard_min_amount_' . $storeid)) {
                 return false;
             }
-            if ($this->config->get('multisafepay_babygiftcard_max_amount_' . $storeid) && $totalcents > $this->config->get('multisafepay_babygiftcard_max_amount_' . $storeid)) {
+            if ($this->config->get('payment_multisafepay_babygiftcard_max_amount_' . $storeid) && $totalcents > $this->config->get('payment_multisafepay_babygiftcard_max_amount_' . $storeid)) {
                 return false;
             }
         }
@@ -61,10 +61,10 @@ class ModelExtensionPaymentMultiSafePayBabygiftcard extends Model
 
         if ($status) {
             $method_data = array(
-                'code' => 'multisafepay_babygiftcard',
+                'code' => 'payment_multisafepay_babygiftcard',
                 'title' => $this->language->get('text_title_babygiftcard'),
                 'terms' => '',
-                'sort_order' => $this->config->get('multisafepay_babygiftcard_sort_order_' . $storeid)
+                'sort_order' => $this->config->get('payment_multisafepay_babygiftcard_sort_order_' . $storeid)
             );
         }
 

@@ -39,7 +39,7 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="minamount"><span><?php echo $text_min_amount; ?></span></label>
                 <div class="col-sm-10">
-                  <input type="text" name="multisafepay_directbank_min_amount_<?php echo $store['store_id'];?>" value="<?php echo ${'multisafepay_directbank_min_amount_'.$store['store_id']}; ?>" id="minamount" class="form-control" />
+                  <input type="text" name="multisafepay_directbank_min_amount_<?php echo $store['store_id'];?>" value="<?php echo ${'payment_multisafepay_directbank_min_amount_'.$store['store_id']}; ?>" id="minamount" class="form-control" />
                 </div>
               </div>
 
@@ -47,7 +47,7 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="maxamount"><span><?php echo $text_max_amount; ?></span></label>
                 <div class="col-sm-10">
-                  <input type="text" name="multisafepay_directbank_max_amount_<?php echo $store['store_id'];?>" value="<?php echo ${'multisafepay_directbank_max_amount_'.$store['store_id']}; ?>" id="maxamount" class="form-control" />
+                  <input type="text" name="multisafepay_directbank_max_amount_<?php echo $store['store_id'];?>" value="<?php echo ${'payment_multisafepay_directbank_max_amount_'.$store['store_id']}; ?>" id="maxamount" class="form-control" />
                 </div>
               </div>
 
@@ -57,7 +57,7 @@
                   <select name="multisafepay_directbank_geo_zone_id_<?php echo $store['store_id'];?>" id="input-geo-zone" class="form-control">
                     <option value="0"><?php echo $text_all_zones; ?></option>
                     <?php foreach ($geo_zones as $geo_zone) { ?>
-                    <?php if ($geo_zone['geo_zone_id'] == ${'multisafepay_directbank_geo_zone_id_'.$store['store_id']}) { ?>
+                    <?php if ($geo_zone['geo_zone_id'] == ${'payment_multisafepay_directbank_geo_zone_id_'.$store['store_id']}) { ?>
                     <option value="<?php echo $geo_zone['geo_zone_id']; ?>" selected="selected"><?php echo $geo_zone['name']; ?></option>
                     <?php } else { ?>
                     <option value="<?php echo $geo_zone['geo_zone_id']; ?>"><?php echo $geo_zone['name']; ?></option>
@@ -71,7 +71,7 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
                 <div class="col-sm-10">
-                  <input type="text" name="multisafepay_directbank_sort_order_<?php echo $store['store_id'];?>" value="<?php echo ${'multisafepay_directbank_sort_order_'.$store['store_id']}; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="form-control" />
+                  <input type="text" name="multisafepay_directbank_sort_order_<?php echo $store['store_id'];?>" value="<?php echo ${'payment_multisafepay_directbank_sort_order_'.$store['store_id']}; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="form-control" />
                 </div>
               </div>
             </div>

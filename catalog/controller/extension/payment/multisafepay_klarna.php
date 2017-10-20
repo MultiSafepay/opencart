@@ -43,10 +43,10 @@ class ControllerExtensionPaymentMultiSafepayKlarna extends Controller
 
         $data['text_description'] = $this->language->get('text_description');
         $data['text_initial'] = substr($order_info['payment_firstname'] . ' ', 0, 1);
-        if (isset($this->session->data['multisafepay_klarna_fee']['fee'])) {
-            $fee = $this->session->data['multisafepay_klarna_fee']['fee'];
-            if (isset($this->session->data['multisafepay_klarna_fee']['feetax'])) {
-                $fee += $this->session->data['multisafepay_klarna_fee']['feetax'];
+        if (isset($this->session->data['payment_multisafepay_klarna_fee']['fee'])) {
+            $fee = $this->session->data['payment_multisafepay_klarna_fee']['fee'];
+            if (isset($this->session->data['payment_multisafepay_klarna_fee']['feetax'])) {
+                $fee += $this->session->data['payment_multisafepay_klarna_fee']['feetax'];
             }
             $data['text_paymentfee'] = str_replace('{fee}', $this->currency->format($fee), $this->language->get('text_paymentfee'));
         } else {
@@ -118,7 +118,7 @@ class ControllerExtensionPaymentMultiSafepayKlarna extends Controller
 
 
 
-        $multisafepay_redirect_url = $this->config->get('multisafepay_redirect_url_' . $storeid);
+        $multisafepay_redirect_url = $this->config->get('payment_multisafepay_redirect_url_' . $storeid);
         if ($multisafepay_redirect_url == 1) {
             $redirect_url = true;
         } else {
@@ -139,14 +139,14 @@ class ControllerExtensionPaymentMultiSafepayKlarna extends Controller
         //MSP SET DATA FOR TRANSACTION REQUEST
         require_once(dirname(__FILE__) . '/MultiSafepay.combined.php');
         $msp = new MultiSafepay();
-        $msp->test = $this->config->get('multisafepay_klarna_environment_' . $storeid);
-        $msp->merchant['account_id'] = $this->config->get('multisafepay_klarna_merchant_id_' . $storeid);
-        $msp->merchant['site_id'] = $this->config->get('multisafepay_klarna_site_id_' . $storeid);
-        $msp->merchant['site_code'] = $this->config->get('multisafepay_klarna_secure_code_' . $storeid);
+        $msp->test = $this->config->get('payment_multisafepay_klarna_environment_' . $storeid);
+        $msp->merchant['account_id'] = $this->config->get('payment_multisafepay_klarna_merchant_id_' . $storeid);
+        $msp->merchant['site_id'] = $this->config->get('payment_multisafepay_klarna_site_id_' . $storeid);
+        $msp->merchant['site_code'] = $this->config->get('payment_multisafepay_klarna_secure_code_' . $storeid);
         $msp->merchant['notification_url'] = $this->url->link('extension/payment/multisafepay/fastcheckout&type=initial', '', 'SSL');
         $msp->merchant['cancel_url'] = $this->url->link('checkout/checkout', '', 'SSL');
         $msp->merchant['redirect_url'] = $this->url->link('checkout/success', '', 'SSL');
-        $msp->merchant['close_window'] = $this->config->get('multisafepay_redirect_url_' . $storeid);
+        $msp->merchant['close_window'] = $this->config->get('payment_multisafepay_redirect_url_' . $storeid);
         $msp->customer['locale'] = $locale;
         $msp->customer['firstname'] = $order_info['payment_firstname'];
         $msp->customer['lastname'] = $order_info['payment_lastname'];
@@ -392,8 +392,8 @@ class ControllerExtensionPaymentMultiSafepayKlarna extends Controller
 
         if (!isset($msp->error)) {
             $this->load->model('checkout/order');
-            if (!$this->config->get('multisafepay_confirm_order_' . $storeid)) {
-                $this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('multisafepay_order_status_id_initialized_' . $storeid), '', true);
+            if (!$this->config->get('payment_multisafepay_confirm_order_' . $storeid)) {
+                $this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('payment_multisafepay_order_status_id_initialized_' . $storeid), '', true);
             }
 
             header('Location: ' . $url);

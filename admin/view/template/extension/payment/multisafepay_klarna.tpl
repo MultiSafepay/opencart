@@ -42,8 +42,8 @@
                 <label class="col-sm-2 control-label" for="environment"><?php echo $entry_environment; ?></label>
                 <div class="col-sm-10">
                   <select name="multisafepay_klarna_environment_<?php echo $store['store_id'];?>" id="environment" class="form-control">
-                    <option value="0" <?php if(${'multisafepay_klarna_environment_'.$store['store_id']} == 0) echo 'selected'; ?>>Live account</option>
-                    <option value="1" <?php if(${'multisafepay_klarna_environment_'.$store['store_id']} == 1) echo 'selected'; ?>>Test account</option>
+                    <option value="0" <?php if(${'payment_multisafepay_klarna_environment_'.$store['store_id']} == 0) echo 'selected'; ?>>Live account</option>
+                    <option value="1" <?php if(${'payment_multisafepay_klarna_environment_'.$store['store_id']} == 1) echo 'selected'; ?>>Test account</option>
                   </select>
                 </div>
               </div>
@@ -53,7 +53,7 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="accountid"><span><?php echo $entry_multisafepay_merchantid; ?></span></label>
                 <div class="col-sm-10">
-                  <input type="text" name="multisafepay_klarna_merchant_id_<?php echo $store['store_id'];?>" value="<?php echo ${'multisafepay_klarna_merchant_id_'.$store['store_id']}; ?>" id="accountid" class="form-control" />
+                  <input type="text" name="multisafepay_klarna_merchant_id_<?php echo $store['store_id'];?>" value="<?php echo ${'payment_multisafepay_klarna_merchant_id_'.$store['store_id']}; ?>" id="accountid" class="form-control" />
                 </div>
               </div>
 
@@ -61,7 +61,7 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="siteid"><span><?php echo $entry_multisafepay_siteid; ?></span></label>
                 <div class="col-sm-10">
-                  <input type="text" name="multisafepay_klarna_site_id_<?php echo $store['store_id'];?>" value="<?php echo ${'multisafepay_klarna_site_id_'.$store['store_id']}; ?>" id="siteid" class="form-control" />
+                  <input type="text" name="multisafepay_klarna_site_id_<?php echo $store['store_id'];?>" value="<?php echo ${'payment_multisafepay_klarna_site_id_'.$store['store_id']}; ?>" id="siteid" class="form-control" />
                 </div>
               </div>
 
@@ -69,7 +69,7 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="sitesecurecode"><span><?php echo $entry_multisafepay_secure_code; ?></span></label>
                 <div class="col-sm-10">
-                  <input type="text" name="multisafepay_klarna_secure_code_<?php echo $store['store_id'];?>" value="<?php echo ${'multisafepay_klarna_secure_code_'.$store['store_id']}; ?>" id="sitesecurecode" class="form-control" />
+                  <input type="text" name="multisafepay_klarna_secure_code_<?php echo $store['store_id'];?>" value="<?php echo ${'payment_multisafepay_klarna_secure_code_'.$store['store_id']}; ?>" id="sitesecurecode" class="form-control" />
                 </div>
               </div>
 
@@ -77,7 +77,7 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="minamount"><span><?php echo $text_multisafepay_klarna_min_amount; ?></span></label>
                 <div class="col-sm-10">
-                  <input type="text" name="multisafepay_klarna_min_amount_<?php echo $store['store_id'];?>" value="<?php echo ${'multisafepay_klarna_min_amount_'.$store['store_id']}; ?>" id="minamount" class="form-control" />
+                  <input type="text" name="multisafepay_klarna_min_amount_<?php echo $store['store_id'];?>" value="<?php echo ${'payment_multisafepay_klarna_min_amount_'.$store['store_id']}; ?>" id="minamount" class="form-control" />
                 </div>
               </div>
 
@@ -85,7 +85,7 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="maxamount"><span><?php echo $text_multisafepay_klarna_max_amount; ?></span></label>
                 <div class="col-sm-10">
-                  <input type="text" name="multisafepay_klarna_max_amount_<?php echo $store['store_id'];?>" value="<?php echo ${'multisafepay_klarna_max_amount_'.$store['store_id']}; ?>" id="maxamount" class="form-control" />
+                  <input type="text" name="multisafepay_klarna_max_amount_<?php echo $store['store_id'];?>" value="<?php echo ${'payment_multisafepay_klarna_max_amount_'.$store['store_id']}; ?>" id="maxamount" class="form-control" />
                 </div>
               </div>
 
@@ -94,8 +94,8 @@
                 <label class="col-sm-2 control-label" for="ipvalidation"><?php echo $text_multisafepay_klarna_ip_validation_option; ?></label>
                 <div class="col-sm-10">
                   <select name="multisafepay_klarna_ip_validation_enabler_<?php echo $store['store_id'];?>" id="ipvalidation" class="form-control">
-                    <option value="0" <?php if(${'multisafepay_klarna_ip_validation_enabler_'.$store['store_id']} == 0) echo 'selected'; ?>>Disabled</option>
-                    <option value="1" <?php if(${'multisafepay_klarna_ip_validation_enabler_'.$store['store_id']} == 1) echo 'selected'; ?>>Enabled</option>
+                    <option value="0" <?php if(${'payment_multisafepay_klarna_ip_validation_enabler_'.$store['store_id']} == 0) echo 'selected'; ?>>Disabled</option>
+                    <option value="1" <?php if(${'payment_multisafepay_klarna_ip_validation_enabler_'.$store['store_id']} == 1) echo 'selected'; ?>>Enabled</option>
                   </select>
                 </div>
               </div>
@@ -104,7 +104,7 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="ipaddresses"><span><?php echo $text_multisafepay_klarna_ip_validation_address; ?></span></label>
                 <div class="col-sm-10">
-                  <input type="text" name="multisafepay_klarna_ip_validation_address_<?php echo $store['store_id'];?>" value="<?php echo ${'multisafepay_klarna_ip_validation_address_'.$store['store_id']}; ?>" id="ipaddresses" class="form-control" />
+                  <input type="text" name="multisafepay_klarna_ip_validation_address_<?php echo $store['store_id'];?>" value="<?php echo ${'payment_multisafepay_klarna_ip_validation_address_'.$store['store_id']}; ?>" id="ipaddresses" class="form-control" />
                 </div>
               </div>
 
@@ -114,7 +114,7 @@
                   <select name="multisafepay_klarna_geo_zone_id_<?php echo $store['store_id'];?>" id="input-geo-zone" class="form-control">
                     <option value="0"><?php echo $text_all_zones; ?></option>
                     <?php foreach ($geo_zones as $geo_zone) { ?>
-                    <?php if ($geo_zone['geo_zone_id'] == ${'multisafepay_klarna_geo_zone_id_'.$store['store_id']}) { ?>
+                    <?php if ($geo_zone['geo_zone_id'] == ${'payment_multisafepay_klarna_geo_zone_id_'.$store['store_id']}) { ?>
                     <option value="<?php echo $geo_zone['geo_zone_id']; ?>" selected="selected"><?php echo $geo_zone['name']; ?></option>
                     <?php } else { ?>
                     <option value="<?php echo $geo_zone['geo_zone_id']; ?>"><?php echo $geo_zone['name']; ?></option>
@@ -129,7 +129,7 @@
                 <label class="col-sm-2 control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
                 <a href="../../../language/english/payment/multisafepay_klarna.php"></a>
                 <div class="col-sm-10">
-                  <input type="text" name="multisafepay_klarna_sort_order_<?php echo $store['store_id'];?>" value="<?php echo ${'multisafepay_klarna_sort_order_'.$store['store_id']}; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="form-control" />
+                  <input type="text" name="multisafepay_klarna_sort_order_<?php echo $store['store_id'];?>" value="<?php echo ${'payment_multisafepay_klarna_sort_order_'.$store['store_id']}; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="form-control" />
                 </div>
               </div>
             </div>
