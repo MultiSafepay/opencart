@@ -118,7 +118,7 @@ class ControllerExtensionPaymentMultiSafePayPayafter extends Controller
         //MSP SET DATA FOR TRANSACTION REQUEST
         require_once(dirname(__FILE__) . '/MultiSafepay.combined.php');
         $msp = new MultiSafepay();
-        $msp->test = $this->config->get('payment_multisafepay_payafter_environment_' . $storeid);
+        $msp->test = $this->config->get('payment_multisafepay_environment_' . $storeid);
         $msp->merchant['account_id'] = $this->config->get('payment_multisafepay_merchant_id_' . $storeid);
         $msp->merchant['site_id'] = $this->config->get('payment_multisafepay_site_id_' . $storeid);
         $msp->merchant['site_code'] = $this->config->get('payment_multisafepay_secure_code_' . $storeid);
