@@ -32,19 +32,6 @@ class ModelExtensionPaymentMultiSafePayPayafter extends Model
         }
         $storeid = $this->config->get('config_store_id');
 
-        /* Get ip adress filtering for PAD */
-        $filter_active = $this->config->get('payment_multisafepay_payafter_ip_validation_enabler_' . $storeid);
-        $ipaddress = array();
-
-        if ($filter_active) {
-            $data = $this->config->get('payment_multisafepay_payafter_ip_validation_address_' . $storeid);
-            $ipaddress = explode(';', $data);
-        }
-        if (!in_array($_SERVER["REMOTE_ADDR"], $ipaddress) && $filter_active) {
-            return false;
-        }
-
-
         $totalcents = $total * 100;
 
         if ($total) {
