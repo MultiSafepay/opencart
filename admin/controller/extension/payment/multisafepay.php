@@ -109,40 +109,40 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
         /**
          * 	Start Default configuration
          */
-        if (isset($this->request->post['payment_multisafepay_max_amount'])) {
-            $data['payment_multisafepay_max_amount'] = $this->request->post['payment_multisafepay_max_amount'];
+        if (isset($this->request->post['payment_multisafepay_max_amount_0'])) {
+            $data['payment_multisafepay_max_amount'] = $this->request->post['payment_multisafepay_max_amount_0'];
         } else {
-            $data['payment_multisafepay_max_amount'] = $this->config->get('payment_multisafepay_max_amount');
+            $data['payment_multisafepay_max_amount'] = $this->config->get('payment_multisafepay_max_amount_0');
         }
 
-        if (isset($this->request->post['payment_multisafepay_confirm_order'])) {
-            $data['payment_multisafepay_confirm_order'] = $this->request->post['payment_multisafepay_confirm_order'];
+        if (isset($this->request->post['payment_multisafepay_confirm_order_0'])) {
+            $data['payment_multisafepay_confirm_order'] = $this->request->post['payment_multisafepay_confirm_order_0'];
         } else {
-            $data['payment_multisafepay_confirm_order'] = $this->config->get('payment_multisafepay_confirm_order');
+            $data['payment_multisafepay_confirm_order'] = $this->config->get('payment_multisafepay_confirm_order_0');
         }
 
-        if (isset($this->request->post['payment_multisafepay_min_amount'])) {
-            $data['payment_multisafepay_min_amount'] = $this->request->post['payment_multisafepay_min_amount'];
+        if (isset($this->request->post['payment_multisafepay_min_amount_0'])) {
+            $data['payment_multisafepay_min_amount'] = $this->request->post['payment_multisafepay_min_amount_0'];
         } else {
-            $data['payment_multisafepay_min_amount'] = $this->config->get('payment_multisafepay_min_amount');
+            $data['payment_multisafepay_min_amount'] = $this->config->get('payment_multisafepay_min_amount_0');
         }
 
-        if (isset($this->request->post['payment_multisafepay_fco_tax_percent'])) {
-            $data['payment_multisafepay_fco_tax_percent'] = $this->request->post['payment_multisafepay_fco_tax_percent'];
+        if (isset($this->request->post['payment_multisafepay_fco_tax_percent_0'])) {
+            $data['payment_multisafepay_fco_tax_percent'] = $this->request->post['payment_multisafepay_fco_tax_percent_0'];
         } else {
-            $data['payment_multisafepay_fco_tax_percent'] = $this->config->get('payment_multisafepay_fco_tax_percent');
+            $data['payment_multisafepay_fco_tax_percent'] = $this->config->get('payment_multisafepay_fco_tax_percent_0');
         }
 
-        if (isset($this->request->post['payment_multisafepay_fco_free_ship'])) {
-            $data['payment_multisafepay_fco_free_ship'] = $this->request->post['payment_multisafepay_fco_free_ship'];
+        if (isset($this->request->post['payment_multisafepay_fco_free_ship_0'])) {
+            $data['payment_multisafepay_fco_free_ship'] = $this->request->post['payment_multisafepay_fco_free_ship_0'];
         } else {
-            $data['payment_multisafepay_fco_free_ship'] = $this->config->get('payment_multisafepay_fco_free_ship');
+            $data['payment_multisafepay_fco_free_ship'] = $this->config->get('payment_multisafepay_fco_free_ship_0');
         }
 
-        if (isset($this->request->post['payment_multisafepay_days_active'])) {
-            $data['payment_multisafepay_days_active'] = $this->request->post['payment_multisafepay_days_active'];
+        if (isset($this->request->post['payment_multisafepay_days_active_0'])) {
+            $data['payment_multisafepay_days_active'] = $this->request->post['payment_multisafepay_days_active_0'];
         } else {
-            $data['payment_multisafepay_days_active'] = $this->config->get('payment_multisafepay_days_active');
+            $data['payment_multisafepay_days_active'] = $this->config->get('payment_multisafepay_days_active_0');
         }
 
         if (isset($this->request->post['payment_multisafepay_status'])) {
@@ -151,128 +151,128 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
             $data['payment_multisafepay_status'] = $this->config->get('payment_multisafepay_status');
         }
         
-        if (isset($this->request->post['payment_multisafepay_environment'])) {
-            $data['payment_multisafepay_environment'] = $this->request->post['payment_multisafepay_environment'];
+        if (isset($this->request->post['payment_multisafepay_environment_0'])) {
+            $data['payment_multisafepay_environment'] = $this->request->post['payment_multisafepay_environment_0'];
         } else {
-            $data['payment_multisafepay_environment'] = $this->config->get('payment_multisafepay_environment');
+            $data['payment_multisafepay_environment'] = $this->config->get('payment_multisafepay_environment_0');
         }
         
-        if (isset($this->request->post['payment_multisafepay_account_type'])) {
-            $data['payment_multisafepay_account_type'] = $this->request->post['payment_multisafepay_account_type'];
+        if (isset($this->request->post['payment_multisafepay_account_type_0'])) {
+            $data['payment_multisafepay_account_type'] = $this->request->post['payment_multisafepay_account_type_0'];
         } else {
-            $data['payment_multisafepay_account_type'] = $this->config->get('payment_multisafepay_account_type');
+            $data['payment_multisafepay_account_type'] = $this->config->get('payment_multisafepay_account_type_0');
         }
         
         
-        if (isset($this->request->post['payment_multisafepay_enable_checkout_button_connect'])) {
-            $data['payment_multisafepay_enable_checkout_button_connect'] = $this->request->post['payment_multisafepay_enable_checkout_button_connect'];
+        if (isset($this->request->post['payment_multisafepay_enable_checkout_button_connect_0'])) {
+            $data['payment_multisafepay_enable_checkout_button_connect'] = $this->request->post['payment_multisafepay_enable_checkout_button_connect_0'];
         } else {
-            $data['payment_multisafepay_enable_checkout_button_connect'] = $this->config->get('payment_multisafepay_enable_checkout_button_connect');
+            $data['payment_multisafepay_enable_checkout_button_connect'] = $this->config->get('payment_multisafepay_enable_checkout_button_connect_0');
         }
         
        
-        if (isset($this->request->post['payment_multisafepay_geo_zone_id'])) {
-            $data['payment_multisafepay_geo_zone_id'] = $this->request->post['payment_multisafepay_geo_zone_id'];
+        if (isset($this->request->post['payment_multisafepay_geo_zone_id_0'])) {
+            $data['payment_multisafepay_geo_zone_id'] = $this->request->post['payment_multisafepay_geo_zone_id_0'];
         } else {
-            $data['payment_multisafepay_geo_zone_id'] = $this->config->get('payment_multisafepay_geo_zone_id');
+            $data['payment_multisafepay_geo_zone_id'] = $this->config->get('payment_multisafepay_geo_zone_id_0');
         }
 
         //main store config
-        if (isset($this->request->post['payment_multisafepay_merchant_id'])) {
-            $data['payment_multisafepay_merchant_id'] = $this->request->post['payment_multisafepay_merchant_id'];
+        if (isset($this->request->post['payment_multisafepay_merchant_id_0'])) {
+            $data['payment_multisafepay_merchant_id'] = $this->request->post['payment_multisafepay_merchant_id_0'];
         } else {
-            $data['payment_multisafepay_merchant_id'] = $this->config->get('payment_multisafepay_merchant_id');
+            $data['payment_multisafepay_merchant_id'] = $this->config->get('payment_multisafepay_merchant_id_0');
         }
 
-        if (isset($this->request->post['payment_multisafepay_site_id'])) {
-            $data['payment_multisafepay_site_id'] = $this->request->post['payment_multisafepay_site_id'];
+        if (isset($this->request->post['payment_multisafepay_site_id_0'])) {
+            $data['payment_multisafepay_site_id'] = $this->request->post['payment_multisafepay_site_id_0'];
         } else {
-            $data['payment_multisafepay_site_id'] = $this->config->get('payment_multisafepay_site_id');
+            $data['payment_multisafepay_site_id'] = $this->config->get('payment_multisafepay_site_id_0');
         }
 
-        if (isset($this->request->post['payment_multisafepay_secure_code'])) {
-            $data['payment_multisafepay_secure_code'] = $this->request->post['payment_multisafepay_secure_code'];
+        if (isset($this->request->post['payment_multisafepay_secure_code_0'])) {
+            $data['payment_multisafepay_secure_code'] = $this->request->post['payment_multisafepay_secure_code_0'];
         } else {
-            $data['payment_multisafepay_secure_code'] = $this->config->get('payment_multisafepay_secure_code');
+            $data['payment_multisafepay_secure_code'] = $this->config->get('payment_multisafepay_secure_code_0');
         }
 
 
-        if (isset($this->request->post['payment_multisafepay_redirect_url'])) {
-            $data['payment_multisafepay_redirect_url'] = $this->request->post['payment_multisafepay_redirect_url'];
+        if (isset($this->request->post['payment_multisafepay_redirect_url_0'])) {
+            $data['payment_multisafepay_redirect_url'] = $this->request->post['payment_multisafepay_redirect_url_0'];
         } else {
-            $data['payment_multisafepay_redirect_url'] = $this->config->get('payment_multisafepay_redirect_url');
+            $data['payment_multisafepay_redirect_url'] = $this->config->get('payment_multisafepay_redirect_url_0');
         }
 
-        if (isset($this->request->post['payment_multisafepay_b2b'])) {
-            $data['payment_multisafepay_b2b'] = $this->request->post['payment_multisafepay_b2b'];
+        if (isset($this->request->post['payment_multisafepay_b2b_0'])) {
+            $data['payment_multisafepay_b2b'] = $this->request->post['payment_multisafepay_b2b_0'];
         } else {
-            $data['payment_multisafepay_b2b'] = $this->config->get('payment_multisafepay_b2b');
+            $data['payment_multisafepay_b2b'] = $this->config->get('payment_multisafepay_b2b_0');
         }
 
-        if (isset($this->request->post['payment_multisafepay_order_status_id_completed'])) {
-            $data['payment_multisafepay_order_status_id_completed'] = $this->request->post['payment_multisafepay_order_status_id_completed'];
+        if (isset($this->request->post['payment_multisafepay_order_status_id_completed_0'])) {
+            $data['payment_multisafepay_order_status_id_completed'] = $this->request->post['payment_multisafepay_order_status_id_completed_0'];
         } else {
-            $data['payment_multisafepay_order_status_id_completed'] = $this->config->get('payment_multisafepay_order_status_id_completed');
+            $data['payment_multisafepay_order_status_id_completed'] = $this->config->get('payment_multisafepay_order_status_id_completed_0');
         }
 
-        if (isset($this->request->post['payment_multisafepay_order_status_id_initialized'])) {
-            $data['payment_multisafepay_order_status_id_initialized'] = $this->request->post['payment_multisafepay_order_status_id_initialized'];
+        if (isset($this->request->post['payment_multisafepay_order_status_id_initialized_0'])) {
+            $data['payment_multisafepay_order_status_id_initialized'] = $this->request->post['payment_multisafepay_order_status_id_initialized_0'];
         } else {
-            $data['payment_multisafepay_order_status_id_initialized'] = $this->config->get('payment_multisafepay_order_status_id_initialized');
+            $data['payment_multisafepay_order_status_id_initialized'] = $this->config->get('payment_multisafepay_order_status_id_initialized_0');
         }
 
-        if (isset($this->request->post['payment_multisafepay_order_status_id_uncleared'])) {
-            $data['payment_multisafepay_order_status_id_uncleared'] = $this->request->post['payment_multisafepay_order_status_id_uncleared'];
+        if (isset($this->request->post['payment_multisafepay_order_status_id_uncleared_0'])) {
+            $data['payment_multisafepay_order_status_id_uncleared'] = $this->request->post['payment_multisafepay_order_status_id_uncleared_0'];
         } else {
-            $data['payment_multisafepay_order_status_id_uncleared'] = $this->config->get('payment_multisafepay_order_status_id_uncleared');
+            $data['payment_multisafepay_order_status_id_uncleared'] = $this->config->get('payment_multisafepay_order_status_id_uncleared_0');
         }
 
-        if (isset($this->request->post['payment_multisafepay_order_status_id_reserved'])) {
-            $data['payment_multisafepay_order_status_id_reserved'] = $this->request->post['payment_multisafepay_order_status_id_reserved'];
+        if (isset($this->request->post['payment_multisafepay_order_status_id_reserved_0'])) {
+            $data['payment_multisafepay_order_status_id_reserved'] = $this->request->post['payment_multisafepay_order_status_id_reserved_0'];
         } else {
-            $data['payment_multisafepay_order_status_id_reserved'] = $this->config->get('payment_multisafepay_order_status_id_reserved');
+            $data['payment_multisafepay_order_status_id_reserved'] = $this->config->get('payment_multisafepay_order_status_id_reserved_0');
         }
 
-        if (isset($this->request->post['payment_multisafepay_order_status_id_void'])) {
-            $data['payment_multisafepay_order_status_id_void'] = $this->request->post['payment_multisafepay_order_status_id_void'];
+        if (isset($this->request->post['payment_multisafepay_order_status_id_void_0'])) {
+            $data['payment_multisafepay_order_status_id_void'] = $this->request->post['payment_multisafepay_order_status_id_void_0'];
         } else {
-            $data['payment_multisafepay_order_status_id_void'] = $this->config->get('payment_multisafepay_order_status_id_void');
+            $data['payment_multisafepay_order_status_id_void'] = $this->config->get('payment_multisafepay_order_status_id_void_0');
         }
 
-        if (isset($this->request->post['payment_multisafepay_order_status_id_refunded'])) {
-            $data['payment_multisafepay_order_status_id_refunded'] = $this->request->post['payment_multisafepay_order_status_id_refunded'];
+        if (isset($this->request->post['payment_multisafepay_order_status_id_refunded_0'])) {
+            $data['payment_multisafepay_order_status_id_refunded'] = $this->request->post['payment_multisafepay_order_status_id_refunded_0'];
         } else {
-            $data['payment_multisafepay_order_status_id_refunded'] = $this->config->get('payment_multisafepay_order_status_id_refunded');
+            $data['payment_multisafepay_order_status_id_refunded'] = $this->config->get('payment_multisafepay_order_status_id_refunded_0');
         }
 
-        if (isset($this->request->post['payment_multisafepay_order_status_id_declined'])) {
-            $data['payment_multisafepay_order_status_id_declined'] = $this->request->post['payment_multisafepay_order_status_id_declined'];
+        if (isset($this->request->post['payment_multisafepay_order_status_id_declined_0'])) {
+            $data['payment_multisafepay_order_status_id_declined'] = $this->request->post['payment_multisafepay_order_status_id_declined_0'];
         } else {
-            $data['payment_multisafepay_order_status_id_declined'] = $this->config->get('payment_multisafepay_order_status_id_declined');
+            $data['payment_multisafepay_order_status_id_declined'] = $this->config->get('payment_multisafepay_order_status_id_declined_0');
         }
 
-        if (isset($this->request->post['payment_multisafepay_order_status_id_expired'])) {
-            $data['payment_multisafepay_order_status_id_expired'] = $this->request->post['payment_multisafepay_order_status_id_expired'];
+        if (isset($this->request->post['payment_multisafepay_order_status_id_expired_0'])) {
+            $data['payment_multisafepay_order_status_id_expired'] = $this->request->post['payment_multisafepay_order_status_id_expired_0'];
         } else {
-            $data['payment_multisafepay_order_status_id_expired'] = $this->config->get('payment_multisafepay_order_status_id_expired');
+            $data['payment_multisafepay_order_status_id_expired'] = $this->config->get('payment_multisafepay_order_status_id_expired_0');
         }
 
-        if (isset($this->request->post['payment_multisafepay_order_status_id_shipped'])) {
-            $data['payment_multisafepay_order_status_id_shipped'] = $this->request->post['payment_multisafepay_order_status_id_shipped'];
+        if (isset($this->request->post['payment_multisafepay_order_status_id_shipped_0'])) {
+            $data['payment_multisafepay_order_status_id_shipped'] = $this->request->post['payment_multisafepay_order_status_id_shipped_0'];
         } else {
-            $data['payment_multisafepay_order_status_id_shipped'] = $this->config->get('payment_multisafepay_order_status_id_shipped');
+            $data['payment_multisafepay_order_status_id_shipped'] = $this->config->get('payment_multisafepay_order_status_id_shipped_0');
         }
 
-        if (isset($this->request->post['payment_multisafepay_order_status_id_partial_refunded'])) {
-            $data['payment_multisafepay_order_status_id_partial_refunded'] = $this->request->post['payment_multisafepay_order_status_id_partial_refunded'];
+        if (isset($this->request->post['payment_multisafepay_order_status_id_partial_refunded_0'])) {
+            $data['payment_multisafepay_order_status_id_partial_refunded'] = $this->request->post['payment_multisafepay_order_status_id_partial_refunded_0'];
         } else {
-            $data['payment_multisafepay_order_status_id_partial_refunded'] = $this->config->get('payment_multisafepay_order_status_id_partial_refunded');
+            $data['payment_multisafepay_order_status_id_partial_refunded'] = $this->config->get('payment_multisafepay_order_status_id_partial_refunded_0');
         }
 
-        if (isset($this->request->post['payment_multisafepay_sort_order'])) {
-            $data['payment_multisafepay_sort_order'] = $this->request->post['payment_multisafepay_sort_order'];
+        if (isset($this->request->post['payment_multisafepay_sort_order_0'])) {
+            $data['payment_multisafepay_sort_order'] = $this->request->post['payment_multisafepay_sort_order_0'];
         } else {
-            $data['payment_multisafepay_sort_order'] = $this->config->get('payment_multisafepay_sort_order');
+            $data['payment_multisafepay_sort_order'] = $this->config->get('payment_multisafepay_sort_order_0');
         }
 //     echo '<pre>';  print_r ($data);  die('Klaar');
 
@@ -511,7 +511,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
             $this->error['warning'] = $this->language->get('error_permission');
         }
 
-        if (!$this->request->post['payment_multisafepay_merchant_id']) {
+        if (!$this->request->post['payment_multisafepay_merchant_id_0']) {
             $this->error['merchant'] = $this->language->get('error_merchant');
         }
 
