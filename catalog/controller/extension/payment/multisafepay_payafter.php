@@ -119,9 +119,9 @@ class ControllerExtensionPaymentMultiSafePayPayafter extends Controller
         require_once(dirname(__FILE__) . '/MultiSafepay.combined.php');
         $msp = new MultiSafepay();
         $msp->test = $this->config->get('payment_multisafepay_payafter_environment_' . $storeid);
-        $msp->merchant['account_id'] = $this->config->get('payment_multisafepay_payafter_merchant_id_' . $storeid);
-        $msp->merchant['site_id'] = $this->config->get('payment_multisafepay_payafter_site_id_' . $storeid);
-        $msp->merchant['site_code'] = $this->config->get('payment_multisafepay_payafter_secure_code_' . $storeid);
+        $msp->merchant['account_id'] = $this->config->get('payment_multisafepay_merchant_id_' . $storeid);
+        $msp->merchant['site_id'] = $this->config->get('payment_multisafepay_site_id_' . $storeid);
+        $msp->merchant['site_code'] = $this->config->get('payment_multisafepay_secure_code_' . $storeid);
         $msp->merchant['notification_url'] = $this->url->link('extension/payment/multisafepay/fastcheckout&type=initial', '', 'SSL');
         $msp->merchant['cancel_url'] = $this->url->link('checkout/checkout', '', 'SSL');
         $msp->merchant['redirect_url'] = $this->url->link('checkout/success', '', 'SSL');
