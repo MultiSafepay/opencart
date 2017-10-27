@@ -75,7 +75,7 @@ class ModelExtensionPaymentMultiSafePayPayafter extends Model
 
         if ($status) {
             $method_data = array(
-                'code' => 'payment_multisafepay_payafter',
+                'code' => 'multisafepay_payafter',
                 'title' => $this->language->get('text_title_payafter'),
                 'terms' => '',
                 'sort_order' => $this->config->get('payment_multisafepay_payafter_sort_order_' . $storeid)

@@ -14,128 +14,91 @@
             </ul>
         </div>
     </div>
+    
     <div class="container-fluid">
         {% if error_warning %}
-        <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-        </div>
+            <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+            </div>
         {% endif %}
+
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_edit }}</h3>
             </div>
+
             <div class="panel-body">
                 <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-multisafepay" class="form-horizontal">
 					<ul class="nav nav-tabs" id="tabs">
-                        <li class="active"><a href="#tab-default" data-toggle="tab">Default Store</a></li>
                         {% for store in stores %}
-                        	<li><a href="#tab-store-{{ store.store_id }}" data-toggle="tab">Store {{ store.name }}</a></li>
+                            <li class="{{ store.id == 0 ? 'active' : '' }}"><a data-toggle="tab" href="tab-store-{{ store.id }}" >{{ store.name }}</a></li>
                         {% endfor %}
                     </ul>
                     
                     <div class="tab-content">
-					 {% for store in stores %}
-					 		<div class="tab-pane" id="tab-store-{{ store.store_id }}">
-					 			<div class="form-group">
-                        <label class="col-sm-2 control-label" for="minamount"><span>{{ text_min_amount }}</span></label>
-                        <div class="col-sm-10">
-                            <input type="text" name="multisafepay_banktrans_min_amount_{{ store.store_id }}" value="{{ }}'payment_multisafepay_banktrans_min_amount_'~store.store_id{% endfor %}" id="minamount" class="form-control" />
-                        </div>
-                    </div>
+                        {% for store in stores %}
+                            <div id="store{{ store.id }}" class="tab-pane fade in {{ store.id == 0 ? 'active' : '' }}">
 
-                    <!--fco tax percentage-->
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label" for="maxamount"><span>{{ text_max_amount }}</span></label>
-                        <div class="col-sm-10">
-                            <input type="text" name="multisafepay_banktrans_max_amount_{{ store.store_id }}" value="{{ }}'payment_multisafepay_banktrans_max_amount_'~store.store_id" id="maxamount" class="form-control" />
-                        </div>
-                    </div>
+                                <!--Module status-->
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
+                                    <div class="col-sm-10">
+                                        <select name="stores[{{ store.id }}][payment_multisafepay_banktrans_status]" id="input-status" class="form-control">
+                                            {% if stores[store.id].payment_multisafepay_banktrans_status  == 1%}
+                                                <option value="1" selected="selected">Enabled</option>
+                                                <option value="0">Disabled</option>
+                                            {% else %}
+                                                <option value="1">Enabled</option>
+                                                <option value="0" selected="selected">Disabled</option>
+                                            {% endif %} 
+                                        </select>
+                                    </div>
+                                </div>
 
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label" for="input-geo-zone">{{ text_all_zones }}</label>
-                        <div class="col-sm-10">
-                            <select name="multisafepay_banktrans_geo_zone_id_{{ store.store_id }}" id="input-geo-zone" class="form-control">
-                                <option value="0">{{ text_all_zones }}</option>
-                                {% for geo_zone in geo_zones %}
-                                {% if geo_zone.geo_zone_id  is  %}'payment_multisafepay_banktrans_geo_zone_id_'~store.store_id{% endfor %}{% endif %}
-                                <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
-                                 {% else %}
-                                <option value="{{ geo_zone.geo_zone_id }}">{{ geo_zone.name }}</option>
+                                <!-- Minimal amount -->
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label" for="payment_multisafepay_banktrans_min_amount"><span>{{ text_min_amount }}</span></label>
+                                    <div class="col-sm-10">
+                                        <input type="text" name="stores[{{ store.id }}][payment_multisafepay_banktrans_min_amount]"
+                                            value="{{ stores[store.id].payment_multisafepay_banktrans_min_amount }}" id="payment_multisafepay_banktrans_min_amount" class="form-control" />
+                                    </div>
+                                </div>
 
+                                <!-- Maximum amount -->
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label" for="payment_multisafepay_banktrans_max_amount"><span>{{ text_max_amount }}</span></label>
+                                    <div class="col-sm-10">
+                                        <input type="text" name="stores[{{ store.id }}][payment_multisafepay_banktrans_max_amount]"
+                                            value="{{ stores[store.id].payment_multisafepay_banktrans_max_amount }}" id="payment_multisafepay_banktrans_max_amount" class="form-control" />
+                                    </div>
+                                </div>
 
-                            </select>
-                        </div>
-                    </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label" for="input-geo-zone">{{ text_all_zones }}</label>
+                                    <div class="col-sm-10">
+                                        <select name="stores[{{ store.id }}][payment_multisafepay_banktrans_geo_zone_id]" class="form-control">
+                                            <option value="0">{{ text_all_zones }}</option>
+                                            {% for geo_zone in geo_zones %}
+                                                {% if geo_zone.geo_zone_id == stores[store.id].payment_multisafepay_banktrans_geo_zone_id %}
+                                                    <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
+                                                {% else %}
+                                                    <option value="{{ geo_zone.geo_zone_id }}">{{ geo_zone.name }}</option>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
 
-                    <!--Sorting-->
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label" for="input-sort-order">{{ entry_sort_order }}</label>
-                        <div class="col-sm-10">
-                            <input type="text" name="multisafepay_banktrans_sort_order_{{ store.store_id }}" value="{{ }}'payment_multisafepay_banktrans_sort_order_'~store.store_id" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control" />
-                        </div>
-                    </div>
+                                <!--Sorting-->
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label" for="input-sort-order">{{ entry_sort_order }}</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" name="stores[{{ store.id }}][payment_multisafepay_banktrans_sort_order]" value="{{ stores[store.id].payment_multisafepay_banktrans_sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control" />
+                                    </div>
+                                </div>
 					 		</div>
-
-					
-					 
-					<div class="tab-pane active" id="tab-default">
-                    <!--Module status-->
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
-                        <div class="col-sm-10">
-                            <select name="multisafepay_banktrans_status" id="input-status" class="form-control">
-                                {% if multisafepay_banktrans_status %}
-                                <option value="1" selected="selected">Enabled</option>
-                                <option value="0">Disabled</option>
-                                {% endif %} {% else %}
-                                <option value="1">Enabled</option>
-                                <option value="0" selected="selected">Disabled</option>
-
-                            </select>
-                        </div>
+                        {% endfor %}
                     </div>
-
-
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label" for="minamount"><span>{{ text_min_amount }}</span></label>
-                        <div class="col-sm-10">
-                            <input type="text" name="multisafepay_banktrans_min_amount_0" value="{{ multisafepay_banktrans_min_amount }}" id="minamount" class="form-control" />
-                        </div>
-                    </div>
-
-                    <!--fco tax percentage-->
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label" for="maxamount"><span>{{ text_max_amount }}</span></label>
-                        <div class="col-sm-10">
-                            <input type="text" name="multisafepay_banktrans_max_amount_0" value="{{ multisafepay_banktrans_max_amount }}" id="maxamount" class="form-control" />
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label" for="input-geo-zone">{{ text_all_zones }}</label>
-                        <div class="col-sm-10">
-                            <select name="multisafepay_banktrans_geo_zone_id_0" id="input-geo-zone" class="form-control">
-                                <option value="0">{{ text_all_zones }}</option>
-                                {% for geo_zone in geo_zones %}
-                                {% if geo_zone.geo_zone_id  is  multisafepay_banktrans_geo_zone_id %}
-                                <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
-                                {% endfor %}{% endif %} {% else %}
-                                <option value="{{ geo_zone.geo_zone_id }}">{{ geo_zone.name }}</option>
-
-
-                            </select>
-                        </div>
-                    </div>
-
-                    <!--Sorting-->
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label" for="input-sort-order">{{ entry_sort_order }}</label>
-                        <div class="col-sm-10">
-                            <input type="text" name="multisafepay_banktrans_sort_order_0" value="{{ multisafepay_banktrans_sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control" />
-                        </div>
-                    </div>
-                    </div>
-                </div>
                 </form>
             </div>
         </div>

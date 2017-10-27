@@ -58,7 +58,7 @@ class ModelExtensionPaymentMultiSafePayDotpay extends Model
 
         if ($status) {
             $method_data = array(
-                'code' => 'payment_multisafepay_dotpay',
+                'code' => 'multisafepay_dotpay',
                 'title' => $this->language->get('text_title_dotpay'),
                 'terms' => '',
                 'sort_order' => $this->config->get('payment_multisafepay_dotpay_sort_order_' . $storeid)

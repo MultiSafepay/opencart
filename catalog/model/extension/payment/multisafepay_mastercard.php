@@ -59,7 +59,7 @@ class ModelExtensionPaymentMultiSafePayMastercard extends Model
 
         if ($status) {
             $method_data = array(
-                'code' => 'payment_multisafepay_mastercard',
+                'code' => 'multisafepay_mastercard',
                 'title' => $this->language->get('text_title_mastercard'),
                 'terms' => '',
                 'sort_order' => $this->config->get('payment_multisafepay_mastercard_sort_order_' . $storeid)

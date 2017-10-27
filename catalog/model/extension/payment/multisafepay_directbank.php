@@ -60,7 +60,7 @@ class ModelExtensionPaymentMultiSafePayDirectbank extends Model
 
         if ($status) {
             $method_data = array(
-                'code' => 'payment_multisafepay_directbank',
+                'code' => 'multisafepay_directbank',
                 'title' => $this->language->get('text_title_directbank'),
                 'terms' => '',
                 'sort_order' => $this->config->get('payment_multisafepay_directbank_sort_order_' . $storeid)

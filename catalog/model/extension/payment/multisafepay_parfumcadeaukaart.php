@@ -58,7 +58,7 @@ class ModelExtensionPaymentMultiSafePayParfumcadeaukaart extends Model
 
         if ($status) {
             $method_data = array(
-                'code' => 'payment_multisafepay_parfumcadeaukaart',
+                'code' => 'multisafepay_parfumcadeaukaart',
                 'title' => $this->language->get('text_title_parfumcadeaukaart'),
                 'terms' => '',
                 'sort_order' => $this->config->get('payment_multisafepay_parfumcadeaukaart_sort_order_' . $storeid)

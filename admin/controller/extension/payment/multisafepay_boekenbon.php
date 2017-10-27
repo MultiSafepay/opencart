@@ -20,7 +20,11 @@
  * ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-class ControllerExtensionPaymentMultiSafePayBoekenbon extends Controller
+
+ ini_set('display_errors', 'On');
+error_reporting(E_ALL);
+
+ class ControllerExtensionPaymentMultiSafePayboekenbon extends Controller
 {
 
     private $error = array();
@@ -29,6 +33,8 @@ class ControllerExtensionPaymentMultiSafePayBoekenbon extends Controller
     {
         $this->load->language('extension/payment/multisafepay');
         $this->load->language('extension/payment/multisafepay_boekenbon');
+        $this->load->model('setting/store');
+        $data['stores'] = $this->model_setting_store->getStores();
         $this->document->setTitle($this->language->get('heading_title'));
         $this->load->model('setting/setting');
 
@@ -38,8 +44,6 @@ class ControllerExtensionPaymentMultiSafePayBoekenbon extends Controller
             $this->session->data['success'] = $this->language->get('text_success');
             $this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', 'SSL'));
         }
-        $this->load->model('setting/store');
-        $data['stores'] = $this->model_setting_store->getStores();
 
         $data['text_edit'] = $this->language->get('text_edit');
         $data['text_enabled'] = $this->language->get('text_enabled');
@@ -63,22 +67,22 @@ class ControllerExtensionPaymentMultiSafePayBoekenbon extends Controller
         $data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
 
 
-        if (isset($this->request->post['payment_multisafepay_boekenbon_geo_zone_id_0'])) {
-            $data['payment_multisafepay_boekenbon_geo_zone_id'] = $this->request->post['payment_multisafepay_boekenbon_geo_zone_id_0'];
+        if (isset($this->request->post['payment_multisafepay_boekenbon_geo_zone_id'])) {
+            $data['payment_multisafepay_boekenbon_geo_zone_id'] = $this->request->post['payment_multisafepay_boekenbon_geo_zone_id'];
         } else {
-            $data['payment_multisafepay_boekenbon_geo_zone_id'] = $this->config->get('payment_multisafepay_boekenbon_geo_zone_id_0');
-        }
-        if (isset($this->request->post['payment_multisafepay_boekenbon_max_amount_0'])) {
-            $data['payment_multisafepay_boekenbon_max_amount'] = $this->request->post['payment_multisafepay_boekenbon_max_amount_0'];
-        } else {
-            $data['payment_multisafepay_boekenbon_max_amount'] = $this->config->get('payment_multisafepay_boekenbon_max_amount_0');
-        }
-        if (isset($this->request->post['payment_multisafepay_boekenbon_min_amount_0'])) {
-            $data['payment_multisafepay_boekenbon_min_amount'] = $this->request->post['payment_multisafepay_boekenbon_min_amount_0'];
-        } else {
-            $data['payment_multisafepay_boekenbon_min_amount'] = $this->config->get('payment_multisafepay_boekenbon_min_amount_0');
+            $data['payment_multisafepay_boekenbon_geo_zone_id'] = $this->config->get('payment_multisafepay_boekenbon_geo_zone_id');
         }
 
+        if (isset($this->request->post['payment_multisafepay_boekenbon_max_amount'])) {
+            $data['payment_multisafepay_boekenbon_max_amount'] = $this->request->post['payment_multisafepay_boekenbon_max_amount'];
+        } else {
+            $data['payment_multisafepay_boekenbon_max_amount'] = $this->config->get('payment_multisafepay_boekenbon_max_amount');
+        }
+        if (isset($this->request->post['payment_multisafepay_boekenbon_min_amount'])) {
+            $data['payment_multisafepay_boekenbon_min_amount'] = $this->request->post['payment_multisafepay_boekenbon_min_amount'];
+        } else {
+            $data['payment_multisafepay_boekenbon_min_amount'] = $this->config->get('payment_multisafepay_boekenbon_min_amount');
+        }
 
         if (isset($this->request->post['payment_multisafepay_boekenbon_status'])) {
             $data['payment_multisafepay_boekenbon_status'] = $this->request->post['payment_multisafepay_boekenbon_status'];
@@ -86,10 +90,10 @@ class ControllerExtensionPaymentMultiSafePayBoekenbon extends Controller
             $data['payment_multisafepay_boekenbon_status'] = $this->config->get('payment_multisafepay_boekenbon_status');
         }
 
-        if (isset($this->request->post['payment_multisafepay_boekenbon_sort_order_0'])) {
-            $data['payment_multisafepay_boekenbon_sort_order'] = $this->request->post['payment_multisafepay_boekenbon_sort_order_0'];
+        if (isset($this->request->post['payment_multisafepay_boekenbon_sort_order'])) {
+            $data['payment_multisafepay_boekenbon_sort_order'] = $this->request->post['payment_multisafepay_boekenbon_sort_order'];
         } else {
-            $data['payment_multisafepay_boekenbon_sort_order'] = $this->config->get('payment_multisafepay_boekenbon_sort_order_0');
+            $data['payment_multisafepay_boekenbon_sort_order'] = $this->config->get('payment_multisafepay_boekenbon_sort_order');
         }
 
 
@@ -101,8 +105,9 @@ class ControllerExtensionPaymentMultiSafePayBoekenbon extends Controller
             } else {
                 $data['payment_multisafepay_boekenbon_geo_zone_id_' . $store['store_id'] . ''] = $this->config->get('payment_multisafepay_boekenbon_geo_zone_id_' . $store['store_id']);
             }
+
             if (isset($this->request->post['payment_multisafepay_boekenbon_max_amount_' . $store['store_id'] . ''])) {
-                $data['payment_multisafepay_boekenbon_max_amount_' . $store['store_id'] . ''] = $this->request->post['payment_multisafepay_boekenbon_max_amount_' . $store['store_id'] . ''];
+                $data['payment_multisafepay_boekenbon_max_amount_' . $store['store_id'] . ''] = $this->request->post['payment_multisafepay_boekenbon_max_amount__' . $store['store_id'] . ''];
             } else {
                 $data['payment_multisafepay_boekenbon_max_amount_' . $store['store_id'] . ''] = $this->config->get('payment_multisafepay_boekenbon_max_amount_' . $store['store_id']);
             }
@@ -110,16 +115,20 @@ class ControllerExtensionPaymentMultiSafePayBoekenbon extends Controller
                 $data['payment_multisafepay_boekenbon_min_amount_' . $store['store_id'] . ''] = $this->request->post['payment_multisafepay_boekenbon_min_amount_' . $store['store_id'] . ''];
             } else {
                 $data['payment_multisafepay_boekenbon_min_amount_' . $store['store_id'] . ''] = $this->config->get('payment_multisafepay_boekenbon_min_amount_' . $store['store_id']);
-                ;
             }
+
+            if (isset($this->request->post['payment_multisafepay_boekenbon_status_' . $store['store_id'] . ''])) {
+                $data['payment_multisafepay_boekenbon_status_' . $store['store_id'] . ''] = $this->request->post['payment_multisafepay_boekenbon_status_' . $store['store_id'] . ''];
+            } else {
+                $data['payment_multisafepay_boekenbon_status_' . $store['store_id'] . ''] = $this->config->get('payment_multisafepay_boekenbon_status_' . $store['store_id']);
+            }
+
             if (isset($this->request->post['payment_multisafepay_boekenbon_sort_order_' . $store['store_id'] . ''])) {
                 $data['payment_multisafepay_boekenbon_sort_order_' . $store['store_id'] . ''] = $this->request->post['payment_multisafepay_boekenbon_sort_order_' . $store['store_id'] . ''];
             } else {
                 $data['payment_multisafepay_boekenbon_sort_order_' . $store['store_id'] . ''] = $this->config->get('payment_multisafepay_boekenbon_sort_order_' . $store['store_id']);
             }
         }
-
-
 
 
 

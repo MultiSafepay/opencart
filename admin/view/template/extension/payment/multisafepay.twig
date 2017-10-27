@@ -40,7 +40,7 @@
                    
                                 <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
                                 <div class="col-sm-10">
-                                    <select name="multisafepay_status_{{ store.store_id }}" id="input-status" class="form-control">
+                                    <select name="payment_multisafepay_status_{{ store.store_id }}" id="input-status" class="form-control">
                                     {% if 'payment_multisafepay_status_'~store.store_id %}
                                         <option value="1" selected="selected">Enabled</option>
                                         <option value="0">Disabled</option>
@@ -58,7 +58,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label" for="environment">{{ entry_environment }}</label>
                                 <div class="col-sm-10">
-                                    <select name="multisafepay_environment_{{ store.store_id }}" id="environment" class="form-control">
+                                    <select name="payment_multisafepay_environment_{{ store.store_id }}" id="environment" class="form-control">
                                         <option value="0" {% if 'payment_multisafepay_environment_'~store.store_id == 0 %} {{ 'selected' }}{% endif %}>Live account</option> 
                                         <option value="1" {% if 'payment_multisafepay_environment_'~store.store_id == 1 %} {{ 'selected' }}{% endif %}>Test account</option>
                                     </select>
@@ -69,7 +69,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label" for="account">{{ entry_environment }}</label>
                                 <div class="col-sm-10">
-                                    <select name="multisafepay_account_type_{{ store.store_id }}" id="account" class="form-control">
+                                    <select name="payment_multisafepay_account_type_{{ store.store_id }}" id="account" class="form-control">
                                         <option value="connect"      {% if 'payment_multisafepay_account_type_'~store.store_id  == 'connect'      %} {{ 'selected' }}{% endif %} >Connect</option>
                                         <option value="fastcheckout" {% if 'payment_multisafepay_account_type_'~store.store_id  == 'fastcheckout' %} {{ 'selected' }}{% endif %} >FastCheckout</option>
                                     </select>
@@ -80,7 +80,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label" for="fcobutton">{{ enable_checkout_button }}</label>
                                 <div class="col-sm-10">
-                                    <select name="multisafepay_enable_checkout_button_connect_{{ store.store_id }}" id="fcobutton" class="form-control">
+                                    <select name="payment_multisafepay_enable_checkout_button_connect_{{ store.store_id }}" id="fcobutton" class="form-control">
                                         <option value="true"    {% if 'payment_multisafepay_enable_checkout_button_connect_'~store.store_id ==  'true'  %} {{ 'selected' }}{% endif %}>{{ yes }}</option>
                                         <option value="false"   {% if 'payment_multisafepay_enable_checkout_button_connect_'~store.store_id ==  'false' %} {{ 'selected' }}{% endif %}>{{ no }}</option>
                                     </select>
@@ -91,7 +91,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label" for="redirect">{{ entry_multisafepay_redirect_url }}</label>
                                 <div class="col-sm-10">
-                                    <select name="multisafepay_redirect_url_{{ store.store_id }}" id="redirect" class="form-control">
+                                    <select name="payment_multisafepay_redirect_url_{{ store.store_id }}" id="redirect" class="form-control">
                                         <option value="true"    {% if 'payment_multisafepay_redirect_url_'~store.store_id == 'true'  %} {{ 'selected' }}{% endif %}>Enabled</option>
                                         <option value="false"   {% if 'payment_multisafepay_redirect_url_'~store.store_id == 'false' %} {{ 'selected' }}{% endif %}>Disabled</option>
                                     </select>
@@ -102,7 +102,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label" for="accountid"><span>{{ entry_multisafepay_merchantid }}</span></label>
                                 <div class="col-sm-10">
-                                    <input type="text" name="multisafepay_merchant_id_{{ store.store_id }}" value="'payment_multisafepay_merchant_id_'~store.store_id" id="accountid" class="form-control" />
+                                    <input type="text" name="payment_multisafepay_merchant_id_{{ store.store_id }}" value="'payment_multisafepay_merchant_id_'~store.store_id" id="accountid" class="form-control" />
                                 </div>
                             </div>
 
@@ -110,7 +110,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label" for="siteid"><span>{{ entry_multisafepay_siteid }}</span></label>
                                 <div class="col-sm-10">
-                                    <input type="text" name="multisafepay_site_id_{{ store.store_id }}" value="'payment_multisafepay_site_id_'~store.store_id" id="siteid" class="form-control" />
+                                    <input type="text" name="payment_multisafepay_site_id_{{ store.store_id }}" value="'payment_multisafepay_site_id_'~store.store_id" id="siteid" class="form-control" />
                                 </div>
                             </div>
 
@@ -118,14 +118,14 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label" for="sitesecurecode"><span>{{ entry_multisafepay_secure_code }}</span></label>
                                 <div class="col-sm-10">
-                                    <input type="text" name="multisafepay_secure_code_{{ store.store_id }}" value="'payment_multisafepay_secure_code_'~store.store_id" id="sitesecurecode" class="form-control" />
+                                    <input type="text" name="payment_multisafepay_secure_code_{{ store.store_id }}" value="'payment_multisafepay_secure_code_'~store.store_id" id="sitesecurecode" class="form-control" />
                                 </div>
                             </div>
                     
                             <div class="form-group">
                                 <label class="col-sm-2 control-label" for="environment">{{ entry_confirm_order }}</label>
                                 <div class="col-sm-10">
-                                    <select name="multisafepay_confirm_order_{{ store.store_id }}" id="environment" class="form-control">
+                                    <select name="payment_multisafepay_confirm_order_{{ store.store_id }}" id="environment" class="form-control">
                                         <option value="0" {% if 'payment_multisafepay_confirm_order_'~store.store_id ==  0 %} {{ 'selected' }}{% endif %}>Before transaction</option>
                                         <option value="1" {% if 'payment_multisafepay_confirm_order_'~store.store_id ==  1 %} {{ 'selected' }}{% endif %}>After paid transaction</option>
                                     </select>
@@ -136,7 +136,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label" for="daysactive"><span>{{ entry_multisafepay_days_active }}</span></label>
                                 <div class="col-sm-10">
-                                    <input type="text" name="multisafepay_days_active_{{ store.store_id }}" value="'payment_multisafepay_days_active_'~store.store_id" id="daysactive" class="form-control" />
+                                    <input type="text" name="payment_multisafepay_days_active_{{ store.store_id }}" value="'payment_multisafepay_days_active_'~store.store_id" id="daysactive" class="form-control" />
                                 </div>
                             </div>
                             
@@ -144,7 +144,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label" for="b2b">{{ entry_multisafepay_b2b }}</label>
                                 <div class="col-sm-10">
-                                    <select name="multisafepay_b2b_{{ store.store_id }}" id="b2b" class="form-control">
+                                    <select name="payment_multisafepay_b2b_{{ store.store_id }}" id="b2b" class="form-control">
                                         <option value="true"  {% if 'payment_multisafepay_b2b_'~store.store_id == 'true' %} {{ 'selected' }}{% endif %}>Enabled</option>
                                         <option value="false" {% if 'payment_multisafepay_b2b_'~store.store_id == 'false'%} {{ 'selected' }}{% endif %}>Disabled</option>
                                     </select>
@@ -155,7 +155,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label" for="fcotax"><span>{{ entry_multisafepay_fco_tax }}</span></label>
                                 <div class="col-sm-10">
-                                    <input type="text" name="multisafepay_fco_tax_percent_{{ store.store_id }}" value="'payment_multisafepay_fco_tax_percent_'~store.store_id" id="fcotax" class="form-control" />
+                                    <input type="text" name="payment_multisafepay_fco_tax_percent_{{ store.store_id }}" value="'payment_multisafepay_fco_tax_percent_'~store.store_id" id="fcotax" class="form-control" />
                                 </div>
                             </div>
 
@@ -163,21 +163,21 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label" for="freeship"><span>{{ entry_multisafepay_fco_free_ship }}</span></label>
                                 <div class="col-sm-10">
-                                    <input type="text" name="multisafepay_fco_free_ship_{{ store.store_id }}" value="'payment_multisafepay_fco_free_ship_'~store.store_id" id="freeship" class="form-control" />
+                                    <input type="text" name="payment_multisafepay_fco_free_ship_{{ store.store_id }}" value="'payment_multisafepay_fco_free_ship_'~store.store_id" id="freeship" class="form-control" />
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-sm-2 control-label" for="minamount_{{ store.store_id }}"><span>{{ text_min_amount }}</span></label>
                                 <div class="col-sm-10">
-                                    <input type="text" name="multisafepay_min_amount_{{ store.store_id }}" value="'payment_multisafepay_min_amount_'~store.store_id" id="minamount" class="form-control" />
+                                    <input type="text" name="payment_multisafepay_min_amount_{{ store.store_id }}" value="'payment_multisafepay_min_amount_'~store.store_id" id="minamount" class="form-control" />
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-sm-2 control-label" for="maxamount_{{ store.store_id }}"><span>{{ text_max_amount }}</span></label>
                                 <div class="col-sm-10">
-                                    <input type="text" name="multisafepay_max_amount_{{ store.store_id }}" value="'payment_multisafepay_max_amount_'~store.store_id" id="maxamount" class="form-control" />
+                                    <input type="text" name="payment_multisafepay_max_amount_{{ store.store_id }}" value="'payment_multisafepay_max_amount_'~store.store_id" id="maxamount" class="form-control" />
                                 </div>
                             </div>
 
@@ -185,7 +185,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label" for="initialized">{{ entry_multisafepay_order_status_id_initialized }}</label>
                                 <div class="col-sm-10">
-                                    <select name="multisafepay_order_status_id_initialized_{{ store.store_id }}" id="initialized" class="form-control">
+                                    <select name="payment_multisafepay_order_status_id_initialized_{{ store.store_id }}" id="initialized" class="form-control">
                                         {% for order_status in order_statuses %}
                                             {% if order_status.order_status_id == 'payment_multisafepay_order_status_id_initialized_'~store.store_id %}
                                                 <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
@@ -201,7 +201,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label" for="completed">{{ entry_multisafepay_order_status_id_completed }}</label>
                                 <div class="col-sm-10">
-                                    <select name="multisafepay_order_status_id_completed_{{ store.store_id }}" id="completed" class="form-control">
+                                    <select name="payment_multisafepay_order_status_id_completed_{{ store.store_id }}" id="completed" class="form-control">
                                         {% for order_status in order_statuses %}
                                             {% if order_status.order_status_id == 'payment_multisafepay_order_status_id_completed_'~store.store_id %}
                                                 <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
@@ -217,7 +217,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label" for="uncleared">{{ entry_multisafepay_order_status_id_uncleared }}</label>
                                 <div class="col-sm-10">
-                                    <select name="multisafepay_order_status_id_uncleared_{{ store.store_id }}" id="uncleared" class="form-control">
+                                    <select name="payment_multisafepay_order_status_id_uncleared_{{ store.store_id }}" id="uncleared" class="form-control">
                                          {% for order_status in order_statuses %}
                                             {% if order_status.order_status_id == 'payment_multisafepay_order_status_id_uncleared_'~store.store_id %}
                                                 <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
@@ -233,7 +233,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label" for="reserved">{{ entry_multisafepay_order_status_id_reserved }}</label>
                                 <div class="col-sm-10">
-                                    <select name="multisafepay_order_status_id_reserved_{{ store.store_id }}" id="reserved" class="form-control">
+                                    <select name="payment_multisafepay_order_status_id_reserved_{{ store.store_id }}" id="reserved" class="form-control">
                                          {% for order_status in order_statuses %}
                                             {% if order_status.order_status_id == 'payment_multisafepay_order_status_id_reserved_'~store.store_id %}
                                                 <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
@@ -249,7 +249,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label" for="void">{{ entry_multisafepay_order_status_id_void }}</label>
                                 <div class="col-sm-10">
-                                    <select name="multisafepay_order_status_id_void_{{ store.store_id }}" id="void" class="form-control">
+                                    <select name="payment_multisafepay_order_status_id_void_{{ store.store_id }}" id="void" class="form-control">
                                          {% for order_status in order_statuses %}
                                             {% if order_status.order_status_id == 'payment_multisafepay_order_status_id_void_'~store.store_id %}
                                                 <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
@@ -265,7 +265,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label" for="refunded">{{ entry_multisafepay_order_status_id_refunded }}</label>
                                 <div class="col-sm-10">
-                                    <select name="multisafepay_order_status_id_refunded_{{ store.store_id }}" id="refunded" class="form-control">
+                                    <select name="payment_multisafepay_order_status_id_refunded_{{ store.store_id }}" id="refunded" class="form-control">
                                          {% for order_status in order_statuses %}
                                             {% if order_status.order_status_id == 'payment_multisafepay_order_status_id_refunded_'~store.store_id %}
                                                 <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
@@ -281,7 +281,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label" for="declined">{{ entry_multisafepay_order_status_id_declined }}</label>
                                 <div class="col-sm-10">
-                                    <select name="multisafepay_order_status_id_declined_{{ store.store_id }}" id="declined" class="form-control">
+                                    <select name="payment_multisafepay_order_status_id_declined_{{ store.store_id }}" id="declined" class="form-control">
                                          {% for order_status in order_statuses %}
                                             {% if order_status.order_status_id == 'payment_multisafepay_order_status_id_declined_'~store.store_id %}
                                                 <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
@@ -297,7 +297,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label" for="expired">{{ entry_multisafepay_order_status_id_expired }}</label>
                                 <div class="col-sm-10">
-                                    <select name="multisafepay_order_status_id_expired_{{ store.store_id }}" id="expired" class="form-control">
+                                    <select name="payment_multisafepay_order_status_id_expired_{{ store.store_id }}" id="expired" class="form-control">
                                          {% for order_status in order_statuses %}
                                             {% if order_status.order_status_id == 'payment_multisafepay_order_status_id_expired_'~store.store_id %}
                                                 <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
@@ -313,7 +313,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label" for="shipped">{{ entry_multisafepay_order_status_id_shipped }}</label>
                                 <div class="col-sm-10">
-                                    <select name="multisafepay_order_status_id_shipped_{{ store.store_id }}" id="shipped" class="form-control">
+                                    <select name="payment_multisafepay_order_status_id_shipped_{{ store.store_id }}" id="shipped" class="form-control">
                                          {% for order_status in order_statuses %}
                                             {% if order_status.order_status_id == 'payment_multisafepay_order_status_id_shipped_'~store.store_id %}
                                                 <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
@@ -330,7 +330,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label" for="partial_refunded">{{ entry_multisafepay_order_status_id_partial_refunded }}</label>
                                 <div class="col-sm-10">
-                                    <select name="multisafepay_order_status_id_partial_refunded_{{ store.store_id }}" id="partial_refunded" class="form-control">
+                                    <select name="payment_multisafepay_order_status_id_partial_refunded_{{ store.store_id }}" id="partial_refunded" class="form-control">
                                          {% for order_status in order_statuses %}
                                             {% if order_status.order_status_id == 'payment_multisafepay_order_status_id_partial_refunded_'~store.store_id %}
                                                 <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
@@ -346,7 +346,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label" for="input-geo-zone">{{ text_all_zones }}</label>
                                 <div class="col-sm-10">
-                                    <select name="multisafepay_geo_zone_id_{{ store.store_id }}" id="input-geo-zone" class="form-control">
+                                    <select name="payment_multisafepay_geo_zone_id_{{ store.store_id }}" id="input-geo-zone" class="form-control">
                                         <option value="0">{{ text_all_zones }}</option>
                                         {% for geo_zone in geo_zones %}
                                             {% if geo_zone.geo_zone_id  == 'payment_multisafepay_geo_zone_id_'~store.store_id %}
@@ -363,7 +363,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label" for="input-sort-order">{{ entry_sort_order }}</label>
                                 <div class="col-sm-10">
-                                    <input type="text" name="multisafepay_sort_order_{{ store.store_id }}" value="'payment_multisafepay_sort_order_'~store.store_id" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control" />
+                                    <input type="text" name="payment_multisafepay_sort_order_{{ store.store_id }}" value="'payment_multisafepay_sort_order_'~store.store_id" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control" />
                                 </div>
                             </div>
 
@@ -380,8 +380,8 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
                             <div class="col-sm-10">
-                                <select name="multisafepay_status" id="input-status" class="form-control">
-                                    {% if multisafepay_status %}
+                                <select name="payment_multisafepay_status_0" id="input-status" class="form-control">
+                                    {% if payment_multisafepay_status %}
                                         <option value="1" selected="selected">Enabled</option>
                                         <option value="0">Disabled</option>
                                     {% else %}
@@ -398,9 +398,9 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label" for="environment">{{ entry_environment }}</label>
                             <div class="col-sm-10">
-                                <select name="multisafepay_environment_0" id="environment" class="form-control">
-                                    <option value="0" {% if 'payment_multisafepay_environment' == 0 %} {{ 'selected' }}{% endif %}>Live account</option> 
-                                    <option value="1" {% if 'payment_multisafepay_environment' == 1 %} {{ 'selected' }}{% endif %}>Test account</option>
+                                <select name="payment_multisafepay_environment_0" id="environment" class="form-control">
+                                    <option value="0"  {% if payment_multisafepay_environment == '0' %} {{ 'selected' }}{% endif %} >Live Account</option>
+                                    <option value="1"  {% if payment_multisafepay_environment == '1' %} {{ 'selected' }}{% endif %} >Test Account</option>
                                 </select>
                             </div>
                         </div>
@@ -408,11 +408,11 @@
                                     
                         <!--MultiSafepay account type-->
                         <div class="form-group">
-                            <label class="col-sm-2 control-label" for="account">{{ entry_environment }}</label>
+                            <label class="col-sm-2 control-label" for="account">{{ entry_account_type }}</label>
                             <div class="col-sm-10">
-                                <select name="multisafepay_account_type_0" id="account" class="form-control">
-                                    <option value="connect"      {% if 'payment_multisafepay_account_type' == 'connect'      %} {{ 'selected' }}{% endif %} >Connect</option>
-                                    <option value="fastcheckout" {% if 'payment_multisafepay_account_type' == 'fastcheckout' %} {{ 'selected' }}{% endif %} >FastCheckout</option>
+                                <select name="payment_multisafepay_account_type_0" id="account" class="form-control">
+                                    <option value="connect"      {% if payment_multisafepay_account_type == 'connect'      %} {{ 'selected' }}{% endif %} >Connect</option>
+                                    <option value="fastcheckout" {% if payment_multisafepay_account_type == 'fastcheckout' %} {{ 'selected' }}{% endif %} >FastCheckout</option>
                                 </select>
                             </div>
                         </div>
@@ -421,9 +421,9 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label" for="fcobutton">{{ enable_checkout_button }}</label>
                             <div class="col-sm-10">
-                                <select name="multisafepay_enable_checkout_button_connect_0" id="fcobutton" class="form-control">
-                                    <option value="true"    {% if 'payment_multisafepay_enable_checkout_button_connect' ==  'true'  %} {{ 'selected' }}{% endif %}>{{ yes }}</option>
-                                    <option value="false"   {% if 'payment_multisafepay_enable_checkout_button_connect' ==  'false' %} {{ 'selected' }}{% endif %}>{{ no }}</option>
+                                <select name="payment_multisafepay_enable_checkout_button_connect_0" id="fcobutton" class="form-control">
+                                    <option value="true"   {% if payment_multisafepay_enable_checkout_button_connect ==  'true'   %} {{ 'selected' }}{% endif %}>{{ yes }}</option>
+                                    <option value="false"   {% if payment_multisafepay_enable_checkout_button_connect == 'false'  %} {{ 'selected' }}{% endif %}>{{ no }}</option>
                                 </select>
                             </div>
                         </div>
@@ -432,9 +432,9 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label" for="redirect">{{ entry_multisafepay_redirect_url }}</label>
                             <div class="col-sm-10">
-                                <select name="multisafepay_redirect_url_0" id="redirect" class="form-control">
-                                    <option value="true"    {% if 'payment_multisafepay_redirect_url' == 'true'  %} {{ 'selected' }}{% endif %}>Enabled</option>
-                                    <option value="false"   {% if 'payment_multisafepay_redirect_url' == 'false' %} {{ 'selected' }}{% endif %}>Disabled</option>
+                                <select name="payment_multisafepay_redirect_url_0" id="redirect" class="form-control">
+                                    <option value="true"    {% if payment_multisafepay_redirect_url == 'true'  %} {{ 'selected' }}{% endif %}>Enabled</option>
+                                    <option value="false"   {% if payment_multisafepay_redirect_url == 'false' %} {{ 'selected' }}{% endif %}>Disabled</option>
                                 </select>
                             </div>
                         </div>
@@ -443,11 +443,7 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label" for="accountid"><span>{{ entry_multisafepay_merchantid }}</span></label>
                             <div class="col-sm-10">
-                                {% set name  = 'payment_multisafepay_merchant_id_0' %}
-                                {% set value = attribute(_context, name) %}
-                                <input type="text" name= "{{ name }}" value= "{{ value }}"  id="input-api-key" class="form-control" />
-
-
+                                <input type="text" name="payment_multisafepay_merchant_id_0" value="{{ payment_multisafepay_merchant_id }}" id="input-api-key" class="form-control" />
                             </div>
                         </div>
 
@@ -455,7 +451,7 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label" for="siteid"><span>{{ entry_multisafepay_siteid }}</span></label>
                             <div class="col-sm-10">
-                                <input type="text" name="multisafepay_site_id_0" value="multisafepay_site_id" id="siteid" class="form-control" />
+                                <input type="text" name="payment_multisafepay_site_id_0" value="{{ payment_multisafepay_site_id }}" id="siteid" class="form-control" />
                             </div>
                         </div>
 
@@ -463,7 +459,7 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label" for="sitesecurecode"><span>{{ entry_multisafepay_secure_code }}</span></label>
                             <div class="col-sm-10">
-                                <input type="text" name="multisafepay_secure_code_0" value="multisafepay_secure_code" id="sitesecurecode" class="form-control" />
+                                <input type="text" name="payment_multisafepay_secure_code_0" value="{{ payment_multisafepay_secure_code }}" id="sitesecurecode" class="form-control" />
                             </div>
                         </div>
                         
@@ -472,9 +468,9 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label" for="environment">{{ entry_confirm_order }}</label>
                             <div class="col-sm-10">
-                                <select name="multisafepay_confirm_order_0" id="environment" class="form-control">
-                                    <option value="0" {% if 'payment_multisafepay_confirm_order' ==  0 %} {{ 'selected' }}{% endif %}>Before transaction</option>
-                                    <option value="1" {% if 'payment_multisafepay_confirm_order' ==  1 %} {{ 'selected' }}{% endif %}>After paid transaction</option>
+                                <select name="payment_multisafepay_confirm_order_0" id="environment" class="form-control">
+                                    <option value="0" {% if payment_multisafepay_confirm_order ==  0 %} {{ 'selected' }}{% endif %}>Before transaction</option>
+                                    <option value="1" {% if payment_multisafepay_confirm_order ==  1 %} {{ 'selected' }}{% endif %}>After paid transaction</option>
                                 </select>
                             </div>
                         </div>
@@ -486,7 +482,7 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label" for="daysactive"><span>{{ entry_multisafepay_days_active }}</span></label>
                             <div class="col-sm-10">
-                                <input type="text" name="multisafepay_days_active_0" value="multisafepay_days_active" id="daysactive" class="form-control" />
+                                <input type="text" name="payment_multisafepay_days_active_0" value="{{ payment_multisafepay_days_active }}" id="daysactive" class="form-control" />
                             </div>
                         </div>
                         
@@ -496,9 +492,9 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label" for="b2b">{{ entry_multisafepay_b2b }}</label>
                             <div class="col-sm-10">
-                                <select name="multisafepay_b2b_0" id="b2b" class="form-control">
-                                    <option value="true"  {% if 'payment_multisafepay_b2b' == 'true' %} {{ 'selected' }}{% endif %}>Enabled</option>
-                                    <option value="false" {% if 'payment_multisafepay_b2b' == 'false'%} {{ 'selected' }}{% endif %}>Disabled</option>
+                                <select name="payment_multisafepay_b2b_0" id="b2b" class="form-control">
+                                    <option value="true"  {% if payment_multisafepay_b2b == 'true' %} {{ 'selected' }}{% endif %}>Enabled</option>
+                                    <option value="false" {% if payment_multisafepay_b2b == 'false'%} {{ 'selected' }}{% endif %}>Disabled</option>
                                 </select>
                             </div>
                         </div>
@@ -508,7 +504,7 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label" for="fcotax"><span>{{ entry_multisafepay_fco_tax }}</span></label>
                             <div class="col-sm-10">
-                                <input type="text" name="multisafepay_fco_tax_percent_0" value="multisafepay_fco_tax_percent" id="fcotax" class="form-control" />
+                                <input type="text" name="payment_multisafepay_fco_tax_percent_0" value="{{ payment_multisafepay_fco_tax_percent }}" id="fcotax" class="form-control" />
                             </div>
                         </div>
 
@@ -516,13 +512,13 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label" for="freeship"><span>{{ entry_multisafepay_fco_free_ship }}</span></label>
                             <div class="col-sm-10">
-                                <input type="text" name="multisafepay_fco_free_ship_0" value="multisafepay_fco_free_ship" id="freeship" class="form-control" />
+                                <input type="text" name="payment_multisafepay_fco_free_ship_0" value="{{ payment_multisafepay_fco_free_ship }}" id="freeship" class="form-control" />
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label" for="minamount"><span>{{ text_min_amount }}</span></label>
                             <div class="col-sm-10">
-                                <input type="text" name="multisafepay_min_amount_0" value="multisafepay_min_amount" id="minamount" class="form-control" />
+                                <input type="text" name="payment_multisafepay_min_amount_0" value="{{ payment_multisafepay_min_amount }}" id="minamount" class="form-control" />
                             </div>
                         </div>
 
@@ -530,7 +526,7 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label" for="maxamount"><span>{{ text_max_amount }}</span></label>
                             <div class="col-sm-10">
-                                <input type="text" name="multisafepay_max_amount_0" value="multisafepay_max_amount" id="maxamount" class="form-control" />
+                                <input type="text" name="payment_multisafepay_max_amount_0" value="{{ payment_multisafepay_max_amount }}" id="maxamount" class="form-control" />
                             </div>
                         </div>
 
@@ -538,9 +534,9 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label" for="initialized">{{ entry_multisafepay_order_status_id_initialized }}</label>
                             <div class="col-sm-10">
-                                <select name="multisafepay_order_status_id_initialized_0" id="initialized" class="form-control">
+                                <select name="payment_multisafepay_order_status_id_initialized_0" id="initialized" class="form-control">
                                     {% for order_status in order_statuses %}
-                                        {% if order_status.order_status_id == 'payment_multisafepay_order_status_id_initialized' %}
+                                        {% if order_status.order_status_id == payment_multisafepay_order_status_id_initialized %}
                                             <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                                          {% else %}
                                             <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
@@ -554,9 +550,9 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label" for="completed">{{ entry_multisafepay_order_status_id_completed }}</label>
                             <div class="col-sm-10">
-                                <select name="multisafepay_order_status_id_completed_0" id="completed" class="form-control">
+                                <select name="payment_multisafepay_order_status_id_completed_0" id="completed" class="form-control">
                                     {% for order_status in order_statuses %}
-                                        {% if order_status.order_status_id == 'payment_multisafepay_order_status_id_completed_0' %}
+                                        {% if order_status.order_status_id == payment_multisafepay_order_status_id_completed %}
                                             <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                                          {% else %}
                                             <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
@@ -571,9 +567,9 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label" for="uncleared">{{ entry_multisafepay_order_status_id_uncleared }}</label>
                             <div class="col-sm-10">
-                                <select name="multisafepay_order_status_id_uncleared_0" id="uncleared" class="form-control">
+                                <select name="payment_multisafepay_order_status_id_uncleared_0" id="uncleared" class="form-control">
                                  {% for order_status in order_statuses %}
-                                        {% if order_status.order_status_id == 'payment_multisafepay_order_status_id_uncleared_0' %}
+                                        {% if order_status.order_status_id == payment_multisafepay_order_status_id_uncleared %}
                                             <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                                          {% else %}
                                             <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
@@ -587,9 +583,9 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label" for="reserved">{{ entry_multisafepay_order_status_id_reserved }}</label>
                             <div class="col-sm-10">
-                                <select name="multisafepay_order_status_id_reserved_0" id="reserved" class="form-control">
+                                <select name="payment_multisafepay_order_status_id_reserved_0" id="reserved" class="form-control">
                                  {% for order_status in order_statuses %}
-                                        {% if order_status.order_status_id == 'payment_multisafepay_order_status_id_reserved_0' %}
+                                        {% if order_status.order_status_id == payment_multisafepay_order_status_id_reserved %}
                                             <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                                          {% else %}
                                             <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
@@ -603,9 +599,9 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label" for="void">{{ entry_multisafepay_order_status_id_void }}</label>
                             <div class="col-sm-10">
-                                <select name="multisafepay_order_status_id_void_0" id="void" class="form-control">
+                                <select name="payment_multisafepay_order_status_id_void_0" id="void" class="form-control">
                                  {% for order_status in order_statuses %}
-                                        {% if order_status.order_status_id == 'payment_multisafepay_order_status_id_void_0' %}
+                                        {% if order_status.order_status_id == payment_multisafepay_order_status_id_void %}
                                             <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                                          {% else %}
                                             <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
@@ -619,9 +615,9 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label" for="refunded">{{ entry_multisafepay_order_status_id_refunded }}</label>
                             <div class="col-sm-10">
-                                <select name="multisafepay_order_status_id_refunded_0" id="refunded" class="form-control">
+                                <select name="payment_multisafepay_order_status_id_refunded_0" id="refunded" class="form-control">
                                     {% for order_status in order_statuses %}
-                                        {% if order_status.order_status_id == 'payment_multisafepay_order_status_id_refunded_0' %}
+                                        {% if order_status.order_status_id == payment_multisafepay_order_status_id_refunded %}
                                             <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                                          {% else %}
                                             <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
@@ -635,9 +631,9 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label" for="declined">{{ entry_multisafepay_order_status_id_declined }}</label>
                             <div class="col-sm-10">
-                                <select name="multisafepay_order_status_id_declined_0" id="declined" class="form-control">
+                                <select name="payment_multisafepay_order_status_id_declined_0" id="declined" class="form-control">
                                     {% for order_status in order_statuses %}
-                                        {% if order_status.order_status_id == 'payment_multisafepay_order_status_id_declined_0' %}
+                                        {% if order_status.order_status_id == payment_multisafepay_order_status_id_declined %}
                                             <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                                          {% else %}
                                             <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
@@ -651,9 +647,9 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label" for="expired">{{ entry_multisafepay_order_status_id_expired }}</label>
                             <div class="col-sm-10">
-                                <select name="multisafepay_order_status_id_expired_0" id="expired" class="form-control">
+                                <select name="payment_multisafepay_order_status_id_expired_0" id="expired" class="form-control">
                                     {% for order_status in order_statuses %}
-                                        {% if order_status.order_status_id == 'payment_multisafepay_order_status_id_expired_0' %}
+                                        {% if order_status.order_status_id == payment_multisafepay_order_status_id_expired %}
                                             <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                                          {% else %}
                                             <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
@@ -667,9 +663,9 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label" for="shipped">{{ entry_multisafepay_order_status_id_shipped }}</label>
                             <div class="col-sm-10">
-                                <select name="multisafepay_order_status_id_shipped_0" id="shipped" class="form-control">
+                                <select name="payment_multisafepay_order_status_id_shipped_0" id="shipped" class="form-control">
                                     {% for order_status in order_statuses %}
-                                        {% if order_status.order_status_id == 'payment_multisafepay_order_status_id_shipped_0' %}
+                                        {% if order_status.order_status_id == payment_multisafepay_order_status_id_shipped %}
                                             <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                                          {% else %}
                                             <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
@@ -685,9 +681,9 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label" for="partial_refunded">{{ entry_multisafepay_order_status_id_partial_refunded }}</label>
                             <div class="col-sm-10">
-                                <select name="multisafepay_order_status_id_partial_refunded_0" id="partial_refunded" class="form-control">
+                                <select name="payment_multisafepay_order_status_id_partial_refunded_0" id="partial_refunded" class="form-control">
                                     {% for order_status in order_statuses %}
-                                        {% if order_status.order_status_id == 'payment_multisafepay_order_status_id_partial_refunded_0' %}
+                                        {% if order_status.order_status_id == payment_multisafepay_order_status_id_partial_refunded %}
                                             <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
                                          {% else %}
                                             <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
@@ -701,10 +697,10 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label" for="input-geo-zone">{{ text_all_zones }}</label>
                             <div class="col-sm-10">
-                                <select name="multisafepay_geo_zone_id_0" id="input-geo-zone" class="form-control">
+                                <select name="payment_multisafepay_geo_zone_id_0" id="input-geo-zone" class="form-control">
                                    <option value="0">{{ text_all_zones }}</option>
                                     {% for geo_zone in geo_zones %}
-                                        {% if geo_zone.geo_zone_id  == 'payment_multisafepay_geo_zone_id' %}
+                                        {% if geo_zone.geo_zone_id  == payment_multisafepay_geo_zone_id %}
                                             <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
                                         {% else %}
                                             <option value="{{ geo_zone.geo_zone_id }}">{{ geo_zone.name }}</option>
@@ -718,7 +714,7 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label" for="input-sort-order">{{ entry_sort_order }}</label>
                             <div class="col-sm-10">
-                                <input type="text" name="multisafepay_sort_order_0" value="multisafepay_sort_order" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control" />
+                                <input type="text" name="payment_multisafepay_sort_order_0" value="{{ payment_multisafepay_sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control" />
                             </div>
                         </div>
                     </div>

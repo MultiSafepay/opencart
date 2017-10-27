@@ -59,7 +59,7 @@ class ModelExtensionPaymentMultiSafePayIdeal extends Model
 
         if ($status) {
             $method_data = array(
-                'code' => 'payment_multisafepay_ideal',
+                'code' => 'multisafepay_ideal',
                 'title' => $this->language->get('text_title_ideal'),
                 'terms' => '',
                 'sort_order' => $this->config->get('payment_multisafepay_ideal_sort_order_' . $storeid)

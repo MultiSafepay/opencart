@@ -59,7 +59,7 @@ class ModelExtensionPaymentMultiSafePayMaestro extends Model
 
         if ($status) {
             $method_data = array(
-                'code' => 'payment_multisafepay_maestro',
+                'code' => 'multisafepay_maestro',
                 'title' => $this->language->get('text_title_maestro'),
                 'terms' => '',
                 'sort_order' => $this->config->get('payment_multisafepay_maestro_sort_order_' . $storeid)

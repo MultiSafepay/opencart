@@ -60,7 +60,7 @@ class ModelExtensionPaymentMultiSafePayBoekenbon extends Model
 
         if ($status) {
             $method_data = array(
-                'code' => 'payment_multisafepay_boekenbon',
+                'code' => 'multisafepay_boekenbon',
                 'title' => $this->language->get('text_title_boekenbon'),
                 'terms' => '',
                 'sort_order' => $this->config->get('payment_multisafepay_boekenbon_sort_order_' . $storeid)

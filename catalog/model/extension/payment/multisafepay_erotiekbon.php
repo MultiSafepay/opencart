@@ -58,7 +58,7 @@ class ModelExtensionPaymentMultiSafePayErotiekbon extends Model
 
         if ($status) {
             $method_data = array(
-                'code' => 'payment_multisafepay_erotiekbon',
+                'code' => 'multisafepay_erotiekbon',
                 'title' => $this->language->get('text_title_erotiekbon'),
                 'terms' => '',
                 'sort_order' => $this->config->get('payment_multisafepay_erotiekbon_sort_order_' . $storeid)

@@ -58,7 +58,7 @@ class ModelExtensionPaymentMultiSafePayFashioncheque extends Model
 
         if ($status) {
             $method_data = array(
-                'code' => 'payment_multisafepay_fashioncheque',
+                'code' => 'multisafepay_fashioncheque',
                 'title' => $this->language->get('text_title_fashioncheque'),
                 'terms' => '',
                 'sort_order' => $this->config->get('payment_multisafepay_fashioncheque_sort_order_' . $storeid)

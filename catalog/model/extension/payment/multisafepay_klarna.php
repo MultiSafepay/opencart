@@ -78,7 +78,7 @@ class ModelExtensionPaymentMultiSafePayKlarna extends Model
 
         if ($status) {
             $method_data = array(
-                'code' => 'payment_multisafepay_klarna',
+                'code' => 'multisafepay_klarna',
                 'title' => $this->language->get('text_title_klarna'),
                 'terms' => '',
                 'sort_order' => $this->config->get('payment_multisafepay_klarna_sort_order_' . $storeid)

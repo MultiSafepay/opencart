@@ -60,7 +60,7 @@ class ModelExtensionPaymentMultiSafePayDirdeb extends Model
 
         if ($status) {
             $method_data = array(
-                'code' => 'payment_multisafepay_dirdeb',
+                'code' => 'multisafepay_dirdeb',
                 'title' => $this->language->get('text_title_dirdeb'),
                 'terms' => '',
                 'sort_order' => $this->config->get('payment_multisafepay_dirdeb_sort_order_' . $storeid)

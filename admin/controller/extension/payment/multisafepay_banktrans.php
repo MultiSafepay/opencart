@@ -20,7 +20,10 @@
  * ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-class ControllerExtensionPaymentMultiSafePayBanktrans extends Controller
+ 
+ini_set('display_errors', '1');
+
+class ControllerExtensionPaymentMultiSafePaybanktrans extends Controller
 {
 
     private $error = array();
@@ -29,119 +32,96 @@ class ControllerExtensionPaymentMultiSafePayBanktrans extends Controller
     {
         $this->load->language('extension/payment/multisafepay');
         $this->load->language('extension/payment/multisafepay_banktrans');
-        $this->document->setTitle($this->language->get('heading_title'));
         $this->load->model('setting/setting');
+   		$this->load->model("setting/store");
+		$this->load->model("localisation/geo_zone");
 
-        if (($this->request->server['REQUEST_METHOD'] == 'POST')) {
-            $this->load->model('setting/setting');
-            $this->model_setting_setting->editSetting('payment_multisafepay_banktrans', $this->request->post);
-            $this->session->data['success'] = $this->language->get('text_success');
-            $this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', 'SSL'));
-        }
+        $this->document->setTitle($this->language->get('heading_title'));
+        
+		$stores = $this->getStores();
+       
+		foreach($stores as $store)
+		{
+			if (($this->request->server['REQUEST_METHOD'] == "POST") && ($this->validate($store['id'])))
+			{
+				$post = $this->request->post['stores'][$store['id']];
+//				echo '<pre>'; print_r ($post, false); die();
+				
+				$this->model_setting_setting->editSetting('payment_multisafepay_banktrans', $post, $store['id']);
+			}
+		}
 
-        $this->load->model('setting/store');
-        $data['stores'] = $this->model_setting_store->getStores();
+        $this->session->data['success'] = $this->language->get('text_success');
+        
+        
+        $data['stores'] = $stores;
 
-        $data['text_edit'] = $this->language->get('text_edit');
-        $data['text_enabled'] = $this->language->get('text_enabled');
-        $data['text_disabled'] = $this->language->get('text_disabled');
-        $data['text_all_zones'] = $this->language->get('text_all_zones');
-        $data['action'] = $this->setup_link('extension/payment/multisafepay_banktrans');
-        $data['cancel'] = $this->setup_link('marketplace/extension');
-        $data['text_set_order_status'] = $this->language->get('text_set_order_status');
-        $data['heading_title'] = $this->language->get('heading_title');
-        $data['entry_status'] = $this->language->get('entry_status');
-        $data['entry_sort_order'] = $this->language->get('entry_sort_order');
-        // Geo Zone
-        $this->load->model('localisation/geo_zone');
-        $data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
+        $data['text_edit']              = $this->language->get('text_edit');
+        $data['text_enabled']           = $this->language->get('text_enabled');
+        $data['text_disabled']          = $this->language->get('text_disabled');
+        $data['text_all_zones']         = $this->language->get('text_all_zones');
+        $data['text_set_order_status']  = $this->language->get('text_set_order_status');
+        $data['heading_title']          = $this->language->get('heading_title');
+        $data['entry_status']           = $this->language->get('entry_status');
+        $data['entry_sort_order']       = $this->language->get('entry_sort_order');
 
+        $data['button_save']            = $this->language->get('button_save');
+        $data['button_cancel']          = $this->language->get('button_cancel');
+        $data['tab_general']            = $this->language->get('tab_general');
 
-
+        $data['breadcrumbs']    = array();
+        $data['breadcrumbs'][]  = array(
+            'text'      => $this->language->get('text_home'),
+            'href'      => $this->setup_link('common/home', 'user_token=' . $this->session->data['user_token'], 'SSL'),
+            'separator' => false
+        );
 
         $data['text_min_amount'] = $this->language->get('text_min_amount');
         $data['text_max_amount'] = $this->language->get('text_max_amount');
 
-        if (isset($this->request->post['payment_multisafepay_banktrans_geo_zone_id_0'])) {
-            $data['payment_multisafepay_banktrans_geo_zone_id'] = $this->request->post['payment_multisafepay_banktrans_geo_zone_id_0'];
-        } else {
-            $data['payment_multisafepay_banktrans_geo_zone_id'] = $this->config->get('payment_multisafepay_banktrans_geo_zone_id_0');
+
+
+        // Geo Zone
+        $data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
+
+		$settings = array(
+			"payment_multisafepay_banktrans_status"       => 1,
+			"payment_multisafepay_banktrans_max_amount"   => null,
+			"payment_multisafepay_banktrans_min_amount"   => null,
+			"payment_multisafepay_banktrans_sort_order"   => 1,
+			"payment_multisafepay_banktrans_geo_zone_id"  => 1
+		);
+
+		foreach($stores as $store)
+		{
+			foreach ($settings as $setting_name => $default_value)
+			{
+				if (isset($this->request->post['stores'][$store['id']][$setting_name])){
+					$data['stores'][$store['id']][$setting_name] = $this->request->post['stores'][$store['id']][$setting_name];
+				} else {
+					$data['stores'][$store['id']][$setting_name] = $this->config->get($setting_name);
+				}
+			}
         }
-
-        if (isset($this->request->post['payment_multisafepay_banktrans_max_amount_0'])) {
-            $data['payment_multisafepay_banktrans_max_amount'] = $this->request->post['payment_multisafepay_banktrans_max_amount_0'];
-        } else {
-            $data['payment_multisafepay_banktrans_max_amount'] = $this->config->get('payment_multisafepay_banktrans_max_amount_0');
-        }
-        if (isset($this->request->post['payment_multisafepay_banktrans_min_amount_0'])) {
-            $data['payment_multisafepay_banktrans_min_amount'] = $this->request->post['payment_multisafepay_banktrans_min_amount_0'];
-        } else {
-            $data['payment_multisafepay_banktrans_min_amount'] = $this->config->get('payment_multisafepay_banktrans_min_amount_0');
-        }
-
-        if (isset($this->request->post['payment_multisafepay_banktrans_status'])) {
-            $data['payment_multisafepay_banktrans_status'] = $this->request->post['payment_multisafepay_banktrans_status'];
-        } else {
-            $data['payment_multisafepay_banktrans_status'] = $this->config->get('payment_multisafepay_banktrans_status');
-        }
-
-        if (isset($this->request->post['payment_multisafepay_banktrans_sort_order_0'])) {
-            $data['payment_multisafepay_banktrans_sort_order'] = $this->request->post['payment_multisafepay_banktrans_sort_order_0'];
-        } else {
-            $data['payment_multisafepay_banktrans_sort_order'] = $this->config->get('payment_multisafepay_banktrans_sort_order_0');
-        }
+		
+		
+		$data['breadcrumbs'] = array();
 
 
-        foreach ($this->model_setting_store->getStores() as $store) {
-            if (isset($this->request->post['payment_multisafepay_banktrans_geo_zone_id_' . $store['store_id'] . ''])) {
-                $data['payment_multisafepay_banktrans_geo_zone_id_' . $store['store_id'] . ''] = $this->request->post['payment_multisafepay_banktrans_geo_zone_id_' . $store['store_id'] . ''];
-            } else {
-                $data['payment_multisafepay_banktrans_geo_zone_id_' . $store['store_id'] . ''] = $this->config->get('payment_multisafepay_banktrans_geo_zone_id_' . $store['store_id']);
-            }
+		$data['breadcrumbs'][] = array(
+			"href"      => $this->url->link('marketplace/extension', "type=payment&" . 'user_token='.$this->session->data['user_token'], "SSL"),
+			"text"      => $this->language->get("text_payment"),
+			"separator" => ' :: ',
+		);
 
-            if (isset($this->request->post['payment_multisafepay_banktrans_max_amount_' . $store['store_id'] . ''])) {
-                $data['payment_multisafepay_banktrans_max_amount_' . $store['store_id'] . ''] = $this->request->post['payment_multisafepay_banktrans_max_amount_' . $store['store_id'] . ''];
-            } else {
-                $data['payment_multisafepay_banktrans_max_amount_' . $store['store_id'] . ''] = $this->config->get('payment_multisafepay_banktrans_max_amount_' . $store['store_id']);
-            }
-            if (isset($this->request->post['payment_multisafepay_banktrans_min_amount_' . $store['store_id'] . ''])) {
-                $data['payment_multisafepay_banktrans_min_amount_' . $store['store_id'] . ''] = $this->request->post['payment_multisafepay_banktrans_min_amount_' . $store['store_id'] . ''];
-            } else {
-                $data['payment_multisafepay_banktrans_min_amount_' . $store['store_id'] . ''] = $this->config->get('payment_multisafepay_banktrans_min_amount_' . $store['store_id']);
-            }
+		$data['breadcrumbs'][] = array(
+			"href"      => $this->url->link("extension/payment/multisafepay_banktrans", 'user_token='.$this->session->data['user_token'], "SSL"),
+			"text"      => $this->language->get("heading_title"),
+			"separator" => " :: ",
+		);
 
-
-
-            if (isset($this->request->post['payment_multisafepay_banktrans_sort_order_' . $store['store_id'] . ''])) {
-                $data['payment_multisafepay_banktrans_sort_order_' . $store['store_id'] . ''] = $this->request->post['payment_multisafepay_banktrans_sort_order_' . $store['store_id'] . ''];
-            } else {
-                $data['payment_multisafepay_banktrans_sort_order_' . $store['store_id'] . ''] = $this->config->get('payment_multisafepay_banktrans_sort_order_' . $store['store_id']);
-            }
-        }
-
-        $data['button_save'] = $this->language->get('button_save');
-        $data['button_cancel'] = $this->language->get('button_cancel');
-        $data['tab_general'] = $this->language->get('tab_general');
-
-        $data['breadcrumbs'] = array();
-        $data['breadcrumbs'][] = array(
-            'text' => $this->language->get('text_home'),
-            'href' => $this->setup_link('common/home', 'user_token=' . $this->session->data['user_token'], 'SSL'),
-            'separator' => false
-        );
-
-        $data['breadcrumbs'][] = array(
-            'text' => $this->language->get('text_payment'),
-            'href' => $this->setup_link('marketplace/extension'),
-            'separator' => ' :: '
-        );
-
-        $data['breadcrumbs'][] = array(
-            'text' => $this->language->get('heading_title'),
-            'href' => $this->setup_link('extension/payment/multisafepay_banktrans'),
-            'separator' => ' :: '
-        );
-
+		$data['action'] = $this->url->link('extension/payment/multisafepay_banktrans', "user_token=".$this->session->data['user_token'], "SSL");
+		$data['cancel'] = $this->url->link('marketplace/extension', "type=payment&" . 'user_token='.$this->session->data['user_token'], "SSL");
 
         $this->template = 'extension/payment/multisafepay_banktrans';
         if (isset($this->error['warning'])) {
@@ -155,12 +135,42 @@ class ControllerExtensionPaymentMultiSafePayBanktrans extends Controller
         $data['footer'] = $this->load->controller('common/footer');
 
         $this->response->setOutput($this->load->view($this->template, $data));
+
     }
 
     private function setup_link($route)
     {
         return $link = $this->url->link($route, 'user_token=' . $this->session->data['user_token'] . '&type=payment', 'SSL');
     }
+
+
+
+	private function validate ($store = 0)
+	{
+		if (!$this->user->hasPermission("modify", "extension/payment/multisafepay_banktrans"))
+		{
+			$this->error['warning'] = $this->language->get("error_permission");
+		}
+
+		return (count($this->error) == 0);
+	}
+    
+    
+
+	protected function getStores()
+	{
+		$sql = $this->db->query(sprintf("SELECT store_id as id, name FROM %sstore", DB_PREFIX));
+		$rows = $sql->rows;
+		$default = array(
+			array(
+				'id' => 0,
+				'name' => $this->config->get('config_name')
+			)
+		);
+		$allStores = array_merge($default, $rows);
+
+		return $allStores;
+	}
 
 }
 

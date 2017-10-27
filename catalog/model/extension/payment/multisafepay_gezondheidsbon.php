@@ -57,7 +57,7 @@ class ModelExtensionPaymentMultiSafePayGezondheidsbon extends Model
 
         if ($status) {
             $method_data = array(
-                'code' => 'payment_multisafepay_gezondheidsbon',
+                'code' => 'multisafepay_gezondheidsbon',
                 'title' => $this->language->get('text_title_gezondheidsbon'),
                 'terms' => '',
                 'sort_order' => $this->config->get('payment_multisafepay_gezondheidsbon_sort_order_' . $storeid)

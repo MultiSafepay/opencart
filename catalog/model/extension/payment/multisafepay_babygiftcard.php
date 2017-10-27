@@ -61,7 +61,7 @@ class ModelExtensionPaymentMultiSafePayBabygiftcard extends Model
 
         if ($status) {
             $method_data = array(
-                'code' => 'payment_multisafepay_babygiftcard',
+                'code' => 'multisafepay_babygiftcard',
                 'title' => $this->language->get('text_title_babygiftcard'),
                 'terms' => '',
                 'sort_order' => $this->config->get('payment_multisafepay_babygiftcard_sort_order_' . $storeid)

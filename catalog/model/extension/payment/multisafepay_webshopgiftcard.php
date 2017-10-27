@@ -59,7 +59,7 @@ class ModelExtensionPaymentMultiSafePayWebshopgiftcard extends Model
 
         if ($status) {
             $method_data = array(
-                'code' => 'payment_multisafepay_webshopgiftcard',
+                'code' => 'multisafepay_webshopgiftcard',
                 'title' => $this->language->get('text_title_webshopgiftcard'),
                 'terms' => '',
                 'sort_order' => $this->config->get('payment_multisafepay_webshopgiftcard_sort_order_' . $storeid)

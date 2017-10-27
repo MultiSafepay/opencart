@@ -60,7 +60,7 @@ class ModelExtensionPaymentMultiSafePayAmex extends Model
 
         if ($status) {
             $method_data = array(
-                'code' => 'payment_multisafepay_amex',
+                'code' => 'multisafepay_amex',
                 'title' => $this->language->get('text_title_amex'),
                 'terms' => '',
                 'sort_order' => $this->config->get('payment_multisafepay_amex_sort_order_' . $storeid)

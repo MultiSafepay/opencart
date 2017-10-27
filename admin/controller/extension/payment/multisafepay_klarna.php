@@ -20,7 +20,11 @@
  * ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-class ControllerExtensionPaymentMultiSafePayKlarna extends Controller
+
+ ini_set('display_errors', 'On');
+error_reporting(E_ALL);
+
+ class ControllerExtensionPaymentMultiSafePayklarna extends Controller
 {
 
     private $error = array();
@@ -29,12 +33,10 @@ class ControllerExtensionPaymentMultiSafePayKlarna extends Controller
     {
         $this->load->language('extension/payment/multisafepay');
         $this->load->language('extension/payment/multisafepay_klarna');
-        $this->document->setTitle($this->language->get('heading_title'));
-        $this->load->model('setting/setting');
-
         $this->load->model('setting/store');
         $data['stores'] = $this->model_setting_store->getStores();
-
+        $this->document->setTitle($this->language->get('heading_title'));
+        $this->load->model('setting/setting');
 
         if (($this->request->server['REQUEST_METHOD'] == 'POST')) {
             $this->load->model('setting/setting');
@@ -43,133 +45,44 @@ class ControllerExtensionPaymentMultiSafePayKlarna extends Controller
             $this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', 'SSL'));
         }
 
-
-        if (isset($this->error['warning'])) {
-            $data['error_warning'] = $this->error['warning'];
-        } else {
-            $data['error_warning'] = '';
-        }
-
-        $data['heading_title'] = $this->language->get('heading_title');
-
         $data['text_edit'] = $this->language->get('text_edit');
         $data['text_enabled'] = $this->language->get('text_enabled');
         $data['text_disabled'] = $this->language->get('text_disabled');
         $data['text_all_zones'] = $this->language->get('text_all_zones');
-
-        $data['button_save'] = $this->language->get('button_save');
-        $data['button_cancel'] = $this->language->get('button_cancel');
-
-
-        /* $do = false;
-          $this->load->model('setting/extension');
-          $totals = $this->model_setting_extension->getInstalled('total');
-          foreach ($totals as $total) {
-          if ($total == 'multisafepayklarnafee') {
-          $do = true;
-          break;
-          }
-          }
-          if (!$do) {
-          $this->model_setting_extension->install('total', 'multisafepayklarnafee');
-          $post['multisafepayklarnafee_sort_order'] = 4;
-          $post['multisafepayklarnafee_status'] = 1;
-          $this->model_setting_setting->editSetting('multisafepayklarnafee', $post);
-          } */
-
-
-        $data['entry_paymentfee'] = $this->language->get('entry_paymentfee');
-        $data['entry_multisafepay_klarna_tax'] = $this->language->get('entry_multisafepay_klarna_tax');
-        $this->load->model('localisation/tax_class');
-        $data['tax_classes'] = $this->model_localisation_tax_class->getTaxClasses();
-        $data['text_none'] = $this->language->get('text_none');
-
-        $data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
-        $data['text_all_zones'] = $this->language->get('text_all_zones');
         // Geo Zone
         $this->load->model('localisation/geo_zone');
-        $data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
+
 
         $data['action'] = $this->setup_link('extension/payment/multisafepay_klarna');
         $data['cancel'] = $this->setup_link('marketplace/extension');
-
         $data['text_set_order_status'] = $this->language->get('text_set_order_status');
-        $data['text_free_account'] = $this->language->get('text_free_account');
-
         $data['heading_title'] = $this->language->get('heading_title');
-        $data['entry_multisafepay_merchantid'] = $this->language->get('klarna_multisafepay_merchantid');
-        $data['entry_multisafepay_siteid'] = $this->language->get('klarna_multisafepay_siteid');
-        $data['entry_multisafepay_secure_code'] = $this->language->get('klarna_multisafepay_secure_code');
-        $data['entry_environment'] = $this->language->get('entry_environment');
-
-        //start klarna data
-        $data['text_multisafepay_klarna_min_amount'] = $this->language->get('text_min_klarna_amount');
-        $data['text_multisafepay_klarna_max_amount'] = $this->language->get('text_max_klarna_amount');
-        $data['text_set_klarna_data'] = $this->language->get('text_set_klarna_data');
-        $data['text_multisafepay_klarna_ip_validation_option'] = $this->language->get('text_klarna_ip_validation_option');
-        $data['text_multisafepay_klarna_ip_validation_address'] = $this->language->get('text_klarna_ip_validation_address');
-
-        //end klarna data
         $data['entry_status'] = $this->language->get('entry_status');
         $data['entry_sort_order'] = $this->language->get('entry_sort_order');
 
 
-        if (isset($this->request->post['payment_multisafepay_klarna_geo_zone_id_0'])) {
-            $data['payment_multisafepay_klarna_geo_zone_id'] = $this->request->post['payment_multisafepay_klarna_geo_zone_id_0'];
+        $data['text_min_amount'] = $this->language->get('text_min_amount');
+        $data['text_max_amount'] = $this->language->get('text_max_amount');
+
+        $data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
+
+
+        if (isset($this->request->post['payment_multisafepay_klarna_geo_zone_id'])) {
+            $data['payment_multisafepay_klarna_geo_zone_id'] = $this->request->post['payment_multisafepay_klarna_geo_zone_id'];
         } else {
-            $data['payment_multisafepay_klarna_geo_zone_id'] = $this->config->get('payment_multisafepay_klarna_geo_zone_id_0');
+            $data['payment_multisafepay_klarna_geo_zone_id'] = $this->config->get('payment_multisafepay_klarna_geo_zone_id');
         }
 
-        if (isset($this->request->post['payment_multisafepay_klarna_ip_validation_address_0'])) {
-            $data['payment_multisafepay_klarna_ip_validation_address'] = $this->request->post['payment_multisafepay_klarna_ip_validation_address_0'];
+        if (isset($this->request->post['payment_multisafepay_klarna_max_amount'])) {
+            $data['payment_multisafepay_klarna_max_amount'] = $this->request->post['payment_multisafepay_klarna_max_amount'];
         } else {
-            $data['payment_multisafepay_klarna_ip_validation_address'] = $this->config->get('payment_multisafepay_klarna_ip_validation_address_0');
+            $data['payment_multisafepay_klarna_max_amount'] = $this->config->get('payment_multisafepay_klarna_max_amount');
         }
-
-
-        if (isset($this->request->post['payment_multisafepay_klarna_ip_validation_enabler_0'])) {
-            $data['payment_multisafepay_klarna_ip_validation_enabler'] = $this->request->post['payment_multisafepay_klarna_ip_validation_enabler_0'];
+        if (isset($this->request->post['payment_multisafepay_klarna_min_amount'])) {
+            $data['payment_multisafepay_klarna_min_amount'] = $this->request->post['payment_multisafepay_klarna_min_amount'];
         } else {
-            $data['payment_multisafepay_klarna_ip_validation_enabler'] = $this->config->get('payment_multisafepay_klarna_ip_validation_enabler_0');
+            $data['payment_multisafepay_klarna_min_amount'] = $this->config->get('payment_multisafepay_klarna_min_amount');
         }
-
-        if (isset($this->request->post['payment_multisafepay_klarna_max_amount_0'])) {
-            $data['payment_multisafepay_klarna_max_amount'] = $this->request->post['payment_multisafepay_klarna_max_amount_0'];
-        } else {
-            $data['payment_multisafepay_klarna_max_amount'] = $this->config->get('payment_multisafepay_klarna_max_amount_0');
-        }
-        if (isset($this->request->post['payment_multisafepay_klarna_min_amount_0'])) {
-            $data['payment_multisafepay_klarna_min_amount'] = $this->request->post['payment_multisafepay_klarna_min_amount_0'];
-        } else {
-            $data['payment_multisafepay_klarna_min_amount'] = $this->config->get('payment_multisafepay_klarna_min_amount_0');
-        }
-
-        if (isset($this->request->post['payment_multisafepay_klarna_merchant_id_0'])) {
-            $data['payment_multisafepay_klarna_merchant_id'] = $this->request->post['payment_multisafepay_klarna_merchant_id_0'];
-        } else {
-            $data['payment_multisafepay_klarna_merchant_id'] = $this->config->get('payment_multisafepay_klarna_merchant_id_0');
-        }
-
-        if (isset($this->request->post['payment_multisafepay_klarna_site_id_0'])) {
-            $data['payment_multisafepay_klarna_site_id'] = $this->request->post['payment_multisafepay_klarna_site_id_0'];
-        } else {
-            $data['payment_multisafepay_klarna_site_id'] = $this->config->get('payment_multisafepay_klarna_site_id_0');
-        }
-
-        if (isset($this->request->post['payment_multisafepay_klarna_secure_code_0'])) {
-            $data['payment_multisafepay_klarna_secure_code'] = $this->request->post['payment_multisafepay_klarna_secure_code_0'];
-        } else {
-            $data['payment_multisafepay_klarna_secure_code'] = $this->config->get('payment_multisafepay_klarna_secure_code_0');
-        }
-
-        if (isset($this->request->post['payment_multisafepay_klarna_environment_0'])) {
-            $data['payment_multisafepay_klarna_environment'] = $this->request->post['payment_multisafepay_klarna_environment_0'];
-        } else {
-            $data['payment_multisafepay_klarna_environment'] = $this->config->get('payment_multisafepay_klarna_environment_0');
-        }
-
-
-
 
         if (isset($this->request->post['payment_multisafepay_klarna_status'])) {
             $data['payment_multisafepay_klarna_status'] = $this->request->post['payment_multisafepay_klarna_status'];
@@ -177,33 +90,24 @@ class ControllerExtensionPaymentMultiSafePayKlarna extends Controller
             $data['payment_multisafepay_klarna_status'] = $this->config->get('payment_multisafepay_klarna_status');
         }
 
-
-        if (isset($this->request->post['payment_multisafepay_klarna_sort_order_0'])) {
-            $data['payment_multisafepay_klarna_sort_order'] = $this->request->post['payment_multisafepay_klarna_sort_order_0'];
+        if (isset($this->request->post['payment_multisafepay_klarna_sort_order'])) {
+            $data['payment_multisafepay_klarna_sort_order'] = $this->request->post['payment_multisafepay_klarna_sort_order'];
         } else {
-            $data['payment_multisafepay_klarna_sort_order'] = $this->config->get('payment_multisafepay_klarna_sort_order_0');
+            $data['payment_multisafepay_klarna_sort_order'] = $this->config->get('payment_multisafepay_klarna_sort_order');
         }
 
 
 
         foreach ($this->model_setting_store->getStores() as $store) {
+
             if (isset($this->request->post['payment_multisafepay_klarna_geo_zone_id_' . $store['store_id'] . ''])) {
                 $data['payment_multisafepay_klarna_geo_zone_id_' . $store['store_id'] . ''] = $this->request->post['payment_multisafepay_klarna_geo_zone_id_' . $store['store_id'] . ''];
             } else {
                 $data['payment_multisafepay_klarna_geo_zone_id_' . $store['store_id'] . ''] = $this->config->get('payment_multisafepay_klarna_geo_zone_id_' . $store['store_id']);
             }
-            if (isset($this->request->post['payment_multisafepay_klarna_ip_validation_address_' . $store['store_id'] . ''])) {
-                $data['payment_multisafepay_klarna_ip_validation_address_' . $store['store_id'] . ''] = $this->request->post['payment_multisafepay_klarna_ip_validation_address_' . $store['store_id'] . ''];
-            } else {
-                $data['payment_multisafepay_klarna_ip_validation_address_' . $store['store_id'] . ''] = $this->config->get('payment_multisafepay_klarna_ip_validation_address_' . $store['store_id']);
-            }
-            if (isset($this->request->post['payment_multisafepay_klarna_ip_validation_enabler_' . $store['store_id'] . ''])) {
-                $data['payment_multisafepay_klarna_ip_validation_enabler_' . $store['store_id'] . ''] = $this->request->post['payment_multisafepay_klarna_ip_validation_enabler_' . $store['store_id'] . ''];
-            } else {
-                $data['payment_multisafepay_klarna_ip_validation_enabler_' . $store['store_id'] . ''] = $this->config->get('payment_multisafepay_klarna_ip_validation_enabler_' . $store['store_id']);
-            }
+
             if (isset($this->request->post['payment_multisafepay_klarna_max_amount_' . $store['store_id'] . ''])) {
-                $data['payment_multisafepay_klarna_max_amount_' . $store['store_id'] . ''] = $this->request->post['payment_multisafepay_klarna_max_amount_' . $store['store_id'] . ''];
+                $data['payment_multisafepay_klarna_max_amount_' . $store['store_id'] . ''] = $this->request->post['payment_multisafepay_klarna_max_amount__' . $store['store_id'] . ''];
             } else {
                 $data['payment_multisafepay_klarna_max_amount_' . $store['store_id'] . ''] = $this->config->get('payment_multisafepay_klarna_max_amount_' . $store['store_id']);
             }
@@ -212,27 +116,13 @@ class ControllerExtensionPaymentMultiSafePayKlarna extends Controller
             } else {
                 $data['payment_multisafepay_klarna_min_amount_' . $store['store_id'] . ''] = $this->config->get('payment_multisafepay_klarna_min_amount_' . $store['store_id']);
             }
-            if (isset($this->request->post['payment_multisafepay_klarna_merchant_id_' . $store['store_id'] . ''])) {
-                $data['payment_multisafepay_klarna_merchant_id_' . $store['store_id'] . ''] = $this->request->post['payment_multisafepay_klarna_merchant_id_' . $store['store_id'] . ''];
+
+            if (isset($this->request->post['payment_multisafepay_klarna_status_' . $store['store_id'] . ''])) {
+                $data['payment_multisafepay_klarna_status_' . $store['store_id'] . ''] = $this->request->post['payment_multisafepay_klarna_status_' . $store['store_id'] . ''];
             } else {
-                $data['payment_multisafepay_klarna_merchant_id_' . $store['store_id'] . ''] = $this->config->get('payment_multisafepay_klarna_merchant_id_' . $store['store_id']);
-            }
-            if (isset($this->request->post['payment_multisafepay_klarna_site_id_' . $store['store_id'] . ''])) {
-                $data['payment_multisafepay_klarna_site_id_' . $store['store_id'] . ''] = $this->request->post['payment_multisafepay_klarna_site_id_' . $store['store_id'] . ''];
-            } else {
-                $data['payment_multisafepay_klarna_site_id_' . $store['store_id'] . ''] = $this->config->get('payment_multisafepay_klarna_site_id_' . $store['store_id']);
-            }
-            if (isset($this->request->post['payment_multisafepay_klarna_secure_code_' . $store['store_id'] . ''])) {
-                $data['payment_multisafepay_klarna_secure_code_' . $store['store_id'] . ''] = $this->request->post['payment_multisafepay_klarna_secure_code_' . $store['store_id'] . ''];
-            } else {
-                $data['payment_multisafepay_klarna_secure_code_' . $store['store_id'] . ''] = $this->config->get('payment_multisafepay_klarna_secure_code_' . $store['store_id']);
+                $data['payment_multisafepay_klarna_status_' . $store['store_id'] . ''] = $this->config->get('payment_multisafepay_klarna_status_' . $store['store_id']);
             }
 
-            if (isset($this->request->post['payment_multisafepay_klarna_environment_' . $store['store_id'] . ''])) {
-                $data['payment_multisafepay_klarna_environment_' . $store['store_id'] . ''] = $this->request->post['payment_multisafepay_klarna_environment_' . $store['store_id'] . ''];
-            } else {
-                $data['payment_multisafepay_klarna_environment_' . $store['store_id'] . ''] = $this->config->get('payment_multisafepay_klarna_environment_' . $store['store_id']);
-            }
             if (isset($this->request->post['payment_multisafepay_klarna_sort_order_' . $store['store_id'] . ''])) {
                 $data['payment_multisafepay_klarna_sort_order_' . $store['store_id'] . ''] = $this->request->post['payment_multisafepay_klarna_sort_order_' . $store['store_id'] . ''];
             } else {
@@ -241,8 +131,13 @@ class ControllerExtensionPaymentMultiSafePayKlarna extends Controller
         }
 
 
-        $data['breadcrumbs'] = array();
 
+
+        $data['button_save'] = $this->language->get('button_save');
+        $data['button_cancel'] = $this->language->get('button_cancel');
+        $data['tab_general'] = $this->language->get('tab_general');
+
+        $data['breadcrumbs'] = array();
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('text_home'),
             'href' => $this->setup_link('common/home', 'user_token=' . $this->session->data['user_token'], 'SSL'),
@@ -254,6 +149,11 @@ class ControllerExtensionPaymentMultiSafePayKlarna extends Controller
             'href' => $this->setup_link('marketplace/extension'),
             'separator' => ' :: '
         );
+        if (isset($this->error['warning'])) {
+            $data['error_warning'] = $this->error['warning'];
+        } else {
+            $data['error_warning'] = '';
+        }
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('heading_title'),
@@ -272,8 +172,7 @@ class ControllerExtensionPaymentMultiSafePayKlarna extends Controller
 
     private function setup_link($route)
     {
-        $link = $this->url->link($route, 'user_token=' . $this->session->data['user_token'], 'SSL');
-        return $link;
+        return $link = $this->url->link($route, 'user_token=' . $this->session->data['user_token'] . '&type=payment', 'SSL');
     }
 
 }

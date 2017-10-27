@@ -20,6 +20,10 @@
  * ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
+
+ ini_set('display_errors', 'On');
+error_reporting(E_ALL);
+
 class ControllerExtensionPaymentMultiSafePay extends Controller
 {
 
@@ -100,6 +104,10 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
         $data['entry_sort_order'] = $this->language->get('entry_sort_order');
         $data['enable_checkout_button'] = $this->language->get('enable_checkout_button');
 
+        
+        $this->load->model('localisation/geo_zone');
+
+        $data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
 
         /**
          * 	Start Default configuration
@@ -115,7 +123,6 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
         } else {
             $data['payment_multisafepay_confirm_order'] = $this->config->get('payment_multisafepay_confirm_order_0');
         }
-
 
         if (isset($this->request->post['payment_multisafepay_min_amount_0'])) {
             $data['payment_multisafepay_min_amount'] = $this->request->post['payment_multisafepay_min_amount_0'];
@@ -141,10 +148,32 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
             $data['payment_multisafepay_days_active'] = $this->config->get('payment_multisafepay_days_active_0');
         }
 
-        $this->load->model('localisation/geo_zone');
-
-        $data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
-
+        if (isset($this->request->post['payment_multisafepay_status_0'])) {
+            $data['payment_multisafepay_status'] = $this->request->post['payment_multisafepay_status_0'];
+        } else {
+            $data['payment_multisafepay_status'] = $this->config->get('payment_multisafepay_status_0');
+        }
+        
+        if (isset($this->request->post['payment_multisafepay_environment_0'])) {
+            $data['payment_multisafepay_environment'] = $this->request->post['payment_multisafepay_environment_0'];
+        } else {
+            $data['payment_multisafepay_environment'] = $this->config->get('payment_multisafepay_environment_0');
+        }
+        
+        if (isset($this->request->post['payment_multisafepay_account_type_0'])) {
+            $data['payment_multisafepay_account_type'] = $this->request->post['payment_multisafepay_account_type_0'];
+        } else {
+            $data['payment_multisafepay_account_type'] = $this->config->get('payment_multisafepay_account_type_0');
+        }
+        
+        
+        if (isset($this->request->post['payment_multisafepay_enable_checkout_button_connect_0'])) {
+            $data['payment_multisafepay_enable_checkout_button_connect'] = $this->request->post['payment_multisafepay_enable_checkout_button_connect_0'];
+        } else {
+            $data['payment_multisafepay_enable_checkout_button_connect'] = $this->config->get('payment_multisafepay_enable_checkout_button_connect_0');
+        }
+        
+       
         if (isset($this->request->post['payment_multisafepay_geo_zone_id_0'])) {
             $data['payment_multisafepay_geo_zone_id'] = $this->request->post['payment_multisafepay_geo_zone_id_0'];
         } else {
@@ -170,23 +199,6 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
             $data['payment_multisafepay_secure_code'] = $this->config->get('payment_multisafepay_secure_code_0');
         }
 
-        if (isset($this->request->post['payment_multisafepay_environment_0'])) {
-            $data['payment_multisafepay_environment'] = $this->request->post['payment_multisafepay_environment_0'];
-        } else {
-            $data['payment_multisafepay_environment'] = $this->config->get('payment_multisafepay_environment_0');
-        }
-
-        if (isset($this->request->post['payment_multisafepay_enable_checkout_button_connect_0'])) {
-            $data['payment_multisafepay_enable_checkout_button_connect'] = $this->request->post['payment_multisafepay_enable_checkout_button_connect_0'];
-        } else {
-            $data['payment_multisafepay_enable_checkout_button_connect'] = $this->config->get('payment_multisafepay_enable_checkout_button_connect_0');
-        }
-
-        if (isset($this->request->post['payment_multisafepay_account_type_0'])) {
-            $data['payment_multisafepay_account_type'] = $this->request->post['payment_multisafepay_account_type_0'];
-        } else {
-            $data['payment_multisafepay_account_type'] = $this->config->get('payment_multisafepay_account_type_0');
-        }
 
         if (isset($this->request->post['payment_multisafepay_redirect_url_0'])) {
             $data['payment_multisafepay_redirect_url'] = $this->request->post['payment_multisafepay_redirect_url_0'];
@@ -205,7 +217,6 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
         } else {
             $data['payment_multisafepay_order_status_id_completed'] = $this->config->get('payment_multisafepay_order_status_id_completed_0');
         }
-
 
         if (isset($this->request->post['payment_multisafepay_order_status_id_initialized_0'])) {
             $data['payment_multisafepay_order_status_id_initialized'] = $this->request->post['payment_multisafepay_order_status_id_initialized_0'];
@@ -261,25 +272,12 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
             $data['payment_multisafepay_order_status_id_partial_refunded'] = $this->config->get('payment_multisafepay_order_status_id_partial_refunded_0');
         }
 
-
-        if (isset($this->request->post['payment_multisafepay_status'])) {
-            $data['payment_multisafepay_status'] = $this->request->post['payment_multisafepay_status'];
-        } else {
-            $data['payment_multisafepay_status'] = $this->config->get('payment_multisafepay_status');
-        }
-
-
         if (isset($this->request->post['payment_multisafepay_sort_order_0'])) {
             $data['payment_multisafepay_sort_order'] = $this->request->post['payment_multisafepay_sort_order_0'];
         } else {
             $data['payment_multisafepay_sort_order'] = $this->config->get('payment_multisafepay_sort_order_0');
         }
-
-        /*
-         * End Default config
-         */
-
-
+//     echo '<pre>';  print_r ($data);  die('Klaar');
 
         /*
          * Start multistore configuration
@@ -456,11 +454,6 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
         /*
          * End multistore configuration
          */
-
-
-
-
-
 
         // callback url
         $data['callback'] = HTTP_CATALOG . 'index.php?route=payment/multisafepay/fastcheckout';

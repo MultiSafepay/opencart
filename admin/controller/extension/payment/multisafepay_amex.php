@@ -20,17 +20,21 @@
  * ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-class ControllerExtensionPaymentMultiSafePayAmex extends Controller
+
+ ini_set('display_errors', 'On');
+error_reporting(E_ALL);
+
+ class ControllerExtensionPaymentMultiSafePayamex extends Controller
 {
 
     private $error = array();
 
     public function index()
     {
-
         $this->load->language('extension/payment/multisafepay');
         $this->load->language('extension/payment/multisafepay_amex');
         $this->load->model('setting/store');
+        $data['stores'] = $this->model_setting_store->getStores();
         $this->document->setTitle($this->language->get('heading_title'));
         $this->load->model('setting/setting');
 
@@ -41,21 +45,12 @@ class ControllerExtensionPaymentMultiSafePayAmex extends Controller
             $this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', 'SSL'));
         }
 
-        $data['text_min_amount'] = $this->language->get('text_min_amount');
-        $data['text_max_amount'] = $this->language->get('text_max_amount');
-
-
         $data['text_edit'] = $this->language->get('text_edit');
         $data['text_enabled'] = $this->language->get('text_enabled');
         $data['text_disabled'] = $this->language->get('text_disabled');
         $data['text_all_zones'] = $this->language->get('text_all_zones');
         // Geo Zone
         $this->load->model('localisation/geo_zone');
-        $data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
-        $data['stores'] = $this->model_setting_store->getStores();
-
-        //default config
-
 
 
         $data['action'] = $this->setup_link('extension/payment/multisafepay_amex');
@@ -66,53 +61,53 @@ class ControllerExtensionPaymentMultiSafePayAmex extends Controller
         $data['entry_sort_order'] = $this->language->get('entry_sort_order');
 
 
+        $data['text_min_amount'] = $this->language->get('text_min_amount');
+        $data['text_max_amount'] = $this->language->get('text_max_amount');
+
+        $data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
+
+
+        if (isset($this->request->post['payment_multisafepay_amex_geo_zone_id'])) {
+            $data['payment_multisafepay_amex_geo_zone_id'] = $this->request->post['payment_multisafepay_amex_geo_zone_id'];
+        } else {
+            $data['payment_multisafepay_amex_geo_zone_id'] = $this->config->get('payment_multisafepay_amex_geo_zone_id');
+        }
+
+        if (isset($this->request->post['payment_multisafepay_amex_max_amount'])) {
+            $data['payment_multisafepay_amex_max_amount'] = $this->request->post['payment_multisafepay_amex_max_amount'];
+        } else {
+            $data['payment_multisafepay_amex_max_amount'] = $this->config->get('payment_multisafepay_amex_max_amount');
+        }
+        if (isset($this->request->post['payment_multisafepay_amex_min_amount'])) {
+            $data['payment_multisafepay_amex_min_amount'] = $this->request->post['payment_multisafepay_amex_min_amount'];
+        } else {
+            $data['payment_multisafepay_amex_min_amount'] = $this->config->get('payment_multisafepay_amex_min_amount');
+        }
+
         if (isset($this->request->post['payment_multisafepay_amex_status'])) {
             $data['payment_multisafepay_amex_status'] = $this->request->post['payment_multisafepay_amex_status'];
         } else {
             $data['payment_multisafepay_amex_status'] = $this->config->get('payment_multisafepay_amex_status');
         }
 
-        if (isset($this->request->post['payment_multisafepay_amex_geo_zone_id_0'])) {
-            $data['payment_multisafepay_amex_geo_zone_id'] = $this->request->post['payment_multisafepay_amex_geo_zone_id_0'];
+        if (isset($this->request->post['payment_multisafepay_amex_sort_order'])) {
+            $data['payment_multisafepay_amex_sort_order'] = $this->request->post['payment_multisafepay_amex_sort_order'];
         } else {
-            $data['payment_multisafepay_amex_geo_zone_id'] = $this->config->get('payment_multisafepay_amex_geo_zone_id_0');
+            $data['payment_multisafepay_amex_sort_order'] = $this->config->get('payment_multisafepay_amex_sort_order');
         }
 
-        if (isset($this->request->post['payment_multisafepay_amex_sort_order_0'])) {
-            $data['payment_multisafepay_amex_sort_order'] = $this->request->post['payment_multisafepay_amex_sort_order_0'];
-        } else {
-            $data['payment_multisafepay_amex_sort_order'] = $this->config->get('payment_multisafepay_amex_sort_order_0');
-        }
-
-
-        if (isset($this->request->post['payment_multisafepay_amex_max_amount_0'])) {
-            $data['payment_multisafepay_amex_max_amount_'] = $this->request->post['payment_multisafepay_amex_max_amount_0'];
-        } else {
-            $data['payment_multisafepay_amex_max_amount'] = $this->config->get('payment_multisafepay_amex_max_amount_0');
-        }
-        if (isset($this->request->post['payment_multisafepay_amex_min_amount_0'])) {
-            $data['payment_multisafepay_amex_min_amount'] = $this->request->post['payment_multisafepay_amex_min_amount_0'];
-        } else {
-            $data['payment_multisafepay_amex_min_amount'] = $this->config->get('payment_multisafepay_amex_min_amount_0');
-        }
 
 
         foreach ($this->model_setting_store->getStores() as $store) {
+
             if (isset($this->request->post['payment_multisafepay_amex_geo_zone_id_' . $store['store_id'] . ''])) {
                 $data['payment_multisafepay_amex_geo_zone_id_' . $store['store_id'] . ''] = $this->request->post['payment_multisafepay_amex_geo_zone_id_' . $store['store_id'] . ''];
             } else {
                 $data['payment_multisafepay_amex_geo_zone_id_' . $store['store_id'] . ''] = $this->config->get('payment_multisafepay_amex_geo_zone_id_' . $store['store_id']);
             }
 
-            if (isset($this->request->post['payment_multisafepay_amex_sort_order_' . $store['store_id'] . ''])) {
-                $data['payment_multisafepay_amex_sort_order_' . $store['store_id'] . ''] = $this->request->post['payment_multisafepay_amex_sort_order_' . $store['store_id'] . ''];
-            } else {
-                $data['payment_multisafepay_amex_sort_order_' . $store['store_id'] . ''] = $this->config->get('payment_multisafepay_amex_sort_order_' . $store['store_id']);
-            }
-
-
             if (isset($this->request->post['payment_multisafepay_amex_max_amount_' . $store['store_id'] . ''])) {
-                $data['payment_multisafepay_amex_max_amount_' . $store['store_id'] . ''] = $this->request->post['payment_multisafepay_amex_max_amount_' . $store['store_id'] . ''];
+                $data['payment_multisafepay_amex_max_amount_' . $store['store_id'] . ''] = $this->request->post['payment_multisafepay_amex_max_amount__' . $store['store_id'] . ''];
             } else {
                 $data['payment_multisafepay_amex_max_amount_' . $store['store_id'] . ''] = $this->config->get('payment_multisafepay_amex_max_amount_' . $store['store_id']);
             }
@@ -121,7 +116,22 @@ class ControllerExtensionPaymentMultiSafePayAmex extends Controller
             } else {
                 $data['payment_multisafepay_amex_min_amount_' . $store['store_id'] . ''] = $this->config->get('payment_multisafepay_amex_min_amount_' . $store['store_id']);
             }
+
+            if (isset($this->request->post['payment_multisafepay_amex_status_' . $store['store_id'] . ''])) {
+                $data['payment_multisafepay_amex_status_' . $store['store_id'] . ''] = $this->request->post['payment_multisafepay_amex_status_' . $store['store_id'] . ''];
+            } else {
+                $data['payment_multisafepay_amex_status_' . $store['store_id'] . ''] = $this->config->get('payment_multisafepay_amex_status_' . $store['store_id']);
+            }
+
+            if (isset($this->request->post['payment_multisafepay_amex_sort_order_' . $store['store_id'] . ''])) {
+                $data['payment_multisafepay_amex_sort_order_' . $store['store_id'] . ''] = $this->request->post['payment_multisafepay_amex_sort_order_' . $store['store_id'] . ''];
+            } else {
+                $data['payment_multisafepay_amex_sort_order_' . $store['store_id'] . ''] = $this->config->get('payment_multisafepay_amex_sort_order_' . $store['store_id']);
+            }
         }
+
+
+
 
         $data['button_save'] = $this->language->get('button_save');
         $data['button_cancel'] = $this->language->get('button_cancel');
@@ -139,17 +149,17 @@ class ControllerExtensionPaymentMultiSafePayAmex extends Controller
             'href' => $this->setup_link('marketplace/extension'),
             'separator' => ' :: '
         );
+        if (isset($this->error['warning'])) {
+            $data['error_warning'] = $this->error['warning'];
+        } else {
+            $data['error_warning'] = '';
+        }
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('heading_title'),
             'href' => $this->setup_link('extension/payment/multisafepay_amex'),
             'separator' => ' :: '
         );
-        if (isset($this->error['warning'])) {
-            $data['error_warning'] = $this->error['warning'];
-        } else {
-            $data['error_warning'] = '';
-        }
 
 
         $this->template = 'extension/payment/multisafepay_amex';
@@ -159,12 +169,6 @@ class ControllerExtensionPaymentMultiSafePayAmex extends Controller
 
         $this->response->setOutput($this->load->view($this->template, $data));
     }
-
-    /* private function setup_link($route) {
-      $old_version = (substr(str_replace(".", "", VERSION), 0, 2) < 15) ? true : false;
-      $link = ($old_version) ? HTTPS_SERVER . 'index.php?route=' . $route . '&user_token=' . $this->session->data['user_token'] : $this->url->link($route, 'user_token=' . $this->session->data['user_token'], 'SSL');
-      return $link;
-      } */
 
     private function setup_link($route)
     {

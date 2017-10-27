@@ -59,7 +59,7 @@ class ModelExtensionPaymentMultiSafePayVisa extends Model
 
         if ($status) {
             $method_data = array(
-                'code' => 'payment_multisafepay_visa',
+                'code' => 'multisafepay_visa',
                 'title' => $this->language->get('text_title_visa'),
                 'terms' => '',
                 'sort_order' => $this->config->get('payment_multisafepay_visa_sort_order_' . $storeid)

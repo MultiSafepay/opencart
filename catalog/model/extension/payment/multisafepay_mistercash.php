@@ -58,7 +58,7 @@ class ModelExtensionPaymentMultiSafePayMistercash extends Model
 
         if ($status) {
             $method_data = array(
-                'code' => 'payment_multisafepay_mistercash',
+                'code' => 'multisafepay_mistercash',
                 'title' => $this->language->get('text_title_mistercash'),
                 'terms' => '',
                 'sort_order' => $this->config->get('payment_multisafepay_mistercash_sort_order_' . $storeid)

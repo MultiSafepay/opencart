@@ -53,7 +53,6 @@ class ControllerExtensionPaymentMultiSafePayIdeal extends Controller
         $msp->merchant['site_code'] = $this->config->get('payment_multisafepay_secure_code_' . $storeid);
         $iDealIssuers = $msp->getIdealIssuers();
 
-
         $idealselect = '<div id="issuerselect">'; // . $this->language->get('text_select_bank');
         $idealselect .= '<select name="issuer">';
         $idealselect .= '<option value="">' . $this->language->get('text_select_bank') . '</option>';

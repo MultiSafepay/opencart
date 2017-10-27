@@ -20,7 +20,11 @@
  * ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-class ControllerExtensionPaymentMultiSafePayPaysafecard extends Controller
+
+ ini_set('display_errors', 'On');
+error_reporting(E_ALL);
+
+ class ControllerExtensionPaymentMultiSafePaypaysafecard extends Controller
 {
 
     private $error = array();
@@ -29,6 +33,8 @@ class ControllerExtensionPaymentMultiSafePayPaysafecard extends Controller
     {
         $this->load->language('extension/payment/multisafepay');
         $this->load->language('extension/payment/multisafepay_paysafecard');
+        $this->load->model('setting/store');
+        $data['stores'] = $this->model_setting_store->getStores();
         $this->document->setTitle($this->language->get('heading_title'));
         $this->load->model('setting/setting');
 
@@ -39,64 +45,69 @@ class ControllerExtensionPaymentMultiSafePayPaysafecard extends Controller
             $this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', 'SSL'));
         }
 
-        $this->load->model('setting/store');
-        $data['stores'] = $this->model_setting_store->getStores();
-
         $data['text_edit'] = $this->language->get('text_edit');
         $data['text_enabled'] = $this->language->get('text_enabled');
         $data['text_disabled'] = $this->language->get('text_disabled');
         $data['text_all_zones'] = $this->language->get('text_all_zones');
+        // Geo Zone
+        $this->load->model('localisation/geo_zone');
+
+
         $data['action'] = $this->setup_link('extension/payment/multisafepay_paysafecard');
         $data['cancel'] = $this->setup_link('marketplace/extension');
         $data['text_set_order_status'] = $this->language->get('text_set_order_status');
         $data['heading_title'] = $this->language->get('heading_title');
         $data['entry_status'] = $this->language->get('entry_status');
         $data['entry_sort_order'] = $this->language->get('entry_sort_order');
-        // Geo Zone
-        $this->load->model('localisation/geo_zone');
-        $data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
-
 
 
         $data['text_min_amount'] = $this->language->get('text_min_amount');
         $data['text_max_amount'] = $this->language->get('text_max_amount');
 
-        if (isset($this->request->post['payment_multisafepay_paysafecard_geo_zone_id_0'])) {
-            $data['payment_multisafepay_paysafecard_geo_zone_id'] = $this->request->post['payment_multisafepay_paysafecard_geo_zone_id_0'];
+        $data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
+
+
+        if (isset($this->request->post['payment_multisafepay_paysafecard_geo_zone_id'])) {
+            $data['payment_multisafepay_paysafecard_geo_zone_id'] = $this->request->post['payment_multisafepay_paysafecard_geo_zone_id'];
         } else {
-            $data['payment_multisafepay_paysafecard_geo_zone_id'] = $this->config->get('payment_multisafepay_paysafecard_geo_zone_id_0');
+            $data['payment_multisafepay_paysafecard_geo_zone_id'] = $this->config->get('payment_multisafepay_paysafecard_geo_zone_id');
         }
-        if (isset($this->request->post['payment_multisafepay_paysafecard_max_amount_0'])) {
-            $data['payment_multisafepay_paysafecard_max_amount'] = $this->request->post['payment_multisafepay_paysafecard_max_amount_0'];
+
+        if (isset($this->request->post['payment_multisafepay_paysafecard_max_amount'])) {
+            $data['payment_multisafepay_paysafecard_max_amount'] = $this->request->post['payment_multisafepay_paysafecard_max_amount'];
         } else {
-            $data['payment_multisafepay_paysafecard_max_amount'] = $this->config->get('payment_multisafepay_paysafecard_max_amount_0');
+            $data['payment_multisafepay_paysafecard_max_amount'] = $this->config->get('payment_multisafepay_paysafecard_max_amount');
         }
-        if (isset($this->request->post['payment_multisafepay_paysafecard_min_amount_0'])) {
-            $data['payment_multisafepay_paysafecard_min_amount'] = $this->request->post['payment_multisafepay_paysafecard_min_amount_0'];
+        if (isset($this->request->post['payment_multisafepay_paysafecard_min_amount'])) {
+            $data['payment_multisafepay_paysafecard_min_amount'] = $this->request->post['payment_multisafepay_paysafecard_min_amount'];
         } else {
-            $data['payment_multisafepay_paysafecard_min_amount'] = $this->config->get('payment_multisafepay_paysafecard_min_amount_0');
+            $data['payment_multisafepay_paysafecard_min_amount'] = $this->config->get('payment_multisafepay_paysafecard_min_amount');
         }
+
         if (isset($this->request->post['payment_multisafepay_paysafecard_status'])) {
             $data['payment_multisafepay_paysafecard_status'] = $this->request->post['payment_multisafepay_paysafecard_status'];
         } else {
             $data['payment_multisafepay_paysafecard_status'] = $this->config->get('payment_multisafepay_paysafecard_status');
         }
-        if (isset($this->request->post['payment_multisafepay_paysafecard_sort_order_0'])) {
-            $data['payment_multisafepay_paysafecard_sort_order'] = $this->request->post['payment_multisafepay_paysafecard_sort_order_0'];
+
+        if (isset($this->request->post['payment_multisafepay_paysafecard_sort_order'])) {
+            $data['payment_multisafepay_paysafecard_sort_order'] = $this->request->post['payment_multisafepay_paysafecard_sort_order'];
         } else {
-            $data['payment_multisafepay_paysafecard_sort_order'] = $this->config->get('payment_multisafepay_paysafecard_sort_order_0');
+            $data['payment_multisafepay_paysafecard_sort_order'] = $this->config->get('payment_multisafepay_paysafecard_sort_order');
         }
 
 
 
         foreach ($this->model_setting_store->getStores() as $store) {
+
             if (isset($this->request->post['payment_multisafepay_paysafecard_geo_zone_id_' . $store['store_id'] . ''])) {
                 $data['payment_multisafepay_paysafecard_geo_zone_id_' . $store['store_id'] . ''] = $this->request->post['payment_multisafepay_paysafecard_geo_zone_id_' . $store['store_id'] . ''];
             } else {
                 $data['payment_multisafepay_paysafecard_geo_zone_id_' . $store['store_id'] . ''] = $this->config->get('payment_multisafepay_paysafecard_geo_zone_id_' . $store['store_id']);
             }
+
             if (isset($this->request->post['payment_multisafepay_paysafecard_max_amount_' . $store['store_id'] . ''])) {
-                $data['payment_multisafepay_paysafecard_max_amount_' . $store['store_id'] . ''] = $this->request->post['payment_multisafepay_paysafecard_max_amount_' . $store['store_id'] . ''];
+                $data['payment_multisafepay_paysafecard_max_amount_' . $store['store_id'] . ''] = $this->request->post['payment_multisafepay_paysafecard_max_amount__' . $store['store_id'] . ''];
             } else {
                 $data['payment_multisafepay_paysafecard_max_amount_' . $store['store_id'] . ''] = $this->config->get('payment_multisafepay_paysafecard_max_amount_' . $store['store_id']);
             }
@@ -105,6 +116,13 @@ class ControllerExtensionPaymentMultiSafePayPaysafecard extends Controller
             } else {
                 $data['payment_multisafepay_paysafecard_min_amount_' . $store['store_id'] . ''] = $this->config->get('payment_multisafepay_paysafecard_min_amount_' . $store['store_id']);
             }
+
+            if (isset($this->request->post['payment_multisafepay_paysafecard_status_' . $store['store_id'] . ''])) {
+                $data['payment_multisafepay_paysafecard_status_' . $store['store_id'] . ''] = $this->request->post['payment_multisafepay_paysafecard_status_' . $store['store_id'] . ''];
+            } else {
+                $data['payment_multisafepay_paysafecard_status_' . $store['store_id'] . ''] = $this->config->get('payment_multisafepay_paysafecard_status_' . $store['store_id']);
+            }
+
             if (isset($this->request->post['payment_multisafepay_paysafecard_sort_order_' . $store['store_id'] . ''])) {
                 $data['payment_multisafepay_paysafecard_sort_order_' . $store['store_id'] . ''] = $this->request->post['payment_multisafepay_paysafecard_sort_order_' . $store['store_id'] . ''];
             } else {
@@ -131,6 +149,11 @@ class ControllerExtensionPaymentMultiSafePayPaysafecard extends Controller
             'href' => $this->setup_link('marketplace/extension'),
             'separator' => ' :: '
         );
+        if (isset($this->error['warning'])) {
+            $data['error_warning'] = $this->error['warning'];
+        } else {
+            $data['error_warning'] = '';
+        }
 
         $data['breadcrumbs'][] = array(
             'text' => $this->language->get('heading_title'),
@@ -140,12 +163,6 @@ class ControllerExtensionPaymentMultiSafePayPaysafecard extends Controller
 
 
         $this->template = 'extension/payment/multisafepay_paysafecard';
-        if (isset($this->error['warning'])) {
-            $data['error_warning'] = $this->error['warning'];
-        } else {
-            $data['error_warning'] = '';
-        }
-
         $data['header'] = $this->load->controller('common/header');
         $data['column_left'] = $this->load->controller('common/column_left');
         $data['footer'] = $this->load->controller('common/footer');

@@ -59,7 +59,7 @@ class ModelExtensionPaymentMultiSafePayBanktrans extends Model
 
         if ($status) {
             $method_data = array(
-                'code' => 'payment_multisafepay_banktrans',
+                'code' => 'multisafepay_banktrans',
                 'title' => $this->language->get('text_title_banktrans'),
                 'terms' => '',
                 'sort_order' => $this->config->get('payment_multisafepay_banktrans_sort_order_' . $storeid)

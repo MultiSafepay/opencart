@@ -58,7 +58,7 @@ class ModelExtensionPaymentMultiSafePayLief extends Model
 
         if ($status) {
             $method_data = array(
-                'code' => 'payment_multisafepay_lief',
+                'code' => 'multisafepay_lief',
                 'title' => $this->language->get('text_title_lief'),
                 'terms' => '',
                 'sort_order' => $this->config->get('payment_multisafepay_lief_sort_order_' . $storeid)

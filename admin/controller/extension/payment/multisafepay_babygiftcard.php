@@ -20,7 +20,8 @@
  * ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-class ControllerExtensionPaymentMultiSafePayBabygiftcard extends Controller
+
+ class ControllerExtensionPaymentMultiSafePayBabygiftcard extends Controller
 {
 
     private $error = array();
@@ -63,21 +64,21 @@ class ControllerExtensionPaymentMultiSafePayBabygiftcard extends Controller
         $data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
 
 
-        if (isset($this->request->post['payment_multisafepay_babygiftcard_geo_zone_id_0'])) {
-            $data['payment_multisafepay_babygiftcard_geo_zone_id'] = $this->request->post['payment_multisafepay_babygiftcard_geo_zone_id_0'];
+        if (isset($this->request->post['payment_multisafepay_babygiftcard_geo_zone_id'])) {
+            $data['payment_multisafepay_babygiftcard_geo_zone_id'] = $this->request->post['payment_multisafepay_babygiftcard_geo_zone_id'];
         } else {
-            $data['payment_multisafepay_babygiftcard_geo_zone_id'] = $this->config->get('payment_multisafepay_babygiftcard_geo_zone_id_0');
+            $data['payment_multisafepay_babygiftcard_geo_zone_id'] = $this->config->get('payment_multisafepay_babygiftcard_geo_zone_id');
         }
 
-        if (isset($this->request->post['payment_multisafepay_babygiftcard_max_amount_0'])) {
-            $data['payment_multisafepay_babygiftcard_max_amount'] = $this->request->post['payment_multisafepay_babygiftcard_max_amount_0'];
+        if (isset($this->request->post['payment_multisafepay_babygiftcard_max_amount'])) {
+            $data['payment_multisafepay_babygiftcard_max_amount'] = $this->request->post['payment_multisafepay_babygiftcard_max_amount'];
         } else {
-            $data['payment_multisafepay_babygiftcard_max_amount'] = $this->config->get('payment_multisafepay_babygiftcard_max_amount_0');
+            $data['payment_multisafepay_babygiftcard_max_amount'] = $this->config->get('payment_multisafepay_babygiftcard_max_amount');
         }
-        if (isset($this->request->post['payment_multisafepay_babygiftcard_min_amount_0'])) {
-            $data['payment_multisafepay_babygiftcard_min_amount'] = $this->request->post['payment_multisafepay_babygiftcard_min_amount_0'];
+        if (isset($this->request->post['payment_multisafepay_babygiftcard_min_amount'])) {
+            $data['payment_multisafepay_babygiftcard_min_amount'] = $this->request->post['payment_multisafepay_babygiftcard_min_amount'];
         } else {
-            $data['payment_multisafepay_babygiftcard_min_amount'] = $this->config->get('payment_multisafepay_babygiftcard_min_amount_0');
+            $data['payment_multisafepay_babygiftcard_min_amount'] = $this->config->get('payment_multisafepay_babygiftcard_min_amount');
         }
 
         if (isset($this->request->post['payment_multisafepay_babygiftcard_status'])) {
@@ -86,10 +87,10 @@ class ControllerExtensionPaymentMultiSafePayBabygiftcard extends Controller
             $data['payment_multisafepay_babygiftcard_status'] = $this->config->get('payment_multisafepay_babygiftcard_status');
         }
 
-        if (isset($this->request->post['payment_multisafepay_babygiftcard_sort_order_0'])) {
-            $data['payment_multisafepay_babygiftcard_sort_order'] = $this->request->post['payment_multisafepay_babygiftcard_sort_order_0'];
+        if (isset($this->request->post['payment_multisafepay_babygiftcard_sort_order'])) {
+            $data['payment_multisafepay_babygiftcard_sort_order'] = $this->request->post['payment_multisafepay_babygiftcard_sort_order'];
         } else {
-            $data['payment_multisafepay_babygiftcard_sort_order'] = $this->config->get('payment_multisafepay_babygiftcard_sort_order_0');
+            $data['payment_multisafepay_babygiftcard_sort_order'] = $this->config->get('payment_multisafepay_babygiftcard_sort_order');
         }
 
 

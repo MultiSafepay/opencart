@@ -58,7 +58,7 @@ class ModelExtensionPaymentMultiSafePayGiropay extends Model
 
         if ($status) {
             $method_data = array(
-                'code' => 'payment_multisafepay_giropay',
+                'code' => 'multisafepay_giropay',
                 'title' => $this->language->get('text_title_giropay'),
                 'terms' => '',
                 'sort_order' => $this->config->get('payment_multisafepay_giropay_sort_order_' . $storeid)
