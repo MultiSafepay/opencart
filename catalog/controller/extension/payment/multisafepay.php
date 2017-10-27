@@ -132,10 +132,11 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
             $msp->customer['email'] = $order_info['email'];
             $msp->customer['phone'] = $order_info['telephone'];
             $msp->customer['country'] = $order_info['payment_iso_code_2'];
-
             if ($msp->customer['housenumber'] == "") {
-                $msp->parseCustomerAddress($order_info['payment_address_2']);
+                $msp->customer['housenumber'] = $order_info['payment_address_2'];
             }
+
+
 
             $msp->customer['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
             $msp->transaction['id'] = $order_info['order_id']; //round($order_info['total'] * $order_info['currency_value'] * 100);

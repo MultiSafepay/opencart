@@ -159,6 +159,11 @@ class ControllerExtensionPaymentMultiSafepayKlarna extends Controller
         }
         $msp->customer['country'] = $order_info['payment_iso_code_2'];
         $msp->parseCustomerAddress($order_info['payment_address_1']);
+        if ($msp->customer['housenumber'] == "") {
+            $msp->customer['housenumber'] = $order_info['payment_address_2'];
+        }
+
+
         $msp->transaction['id'] = $order_info['order_id'];
         $msp->transaction['currency'] = 'EUR'; //MSP only supports EUR at the moment  ->  $order_info['currency_code'];
         $msp->transaction['description'] = 'Order #' . $msp->transaction['id'];
