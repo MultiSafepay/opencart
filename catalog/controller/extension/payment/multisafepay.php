@@ -817,6 +817,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
                 $xml .= '</shipping-info>';
                 //header ("Content-Type:text/xml");  
                 print_r($xml);
+
                 exit;
             }
         }
@@ -1439,11 +1440,11 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
         $quote_data = array();
 
         // Load interface for getting extension information
-        $this->load->model('marketplace/extension');
-        //$this->load->model('setting/extension'); 
+//        $this->load->model('marketplace/extension');
+        $this->load->model('setting/extension');
 
         $amount = $_REQUEST['amount'];
-        $results = $this->model_extension_extension->getExtensions('shipping');
+        $results = $this->model_setting_extension->getExtensions('shipping');
 
 
 

@@ -77,12 +77,11 @@
                         
             <add><![CDATA[
                 {% if multisafepay_fastcheckout and enable_checkout_button_connect %}
-                                        <div class="right">
-                                                <a href="{{ multisafepay_fastcheckout }}" id="fastcheckout-link"> 
-                                                        <img src="image/msp/button.png" width="219" height="59" style="float: right;margin-bottom:15px;" hspace="6" alt="MultiSafepay fast checkout" title="Multisafepay fast checkout" border="0" />
-                                                </a>
-                                        </div>
-                                {% endif %}
+                        <a href="{{ multisafepay_fastcheckout }}" id="fastcheckout-link"> 
+                            <img src="image/msp/button.png" width="219" height="59" style="float: right;margin-bottom:15px;" hspace="6" alt="MultiSafepay fast checkout" title="Multisafepay fast checkout" border="0" />
+                        </a>
+                    </div>
+                {% endif %}
                 ]]></add>
         </operation>
     </file>
