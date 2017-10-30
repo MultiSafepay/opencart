@@ -72,7 +72,7 @@
     <file name="catalog/view/theme/*/template/checkout/checkout.twig">
         <operation>
            <search position="before"><![CDATA[
-                {{ heading_title }}
+                {{ content_bottom }}
                 ]]></search>
                         
             <add><![CDATA[
