@@ -38,7 +38,7 @@ class ControllerExtensionTotalMultiSafepayPayAfterFee extends Controller
         if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
             $status = true;
 
-            $this->model_setting_setting->editSetting('multisafepaypayafterfee', array_merge($this->request->post, array('multisafepaypayafterfee_status' => $status)));
+            $this->model_setting_setting->editSetting('total_multisafepaypayafterfee', array_merge($this->request->post, array('multisafepaypayafterfee_status' => $status)));
 
             $this->session->data['success'] = $this->language->get('text_success');
 
@@ -90,21 +90,15 @@ class ControllerExtensionTotalMultiSafepayPayAfterFee extends Controller
         $data['cancel'] = $this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=total', 'SSL');
 
 
-        if (isset($this->request->post['multisafepaypayafterfee'])) {
-            $data['multisafepaypayafterfee'] = $this->request->post['multisafepaypayafterfee'];
+        if (isset($this->request->post['total_multisafepaypayafterfee'])) {
+            $data['total_multisafepaypayafterfee'] = $this->request->post['total_multisafepaypayafterfee'];
         } else {
-            $data['multisafepaypayafterfee'] = $this->config->get('multisafepaypayafterfee');
+            $data['total_multisafepaypayafterfee'] = $this->config->get('total_multisafepaypayafterfee');
         }
 
         $this->load->model('localisation/tax_class');
 
-
-
-
         $data['countries'] = array();
-
-
-
         $data['countries'][] = array(
             'name' => $this->language->get('text_netherlands'),
             'code' => 'NLD'

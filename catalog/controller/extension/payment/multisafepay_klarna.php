@@ -332,7 +332,7 @@ class ControllerExtensionPaymentMultiSafepayKlarna extends Controller
 
         // Payment fee
 
-        $fee = $this->config->get('multisafepaypayafterfee');
+        $fee = $this->config->get('total_multisafepaypayafterfee');
 
 
 
