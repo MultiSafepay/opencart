@@ -15,6 +15,7 @@ $_['entry_fee'] = 'Invoice Fee';
 $_['entry_tax_class'] = 'Tax Class';
 $_['entry_status'] = 'Status';
 $_['entry_sort_order'] = 'Sort Order';
+$_['text_netherlands'] = 'The Netherlands';
 
 // Error
 $_['error_permission'] = 'Warning: You do not have permission to modify the Pay After Delivery fee total!';
