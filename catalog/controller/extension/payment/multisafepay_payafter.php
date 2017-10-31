@@ -308,33 +308,29 @@ class ControllerExtensionPaymentMultiSafePayPayafter extends Controller
 
         // Payment fee
 
-        $fee = $this->config->get('total_multisafepaypayafterfee');
 
+        if ($this->config->get('total_multisafepay_status')) {
 
+            $tax_rates = $this->tax->getRates($this->config->get('total_multisafepay_fee'),
+                                              $this->config->get('total_multisafepay_tax_class_id'));
 
-        if ($fee['NLD']['status']) {
+    $string = sprintf ("%s\n%s\n%s\n%s: %s\n\n",  date ('Y-m-d H:i:s'), __FILE__ , __METHOD__ , 'tax_rates',  print_r ($tax_rates, true));
+    error_log($string, 3, "MultiSafepay.log");
 
-            $tax_rates = $this->tax->getRates($fee['NLD']['fee'], $fee['NLD']['tax_class_id']);
+            $fee_select = '0';
+            foreach ($tax_rates as $key => $value) {
+                $correct_rate = round($value['rate'], 2) / 100;
+                $rule = new MspDefaultTaxRule($correct_rate, 'true'); // Tax rate, shipping taxed
+                $msp->cart->AddDefaultTaxRules($rule);
+                $fee_select = $value['name'];
+            }
 
-
-            $feetaxrate = $this->_getRate($fee['NLD']['tax_class_id']);
-            $fee = $this->_getAmount($order_info, $fee['NLD']['fee']);
-
-
-
-            //$btw= $fee/ (100+$feetaxrate)*$feetaxrate;
-            //$fee= $fee -$btw;
-
+            $fee = $this->_getAmount($order_info, $this->config->get('total_multisafepay_fee'));
 
             $c_item = new MspItem($this->language->get('entry_paymentfee'), 'Fee', '1', $fee, 'KG', '0');
             $c_item->merchant_item_id = 'payment fee';
-            $c_item->SetTaxTableSelector('fee');
+            $c_item->SetTaxTableSelector($fee_select);
             $msp->cart->AddItem($c_item);
-
-            $taxtable = new MspAlternateTaxTable('fee', 'true');
-            $taxrule = new MspAlternateTaxRule($feetaxrate / 100);
-            $taxtable->AddAlternateTaxRules($taxrule);
-            $msp->cart->AddAlternateTaxTables($taxtable);
         }
 
 
@@ -367,7 +363,7 @@ class ControllerExtensionPaymentMultiSafePayPayafter extends Controller
 
         $url = $msp->startCheckout();
 
-        /* echo '<pre>';	
+        /* echo '<pre>';
           print_r($msp);
           echo '</pre>';exit; */
 
@@ -434,5 +430,3 @@ class ControllerExtensionPaymentMultiSafePayPayafter extends Controller
     }
 
 }
-
-?>
