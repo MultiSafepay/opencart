@@ -21,9 +21,6 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
- ini_set('display_errors', 'On');
-error_reporting(E_ALL);
-
  class ControllerExtensionPaymentMultiSafePaypaysafecard extends Controller
 {
 
