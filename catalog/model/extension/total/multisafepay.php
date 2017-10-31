@@ -48,5 +48,4 @@ class ModelExtensionTotalMultisafepay extends Model
             $total['total'] += $this->config->get('total_multisafepay_fee');
         }
     }
-
 }

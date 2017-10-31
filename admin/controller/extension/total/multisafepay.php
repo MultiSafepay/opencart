@@ -86,10 +86,10 @@ class ControllerExtensionTotalmultisafepay extends Controller {
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'extension/total/multisafepay')) {
-			$this->error['warning'] = $this->language->get('error_permission');
-		}
+            if (!$this->user->hasPermission('modify', 'extension/total/multisafepay')) {
+                    $this->error['warning'] = $this->language->get('error_permission');
+            }
 
-		return !$this->error;
+            return !$this->error;
 	}
 }
