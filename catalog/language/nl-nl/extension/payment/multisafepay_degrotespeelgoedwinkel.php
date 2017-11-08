@@ -9,13 +9,13 @@
  */
 // Heading
 // Text
-$_['text_title'] = 'MultiSafepay iDeal, Visa, MasterCard, Mistercash, Overboeking';
+$_['text_title'] = 'MultiSafepay iDeal, Visa, MasterCard, Bancontact, Overboeking';
 $_['text_title_ideal'] = 'iDEAL';
 $_['text_title_visa'] = 'VISA';
 $_['text_title_amex'] = 'American Express';
 $_['text_title_banktrans'] = 'Bank Overschrijving';
 $_['text_title_giropay'] = 'GiroPay';
-$_['text_title_mistercash'] = 'MisterCash';
+$_['text_title_mistercash'] = 'Bancontact';
 $_['text_title_maestro'] = 'Maestro';
 $_['text_title_directbank'] = 'SOFORT Banking';
 $_['text_title_babygiftcard'] = 'Babygiftcard';
