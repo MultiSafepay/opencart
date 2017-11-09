@@ -21,8 +21,6 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
  
-ini_set('display_errors', '1');
-
 class ControllerExtensionPaymentMultiSafePaybanktrans extends Controller
 {
 
