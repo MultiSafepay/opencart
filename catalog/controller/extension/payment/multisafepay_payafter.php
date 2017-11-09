@@ -314,9 +314,6 @@ class ControllerExtensionPaymentMultiSafePayPayafter extends Controller
             $tax_rates = $this->tax->getRates($this->config->get('total_multisafepay_fee'),
                                               $this->config->get('total_multisafepay_tax_class_id'));
 
-    $string = sprintf ("%s\n%s\n%s\n%s: %s\n\n",  date ('Y-m-d H:i:s'), __FILE__ , __METHOD__ , 'tax_rates',  print_r ($tax_rates, true));
-    error_log($string, 3, "MultiSafepay.log");
-
             $fee_select = '0';
             foreach ($tax_rates as $key => $value) {
                 $correct_rate = round($value['rate'], 2) / 100;
