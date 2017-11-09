@@ -132,6 +132,8 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
             $msp->customer['email'] = $order_info['email'];
             $msp->customer['phone'] = $order_info['telephone'];
             $msp->customer['country'] = $order_info['payment_iso_code_2'];
+
+            $msp->parseCustomerAddress($order_info['payment_address_1']);
             if ($msp->customer['housenumber'] == "") {
                 $msp->customer['housenumber'] = $order_info['payment_address_2'];
             }
