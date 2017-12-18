@@ -18,7 +18,7 @@ $_['text_successful'] = 'On - Always Successful';
 $_['text_declined'] = 'On - Always Declined';
 $_['text_off'] = 'Off';
 $_['text_none'] = 'None';
-$_['entry_multisafepay_b2b'] = 'Enable company field for FastCheckout Registration (B2B)';
+$_['entry_multisafepay_b2b'] = 'Company field for FastCheckout';
 $_['entry_multisafepay_storeid'] = 'Store ID (configuration below will be used for this store)';
 $_['entry_multisafepay_days_active'] = 'Days active';
 $_['text_set_order_status'] = 'Set Order Status';
@@ -35,7 +35,7 @@ $_['entry_confirm_order'] = 'When to confirm the order?';
 
 
 $_['text_set_fco_shipping'] = 'Set Fast Checkout Shipping options';
-$_['entry_multisafepay_fco_tax'] = 'Set Shipping tax percentage enter 6% as 0.06';
+$_['entry_multisafepay_fco_tax'] = 'TAX for shipping (6% is 0.06)';
 $_['entry_multisafepay_fco_free_ship'] = 'Set free shipping amount';
 $_['entry_paymentfee'] = 'Pay After Delivery payment fee (max 2.44 if 21% tax is selected)';
 $_['entry_multisafepay_payafter_tax'] = 'Payment Fee tax';
@@ -72,7 +72,7 @@ $_['entry_status'] = 'Gateway Status:';
 $_['select_methods'] = 'Select payment methods';
 $_['yes'] = 'Yes';
 $_['no'] = 'No';
-$_['enable_checkout_button'] = 'Enable Fastcheckout button with connect account';
+$_['enable_checkout_button'] = 'Enable Fastcheckout for connect';
 
 // Entry
 
