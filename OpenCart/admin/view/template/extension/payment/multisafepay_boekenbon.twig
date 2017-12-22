@@ -36,45 +36,53 @@
                     <div class="tab-content">
                     {% for store in stores %}
                     	<div class="tab-pane" id="tab-store-{{ store.store_id }}">
+
                             <div class="form-group">
-                                <label class="col-sm-2 control-label" for="minamount"><span>{{ text_min_amount }}</span></label>
+                                {# -- Min amount -- #}
+                                <label class="col-sm-2 control-label" for="minamount">{{ text_min_amount }}</label>
                                 <div class="col-sm-10">
-                                    <input type="text" name="payment_multisafepay_boekenbon_min_amount_{{ store.store_id }}" value="{{ payment_multisafepay_boekenbon_min_amount_~store.store_id }}" id="minamount" class="form-control" />
+                                    {% set name  = 'payment_multisafepay_boekenbon_min_amount_'~store.store_id %}
+                                    {% set value = attribute(_context, name) %}
+                                    <input type="text" name= "{{ name }}" value= "{{ value }}"  id="minamount" class="form-control" />
+                                </div>
+                             </div>
+                                
+                            <div class="form-group">
+                                {# -- Max amount -- #}
+                                <label class="col-sm-2 control-label" for="maxamount">{{ text_max_amount }}</label>
+                                <div class="col-sm-10">
+                                    {% set name  = 'payment_multisafepay_boekenbon_max_amount_'~store.store_id %}
+                                    {% set value = attribute(_context, name) %}
+                                    <input type="text" name= "{{ name }}" value= "{{ value }}"  id="maxamount" class="form-control" />
                                 </div>
                             </div>
 
-                            <!--fco tax percentage-->
                             <div class="form-group">
-                                <label class="col-sm-2 control-label" for="maxamount"><span>{{ text_max_amount }}</span></label>
+                                {# -- Geo-Zone -- #}
+                                <label class="col-sm-2 control-label" for="input-msp-zone">{{ text_all_zones }}</label>
                                 <div class="col-sm-10">
-                                    <input type="text" name="payment_multisafepay_boekenbon_max_amount_{{ store.store_id }}" value="{{ payment_multisafepay_boekenbon_max_amount_~store.store_id }}" id="maxamount" class="form-control" />
-                                </div>
-                            </div>
+                                    {% set name  = 'payment_multisafepay_boekenbon_geo_zone_id_'~store.store_id %}
+                                    {% set value = attribute(_context, name) %}
 
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label" for="input-geo-zone">{{ text_all_zones }}</label>
-                                <div class="col-sm-10">
-                                    <select name="payment_multisafepay_boekenbon_geo_zone_id_{{ store.store_id }}" id="input-geo-zone" class="form-control">
+                                    <select name= "{{ name }}" id="input-geo-zone" class="form-control">
                                         <option value="0">{{ text_all_zones }}</option>
-                                        {% for geo_zone in geo_zones %}
-                                        {% if geo_zone.geo_zone_id  == 'payment_multisafepay_boekenbon_geo_zone_id_'~store.store_id  %}
-                                        <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
-                                         {% else %}
-                                        <option value="{{ geo_zone.geo_zone_id }}">{{ geo_zone.name }}</option>
-                                        {% endif %}
+                                        {% for row in geo_zones %}
+                                            <option value="{{ row.geo_zone_id }}" {% if value == row.geo_zone_id %}selected{% endif %}>{{ row.name }}</option>
                                         {% endfor %}
-
                                     </select>
                                 </div>
                             </div>
 
-                            <!--Sorting-->
                             <div class="form-group">
+                                {# -- Sorting -- #}
                                 <label class="col-sm-2 control-label" for="input-sort-order">{{ entry_sort_order }}</label>
                                 <div class="col-sm-10">
-                                    <input type="text" name="payment_multisafepay_boekenbon_sort_order_{{ store.store_id }}" value="{{ payment_multisafepay_boekenbon_sort_order_~store.store_id }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control" />
+                                    {% set name  = 'payment_multisafepay_boekenbon_sort_order_'~store.store_id %}
+                                    {% set value = attribute(_context, name) %}
+                                    <input type="text" name= "{{ name }}" value= "{{ value }}"  id="input-sort-order" class="form-control" />
                                 </div>
                             </div>
+                                    
                         {% endfor %}                        
                     </div>
                     
