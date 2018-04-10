@@ -27,30 +27,40 @@ class ModelExtensionPaymentMultiSafePayPayafter extends Model
         if ($total == 0) {
             return false;
         }
+
+        $this->load->language('extension/payment/multisafepay');
+        $storeid = $this->config->get('config_store_id');
+
+        if ($storeid == 0) {
+            $appendix = '';
+        }else{
+            $appendix = '_' . $storeid;
+        }
+
         if ($this->session->data['currency'] != 'EUR') {
             return false;
         }
-        $storeid = $this->config->get('config_store_id');
+
 
         $totalcents = $total * 100;
 
         if ($total) {
-            if ($this->config->get('payment_multisafepay_payafter_min_amount_' . $storeid) && $totalcents < $this->config->get('payment_multisafepay_payafter_min_amount_' . $storeid)) {
+            if ($this->config->get('payment_multisafepay_payafter_min_amount' . $appendix) && $totalcents < $this->config->get('payment_multisafepay_payafter_min_amount' . $appendix)) {
                 return false;
             }
-            if ($this->config->get('payment_multisafepay_payafter_max_amount_' . $storeid) && $totalcents > $this->config->get('payment_multisafepay_payafter_max_amount_' . $storeid)) {
+            if ($this->config->get('payment_multisafepay_payafter_max_amount' . $appendix) && $totalcents > $this->config->get('payment_multisafepay_payafter_max_amount' . $appendix)) {
                 return false;
             }
         }
 
 
 
-        $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int) $this->config->get('payment_multisafepay_payafter_geo_zone_id_' . $storeid) . "' AND country_id = '" . (int) $address['country_id'] . "' AND (zone_id = '" . (int) $address['zone_id'] . "' OR zone_id = '0')");
+        $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int) $this->config->get('payment_multisafepay_payafter_geo_zone_id' . $appendix) . "' AND country_id = '" . (int) $address['country_id'] . "' AND (zone_id = '" . (int) $address['zone_id'] . "' OR zone_id = '0')");
 
         /* if ($this->config->get('payment_multisafepay_total') > 0 && $this->config->get('payment_multisafepay_total') > $total) {
           $status = false;
           } else */
-        if (!$this->config->get('payment_multisafepay_payafter_geo_zone_id_' . $storeid)) {
+        if (!$this->config->get('payment_multisafepay_payafter_geo_zone_id' . $appendix)) {
             $status = true;
         } elseif ($query->num_rows) {
             $status = true;
@@ -65,7 +75,7 @@ class ModelExtensionPaymentMultiSafePayPayafter extends Model
                 'code' => 'multisafepay_payafter',
                 'title' => $this->language->get('text_title_payafter'),
                 'terms' => '',
-                'sort_order' => $this->config->get('payment_multisafepay_payafter_sort_order_' . $storeid)
+                'sort_order' => $this->config->get('payment_multisafepay_payafter_sort_order' . $appendix)
             );
         }
 

@@ -27,16 +27,20 @@ class ModelExtensionPaymentMultiSafePayDirectbank extends Model
         if ($total == 0) {
             return false;
         }
+
         $this->load->language('extension/payment/multisafepay');
         $storeid = $this->config->get('config_store_id');
 
+        if ($storeid == 0) {
+            $appendix = '';
+        }else{
+            $appendix = '_' . $storeid;
+        }
 
-        $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int) $this->config->get('payment_multisafepay_directbank_geo_zone_id_' . $storeid) . "' AND country_id = '" . (int) $address['country_id'] . "' AND (zone_id = '" . (int) $address['zone_id'] . "' OR zone_id = '0')");
 
-        /* if ($this->config->get('payment_multisafepay_total') > 0 && $this->config->get('payment_multisafepay_total') > $total) {
-          $status = false;
-          } else */
-        if (!$this->config->get('payment_multisafepay_directbank_geo_zone_id_' . $storeid)) {
+        $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int) $this->config->get('payment_multisafepay_directbank_geo_zone_id' . $appendix) . "' AND country_id = '" . (int) $address['country_id'] . "' AND (zone_id = '" . (int) $address['zone_id'] . "' OR zone_id = '0')");
+
+        if (!$this->config->get('payment_multisafepay_directbank_geo_zone_id' . $appendix)) {
             $status = true;
         } elseif ($query->num_rows) {
             $status = true;
@@ -48,10 +52,10 @@ class ModelExtensionPaymentMultiSafePayDirectbank extends Model
         $totalcents = $total * 100;
 
         if ($total) {
-            if ($this->config->get('payment_multisafepay_directbank_min_amount_' . $storeid) && $totalcents < $this->config->get('payment_multisafepay_directbank_min_amount_' . $storeid)) {
+            if ($this->config->get('payment_multisafepay_directbank_min_amount' . $appendix) && $totalcents < $this->config->get('payment_multisafepay_directbank_min_amount' . $appendix)) {
                 return false;
             }
-            if ($this->config->get('payment_multisafepay_directbank_max_amount_' . $storeid) && $totalcents > $this->config->get('payment_multisafepay_directbank_max_amount_' . $storeid)) {
+            if ($this->config->get('payment_multisafepay_directbank_max_amount' . $appendix) && $totalcents > $this->config->get('payment_multisafepay_directbank_max_amount' . $appendix)) {
                 return false;
             }
         }
@@ -63,7 +67,7 @@ class ModelExtensionPaymentMultiSafePayDirectbank extends Model
                 'code' => 'multisafepay_directbank',
                 'title' => $this->language->get('text_title_directbank'),
                 'terms' => '',
-                'sort_order' => $this->config->get('payment_multisafepay_directbank_sort_order_' . $storeid)
+                'sort_order' => $this->config->get('payment_multisafepay_directbank_sort_order' . $appendix)
             );
         }
 
