@@ -170,11 +170,11 @@ class ControllerExtensionPaymentMultiSafepayKlarna extends Controller
         $msp->transaction['amount'] = $this->currency->format($order_info['total'], 'EUR', '', FALSE) * 100;
 
         $msp->plugin_name = 'OpenCart ' . VERSION;
-        $msp->version = '(2.1.0)';
+        $msp->version = '(2.1.1)';
         $msp->transaction['items'] = $html;
         $msp->plugin['shop'] = 'OpenCart';
         $msp->plugin['shop_version'] = VERSION;
-        $msp->plugin['plugin_version'] = '2.1.0';
+        $msp->plugin['plugin_version'] = '2.1.1';
         $msp->plugin['partner'] = '';
         $msp->plugin['shop_root_url'] = '';
 
@@ -391,7 +391,7 @@ class ControllerExtensionPaymentMultiSafepayKlarna extends Controller
 
         $url = $msp->startCheckout();
 
-        /* echo '<pre>';	
+        /* echo '<pre>';
           print_r($msp);
           echo '</pre>';exit; */
 

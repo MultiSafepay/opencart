@@ -352,12 +352,12 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
             //$msp->transaction['amount'] = round($order_info['total'] * 100);
             $msp->transaction['amount'] = round(($order_info['total'] * $order_info['currency_value']) * 100); //FIXES PLGOPN-14
             $msp->plugin_name = 'OpenCart';
-            $msp->version = '(2.1.0)';
+            $msp->version = '(2.1.1)';
 
             $msp->transaction['items'] = $html;
             $msp->plugin['shop'] = 'OpenCart';
             $msp->plugin['shop_version'] = VERSION;
-            $msp->plugin['plugin_version'] = '2.1.0';
+            $msp->plugin['plugin_version'] = '2.1.1';
             $msp->plugin['partner'] = '';
             $msp->plugin['shop_root_url'] = '';
 
@@ -817,7 +817,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
                     $v++;
                 }
                 $xml .= '</shipping-info>';
-                //header ("Content-Type:text/xml");  
+                //header ("Content-Type:text/xml");
                 print_r($xml);
 
                 exit;
