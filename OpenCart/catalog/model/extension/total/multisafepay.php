@@ -28,7 +28,9 @@ class ModelExtensionTotalMultisafepay extends Model
         $this->load->language('extension/payment/multisafepay');
         $fee = $this->config->get('total_multisafepay_fee');
 
-        if (isset($this->session->data['payment_method']) && $this->session->data['payment_method']['code'] == 'multisafepay_payafter') {
+        if (isset($this->session->data['payment_method']) &&
+            ( $this->session->data['payment_method']['code'] == 'multisafepay_payafter' ||
+              $this->session->data['payment_method']['code'] == 'multisafepay_klarna') ) {
             $total['totals'][] = array(
                 'code'       => 'multisafepay',
                 'title'      => $this->language->get('entry_paymentfee'),
