@@ -65,6 +65,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
 
     public function multisafepayProcess()
     {
+        $this->language->load('extension/payment/multisafepay');
 
         $storeid = $this->config->get('config_store_id');
         $db = new DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
@@ -142,7 +143,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
 
             $msp->customer['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
             $msp->transaction['id'] = $order_info['order_id']; //round($order_info['total'] * $order_info['currency_value'] * 100);
-            $msp->transaction['currency'] = $order_info['currency_code']; //MSP only supports EUR at the moment  ->  $order_info['currency_code'];
+            $msp->transaction['currency'] = $order_info['currency_code'];
 
             $msp->transaction['description'] = 'Order #' . $msp->transaction['id'];
 
@@ -153,16 +154,12 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
             $confirm_message = "Order Created at " . date('Y/m/d H:i:s', time());
 
 
-
             //Enable to show the order before the transaction. Side effect, no confirmation email is send.
             //$this->db->query("UPDATE `" . DB_PREFIX . "order` SET order_status_id = '" . (int)$newStatus . "', date_modified = NOW() WHERE order_id = '" . (int)$orderid . "'");
             //$this->db->query("INSERT INTO " . DB_PREFIX . "order_history SET order_id = '" . (int)$orderid . "', order_status_id = '" . (int)$newStatus . "', notify = '" . (int)$notify . "', comment = '" . $this->db->escape($confirm_message) . "', date_added = NOW()");
 
 
-
-
             if ($this->customer->isLogged()) {
-
                 $msp->transaction['var1'] = $this->customer->getId() . '|' . $this->customer->getBalance();
                 $msp->transaction['var2'] = $this->config->get('config_customer_group_id');
             }
@@ -177,30 +174,6 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
                 $gateway = $this->request->post['gateway'];
             }
 
-            if ($gateway == 'MSP_PAYAFTER') {
-                $msp->test = $this->config->get('bno_multisafepay_environment_' . $storeid);
-                $msp->merchant['account_id'] = $this->config->get('bno_multisafepay_merchant_id_' . $storeid);
-                $msp->merchant['site_id'] = $this->config->get('bno_multisafepay_site_id_' . $storeid);
-                $msp->merchant['site_code'] = $this->config->get('bno_multisafepay_secure_code_' . $storeid);
-
-                /*
-                 * 	Start Pay after Delivery
-                 */
-                $msp->transaction['gateway'] = 'PAYAFTER';
-            }
-
-            if ($gateway == 'MSP_KLARNA') {
-                $msp->test = $this->config->get('klarna_multisafepay_environment_' . $storeid);
-                $msp->merchant['account_id'] = $this->config->get('klarna_multisafepay_merchant_id_' . $storeid);
-                $msp->merchant['site_id'] = $this->config->get('klarna_multisafepay_site_id_' . $storeid);
-                $msp->merchant['site_code'] = $this->config->get('klarna_multisafepay_secure_code_' . $storeid);
-
-                /*
-                 * 	Start Pay after Delivery
-                 */
-                $msp->transaction['gateway'] = 'KLARNA';
-            }
-
             $msp->gatewayinfo['email'] = $this->customer->getEmail();
             $msp->gatewayinfo['phone'] = ''; //not available
             $msp->gatewayinfo['bankaccount'] = ''; //not available
@@ -208,146 +181,186 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
             $msp->gatewayinfo['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
             $msp->gatewayinfo['birthday'] = ''; //not available
 
-            if ($gateway == 'MSP_PAYAFTER' || $gateway == 'MSP_KLARNA') {
+            $products = $this->cart->getProducts();
 
-                $products = $this->cart->getProducts();
+            // Tax for products
 
-                // Tax for products
-
-                $taxname = '0';
-                $taxtable = new MspAlternateTaxTable('0', 'true');
-                $taxrule = new MspAlternateTaxRule(0.00);
-                $taxtable->AddAlternateTaxRules($taxrule);
-                $msp->cart->AddAlternateTaxTables($taxtable);
+            $taxname = 'none';
+            $taxtable = new MspAlternateTaxTable($taxname, 'true');
+            $taxrule = new MspAlternateTaxRule(0.00);
+            $taxtable->AddAlternateTaxRules($taxrule);
+            $msp->cart->AddAlternateTaxTables($taxtable);
 
 
-                $taxtable = Array();
-                foreach ($products AS $product) {
-                    $ratiotax = $this->tax->getRates($product['total'], $product['tax_class_id']);
-                    foreach ($ratiotax AS $tax_array) {
+            $taxtable = Array();
+            foreach ($products AS $product) {
+
+                $ratiotax = $this->tax->getRates($product['total'], $product['tax_class_id']);
+                foreach ($ratiotax AS $tax_array) {
+                    // Only take the percentages
+                    if ($tax_array['type'] == 'P'){
                         $taxes[] = $tax_array;
                     }
-                }
 
-                $unique_taxes = array_unique($taxes, SORT_REGULAR);
-                foreach ($unique_taxes as $tax) {
+                    if ($tax_array['type'] == 'F') {
+                        // Add item with fixed TAX
+                        $c_item = new MspItem('Fixed TAX', 'Tax', $product['quantity'], $tax_array['rate']);
+                        $c_item->merchant_item_id = '10101010';
+                        $c_item->SetTaxTableSelector('none');
+                        $msp->cart->AddItem($c_item);
+                    }
+                }
+            }
+
+            $unique_taxes = array_unique($taxes, SORT_REGULAR);
+            foreach ($unique_taxes as $tax) {
+                $taxname = $tax['name'];
+                $taxtable = new MspAlternateTaxTable($tax['name'], 'true');
+                $taxrule = new MspAlternateTaxRule($tax['rate'] / 100);
+                $taxtable->AddAlternateTaxRules($taxrule);
+                $msp->cart->AddAlternateTaxTables($taxtable);
+            }
+
+            if (isset($this->session->data['coupon'])) {
+                $coupon_set = true;
+                $this->load->model('extension/total/coupon');
+                $coupon_info = $this->model_extension_total_coupon->getCoupon($this->session->data['coupon']);
+            } else {
+                $coupon_set = false;
+            }
+
+            $product_ids = array();
+            foreach ($products AS $product) {
+                $product_ids[$product['product_id']] = $product['product_id'];
+            }
+
+            // Check if Extra Fee PAD is configured. ( Not MultiStore yet)
+            if ( in_array ($gateway, array ('PAYAFTER', 'KLARNA')) && $this->config->get('total_multisafepay_status')) {
+
+                $tax_rates = $this->tax->getRates($this->config->get('total_multisafepay_fee'),
+                                                  $this->config->get('total_multisafepay_tax_class_id'));
+
+                // Default taxrate
+                $taxname = 'none';
+                foreach ($tax_rates as $key => $tax) {
+                    $correct_rate = round($tax['rate'], 2) / 100;
+
                     $taxname = $tax['name'];
-                    $taxtable = new MspAlternateTaxTable($tax['name'], 'true');
-                    $taxrule = new MspAlternateTaxRule($tax['rate'] / 100);
+                    $taxtable = new MspAlternateTaxTable($taxname, 'true');
+                    $taxrule = new MspAlternateTaxRule($correct_rate);
                     $taxtable->AddAlternateTaxRules($taxrule);
                     $msp->cart->AddAlternateTaxTables($taxtable);
                 }
 
-                if (isset($this->session->data['coupon'])) {
-                    $coupon_set = true;
-                    $this->load->model('extension/total/coupon');
-                    $coupon_info = $this->model_extension_total_coupon->getCoupon($this->session->data['coupon']);
-                } else {
-                    $coupon_set = false;
+                $fee = $this->_getAmount($order_info, $this->config->get('total_multisafepay_fee'));
+
+                $c_item = new MspItem($this->language->get('entry_paymentfee'), 'Fee', '1', $fee, 'KG', '0');
+                $c_item->merchant_item_id = 'payment fee';
+                $c_item->SetTaxTableSelector($taxname);
+                $msp->cart->AddItem($c_item);
+            }
+
+            $shipping_select = 'none';
+
+            //add shippingmethod
+            if ($this->session->data['shipping_method']['tax_class_id']) {
+                $shipping_tax = $this->tax->getRates($this->session->data['shipping_method']['cost'], $this->session->data['shipping_method']['tax_class_id']);
+
+                foreach ($shipping_tax as $key => $tax) {
+
+                    $correct_rate = round($tax['rate'], 2) / 100;
+
+                    $rule = new MspDefaultTaxRule($correct_rate, 'true'); // Tax rate, shipping taxed
+                    $msp->cart->AddDefaultTaxRules($rule);
+                    $shipping_select = $tax['name'];
+                }
+            }
+
+            $c_item = new MspItem($this->session->data['shipping_method']['title'] . " " . $order_info['currency_code'] , 'Shipping', '1', $this->session->data['shipping_method']['cost'], '0', '0');
+            $msp->cart->AddItem($c_item);
+            $c_item->SetMerchantItemId('msp-shipping');
+            $c_item->SetTaxTableSelector($correct_rate); //shipping.... $this->session->data['shipping_method']['tax_class_id']
+
+
+
+            //add products
+            foreach ($products AS $product) {
+                // Retrieve which tax table to use.
+                $ratiotax = $this->tax->getRates($product['price'], $product['tax_class_id']);
+
+                $i = 0;
+                foreach ($ratiotax AS $tax_array) {
+                    $taxes[$i] = $tax_array;
+                    $i++;
                 }
 
-                $product_ids = array();
-                foreach ($products AS $product) {
-                    $product_ids[$product['product_id']] = $product['product_id'];
-                }
-
-                if (!in_array($this->config->get('bno_product_fee_id_' . $storeid), $product_ids)) {
-                    $product_fee_id = $this->config->get('bno_product_fee_id_' . $storeid);
-                    if (isset($product_fee_id)) {
-                        $option = array();
-                        $this->cart->add($product_fee_id, 1, $option);
-                    }
-                }
-
-
-                //add products
-                foreach ($products AS $product) {
-                    // Retrieve which tax table to use.
-                    $ratiotax = $this->tax->getRates($product['price'], $product['tax_class_id']);
-
-                    $i = 0;
-                    foreach ($ratiotax AS $tax_array) {
-                        $taxes[$i] = $tax_array;
-                        $i++;
-                    }
-
+                if (isset($taxes[0])) {
                     $taxname = $taxes[0]['name'];
+                } else {
+                    $taxname = 'none';
+                }
 
-                    if ($coupon_set) {
-                        if ($coupon_info['type'] == 'F') {
-                            $c_item = new MspItem($product['name'], strip_tags($product['model']), $product['quantity'], $product['price'], 'KG', $product['weight']);
-                            $c_item->merchant_item_id = $product['product_id'];
-                            $c_item->SetTaxTableSelector($taxname);
-                            $msp->cart->AddItem($c_item);
-                        } else {
-                            $price_new = $product['price'] - ($product['price'] / 100 * $coupon_info['discount']);
-                            $c_item = new MspItem($product['name'], strip_tags($product['model']), $product['quantity'], $price_new, 'KG', $product['weight']);
-                            $c_item->merchant_item_id = $product['product_id'];
-                            $c_item->SetTaxTableSelector($taxname);
-                            $msp->cart->AddItem($c_item);
-                        }
-                    } else {
+                if ($coupon_set) {
+                    if ($coupon_info['type'] == 'F') {
                         $c_item = new MspItem($product['name'], strip_tags($product['model']), $product['quantity'], $product['price'], 'KG', $product['weight']);
                         $c_item->merchant_item_id = $product['product_id'];
                         $c_item->SetTaxTableSelector($taxname);
                         $msp->cart->AddItem($c_item);
+                    } else {
+                        $price_new = $product['price'] - ($product['price'] / 100 * $coupon_info['discount']);
+                        $c_item = new MspItem($product['name'], strip_tags($product['model']), $product['quantity'], $price_new, 'KG', $product['weight']);
+                        $c_item->merchant_item_id = $product['product_id'];
+                        $c_item->SetTaxTableSelector($taxname);
+                        $msp->cart->AddItem($c_item);
                     }
-                }
-
-
-                //Customer credit processing
-                if ($this->customer->getBalance() > 0) {
-                    $credit = 0 - $this->customer->getBalance();
-                    $c_item = new MspItem('Credit', 'Credit', 1, $credit);
-                    $c_item->merchant_item_id = '10101010';
-                    $c_item->SetTaxTableSelector('0');
+                } else {
+                    $c_item = new MspItem($product['name'], strip_tags($product['model']), $product['quantity'], $product['price'], 'KG', $product['weight']);
+                    $c_item->merchant_item_id = $product['product_id'];
+                    $c_item->SetTaxTableSelector($taxname);
                     $msp->cart->AddItem($c_item);
                 }
+            }
 
-                //add discounts
-                if ($coupon_set) {
-                    $this->load->model('extension/total/coupon');
-                    $total_data = array();
-                    $total = $this->cart->getTotal();
-                    $start_total = $this->cart->getTotal();
-                    $taxes = $this->cart->getTaxes();
 
-                    $total_data_arr = array(
-                        'totals' => &$total_data,
-                        'total' => &$total,
-                        'taxes' => &$taxes
-                    );
+            //Customer credit processing
+            if ($this->customer->getBalance() > 0) {
+                $credit = 0 - $this->customer->getBalance();
+                $c_item = new MspItem('Credit', 'Credit', 1, $credit);
+                $c_item->merchant_item_id = '10101010';
+                $c_item->SetTaxTableSelector('none');
+                $msp->cart->AddItem($c_item);
+            }
 
-                    $this->model_extension_total_coupon->getTotal($total_data_arr);
-                    if ($coupon_info['type'] == 'F') {
-                        if ($start_total != $total) {
-                            $discount_total = 0;
-                            $start_total = $start_total;
-                            $total = $total;
-                            $discount_total = $discount_total - ($start_total - $total);
+            //add discounts
+            if ($coupon_set) {
+                $this->load->model('extension/total/coupon');
+                $total_data = array();
+                $total = $this->cart->getTotal();
+                $start_total = $this->cart->getTotal();
+                $taxes = $this->cart->getTaxes();
 
-                            $c_item = new MspItem('Coupon', 'Coupon', 1, $discount_total);
-                            $c_item->merchant_item_id = '10101010';
-                            $c_item->SetTaxTableSelector('0');
-                            $msp->cart->AddItem($c_item);
-                        }
+                $total_data_arr = array(
+                    'totals' => &$total_data,
+                    'total' => &$total,
+                    'taxes' => &$taxes
+                );
+
+                $this->model_extension_total_coupon->getTotal($total_data_arr);
+                if ($coupon_info['type'] == 'F') {
+                    if ($start_total != $total) {
+                        $discount_total = 0;
+                        $start_total = $start_total;
+                        $total = $total;
+                        $discount_total = $discount_total - ($start_total - $total);
+
+                        $c_item = new MspItem('Coupon', 'Coupon', 1, $discount_total);
+                        $c_item->merchant_item_id = '10101010';
+                        $c_item->SetTaxTableSelector('none');
+                        $msp->cart->AddItem($c_item);
                     }
                 }
-
-                //add shippingmethod
-                $shipping_tax = $this->tax->getRates($this->session->data['shipping_method']['cost'], $this->session->data['shipping_method']['tax_class_id']);
-
-                foreach ($shipping_tax as $key => $value) {
-                    $correct_rate = round($value['rate'], 2) / 100;
-                    $rule = new MspDefaultTaxRule($correct_rate, 'true'); // Tax rate, shipping taxed
-                    $msp->cart->AddDefaultTaxRules($rule);
-                    $shipping_select = $value['name'];
-                }
-                $c_item = new MspItem($this->session->data['shipping_method']['title'] . " " . $order_info['currency_code'], 'Shipping', '1', $this->session->data['shipping_method']['cost'], '0', '0');
-                $msp->cart->AddItem($c_item);
-                $c_item->SetMerchantItemId('Shipping');
-                $c_item->SetTaxTableSelector($shipping_select); //shipping.... $this->session->data['shipping_method']['tax_class_id']
             }
+
             $msp->transaction['daysactive'] = $this->config->get('payment_multisafepay_days_active_' . $storeid);
             //$msp->transaction['amount'] = round($order_info['total'] * 100);
             $msp->transaction['amount'] = round(($order_info['total'] * $order_info['currency_value']) * 100); //FIXES PLGOPN-14
@@ -385,7 +398,6 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
                 header('Location: ' . $url);
                 exit;
             } else {
-                $this->language->load('extension/payment/multisafepay');
                 $data['back_to_store'] = $this->language->get('back_to_store');
                 $data['errorcode'] = $msp->error_code;
                 $data['errorstring'] = $msp->error;
@@ -434,7 +446,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
 
                 $c_item = new MspItem('Coupon', 'Coupon', 1, $discount_total);
                 $c_item->merchant_item_id = '10101010';
-                $c_item->SetTaxTableSelector('0');
+                $c_item->SetTaxTableSelector('none');
                 $msp->cart->AddItem($c_item);
             }
 
@@ -507,7 +519,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
                     $credit = 0 - $this->customer->getBalance();
                     $c_item = new MspItem('Credit', 'Credit', 1, $credit);
                     $c_item->merchant_item_id = '10101010';
-                    $c_item->SetTaxTableSelector('0');
+                    $c_item->SetTaxTableSelector('none');
                     $msp->cart->AddItem($c_item);
                 }
                 $msp->transaction['var1'] = $this->customer->getId() . '|' . $this->customer->getBalance();
@@ -770,6 +782,34 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
             }
         }
     }
+
+
+    private function _getAmount($order_info, $amount)
+    {
+
+        $amt = $this->currency->format($amount, $order_info['currency_code'], $order_info['currency_value'], false);
+
+        if ($this->session->data['currency'] != 'EUR') {
+            $amt = $this->currency->convert($amt, $this->session->data['currency'], 'EUR');
+        }
+        return $amt;
+    }
+
+    private function _getRate($tax_class_id)
+    {
+        if (method_exists($this->tax, 'getRate')) {
+            return $this->tax->getRate($tax_class_id);
+        } else {
+            $tax_rates = $this->tax->getRates(100, $tax_class_id);
+            foreach ($tax_rates as $tax_rate) {
+                return $tax_rate['amount'];
+            }
+        }
+    }
+
+
+
+
 
     /**
      * Call back function
@@ -1224,19 +1264,11 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
             require_once(dirname(__FILE__) . '/MultiSafepay.combined.php');
 
             $msp = new MultiSafepay();
-            if ($order['payment_code'] == "multisafepay_payafter") {
-                $msp->test = $this->config->get('payment_multisafepay_payafter_environment_' . $storeid);
-                $msp->merchant['account_id'] = $this->config->get('payment_multisafepay_payafter_merchant_id_' . $storeid);
-                $msp->merchant['site_id'] = $this->config->get('payment_multisafepay_payafter_site_id_' . $storeid);
-                $msp->merchant['site_code'] = $this->config->get('payment_multisafepay_payafter_secure_code_' . $storeid);
-            } else {
-                $msp->test = $this->config->get('payment_multisafepay_environment_' . $storeid);
+            $msp->test = $this->config->get('payment_multisafepay_environment_' . $storeid);
+            $msp->merchant['account_id'] = $this->config->get('payment_multisafepay_merchant_id_' . $storeid);
+            $msp->merchant['site_id'] = $this->config->get('payment_multisafepay_site_id_' . $storeid);
+            $msp->merchant['site_code'] = $this->config->get('payment_multisafepay_secure_code_' . $storeid);
 
-
-                $msp->merchant['account_id'] = $this->config->get('payment_multisafepay_merchant_id_' . $storeid);
-                $msp->merchant['site_id'] = $this->config->get('payment_multisafepay_site_id_' . $storeid);
-                $msp->merchant['site_code'] = $this->config->get('payment_multisafepay_secure_code_' . $storeid);
-            }
             $msp->transaction['id'] = $order_number;
             $status = $msp->getStatus();
             $details = $msp->details;

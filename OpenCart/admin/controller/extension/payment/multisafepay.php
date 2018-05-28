@@ -86,7 +86,6 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
         $data['text_min_amount'] = $this->language->get('text_min_amount');
         $data['text_max_amount'] = $this->language->get('text_max_amount');
         $data['text_set_bno_data'] = $this->language->get('text_set_bno_data');
-        $data['text_bno_product_fee_id'] = $this->language->get('text_bno_product_fee_id');
         $data['text_bno_ip_validation_option'] = $this->language->get('text_bno_ip_validation_option');
         $data['text_bno_ip_validation_address'] = $this->language->get('text_bno_ip_validation_address');
 
@@ -101,7 +100,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
         $data['entry_sort_order'] = $this->language->get('entry_sort_order');
         $data['enable_checkout_button'] = $this->language->get('enable_checkout_button');
 
-        
+
         $this->load->model('localisation/geo_zone');
 
         $data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
@@ -150,27 +149,27 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
         } else {
             $data['payment_multisafepay_status'] = $this->config->get('payment_multisafepay_status');
         }
-        
+
         if (isset($this->request->post['payment_multisafepay_environment_0'])) {
             $data['payment_multisafepay_environment'] = $this->request->post['payment_multisafepay_environment_0'];
         } else {
             $data['payment_multisafepay_environment'] = $this->config->get('payment_multisafepay_environment_0');
         }
-        
+
         if (isset($this->request->post['payment_multisafepay_account_type_0'])) {
             $data['payment_multisafepay_account_type'] = $this->request->post['payment_multisafepay_account_type_0'];
         } else {
             $data['payment_multisafepay_account_type'] = $this->config->get('payment_multisafepay_account_type_0');
         }
-        
-        
+
+
         if (isset($this->request->post['payment_multisafepay_enable_checkout_button_connect_0'])) {
             $data['payment_multisafepay_enable_checkout_button_connect'] = $this->request->post['payment_multisafepay_enable_checkout_button_connect_0'];
         } else {
             $data['payment_multisafepay_enable_checkout_button_connect'] = $this->config->get('payment_multisafepay_enable_checkout_button_connect_0');
         }
-        
-       
+
+
         if (isset($this->request->post['payment_multisafepay_geo_zone_id_0'])) {
             $data['payment_multisafepay_geo_zone_id'] = $this->request->post['payment_multisafepay_geo_zone_id_0'];
         } else {

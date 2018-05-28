@@ -620,145 +620,48 @@ class MultiSafepay
 
     function createTransactionRequest()
     {
-        // issuer attribute
         $issuer = "";
         if (!empty($this->issuer)) {
             $issuer = ' issuer="' . $this->xmlEscape($this->issuer) . '"';
         }
 
         $request = '<?xml version="1.0" encoding="UTF-8"?>
-    <redirecttransaction ua="' . $this->plugin_name . ' ' . $this->version . '">
-      <merchant>
-        <account>' . $this->xmlEscape($this->merchant['account_id']) . '</account>
-        <site_id>' . $this->xmlEscape($this->merchant['site_id']) . '</site_id>
-        <site_secure_code>' . $this->xmlEscape($this->merchant['site_code']) . '</site_secure_code>
-        <notification_url>' . $this->xmlEscape($this->merchant['notification_url']) . '</notification_url>
-        <cancel_url>' . $this->xmlEscape($this->merchant['cancel_url']) . '</cancel_url>
-        <redirect_url>' . $this->xmlEscape($this->merchant['redirect_url']) . '</redirect_url>
-        <close_window>' . $this->xmlEscape($this->merchant['close_window']) . '</close_window>
-      </merchant>
-	   <plugin>
-		<shop>' . $this->xmlEscape($this->plugin['shop']) . '</shop>
-		<shop_version>' . $this->xmlEscape($this->plugin['shop_version']) . '</shop_version>
-		<plugin_version>' . $this->xmlEscape($this->plugin['plugin_version']) . '</plugin_version>
-		<partner>' . $this->xmlEscape($this->plugin['partner']) . '</partner>
-		<shop_root_url>' . $this->xmlEscape($this->plugin['shop_root_url']) . '</shop_root_url>
-	  </plugin>
-      <customer>
-        <locale>' . $this->xmlEscape($this->customer['locale']) . '</locale>
-        <ipaddress>' . $this->xmlEscape($this->customer['ipaddress']) . '</ipaddress>
-        <forwardedip>' . $this->xmlEscape($this->customer['forwardedip']) . '</forwardedip>
-        <firstname>' . $this->xmlEscape($this->customer['firstname']) . '</firstname>
-        <lastname>' . $this->xmlEscape($this->customer['lastname']) . '</lastname>
-        <address1>' . $this->xmlEscape($this->customer['address1']) . '</address1>
-        <address2>' . $this->xmlEscape($this->customer['address2']) . '</address2>
-        <housenumber>' . $this->xmlEscape($this->customer['housenumber']) . '</housenumber>
-        <zipcode>' . $this->xmlEscape($this->customer['zipcode']) . '</zipcode>
-        <city>' . $this->xmlEscape($this->customer['city']) . '</city>
-        <state>' . $this->xmlEscape($this->customer['state']) . '</state>
-        <country>' . $this->xmlEscape($this->customer['country']) . '</country>
-        <phone>' . $this->xmlEscape($this->customer['phone']) . '</phone>
-        <email>' . $this->xmlEscape($this->customer['email']) . '</email>
-		<referrer>' . $this->xmlEscape($this->customer['referrer']) . '</referrer>
-		<user_agent>' . $this->xmlEscape($this->customer['user_agent']) . '</user_agent>
-          <gender>' . $this->xmlEscape($this->customer['gender']) . '</gender>
-      </customer>
-			<customer-delivery>
-				<firstname>' . $this->xmlEscape($this->delivery['firstname']) . '</firstname>
-				<lastname>' . $this->xmlEscape($this->delivery['lastname']) . '</lastname>
-				<address1>' . $this->xmlEscape($this->delivery['address1']) . '</address1>
-				<address2>' . $this->xmlEscape($this->delivery['address2']) . '</address2>
-				<housenumber>' . $this->xmlEscape($this->delivery['housenumber']) . '</housenumber>
-				<zipcode>' . $this->xmlEscape($this->delivery['zipcode']) . '</zipcode>
-				<city>' . $this->xmlEscape($this->delivery['city']) . '</city>
-				<state>' . $this->xmlEscape($this->delivery['state']) . '</state>
-				<country>' . $this->xmlEscape($this->delivery['country']) . '</country>
-				<phone>' . $this->xmlEscape($this->delivery['phone']) . '</phone>
-				<email>' . $this->xmlEscape($this->delivery['email']) . '</email>
-			</customer-delivery>
-      <transaction>
-        <id>' . $this->xmlEscape($this->transaction['id']) . '</id>
-        <currency>' . $this->xmlEscape($this->transaction['currency']) . '</currency>
-        <amount>' . $this->xmlEscape($this->transaction['amount']) . '</amount>
-        <description>' . $this->xmlEscape($this->transaction['description']) . '</description>
-        <var1>' . $this->xmlEscape($this->transaction['var1']) . '</var1>
-        <var2>' . $this->xmlEscape($this->transaction['var2']) . '</var2>
-        <var3>' . $this->xmlEscape($this->transaction['var3']) . '</var3>
-        <items>' . $this->xmlEscape($this->transaction['items']) . '</items>
-        <manual>' . $this->xmlEscape($this->transaction['manual']) . '</manual>
-        <daysactive>' . $this->xmlEscape($this->transaction['daysactive']) . '</daysactive>
-        <gateway' . $issuer . '>' . $this->xmlEscape($this->transaction['gateway']) . '</gateway>
-      </transaction>
-      <signature>' . $this->xmlEscape($this->signature) . '</signature>
-    </redirecttransaction>';
-
-        return $request;
-    }
-
-    function createDirectXMLTransactionRequest()
-    {
-        $issuer = "";
-        if (!empty($this->issuer)) {
-            $issuer = ' issuer="' . $this->xmlEscape($this->issuer) . '"';
-        }
-        if ($this->extravars != '') {
-            $gatewayinfo = '<gatewayinfo>
-							<issuerid>' . $this->extravars . '</issuerid>	
-						</gatewayinfo>';
-        } else {
-            $gatewayinfo = '';
-        }
-
-        $request = '<?xml version="1.0" encoding="UTF-8"?>
-		<directtransaction ua="' . $this->plugin_name . ' ' . $this->version . '">
-			<transaction>
-				<id>' . $this->xmlEscape($this->transaction['id']) . '</id>
-				<currency>' . $this->xmlEscape($this->transaction['currency']) . '</currency>
-				<amount>' . $this->xmlEscape($this->transaction['amount']) . '</amount>
-				<description>' . $this->xmlEscape($this->transaction['description']) . '</description>
-				<var1>' . $this->xmlEscape($this->transaction['var1']) . '</var1>
-				<var2>' . $this->xmlEscape($this->transaction['var2']) . '</var2>
-				<var3>' . $this->xmlEscape($this->transaction['var3']) . '</var3>
-				<items>' . $this->xmlEscape($this->transaction['items']) . '</items>
-				<manual>' . $this->xmlEscape($this->transaction['manual']) . '</manual>
-				<daysactive>' . $this->xmlEscape($this->transaction['daysactive']) . '</daysactive>
-				<gateway' . $issuer . '>' . $this->xmlEscape($this->transaction['gateway']) . '</gateway>
-			</transaction>
-		  <merchant>
-			<account>' . $this->xmlEscape($this->merchant['account_id']) . '</account>
-			<site_id>' . $this->xmlEscape($this->merchant['site_id']) . '</site_id>
-			<site_secure_code>' . $this->xmlEscape($this->merchant['site_code']) . '</site_secure_code>
-			<notification_url>' . $this->xmlEscape($this->merchant['notification_url']) . '</notification_url>
-			<cancel_url>' . $this->xmlEscape($this->merchant['cancel_url']) . '</cancel_url>
-			<redirect_url>' . $this->xmlEscape($this->merchant['redirect_url']) . '</redirect_url>
-			<close_window>' . $this->xmlEscape($this->merchant['close_window']) . '</close_window>
-		  </merchant>
-		   <plugin>
-		<shop>' . $this->xmlEscape($this->plugin['shop']) . '</shop>
-		<shop_version>' . $this->xmlEscape($this->plugin['shop_version']) . '</shop_version>
-		<plugin_version>' . $this->xmlEscape($this->plugin['plugin_version']) . '</plugin_version>
-		<partner>' . $this->xmlEscape($this->plugin['partner']) . '</partner>
-		<shop_root_url>' . $this->xmlEscape($this->plugin['shop_root_url']) . '</shop_root_url>
-	  </plugin>
-		  <customer>
-			<locale>' . $this->xmlEscape($this->customer['locale']) . '</locale>
-			<ipaddress>' . $this->xmlEscape($this->customer['ipaddress']) . '</ipaddress>
-			<forwardedip>' . $this->xmlEscape($this->customer['forwardedip']) . '</forwardedip>
-			<firstname>' . $this->xmlEscape($this->customer['firstname']) . '</firstname>
-			<lastname>' . $this->xmlEscape($this->customer['lastname']) . '</lastname>
-			<address1>' . $this->xmlEscape($this->customer['address1']) . '</address1>
-			<address2>' . $this->xmlEscape($this->customer['address2']) . '</address2>
-			<housenumber>' . $this->xmlEscape($this->customer['housenumber']) . '</housenumber>
-			<zipcode>' . $this->xmlEscape($this->customer['zipcode']) . '</zipcode>
-			<city>' . $this->xmlEscape($this->customer['city']) . '</city>
-			<state>' . $this->xmlEscape($this->customer['state']) . '</state>
-			<country>' . $this->xmlEscape($this->customer['country']) . '</country>
-			<phone>' . $this->xmlEscape($this->customer['phone']) . '</phone>
-			<email>' . $this->xmlEscape($this->customer['email']) . '</email>
-			<referrer>' . $this->xmlEscape($this->customer['referrer']) . '</referrer>
-			<user_agent>' . $this->xmlEscape($this->customer['user_agent']) . '</user_agent>
-              <gender>' . $this->xmlEscape($this->customer['gender']) . '</gender>
-		  </customer>
+			<redirecttransaction ua="' . $this->plugin_name . ' ' . $this->version . '">
+				<merchant>
+					<account>' . $this->xmlEscape($this->merchant['account_id']) . '</account>
+					<site_id>' . $this->xmlEscape($this->merchant['site_id']) . '</site_id>
+					<site_secure_code>' . $this->xmlEscape($this->merchant['site_code']) . '</site_secure_code>
+					<notification_url>' . $this->xmlEscape($this->merchant['notification_url']) . '</notification_url>
+					<cancel_url>' . $this->xmlEscape($this->merchant['cancel_url']) . '</cancel_url>
+					<redirect_url>' . $this->xmlEscape($this->merchant['redirect_url']) . '</redirect_url>
+					<close_window>' . $this->xmlEscape($this->merchant['close_window']) . '</close_window>
+				</merchant>
+				<plugin>
+					<shop>' . $this->xmlEscape($this->plugin['shop']) . '</shop>
+					<shop_version>' . $this->xmlEscape($this->plugin['shop_version']) . '</shop_version>
+					<plugin_version>' . $this->xmlEscape($this->plugin['plugin_version']) . '</plugin_version>
+					<partner>' . $this->xmlEscape($this->plugin['partner']) . '</partner>
+					<shop_root_url>' . $this->xmlEscape($this->plugin['shop_root_url']) . '</shop_root_url>
+				</plugin>
+				<customer>
+					<locale>' . $this->xmlEscape($this->customer['locale']) . '</locale>
+					<ipaddress>' . $this->xmlEscape($this->customer['ipaddress']) . '</ipaddress>
+					<forwardedip>' . $this->xmlEscape($this->customer['forwardedip']) . '</forwardedip>
+					<firstname>' . $this->xmlEscape($this->customer['firstname']) . '</firstname>
+					<lastname>' . $this->xmlEscape($this->customer['lastname']) . '</lastname>
+					<address1>' . $this->xmlEscape($this->customer['address1']) . '</address1>
+					<address2>' . $this->xmlEscape($this->customer['address2']) . '</address2>
+					<housenumber>' . $this->xmlEscape($this->customer['housenumber']) . '</housenumber>
+					<zipcode>' . $this->xmlEscape($this->customer['zipcode']) . '</zipcode>
+					<city>' . $this->xmlEscape($this->customer['city']) . '</city>
+					<state>' . $this->xmlEscape($this->customer['state']) . '</state>
+					<country>' . $this->xmlEscape($this->customer['country']) . '</country>
+					<phone>' . $this->xmlEscape($this->customer['phone']) . '</phone>
+					<email>' . $this->xmlEscape($this->customer['email']) . '</email>
+					<referrer>' . $this->xmlEscape($this->customer['referrer']) . '</referrer>
+					<user_agent>' . $this->xmlEscape($this->customer['user_agent']) . '</user_agent>
+					<gender>' . $this->xmlEscape($this->customer['gender']) . '</gender>
+				</customer>
 				<customer-delivery>
 					<firstname>' . $this->xmlEscape($this->delivery['firstname']) . '</firstname>
 					<lastname>' . $this->xmlEscape($this->delivery['lastname']) . '</lastname>
@@ -772,9 +675,107 @@ class MultiSafepay
 					<phone>' . $this->xmlEscape($this->delivery['phone']) . '</phone>
 					<email>' . $this->xmlEscape($this->delivery['email']) . '</email>
 				</customer-delivery>
-			' . $gatewayinfo . '
-		  <signature>' . $this->xmlEscape($this->signature) . '</signature>
-		</directtransaction>';
+				' . $this->cart->GetXML() . '
+				<transaction>
+					<id>' . $this->xmlEscape($this->transaction['id']) . '</id>
+					<currency>' . $this->xmlEscape($this->transaction['currency']) . '</currency>
+					<amount>' . $this->xmlEscape($this->transaction['amount']) . '</amount>
+					<description>' . $this->xmlEscape($this->transaction['description']) . '</description>
+					<var1>' . $this->xmlEscape($this->transaction['var1']) . '</var1>
+					<var2>' . $this->xmlEscape($this->transaction['var2']) . '</var2>
+					<var3>' . $this->xmlEscape($this->transaction['var3']) . '</var3>
+					<items>' . $this->xmlEscape($this->transaction['items']) . '</items>
+					<manual>' . $this->xmlEscape($this->transaction['manual']) . '</manual>
+					<daysactive>' . $this->xmlEscape($this->transaction['daysactive']) . '</daysactive>
+					<gateway' . $issuer . '>' . $this->xmlEscape($this->transaction['gateway']) . '</gateway>
+				</transaction>
+				<signature>' . $this->xmlEscape($this->signature) . '</signature>
+			</redirecttransaction>';
+
+        return $request;
+    }
+
+    function createDirectXMLTransactionRequest()
+    {
+        $issuer = "";
+        if (!empty($this->issuer)) {
+            $issuer = ' issuer="' . $this->xmlEscape($this->issuer) . '"';
+        }
+        if ($this->extravars != '') {
+            $gatewayinfo = '<gatewayinfo>
+							<issuerid>' . $this->extravars . '</issuerid>
+						</gatewayinfo>';
+        } else {
+            $gatewayinfo = '';
+        }
+
+        $request = '<?xml version="1.0" encoding="UTF-8"?>
+			<directtransaction ua="' . $this->plugin_name . ' ' . $this->version . '">
+				<merchant>
+					<account>' . $this->xmlEscape($this->merchant['account_id']) . '</account>
+					<site_id>' . $this->xmlEscape($this->merchant['site_id']) . '</site_id>
+					<site_secure_code>' . $this->xmlEscape($this->merchant['site_code']) . '</site_secure_code>
+					<notification_url>' . $this->xmlEscape($this->merchant['notification_url']) . '</notification_url>
+					<cancel_url>' . $this->xmlEscape($this->merchant['cancel_url']) . '</cancel_url>
+					<redirect_url>' . $this->xmlEscape($this->merchant['redirect_url']) . '</redirect_url>
+					<close_window>' . $this->xmlEscape($this->merchant['close_window']) . '</close_window>
+				</merchant>
+				<plugin>
+					<shop>' . $this->xmlEscape($this->plugin['shop']) . '</shop>
+					<shop_version>' . $this->xmlEscape($this->plugin['shop_version']) . '</shop_version>
+					<plugin_version>' . $this->xmlEscape($this->plugin['plugin_version']) . '</plugin_version>
+					<partner>' . $this->xmlEscape($this->plugin['partner']) . '</partner>
+					<shop_root_url>' . $this->xmlEscape($this->plugin['shop_root_url']) . '</shop_root_url>
+				</plugin>
+				<customer>
+					<locale>' . $this->xmlEscape($this->customer['locale']) . '</locale>
+					<ipaddress>' . $this->xmlEscape($this->customer['ipaddress']) . '</ipaddress>
+					<forwardedip>' . $this->xmlEscape($this->customer['forwardedip']) . '</forwardedip>
+					<firstname>' . $this->xmlEscape($this->customer['firstname']) . '</firstname>
+					<lastname>' . $this->xmlEscape($this->customer['lastname']) . '</lastname>
+					<address1>' . $this->xmlEscape($this->customer['address1']) . '</address1>
+					<address2>' . $this->xmlEscape($this->customer['address2']) . '</address2>
+					<housenumber>' . $this->xmlEscape($this->customer['housenumber']) . '</housenumber>
+					<zipcode>' . $this->xmlEscape($this->customer['zipcode']) . '</zipcode>
+					<city>' . $this->xmlEscape($this->customer['city']) . '</city>
+					<state>' . $this->xmlEscape($this->customer['state']) . '</state>
+					<country>' . $this->xmlEscape($this->customer['country']) . '</country>
+					<phone>' . $this->xmlEscape($this->customer['phone']) . '</phone>
+					<email>' . $this->xmlEscape($this->customer['email']) . '</email>
+					<referrer>' . $this->xmlEscape($this->customer['referrer']) . '</referrer>
+					<user_agent>' . $this->xmlEscape($this->customer['user_agent']) . '</user_agent>
+					<gender>' . $this->xmlEscape($this->customer['gender']) . '</gender>
+				</customer>
+				<customer-delivery>
+					<firstname>' . $this->xmlEscape($this->delivery['firstname']) . '</firstname>
+					<lastname>' . $this->xmlEscape($this->delivery['lastname']) . '</lastname>
+					<address1>' . $this->xmlEscape($this->delivery['address1']) . '</address1>
+					<address2>' . $this->xmlEscape($this->delivery['address2']) . '</address2>
+					<housenumber>' . $this->xmlEscape($this->delivery['housenumber']) . '</housenumber>
+					<zipcode>' . $this->xmlEscape($this->delivery['zipcode']) . '</zipcode>
+					<city>' . $this->xmlEscape($this->delivery['city']) . '</city>
+					<state>' . $this->xmlEscape($this->delivery['state']) . '</state>
+					<country>' . $this->xmlEscape($this->delivery['country']) . '</country>
+					<phone>' . $this->xmlEscape($this->delivery['phone']) . '</phone>
+					<email>' . $this->xmlEscape($this->delivery['email']) . '</email>
+				</customer-delivery>'
+				. $this->cart->GetXML()
+                . $gatewayinfo . '
+				<transaction>
+					<id>' . $this->xmlEscape($this->transaction['id']) . '</id>
+					<currency>' . $this->xmlEscape($this->transaction['currency']) . '</currency>
+					<amount>' . $this->xmlEscape($this->transaction['amount']) . '</amount>
+					<description>' . $this->xmlEscape($this->transaction['description']) . '</description>
+					<var1>' . $this->xmlEscape($this->transaction['var1']) . '</var1>
+					<var2>' . $this->xmlEscape($this->transaction['var2']) . '</var2>
+					<var3>' . $this->xmlEscape($this->transaction['var3']) . '</var3>
+					<items>' . $this->xmlEscape($this->transaction['items']) . '</items>
+					<manual>' . $this->xmlEscape($this->transaction['manual']) . '</manual>
+					<daysactive>' . $this->xmlEscape($this->transaction['daysactive']) . '</daysactive>
+					<gateway' . $issuer . '>' . $this->xmlEscape($this->transaction['gateway']) . '</gateway>
+				</transaction>
+				<signature>' . $this->xmlEscape($this->signature) . '</signature>
+			</directtransaction>';
 
         return $request;
     }
@@ -951,8 +952,8 @@ class MultiSafepay
 			</customer-delivery>
 			' . $this->cart_xml . '
 			' . $this->fields_xml . '
-			' . $ganalytics . '		
-			' . $use_shipping_xml . ' 
+			' . $ganalytics . '
+			' . $use_shipping_xml . '
 			<gatewayinfo>
 				<referrer>' . $this->xmlEscape($this->gatewayinfo['referrer']) . '</referrer>
 				<user_agent>' . $this->xmlEscape($this->gatewayinfo['user_agent']) . '</user_agent>
@@ -1386,7 +1387,7 @@ class MultiSafepay
             return false;
         }
 
-        // split header and body    
+        // split header and body
         $reply_header = substr($reply_data, 0, $reply_info['header_size'] - 4);
         $reply_xml = substr($reply_data, $reply_info['header_size']);
 
@@ -1468,9 +1469,9 @@ class msp_gc_xmlparser
     /*
      * Credits for the structure of this function
      * http://mysrc.blogspot.com/2007/02/php-xml-to-array-and-backwards.html
-     * 
-     * Adapted by Ropu - 05/23/2007 
-     * 
+     *
+     * Adapted by Ropu - 05/23/2007
+     *
      */
 
     function xml2ary($vals)
@@ -1560,7 +1561,7 @@ class msp_gc_xmlparser
 
 /**
  * Classes used to generate XML data
- * Based on sample code available at http://simon.incutio.com/code/php/XmlWriter.class.php.txt 
+ * Based on sample code available at http://simon.incutio.com/code/php/XmlWriter.class.php.txt
  */
 
 /**
@@ -1600,7 +1601,7 @@ class msp_gc_XmlBuilder
     }
 
     //Used when an element has no subelements.
-    //Data within the open and close tags are provided with the 
+    //Data within the open and close tags are provided with the
     //contents variable
     function Element($element, $content, $attributes = array())
     {
@@ -1645,13 +1646,13 @@ class msp_gc_XmlBuilder
 
 /*
  * Copyright (C) 2007 Google Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -1666,7 +1667,7 @@ class msp_gc_XmlBuilder
 define('MAX_DIGITAL_DESC', 1024);
 
 /**
- * Creates a Google Checkout shopping cart and posts it 
+ * Creates a Google Checkout shopping cart and posts it
  * to the google checkout sandbox or production environment
  * Refer demo/cartdemo.php for different use case scenarios for this code
  */
@@ -1745,12 +1746,12 @@ class MspCart
     );
 
     /**
-     * Has all the logic to build the cart's xml (or html) request to be 
+     * Has all the logic to build the cart's xml (or html) request to be
      * posted to google's servers.
-     * 
+     *
      * @param string $id the merchant id
      * @param string $key the merchant key
-     * @param string $server_type the server type of the server to be used, one 
+     * @param string $server_type the server type of the server to be used, one
      *                            of 'sandbox' or 'production'.
      *                            defaults to 'sandbox'
      * @param string $currency the currency of the items to be added to the cart
@@ -1783,12 +1784,12 @@ class MspCart
 
     /**
      * Sets the cart's expiration date
-     * 
+     *
      * GC tag: {@link http://code.google.com/apis/checkout/developer/index.html#tag_good-until-date <good-until-date>}
-     * 
-     * @param string $cart_expire a string representing a date in the 
+     *
+     * @param string $cart_expire a string representing a date in the
      *         iso 8601 date and time format: {@link http://www.w3.org/TR/NOTE-datetime}
-     * 
+     *
      * @return void
      */
     function SetCartExpiration($cart_expire)
@@ -1798,16 +1799,16 @@ class MspCart
 
     /**
      * Sets the merchant's private data.
-     * 
+     *
      * Google Checkout will return this data in the
-     * <merchant-calculation-callback> and the 
+     * <merchant-calculation-callback> and the
      * <new-order-notification> for the order.
-     * 
+     *
      * GC tag: {@link http://code.google.com/apis/checkout/developer/index.html#tag_merchant-private-data <merchant-private-data>}
-     * 
-     * @param MerchantPrivateData $data an object which contains the data to be 
+     *
+     * @param MerchantPrivateData $data an object which contains the data to be
      *                                  sent as merchant-private-data
-     * 
+     *
      * @return void
      */
     function SetMerchantPrivateData($data)
@@ -1817,9 +1818,9 @@ class MspCart
 
     /**
      * Sets the url where the customer can edit his cart.
-     * 
+     *
      * GC tag: {@link http://code.google.com/apis/checkout/developer/index.html#tag_edit-cart-url <edit-cart-url>}
-     * 
+     *
      * @param string $url the merchant's site edit cart url
      * @return void
      */
@@ -1829,11 +1830,11 @@ class MspCart
     }
 
     /**
-     * Sets the continue shopping url, which allows the customer to return 
+     * Sets the continue shopping url, which allows the customer to return
      * to the merchant's site after confirming an order.
-     * 
+     *
      * GC tag: {@link http://code.google.com/apis/checkout/developer/index.html#tag_continue-shopping-url <continue-shopping-url>}
-     * 
+     *
      * @param string $url the merchant's site continue shopping url
      * @return void
      */
@@ -1846,9 +1847,9 @@ class MspCart
      * Sets whether the customer must enter a phone number to complete an order.
      * If set to true, the customer must enter a number, which Google Checkout
      * will return in the new order notification for the order.
-     * 
+     *
      * GC tag: {@link http://code.google.com/apis/checkout/developer/index.html#tag_request-buyer-phone-number <request-buyer-phone-number>}
-     * 
+     *
      * @param bool $req true if the customer's phone number is *required*
      *                  to complete an order.
      *                  defaults to false.
@@ -1860,11 +1861,11 @@ class MspCart
     }
 
     /**
-     * Sets the information about calculations that will be performed by the 
+     * Sets the information about calculations that will be performed by the
      * merchant.
-     * 
+     *
      * GC tag: {@link http://code.google.com/apis/checkout/developer/index.html#tag_merchant-calculations <merchant-calculations>}
-     * 
+     *
      * @param string $url the merchant calculations callback url
      * @param bool $tax_option true if the merchant has to do tax calculations.
      *                         defaults to false.
@@ -1884,12 +1885,12 @@ class MspCart
 
     /**
      * Add an item to the cart.
-     * 
+     *
      * GC tag: {@link http://code.google.com/apis/checkout/developer/index.html#tag_item <item>}
-     * 
-     * @param GoogleItem $google_item an object that represents an item 
+     *
+     * @param GoogleItem $google_item an object that represents an item
      *                                (defined in googleitem.php)
-     * 
+     *
      * @return void
      */
     function AddItem($google_item)
@@ -1899,12 +1900,12 @@ class MspCart
 
     /**
      * Add a shipping method to the cart.
-     * 
+     *
      * GC tag: {@link http://code.google.com/apis/checkout/developer/index.html#tag_shipping-methods <shipping-methods>}
-     * 
-     * @param object $ship an object that represents a shipping method, must be 
+     *
+     * @param object $ship an object that represents a shipping method, must be
      *                     one of the methods defined in googleshipping.php
-     * 
+     *
      * @return void
      */
     function AddShipping($ship)
@@ -1914,12 +1915,12 @@ class MspCart
 
     /**
      * Add a default tax rule to the cart.
-     * 
+     *
      * GC tag: {@link http://code.google.com/apis/checkout/developer/index.html#tag_default-tax-rule <default-tax-rule>}
-     * 
+     *
      * @param GoogleDefaultTaxRule $rules an object that represents a default
      *                                    tax rule (defined in googletax.php)
-     * 
+     *
      * @return void
      */
     function AddDefaultTaxRules($rules)
@@ -1930,13 +1931,13 @@ class MspCart
 
     /**
      * Add an alternate tax table to the cart.
-     * 
+     *
      * GC tag: {@link http://code.google.com/apis/checkout/developer/index.html#tag_alternate-tax-table <alternate-tax-table>}
-     * 
-     * @param GoogleAlternateTaxTable $tax an object that represents an 
-     *                                     alternate tax table 
+     *
+     * @param GoogleAlternateTaxTable $tax an object that represents an
+     *                                     alternate tax table
      *                                     (defined in googletax.php)
-     * 
+     *
      * @return void
      */
     function AddAlternateTaxTables($tax)
@@ -1948,13 +1949,13 @@ class MspCart
      * Set the policy to be used to round monetary values.
      * Rounding policy explanation here:
      * {@link http://code.google.com/apis/checkout/developer/Google_Checkout_Rounding_Policy.html}
-     * 
+     *
      * GC tag: {@link http://code.google.com/apis/checkout/developer/index.html#tag_rounding-policy <rounding-policy>}
-     * 
-     * @param string $mode one of "UP", "DOWN", "CEILING", "HALF_DOWN" 
+     *
+     * @param string $mode one of "UP", "DOWN", "CEILING", "HALF_DOWN"
      *                     or "HALF_EVEN", described here: {@link http://java.sun.com/j2se/1.5.0/docs/api/java/math/RoundingMode.html}
      * @param string $rule one of "PER_LINE", "TOTAL"
-     * 
+     *
      * @return void
      */
     function AddRoundingPolicy($mode, $rule)
@@ -1984,11 +1985,11 @@ class MspCart
 
     /**
      * Set the google analytics data.
-     * 
+     *
      * {@link http://code.google.com/apis/checkout/developer/checkout_analytics_integration.html info on Checkout and Analytics integration}
-     * 
+     *
      * @param string $data the analytics data
-     * 
+     *
      * @return void
      */
     function SetAnalyticsData($data)
@@ -1998,11 +1999,11 @@ class MspCart
 
     /**
      * Add a google analytics tracking id.
-     * 
+     *
      * {@link http://code.google.com/apis/checkout/developer/checkout_analytics_integration.html info on Checkout and Analytics integration}
-     * 
+     *
      * @param string $GA_id the google analytics id
-     * 
+     *
      * @return void
      */
     function AddGoogleAnalyticsTracking($GA_id)
@@ -2012,11 +2013,11 @@ class MspCart
 
     /**
      * Add third-party tracking to the cart
-     * 
+     *
      * Described here:
      * {@link http://code.google.com/apis/checkout/developer/checkout_analytics_integration.html#googleCheckoutAnalyticsIntegrationAlternate}
-     * 
-     * @param $tracking_attr_types attributes to be tracked, one of 
+     *
+     * @param $tracking_attr_types attributes to be tracked, one of
      *                            ('buyer-id',
      *                             'order-id',
      *                             'order-subtotal',
@@ -2045,7 +2046,7 @@ class MspCart
 
     /**
      * Builds the cart's xml to be sent to Google Checkout.
-     * 
+     *
      * @return string the cart's xml
      */
     function GetXML()
@@ -2133,7 +2134,7 @@ class MspCart
             if ($ship->type == "flat-rate-shipping" ||
                     $ship->type == "merchant-calculated-shipping"
 //  If shipping-company calc support addr-filtering and shipping restrictions as a subatag of shipping-company-calculated-shipping
-//           ||$ship->type == "shipping-company-calculated-shipping" 
+//           ||$ship->type == "shipping-company-calculated-shipping"
             ) {
                 $xml_data->Push($ship->type, array('name' => $ship->name));
                 $xml_data->Element('price', $ship->price, array('currency' => $this->currency));
@@ -2574,10 +2575,10 @@ class MspCart
     /**
      * Set the Google Checkout button's variant.
      * {@link http://code.google.com/apis/checkout/developer/index.html#google_checkout_buttons}
-     * 
-     * @param bool $variant true for an enabled button, false for a 
+     *
+     * @param bool $variant true for an enabled button, false for a
      *                      disabled one
-     * 
+     *
      * @return void
      */
     function SetButtonVariant($variant)
@@ -2595,13 +2596,13 @@ class MspCart
 
     /**
      * Submit a server-to-server request.
-     * Creates a GoogleRequest object (defined in googlerequest.php) and sends 
+     * Creates a GoogleRequest object (defined in googlerequest.php) and sends
      * it to the Google Checkout server.
-     * 
+     *
      * more info:
      * {@link http://code.google.com/apis/checkout/developer/index.html#alternate_technique}
-     * 
-     * @return array with the returned http status code (200 if OK) in index 0 
+     *
+     * @return array with the returned http status code (200 if OK) in index 0
      *               and the redirect url returned by the server in index 1
      */
     function CheckoutServer2Server($proxy = array(), $certPath = '')
@@ -2619,24 +2620,24 @@ class MspCart
     /**
      * Get the Google Checkout button's html to be used in a server-to-server
      * request.
-     * 
+     *
      * {@link http://code.google.com/apis/checkout/developer/index.html#google_checkout_buttons}
-     * 
-     * @param string $url the merchant's site url where the form will be posted 
+     *
+     * @param string $url the merchant's site url where the form will be posted
      *                    to
      * @param string $size the size of the button, one of 'large', 'medium' or
      *                     'small'.
      *                     defaults to 'large'
-     * @param bool $variant true for an enabled button, false for a 
+     * @param bool $variant true for an enabled button, false for a
      *                      disabled one. defaults to true. will be ignored if
      *                      SetButtonVariant() was used before.
      * @param string $loc the locale of the button's text, the only valid value
      *                    is 'en_US' (used as default)
-     * @param bool $showtext whether to show Google Checkout text or not, 
+     * @param bool $showtext whether to show Google Checkout text or not,
      *                       defaults to true.
      * @param string $style the background style of the button, one of 'white'
      *                      or 'trans'. defaults to "trans"
-     * 
+     *
      * @return string the button's html
      */
     function CheckoutServer2ServerButton($url, $size = "large", $variant = true, $loc = "en_US", $showtext = true, $style = "trans")
@@ -2675,10 +2676,10 @@ class MspCart
             $data .= "<div align=center><form method=\"POST\" action=\"" .
                     $url . "\"" . ($this->googleAnalytics_id ?
                             " onsubmit=\"setUrchinInputCode();\"" : "") . ">
-                <input type=\"image\" name=\"Checkout\" alt=\"Checkout\" 
+                <input type=\"image\" name=\"Checkout\" alt=\"Checkout\"
                 src=\"" . $this->server_url . "buttons/checkout.gif?merchant_id=" .
                     $this->merchant_id . "&w=" . $width . "&h=" . $height . "&style=" .
-                    $style . "&variant=" . $this->variant . "&loc=" . $loc . "\" 
+                    $style . "&variant=" . $this->variant . "&loc=" . $loc . "\"
                 height=\"" . $height . "\" width=\"" . $width . "\" />";
 
             if ($this->googleAnalytics_id) {
@@ -2695,7 +2696,7 @@ class MspCart
             urchinTracker();
             </script>
             <script src=\"https://checkout.google.com/files/digital/urchin_po" .
-                        "st.js\" type=\"text/javascript\"></script>  
+                        "st.js\" type=\"text/javascript\"></script>
             <!-- End Google analytics -->";
             }
         } else {
@@ -2711,22 +2712,22 @@ class MspCart
 
     /**
      * Get the Google Checkout button's html.
-     * 
+     *
      * {@link http://code.google.com/apis/checkout/developer/index.html#google_checkout_buttons}
-     * 
+     *
      * @param string $size the size of the button, one of 'large', 'medium' or
      *                     'small'.
      *                     defaults to 'large'
-     * @param bool $variant true for an enabled button, false for a 
+     * @param bool $variant true for an enabled button, false for a
      *                      disabled one. defaults to true. will be ignored if
      *                      SetButtonVariant() was used before.
      * @param string $loc the locale of the button's text, the only valid value
      *                    is 'en_US' (used as default)
-     * @param bool $showtext whether to show Google Checkout text or not, 
+     * @param bool $showtext whether to show Google Checkout text or not,
      *                       defaults to true.
      * @param string $style the background style of the button, one of 'white'
      *                      or 'trans'. defaults to "trans"
-     * 
+     *
      * @return string the button's html
      */
     function CheckoutButtonCode($size = "large", $variant = true, $loc = "en_US", $showtext = true, $style = "trans")
@@ -2770,11 +2771,11 @@ class MspCart
                 <input type=\"hidden\" name=\"cart\" value=\"" .
                     base64_encode($this->GetXML()) . "\">
                 <input type=\"hidden\" name=\"signature\" value=\"" .
-                    base64_encode($this->CalcHmacSha1($this->GetXML())) . "\"> 
-                <input type=\"image\" name=\"Checkout\" alt=\"Checkout\" 
+                    base64_encode($this->CalcHmacSha1($this->GetXML())) . "\">
+                <input type=\"image\" name=\"Checkout\" alt=\"Checkout\"
                 src=\"" . $this->server_url . "buttons/checkout.gif?merchant_id=" .
                     $this->merchant_id . "&w=" . $width . "&h=" . $height . "&style=" .
-                    $style . "&variant=" . $this->variant . "&loc=" . $loc . "\" 
+                    $style . "&variant=" . $this->variant . "&loc=" . $loc . "\"
                 height=\"" . $height . "\" width=\"" . $width . "\" />";
 
             if ($this->googleAnalytics_id) {
@@ -2791,7 +2792,7 @@ class MspCart
             urchinTracker();
             </script>
             <script src=\"https://checkout.google.com/files/digital/urchin_po" .
-                        "st.js\" type=\"text/javascript\"></script>  
+                        "st.js\" type=\"text/javascript\"></script>
             <!-- End Google analytics -->";
             }
         } else {
@@ -2813,7 +2814,7 @@ class MspCart
         return $data;
     }
 
-    //Code for generating Checkout button 
+    //Code for generating Checkout button
     //@param $variant will be ignored if SetButtonVariant() was used before
     function CheckoutButtonNowCode($size = "large", $variant = true, $loc = "en_US", $showtext = true, $style = "trans")
     {
@@ -2852,10 +2853,10 @@ class MspCart
                 <input type=\"hidden\" name=\"buyButtonCart\" value=\"" .
                     base64_encode($this->GetXML()) . "//separator//" .
                     base64_encode($this->CalcHmacSha1($this->GetXML())) . "\">
-                <input type=\"image\" name=\"Checkout\" alt=\"BuyNow\" 
+                <input type=\"image\" name=\"Checkout\" alt=\"BuyNow\"
                 src=\"" . $this->server_url . "buttons/buy.gif?merchant_id=" .
                     $this->merchant_id . "&w=" . $width . "&h=" . $height . "&style=" .
-                    $style . "&variant=" . $this->variant . "&loc=" . $loc . "\" 
+                    $style . "&variant=" . $this->variant . "&loc=" . $loc . "\"
                 height=\"" . $height . "\" width=\"" . $width . "\" />";
 
             if ($this->googleAnalytics_id) {
@@ -2872,7 +2873,7 @@ class MspCart
             urchinTracker();
             </script>
             <script src=\"https://checkout.google.com/files/digital/urchin_po" .
-                        "st.js\" type=\"text/javascript\"></script>  
+                        "st.js\" type=\"text/javascript\"></script>
             <!-- End Google analytics -->";
             }
 //        ask for link to BuyNow disable button
@@ -2897,22 +2898,22 @@ class MspCart
 
     /**
      * Get the Google Checkout button's html to be used with the html api.
-     * 
+     *
      * {@link http://code.google.com/apis/checkout/developer/index.html#google_checkout_buttons}
-     * 
+     *
      * @param string $size the size of the button, one of 'large', 'medium' or
      *                     'small'.
      *                     defaults to 'large'
-     * @param bool $variant true for an enabled button, false for a 
+     * @param bool $variant true for an enabled button, false for a
      *                      disabled one. defaults to true. will be ignored if
      *                      SetButtonVariant() was used before.
      * @param string $loc the locale of the button's text, the only valid value
      *                    is 'en_US' (used as default)
-     * @param bool $showtext whether to show Google Checkout text or not, 
+     * @param bool $showtext whether to show Google Checkout text or not,
      *                       defaults to true.
      * @param string $style the background style of the button, one of 'white'
      *                      or 'trans'. defaults to "trans"
-     * 
+     *
      * @return string the button's html
      */
     function CheckoutHTMLButtonCode($size = "large", $variant = true, $loc = "en_US", $showtext = true, $style = "trans")
@@ -2963,7 +2964,7 @@ class MspCart
             $data .= "<input type=\"image\" name=\"Checkout\" alt=\"Checkout\" " .
                     "src=\"" . $this->server_url . "buttons/checkout.gif?merchant_id=" .
                     $this->merchant_id . "&w=" . $width . "&h=" . $height . "&style=" .
-                    $style . "&variant=" . $this->variant . "&loc=" . $loc . "\" 
+                    $style . "&variant=" . $this->variant . "&loc=" . $loc . "\"
                 height=\"" . $height . "\" width=\"" . $width . "\" />";
 
             if ($this->googleAnalytics_id) {
@@ -2980,7 +2981,7 @@ class MspCart
             urchinTracker();
             </script>
             <script src=\"https://checkout.google.com/files/digital/urchin_po" .
-                        "st.js\" type=\"text/javascript\"></script>  
+                        "st.js\" type=\"text/javascript\"></script>
             <!-- End Google analytics -->";
             }
         } else {
@@ -3010,7 +3011,7 @@ class MspCart
     function xml2html($data, $path = '', &$rta)
     {
 //      global $multiple_tags,$ignore_tags;
-        //    $arr = gc_get_arr_result($data);  
+        //    $arr = gc_get_arr_result($data);
         foreach ($data as $tag_name => $tag) {
             if (isset($this->ignore_tags[$tag_name])) {
                 continue;
@@ -3057,11 +3058,11 @@ class MspCart
 
     /**
      * Get the Google Checkout acceptance logos html
-     * 
+     *
      * {@link http://checkout.google.com/seller/acceptance_logos.html}
-     * 
+     *
      * @param integer $type the acceptance logo type, valid values: 1, 2, 3
-     * 
+     *
      * @return string the logo's html
      */
     function CheckoutAcceptanceLogo($type = 1)
@@ -3099,11 +3100,11 @@ class MspCart
     }
 
     /**
-     * Calculates the cart's hmac-sha1 signature, this allows google to verify 
+     * Calculates the cart's hmac-sha1 signature, this allows google to verify
      * that the cart hasn't been tampered by a third-party.
-     * 
+     *
      * {@link http://code.google.com/apis/checkout/developer/index.html#create_signature}
-     * 
+     *
      * @param string $data the cart's xml
      * @return string the cart's signature (in binary format)
      */
@@ -3168,9 +3169,9 @@ class MspCart
 /**
  * @abstract
  * Abstract class that represents the merchant-private-data.
- * 
+ *
  * See {@link MerchantPrivateData} and {@link MerchantPrivateItemData}
- * 
+ *
  * GC tag: {@link http://code.google.com/apis/checkout/developer/index.html#tag_merchant-private-data <merchant-private-data>}
  */
 class MspMerchantPrivate
@@ -3181,7 +3182,7 @@ class MspMerchantPrivate
 
     function __construct()
     {
-        
+
     }
 
     function AddMerchantPrivateToXML(&$xml_data)
@@ -3215,14 +3216,14 @@ class MspMerchantPrivate
 
 /**
  * Class that represents the merchant-private-data.
- * 
+ *
  * GC tag: {@link http://code.google.com/apis/checkout/developer/index.html#tag_merchant-private-data <merchant-private-data>}
  */
 class MspMerchantPrivateData extends MspMerchantPrivate
 {
 
     /**
-     * @param mixed $data a string with the data that will go in the 
+     * @param mixed $data a string with the data that will go in the
      *                    merchant-private-data tag or an array that will
      *                    be mapped to xml, formatted like (e.g.):
      *                    array('my-order-id' => 34234,
@@ -3246,14 +3247,14 @@ class MspMerchantPrivateData extends MspMerchantPrivate
 
 /**
  * Class that represents a merchant-private-item-data.
- * 
+ *
  * GC tag: {@link http://code.google.com/apis/checkout/developer/index.html#tag_merchant-private-item-data <merchant-private-data>}
  */
 class MspMerchantPrivateItemData extends MspMerchantPrivate
 {
 
     /**
-     * @param mixed $data a string with the data that will go in the 
+     * @param mixed $data a string with the data that will go in the
      *                    merchant-private-item-data tag or an array that will
      *                    be mapped to xml, formatted like:
      *                    array('my-item-id' => 34234,
@@ -3277,13 +3278,13 @@ class MspMerchantPrivateItemData extends MspMerchantPrivate
 
 /*
  * Copyright (C) 2007 Google Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -3299,9 +3300,9 @@ class MspMerchantPrivateItemData extends MspMerchantPrivate
 /**
  * Creates an item to be added to the shopping cart.
  * A new instance of the class must be created for each item to be added.
- * 
+ *
  * Required fields are the item name, description, quantity and price
- * The private-data and tax-selector for each item can be set in the 
+ * The private-data and tax-selector for each item can be set in the
  * constructor call or using individual Set functions
  */
 class MspItem
@@ -3324,17 +3325,17 @@ class MspItem
 
     /**
      * {@link http://code.google.com/apis/checkout/developer/index.html#tag_item <item>}
-     * 
+     *
      * @param string $name the name of the item -- required
      * @param string $desc the description of the item -- required
-     * @param integer $qty the number of units of this item the customer has 
+     * @param integer $qty the number of units of this item the customer has
      *                    in its shopping cart -- required
      * @param double $price the unit price of the item -- required
      * @param string $item_weight the weight unit used to specify the item's
      *                            weight,
      *                            one of 'LB' (pounds) or 'KG' (kilograms)
      * @param double $numeric_weight the weight of the item
-     * 
+     *
      */
     function xmlEscape($str)
     {
@@ -3357,17 +3358,17 @@ class MspItem
 
     /**
      * {@link http://code.google.com/apis/checkout/developer/index.html#tag_item <item>}
-     * 
+     *
      * @param string $name the name of the item -- required
      * @param string $desc the description of the item -- required
-     * @param integer $qty the number of units of this item the customer has 
+     * @param integer $qty the number of units of this item the customer has
      *                    in its shopping cart -- required
      * @param double $price the unit price of the item -- required
      * @param string $item_weight the weight unit used to specify the item's
      *                            weight,
      *                            one of 'LB' (pounds) or 'KG' (kilograms)
      * @param double $numeric_weight the weight of the item
-     * 
+     *
      */
     function __construct($name, $desc, $qty, $price, $item_weight = '', $numeric_weight = '')
     {
@@ -3398,12 +3399,12 @@ class MspItem
      * Set the merchant item id that the merchant uses to uniquely identify an
      * item. Google Checkout will include this value in the
      * merchant calculation callbacks
-     * 
+     *
      * GC tag: {@link http://code.google.com/apis/checkout/developer/index.html#tag_merchant-item-id <merchant-item-id>}
-     * 
-     * @param mixed $item_id the value that identifies this item on the 
+     *
+     * @param mixed $item_id the value that identifies this item on the
      *                                 merchant's side
-     * 
+     *
      * @return void
      */
     function SetMerchantItemId($item_id)
@@ -3413,13 +3414,13 @@ class MspItem
 
     /**
      * Sets the tax table selector which identifies an alternate tax table that
-     * should be used to calculate tax for a particular item. 
-     * 
+     * should be used to calculate tax for a particular item.
+     *
      * GC tag: {@link http://code.google.com/apis/checkout/developer/index.html#tag_tax-table-selector <tax-table-selector>}
-     * 
-     * @param string $tax_selector this value should correspond to the name 
+     *
+     * @param string $tax_selector this value should correspond to the name
      *                             of an alternate-tax-table.
-     * 
+     *
      * @return void
      */
     function SetTaxTableSelector($tax_selector)
@@ -3432,12 +3433,12 @@ class MspItem
      * send an email to the buyer explaining how to access the digital content.
      * Email delivery allows the merchant to charge the buyer for an order
      * before allowing the buyer to access the digital content.
-     * 
+     *
      * GC tag: {@link http://code.google.com/apis/checkout/developer/index.html#tag_email-delivery <email-delivery>}
-     * 
+     *
      * @param bool $email_delivery true if email_delivery applies, defaults to
      *                             false
-     * 
+     *
      * @return void
      */
     function SetEmailDigitalDelivery($email_delivery = 'false')
@@ -3451,17 +3452,17 @@ class MspItem
 
     /**
      * Sets the information related to the digital delivery of the item.
-     * 
+     *
      * GC tag: {@link http://code.google.com/apis/checkout/developer/index.html#tag_digital-content <digital-content>}
-     * 
+     *
      * @param string $digital_url the url the customer must go to download the
      *                            item. --optional
      * @param string $digital_key the key which allows to download or unlock the
      *                            digital content item -- optional
-     * @param string $digital_description instructions for downloading adigital 
+     * @param string $digital_description instructions for downloading adigital
      *                                    content item, 1024 characters max, can
      *                                    contain xml-escaped HTML -- optional
-     * 
+     *
      * @return void
      */
     function SetURLDigitalContent($digital_url, $digital_key, $digital_description)
@@ -3477,13 +3478,13 @@ class MspItem
 
 /*
  * Copyright (C) 2007 Google Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -3498,11 +3499,11 @@ class MspItem
 
 /**
  * Class that represents flat rate shipping
- * 
+ *
  * info:
  * {@link http://code.google.com/apis/checkout/developer/index.html#tag_flat-rate-shipping}
  * {@link http://code.google.com/apis/checkout/developer/index.html#shipping_xsd}
- *  
+ *
  */
 class MspFlatRateShipping
 {
@@ -3524,7 +3525,7 @@ class MspFlatRateShipping
 
     /**
      * Adds a restriction to this shipping.
-     * 
+     *
      * @param GoogleShippingFilters $restrictions the shipping restrictions
      */
     function AddShippingRestrictions($restrictions)
@@ -3535,21 +3536,21 @@ class MspFlatRateShipping
 }
 
 /**
- * 
+ *
  * Shipping restrictions contain information about particular areas where
  * items can (or cannot) be shipped.
- * 
+ *
  * More info:
  * {@link http://code.google.com/apis/checkout/developer/index.html#tag_shipping-restrictions}
- * 
- * Address filters identify areas where a particular merchant-calculated 
- * shipping method is available or unavailable. Address filters are applied 
- * before Google Checkout sends a <merchant-calculation-callback> to the 
- * merchant. Google Checkout will not ask you to calculate the cost of a 
- * particular shipping method for an address if the address filters in the 
- * Checkout API request indicate that the method is not available for the 
+ *
+ * Address filters identify areas where a particular merchant-calculated
+ * shipping method is available or unavailable. Address filters are applied
+ * before Google Checkout sends a <merchant-calculation-callback> to the
+ * merchant. Google Checkout will not ask you to calculate the cost of a
+ * particular shipping method for an address if the address filters in the
+ * Checkout API request indicate that the method is not available for the
  * address.
- * 
+ *
  * More info:
  * {@link http://code.google.com/apis/checkout/developer/index.html#tag_address-filters}
  */
@@ -3586,7 +3587,7 @@ class MspShippingFilters
 
     /**
      * GC tag: {@link http://code.google.com/apis/checkout/developer/index.html#tag_allow-us-po-box <allow-us-po-box>}
-     * 
+     *
      * @param bool $allow_us_po_box whether to allow delivery to PO boxes in US,
      * defaults to true
      */
@@ -3597,9 +3598,9 @@ class MspShippingFilters
 
     /**
      * Set the world as allowed delivery area.
-     * 
+     *
      * GC tag: {@link http://code.google.com/apis/checkout/developer/index.html#tag_world-area <world-area>}
-     * 
+     *
      * @param bool $world_area Set worldwide allowed shipping, defaults to true
      */
     function SetAllowedWorldArea($world_area = true)
@@ -3611,9 +3612,9 @@ class MspShippingFilters
     // Allows
     /**
      * Add a postal area to be allowed for delivery.
-     * 
+     *
      * GC tag: {@link http://code.google.com/apis/checkout/developer/index.html#tag_postal-area <postal-area>}
-     * 
+     *
      * @param string $country_code 2-letter iso country code
      * @param string $postal_pattern Pattern that matches the postal areas to
      * be allowed, as defined in {@link http://code.google.com/apis/checkout/developer/index.html#tag_postal-code-pattern}
@@ -3627,12 +3628,12 @@ class MspShippingFilters
 
     /**
      * Add a us country area to be allowed for delivery.
-     * 
+     *
      * GC tag: {@link http://code.google.com/apis/checkout/developer/index.html#tag_us-country-area <us-country-area>}
-     * 
-     * @param string $country_area the area to allow, one of "CONTINENTAL", 
+     *
+     * @param string $country_area the area to allow, one of "CONTINENTAL",
      * "FULL_50_STATES" or "ALL"
-     * 
+     *
      */
     function SetAllowedCountryArea($country_area)
     {
@@ -3651,9 +3652,9 @@ class MspShippingFilters
 
     /**
      * Allow shipping to areas specified by state.
-     * 
+     *
      * GC tag: {@link http://code.google.com/apis/checkout/developer/index.html#tag_us-state-area <us-state-area>}
-     * 
+     *
      * @param array $areas Areas to be allowed
      */
     function SetAllowedStateAreas($areas)
@@ -3664,9 +3665,9 @@ class MspShippingFilters
 
     /**
      * Allow shipping to areas specified by state.
-     * 
+     *
      * GC tag: {@link http://code.google.com/apis/checkout/developer/index.html#tag_us-state-area <us-state-area>}
-     * 
+     *
      * @param string $area Area to be allowed
      */
     function AddAllowedStateArea($area)
@@ -3677,9 +3678,9 @@ class MspShippingFilters
 
     /**
      * Allow shipping to areas specified by zip patterns.
-     * 
+     *
      * GC tag: {@link http://code.google.com/apis/checkout/developer/index.html#tag_us-zip-area <us-zip-area>}
-     * 
+     *
      * @param array $zips
      */
     function SetAllowedZipPatterns($zips)
@@ -3690,10 +3691,10 @@ class MspShippingFilters
 
     /**
      * Allow shipping to area specified by zip pattern.
-     * 
+     *
      * GC tag: {@link http://code.google.com/apis/checkout/developer/index.html#tag_us-zip-area <us-zip-area>}
-     * 
-     * @param string 
+     *
+     * @param string
      */
     function AddAllowedZipPattern($zip)
     {
@@ -3703,7 +3704,7 @@ class MspShippingFilters
 
     /**
      * Exclude postal areas from shipping.
-     * 
+     *
      * @see AddAllowedPostalArea
      */
     function AddExcludedPostalArea($country_code, $postal_pattern = "")
@@ -3715,7 +3716,7 @@ class MspShippingFilters
 
     /**
      * Exclude state areas from shipping.
-     * 
+     *
      * @see SetAllowedStateAreas
      */
     function SetExcludedStateAreas($areas)
@@ -3726,7 +3727,7 @@ class MspShippingFilters
 
     /**
      * Exclude state area from shipping.
-     * 
+     *
      * @see AddAllowedStateArea
      */
     function AddExcludedStateArea($area)
@@ -3737,7 +3738,7 @@ class MspShippingFilters
 
     /**
      * Exclude shipping to area specified by zip pattern.
-     * 
+     *
      * @see SetAllowedZipPatterns
      */
     function SetExcludedZipPatternsStateAreas($zips)
@@ -3748,7 +3749,7 @@ class MspShippingFilters
 
     /**
      * Exclude shipping to area specified by zip pattern.
-     * 
+     *
      * @see AddExcludedZipPattern
      */
     function SetAllowedZipPatternsStateArea($zip)
@@ -3759,7 +3760,7 @@ class MspShippingFilters
 
     /**
      * Exclude shipping to country area
-     * 
+     *
      * @see SetAllowedCountryArea
      */
     function SetExcludedCountryArea($country_area)
@@ -3781,9 +3782,9 @@ class MspShippingFilters
 }
 
 /**
- * Used as a shipping option in which neither a carrier nor a ship-to 
+ * Used as a shipping option in which neither a carrier nor a ship-to
  * address is specified
- * 
+ *
  * GC tag: {@link http://code.google.com/apis/checkout/developer/index.html#tag_pickup} <pickup>
  */
 class MspPickUp
@@ -3807,13 +3808,13 @@ class MspPickUp
 
 /*
  * Copyright (C) 2006 Google Inc.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -3827,10 +3828,10 @@ class MspPickUp
 
 /**
  * Represents a tax rule
- * 
+ *
  * @see GoogleDefaultTaxRule
  * @see GoogleAlternateTaxRule
- * 
+ *
  * @abstract
  */
 class MspTaxRule
@@ -3846,7 +3847,7 @@ class MspTaxRule
 
     function __construct()
     {
-        
+
     }
 
     function SetWorldArea($world_area = true)
@@ -3894,7 +3895,7 @@ class MspTaxRule
 
 /**
  * Represents a default tax rule
- * 
+ *
  * GC tag: {@link http://code.google.com/apis/checkout/developer/index.html#tag_default-tax-rule <default-tax-rule>}
  */
 class MspDefaultTaxRule extends MspTaxRule
@@ -3917,7 +3918,7 @@ class MspDefaultTaxRule extends MspTaxRule
 
 /**
  * Represents an alternate tax rule
- * 
+ *
  * GC tag: {@link http://code.google.com/apis/checkout/developer/index.html#tag_alternate-tax-rule <alternate-tax-rule>}
  */
 class MspAlternateTaxRule extends MspTaxRule
@@ -3937,7 +3938,7 @@ class MspAlternateTaxRule extends MspTaxRule
 
 /**
  * Represents an alternate tax table
- * 
+ *
  * GC tag: {@link http://code.google.com/apis/checkout/developer/index.html#tag_alternate-tax-table <alternate-tax-table>}
  */
 class MspAlternateTaxTable
