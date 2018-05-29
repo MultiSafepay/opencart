@@ -123,6 +123,8 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
             $msp->merchant['cancel_url'] = $this->url->link('checkout/checkout', '', 'SSL');
             $msp->merchant['redirect_url'] = $this->url->link('checkout/success', '', 'SSL');
             $msp->merchant['close_window'] = $this->config->get('payment_multisafepay_redirect_url_' . $storeid);
+
+            $msp->customer['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
             $msp->customer['locale'] = $locale;
             $msp->customer['firstname'] = $order_info['payment_firstname'];
             $msp->customer['lastname'] = $order_info['payment_lastname'];
@@ -137,9 +139,18 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
                 $msp->customer['housenumber'] = $order_info['payment_address_2'];
             }
 
+            $msp->delivery['firstname'] = $order_info['shipping_firstname'];
+            $msp->delivery['lastname'] = $order_info['shipping_lastname'];
+            $msp->delivery['zipcode'] = $order_info['shipping_postcode'];
+            $msp->delivery['city'] = $order_info['shipping_city'];
+            $msp->delivery['country'] = $order_info['shipping_iso_code_2'];
+
+            $msp->parseDeliveryAddress($order_info['shipping_address_1']);
+            if ($msp->delivery['housenumber'] == "") {
+                $msp->delivery['housenumber'] = $order_info['shipping_address_2'];
+            }
 
 
-            $msp->customer['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
             $msp->transaction['id'] = $order_info['order_id']; //round($order_info['total'] * $order_info['currency_value'] * 100);
             $msp->transaction['currency'] = $order_info['currency_code'];
 
