@@ -40,6 +40,7 @@ $_['text_title_gezondheidsbon'] = 'Gezondheidsbon';
 $_['text_title_giropay'] = 'GiroPay';
 $_['text_title_ideal'] = 'iDEAL';
 $_['text_title_klarna'] = 'Klarna';
+$_['text_title_trustly'] = 'Trustly';
 $_['text_title_lief'] = 'Lief cadeaukaart';
 $_['text_title_maestro'] = 'Maestro';
 $_['text_title_mastercard'] = 'Mastercard';
