@@ -30,6 +30,7 @@ $_['text_title_amex'] = 'American Express';
 $_['text_title_babygiftcard'] = 'Babygiftcard';
 $_['text_title_banktrans'] = 'Bank Overschrijving';
 $_['text_title_boekenbon'] = 'Boekenbon';
+$_['text_title_vvv'] = 'VVV Cadeaukaart';
 $_['text_title_dirdeb'] = 'Automatisch Incasso';
 $_['text_title_directbank'] = 'SOFORT Banking';
 $_['text_title_dotpay'] = 'Dotpay';
