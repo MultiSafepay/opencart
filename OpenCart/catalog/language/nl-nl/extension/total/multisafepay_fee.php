@@ -1,3 +1,3 @@
 <?php
 
-$_['text_payafter_fee'] = 'Payment Fee';
+$_['text_payafter_fee'] = 'Betaal toeslag';

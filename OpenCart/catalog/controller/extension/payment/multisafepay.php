@@ -41,9 +41,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
         $data['back'] = $this->url->link('checkout/checkout', '', 'SSL');
         $data['order_id'] = $order_info['order_id'];
         $data['text_paymentmethod'] = $this->language->get('text_paymentmethod');
-        $data['text_dirdeb'] = $this->language->get('text_dirdeb');
         $data['gateway'] = '';
-        $data['text_banktransfer'] = $this->language->get('text_banktransfer');
 
 
         if ($this->config->get('payment_multisafepay_account_type_' . $storeid) != 'fastcheckout') {

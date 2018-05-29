@@ -1,21 +1,21 @@
 <?php
 
 // Heading
-$_['heading_title'] = 'Payment Fee';
+$_['heading_title'] = 'Toeslag voor achteraf betalen';
 
 // Text
-$_['text_total'] = 'Order Totals';
-$_['text_success'] = 'Success: You have modified Payment Fee total!';
-$_['text_edit'] = 'Edit the Payment Fee Total';
+$_['text_total'] = 'Order Totaal';
+$_['text_success'] = 'Wijzigen van de toeslag is geslaagd.!';
+$_['text_edit'] = 'Wijzig de toeslag voor achteraf betalen';
 
 
 // Entry
-$_['entry_total'] = 'Order Total';
-$_['entry_fee'] = 'Invoice Fee';
-$_['entry_tax_class'] = 'Tax Class';
+$_['entry_total'] = 'Order Totaal';
+$_['entry_fee'] = 'Toeslag Factuur';
+$_['entry_tax_class'] = 'BTW Groep';
 $_['entry_status'] = 'Status';
-$_['entry_sort_order'] = 'Sort Order';
-$_['text_netherlands'] = 'The Netherlands';
+$_['entry_sort_order'] = 'Sorteervolgorde';
+$_['text_netherlands'] = 'Nederland';
 
 // Error
-$_['error_permission'] = 'Warning: You do not have permission to modify the Payment Fee total!';
+$_['error_permission'] = 'Waarschuwing: U heeft geen rechten om de instellingen te wijzigen!';
