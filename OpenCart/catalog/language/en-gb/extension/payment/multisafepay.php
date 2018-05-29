@@ -26,6 +26,7 @@ $_['text_select_payment_method'] = 'Select a payment method:';
 $_['text_success'] = '... We received your payment.';
 $_['text_success_wait'] = '<b><span style="color: #FF0000">One moment please...</span></b> we are processing your order.<br>Click <a href="%s">here</a> if you are not redirected within 10 seconds.';
 $_['text_title'] = 'MultiSafepay iDeal, Visa, MasterCard, Bancontact, Banktransfer';
+$_['text_title_einvoice'] = 'E-Invoice';
 $_['text_title_amex'] = 'American Express';
 $_['text_title_babygiftcard'] = 'Babygiftcard';
 $_['text_title_banktrans'] = 'Bank Transfer';

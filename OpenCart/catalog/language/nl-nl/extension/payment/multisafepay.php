@@ -26,6 +26,7 @@ $_['text_select_payment_method'] = 'Selecteer de gewenste betaalmethode:';
 $_['text_success'] = '... uw betaling is in goede orde ontvangen.';
 $_['text_success_wait'] = '<b><span style="color: #FF0000">Een ogenblik alstublieft...</span></b> uw bestelling wordt op dit moment verwerkt.<br>Als u binnen 10 seconden niet automatisch wordt doorgestuurd, klik dan <a href="%s">hier</a>.';
 $_['text_title'] = 'MultiSafepay iDeal, Visa, MasterCard, Bancontact, Overboeking';
+$_['text_title_einvoice'] = 'E-Invoice';
 $_['text_title_amex'] = 'American Express';
 $_['text_title_babygiftcard'] = 'Babygiftcard';
 $_['text_title_banktrans'] = 'Bank Overschrijving';
