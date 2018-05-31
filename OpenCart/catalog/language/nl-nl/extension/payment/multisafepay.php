@@ -28,6 +28,7 @@ $_['text_success_wait'] = '<b><span style="color: #FF0000">Een ogenblik alstubli
 $_['text_title'] = 'MultiSafepay iDeal, Visa, MasterCard, Bancontact, Overboeking';
 $_['text_title_santander'] = 'Santander Betaalplan';
 $_['text_title_einvoice'] = 'E-Invoice';
+$_['text_title_afterpay'] = 'AfterPay';
 $_['text_title_amex'] = 'American Express';
 $_['text_title_babygiftcard'] = 'Babygiftcard';
 $_['text_title_banktrans'] = 'Bank Overschrijving';
