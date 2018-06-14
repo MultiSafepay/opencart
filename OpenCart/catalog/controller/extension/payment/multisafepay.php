@@ -288,9 +288,22 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
             $c_item = new MspItem($this->session->data['shipping_method']['title'] . " " . $order_info['currency_code'] , 'Shipping', '1', $this->session->data['shipping_method']['cost'], '0', '0');
             $msp->cart->AddItem($c_item);
             $c_item->SetMerchantItemId('msp-shipping');
-            $c_item->SetTaxTableSelector($correct_rate); //shipping.... $this->session->data['shipping_method']['tax_class_id']
+            $c_item->SetTaxTableSelector($shipping_select); //shipping.... $this->session->data['shipping_method']['tax_class_id']
 
+            $addShippingTax = true;
+            foreach ($unique_taxes as $tax) {
+                if ( $tax['name'] == $shipping_select ){
+                    $addShippingTax = false;
+                    break;
+                }
+            }
 
+            if ($addShippingTax){
+                $taxtable = new MspAlternateTaxTable($shipping_select, 'true');
+                $taxrule = new MspAlternateTaxRule($correct_rate);
+                $taxtable->AddAlternateTaxRules($taxrule);
+                $msp->cart->AddAlternateTaxTables($taxtable);
+            }
 
             //add products
             foreach ($products AS $product) {
