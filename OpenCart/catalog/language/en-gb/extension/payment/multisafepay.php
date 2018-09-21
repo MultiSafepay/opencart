@@ -9,6 +9,10 @@
  */
 // Heading
 // Text
+$_['text_order_history_confirmed_order'] = 'Order confirmed at %s';
+$_['text_order_history_order_status'] = 'Order %s at %s';
+
+
 
 $_['back_to_store'] = 'Back to the store';
 $_['entry_multisafepay_payafter_tax'] = 'Pay After Delivery (VAT)';

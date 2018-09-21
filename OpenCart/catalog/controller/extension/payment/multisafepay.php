@@ -1274,6 +1274,9 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
      */
     public function callback()
     {
+        $this->language->load('extension/payment/multisafepay');
+
+
         $initial_request = (isset($_GET['type']) == 'initial');
 
         $order_number = $_GET['transactionid'];
@@ -1397,13 +1400,15 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
              */
             if ($success) {
                 $return_link = $this->url->link('checkout/success', '', 'SSL');
-                $confirm_message = "Confirmed order at " . date('Y/m/d H:i:s', time());
+                $message = sprintf ($this->language->get('text_order_history_confirmed_order'),  date('Y/m/d H:i:s', time()));
             } else {
                 $return_link = $this->url->link('extension/payment/multisafepay/_multisafepayfailure', '', 'SSL');
-                $confirm_message = "Order " . $status . " at " . date('Y/m/d H:i:s', time());
+                $message = sprintf ($this->language->get('text_order_history_order_status'),  $status, date('Y/m/d H:i:s', time()));
             }
 
-            $message = "Order " . $status . " at " . date('Y/m/d H:i:s ', time());
+
+
+
 
             /*
              * 	MSP returned data is processed so update the order
