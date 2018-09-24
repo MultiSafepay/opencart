@@ -63,10 +63,20 @@ class ModelExtensionPaymentMultiSafePayMastercard extends Model
         $method_data = array();
 
         if ($status) {
+
+//          if ($this->config->get('payment_multisafepay_use_payment_logo' .$appendix) == true ) {
+            if ($this->config->get('payment_multisafepay_use_payment_logo_0') == true ) {
+                $title = '<img height=32 width=auto src="./image/msp/mastercard.svg" alt="mastercard" title="mastercard" style="vertical-align: middle;" />';
+                $terms = $this->language->get('text_title_mastercard');
+            }else{
+                $title = $this->language->get('text_title_mastercard');
+                $terms = '';
+            }
+
             $method_data = array(
                 'code' => 'multisafepay_mastercard',
-                'title' => $this->language->get('text_title_mastercard'),
-                'terms' => '',
+                'title' => $title,
+                'terms' => $terms,
                 'sort_order' => $this->config->get('payment_multisafepay_mastercard_sort_order' . $appendix)
             );
         }

@@ -61,10 +61,20 @@ class ModelExtensionPaymentMultiSafePayIng extends Model
         $method_data = array();
 
         if ($status) {
+
+//          if ($this->config->get('payment_multisafepay_use_payment_logo' .$appendix) == true ) {
+            if ($this->config->get('payment_multisafepay_use_payment_logo_0') == true ) {
+                $title = '<img height=32 width=auto src="./image/msp/ing.svg" alt="ing" title="ing" style="vertical-align: middle;" />';
+                $terms = $this->language->get('text_title_ing');
+            }else{
+                $title = $this->language->get('text_title_ing');
+                $terms = '';
+           }
+
             $method_data = array(
                 'code' => 'multisafepay_ing',
-                'title' => $this->language->get('text_title_ing'),
-                'terms' => '',
+                'title' => $title,
+                'terms' => $terms,
                 'sort_order' => $this->config->get('payment_multisafepay_ing_sort_order' . $appendix)
             );
         }

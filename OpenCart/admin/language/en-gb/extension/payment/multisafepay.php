@@ -11,7 +11,7 @@
 $_['heading_title'] = 'MultiSafepay';
 
 // Text
-$_['text_multisafepay'] = '<a onclick="window.open(\'http://www.multisafepay.com\');"><img src="view/image/payment/multisafepay.png" alt="MultiSafepay" title="MultiSafepay" style="border: 1px solid #EEEEEE;" /></a>';
+$_['text_multisafepay'] = '<a onclick="window.open(\'http://www.multisafepay.com\');"><img height=40 width=auto src="view/image/payment/multisafepay.svg" alt="MultiSafepay" title="MultiSafepay" style="border: 1px solid #EEEEEE;" /></a>';
 $_['text_payment'] = 'Payment';
 $_['text_success'] = 'Success: You have modified MultiSafepay account details!';
 $_['text_successful'] = 'On - Always Successful';
@@ -21,6 +21,8 @@ $_['text_none'] = 'None';
 $_['entry_multisafepay_b2b'] = 'Company field for FastCheckout';
 $_['entry_multisafepay_storeid'] = 'Store ID (configuration below will be used for this store)';
 $_['entry_multisafepay_days_active'] = 'Days active';
+$_['entry_multisafepay_use_payment_logo'] = 'Use logo\'s during checkout';
+
 $_['text_set_order_status'] = 'Set Order Status';
 $_['text_free_account'] = 'Sign up for a free test account';
 $_['text_min_bno_amount'] = 'Minimal ordertotal for Pay after Delivery, in cents';

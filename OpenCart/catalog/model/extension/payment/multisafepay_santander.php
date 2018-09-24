@@ -67,10 +67,20 @@ class ModelExtensionPaymentMultiSafePaySantander extends Model
         $method_data = array();
 
         if ($status) {
+
+//          if ($this->config->get('payment_multisafepay_use_payment_logo' .$appendix) == true ) {
+            if ($this->config->get('payment_multisafepay_use_payment_logo_0') == true ) {
+                $title = '<img height=32 width=auto src="./image/msp/santander.svg" alt="santander" title="santander" style="vertical-align: middle;" />';
+                $terms = $this->language->get('text_title_santander');
+            }else{
+                $title = $this->language->get('text_title_santander');
+                $terms = '';
+            }
+
             $method_data = array(
                 'code' => 'multisafepay_santander',
-                'title' => $this->language->get('text_title_santander'),
-                'terms' => '',
+                'title' => $title,
+                'terms' => $terms,
                 'sort_order' => $this->config->get('payment_multisafepay_santander_sort_order' . $appendix)
             );
         }

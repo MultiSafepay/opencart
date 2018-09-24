@@ -63,10 +63,20 @@ class ModelExtensionPaymentMultiSafePayDirdeb extends Model
         $method_data = array();
 
         if ($status) {
+
+//          if ($this->config->get('payment_multisafepay_use_payment_logo' .$appendix) == true ) {
+            if ($this->config->get('payment_multisafepay_use_payment_logo_0') == true ) {
+                $title = '<img height=32 width=auto  src="./image/msp/directdebit.svg" alt="dirdeb" title="dirdeb" style="vertical-align: middle;" />';
+                $terms = $this->language->get('text_title_dirdeb');
+            }else{
+                $title = $this->language->get('text_title_dirdeb');
+                $terms = '';
+            }
+
             $method_data = array(
                 'code' => 'multisafepay_dirdeb',
-                'title' => $this->language->get('text_title_dirdeb'),
-                'terms' => '',
+                'title' => $title,
+                'terms' => $terms,
                 'sort_order' => $this->config->get('payment_multisafepay_dirdeb_sort_order' . $appendix)
             );
         }

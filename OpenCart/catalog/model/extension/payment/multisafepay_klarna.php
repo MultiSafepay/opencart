@@ -67,10 +67,20 @@ class ModelExtensionPaymentMultiSafePayKlarna extends Model
         $method_data = array();
 
         if ($status) {
+
+//          if ($this->config->get('payment_multisafepay_use_payment_logo' .$appendix) == true ) {
+            if ($this->config->get('payment_multisafepay_use_payment_logo_0') == true ) {
+                $title = '<img height=32 width=auto src="./image/msp/klarna.svg" alt="klarna" title="klarna" style="vertical-align: middle;" />';
+                $terms = $this->language->get('text_title_klarna');
+            }else{
+                $title = $this->language->get('text_title_klarna');
+                $terms = '';
+            }
+
             $method_data = array(
                 'code' => 'multisafepay_klarna',
-                'title' => $this->language->get('text_title_klarna'),
-                'terms' => '',
+                'title' => $title,
+                'terms' => $terms,
                 'sort_order' => $this->config->get('payment_multisafepay_klarna_sort_order' . $appendix)
             );
         }

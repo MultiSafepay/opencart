@@ -39,7 +39,7 @@ class ModelExtensionPaymentMultiSafePayBabygiftcard extends Model
         }
 
 
-        $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int) $this->config->get('payment_multisafepay_babygiftcard_geo_zone_id' . appendix) . "' AND country_id = '" . (int) $address['country_id'] . "' AND (zone_id = '" . (int) $address['zone_id'] . "' OR zone_id = '0')");
+        $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int) $this->config->get('payment_multisafepay_babygiftcard_geo_zone_id' . $appendix) . "' AND country_id = '" . (int) $address['country_id'] . "' AND (zone_id = '" . (int) $address['zone_id'] . "' OR zone_id = '0')");
 
         /* if ($this->config->get('payment_multisafepay_total') > 0 && $this->config->get('payment_multisafepay_total') > $total) {
           $status = false;
@@ -67,10 +67,20 @@ class ModelExtensionPaymentMultiSafePayBabygiftcard extends Model
         $method_data = array();
 
         if ($status) {
+
+//          if ($this->config->get('payment_multisafepay_use_payment_logo' .$appendix) == true ) {
+            if ($this->config->get('payment_multisafepay_use_payment_logo_0') == true ) {
+                $title = '<img height=32 width=auto  src="./image/msp/babygiftcard.svg" alt="babygiftcard" title="babygiftcard" style="vertical-align: middle;" />';
+                $terms = $this->language->get('text_title_babygiftcard');
+            }else{
+                $title = $this->language->get('text_title_babygiftcard');
+                $terms = '';
+            }
+
             $method_data = array(
                 'code' => 'multisafepay_babygiftcard',
-                'title' => $this->language->get('text_title_babygiftcard'),
-                'terms' => '',
+                'title' => $title,
+                'terms' => $terms,
                 'sort_order' => $this->config->get('payment_multisafepay_babygiftcard_sort_order' . $appendix)
             );
         }

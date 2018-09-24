@@ -62,10 +62,20 @@ class ModelExtensionPaymentMultiSafePayAmex extends Model
         $method_data = array();
 
         if ($status) {
+
+//          if ($this->config->get('payment_multisafepay_use_payment_logo' .$appendix) == true ) {
+            if ($this->config->get('payment_multisafepay_use_payment_logo_0') == true ) {
+                $title = '<img height=32 width=auto  src="./image/msp/amex.svg" alt="amex" title="amex" style="vertical-align: middle;" />';
+                $terms = $this->language->get('text_title_amex');
+            }else{
+                $title = $this->language->get('text_title_amex');
+                $terms = '';
+            }
+
             $method_data = array(
                 'code' => 'multisafepay_amex',
-                'title' => $this->language->get('text_title_amex'),
-                'terms' => '',
+                'title' => $title,
+                'terms' => $terms,
                 'sort_order' => $this->config->get('payment_multisafepay_amex_sort_order' . $appendix)
             );
         }

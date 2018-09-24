@@ -61,10 +61,20 @@ class ModelExtensionPaymentMultiSafePayKbc extends Model
         $method_data = array();
 
         if ($status) {
+
+//          if ($this->config->get('payment_multisafepay_use_payment_logo' .$appendix) == true ) {
+            if ($this->config->get('payment_multisafepay_use_payment_logo_0') == true ) {
+                $title = '<img height=32 width=auto src="./image/msp/kbc.svg" alt="kbc" title="kbc" style="vertical-align: middle;" />';
+                $terms = $this->language->get('text_title_kbc');
+            }else{
+                $title = $this->language->get('text_title_kbc');
+                $terms = '';
+            }
+
             $method_data = array(
                 'code' => 'multisafepay_kbc',
-                'title' => $this->language->get('text_title_kbc'),
-                'terms' => '',
+                'title' => $title,
+                'terms' => $terms,
                 'sort_order' => $this->config->get('payment_multisafepay_kbc_sort_order' . $appendix)
             );
         }

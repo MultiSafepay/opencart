@@ -66,10 +66,20 @@ class ModelExtensionPaymentMultiSafePayBoekenbon extends Model
         $method_data = array();
 
         if ($status) {
+
+//          if ($this->config->get('payment_multisafepay_use_payment_logo' .$appendix) == true ) {
+            if ($this->config->get('payment_multisafepay_use_payment_logo_0') == true ) {
+                $title = '<img height=32 width=auto  src="./image/msp/boekenbon.svg" alt="boekenbon" title="boekenbon" style="vertical-align: middle;" />';
+                $terms = $this->language->get('text_title_boekenbon');
+            }else{
+                $title = $this->language->get('text_title_boekenbon');
+                $terms = '';
+            }
+
             $method_data = array(
                 'code' => 'multisafepay_boekenbon',
-                'title' => $this->language->get('text_title_boekenbon'),
-                'terms' => '',
+                'title' => $title,
+                'terms' => $terms,
                 'sort_order' => $this->config->get('payment_multisafepay_boekenbon_sort_order' . $appendix)
             );
         }

@@ -93,6 +93,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
         $data['entry_multisafepay_fco_tax'] = $this->language->get('entry_multisafepay_fco_tax');
         $data['entry_multisafepay_fco_free_ship'] = $this->language->get('entry_multisafepay_fco_free_ship');
         $data['entry_multisafepay_days_active'] = $this->language->get('entry_multisafepay_days_active');
+        $data['entry_multisafepay_use_payment_logo'] = $this->language->get('entry_multisafepay_use_payment_logo');
 
 
         //end bno data
@@ -142,6 +143,12 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
             $data['payment_multisafepay_days_active'] = $this->request->post['payment_multisafepay_days_active_0'];
         } else {
             $data['payment_multisafepay_days_active'] = $this->config->get('payment_multisafepay_days_active_0');
+        }
+
+        if (isset($this->request->post['payment_multisafepay_use_payment_logo_0'])) {
+            $data['payment_multisafepay_use_payment_logo'] = $this->request->post['payment_multisafepay_use_payment_logo_0'];
+        } else {
+            $data['payment_multisafepay_use_payment_logo'] = $this->config->get('payment_multisafepay_use_payment_logo_0');
         }
 
         if (isset($this->request->post['payment_multisafepay_status'])) {
@@ -315,6 +322,11 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
                 $data['payment_multisafepay_days_active_' . $store['store_id'] . ''] = $this->config->get('payment_multisafepay_days_active_' . $store['store_id']);
             }
 
+            if (isset($this->request->post['payment_multisafepay_use_payment_logo_' . $store['store_id'] . ''])) {
+                $data['payment_multisafepay_use_payment_logo_' . $store['store_id'] . ''] = $this->request->post['payment_multisafepay_use_payment_logo_' . $store['store_id'] . ''];
+            } else {
+                $data['payment_multisafepay_use_payment_logo_' . $store['store_id'] . ''] = $this->config->get('payment_multisafepay_use_payment_logo_' . $store['store_id']);
+            }
 
             if (isset($this->request->post['payment_multisafepay_geo_zone_id_' . $store['store_id'] . ''])) {
                 $data['payment_multisafepay_geo_zone_id_' . $store['store_id'] . ''] = $this->request->post['payment_multisafepay_geo_zone_id_' . $store['store_id'] . ''];
