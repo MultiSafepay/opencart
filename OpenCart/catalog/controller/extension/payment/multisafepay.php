@@ -412,10 +412,8 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
                 $this->load->model('checkout/order');
 
                 if (!$this->config->get('payment_multisafepay_confirm_order_' . $storeid)) {
-                    $this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('payment_multisafepay_order_status_id_initialized_' . $storeid), '', true);
+                    $this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('payment_multisafepay_order_status_id_initialized_' . $storeid));
                 }
-
-                //$this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('payment_multisafepay_order_status_id_initialized_'.$storeid), '', true);
 
                 header('Location: ' . $url);
                 exit;
@@ -1167,10 +1165,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
             // If order status doesn't change - return
             $order_data = $this->model_checkout_order->getOrder($msp->transaction['id']);
             if ($order_data['order_status_id'] != $neworderstatus) {
-                //$this->model_checkout_order->addOrderHistory($msp->transaction['id'], $initialorderstatus, $comment, true);
-                $this->model_checkout_order->addOrderHistory($msp->transaction['id'], $neworderstatus, $comment, true);
-                //$this->model_checkout_order->confirm($msp->transaction['id'], $$neworderstatus, $comment, true);
-                //$this->model_checkout_order->update($msp->transaction['id'], $neworderstatus, $comment, true);
+                $this->model_checkout_order->addOrderHistory($msp->transaction['id'], $neworderstatus, $comment);
             }
 
             if ($initial) {
@@ -1415,8 +1410,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
                 if ($order['order_status_id'] != $newStatus && $order['order_status_id'] != '3') {
 
                     if ($order['order_status_id'] != $this->config->get('payment_multisafepay_order_status_id_completed_' . $storeid)) {
-                        // $this->model_checkout_order->update($orderid, $newStatus, $message, false);
-                        $this->model_checkout_order->addOrderHistory($orderid, $newStatus, $message, true);
+                        $this->model_checkout_order->addOrderHistory($orderid, $newStatus, $message);
                     }
                 }
             }
