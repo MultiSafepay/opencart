@@ -1,155 +1,177 @@
-{{ header }}{{ column_left }}
-{{ header }}{{ column_left }}
-<div id="content">
-    <div class="page-header">
-        <div class="container-fluid">
-            <div class="pull-right">
-                <button type="submit" form="form-multisafepay" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
-                <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a>
-            </div>
-            <h1>{{ heading_title }}</h1>
-            <ul class="breadcrumb">
-                {% for breadcrumb in breadcrumbs %}
-                <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
-                {% endfor %}
-            </ul>
-        </div>
-    </div>
-    <div class="container-fluid">
-        {% if error_warning %}
-        <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-        </div>
-        {% endif %}
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_edit }}</h3>
-            </div>
-            <div class="panel-body">
-                <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-multisafepay" class="form-horizontal">
-					 <ul class="nav nav-tabs" id="tabs">
-                        <li class="active"><a href="#tab-default" data-toggle="tab">Default Store</a></li>
-                        {% for store in stores %}
-                        	<li><a href="#tab-store-{{ store.store_id }}" data-toggle="tab">Store {{ store.name }}</a></li>
-                        {% endfor %}
-                    </ul>
+<?php
 
-                    <div class="tab-content">
-                    {% for store in stores %}
-                    	<div class="tab-pane" id="tab-store-{{ store.store_id }}">
+/**
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade the MultiSafepay plugin
+ * to newer versions in the future. If you wish to customize the plugin for your
+ * needs please document your changes and make backups before you update.
+ *
+ * @category    MultiSafepay
+ * @package     Connect
+ * @author      TechSupport <techsupport@multisafepay.com>
+ * @copyright   Copyright (c) 2017 MultiSafepay, Inc. (http://www.multisafepay.com)
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+ * INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
+ * PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+ * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
+ * ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+ * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
 
-                            <div class="form-group">
-                                {# -- Min amount -- #}
-                                <label class="col-sm-2 control-label" for="minamount">{{ text_min_amount }}</label>
-                                <div class="col-sm-10">
-                                    {% set name  = 'payment_multisafepay_dirdeb_min_amount_'~store.store_id %}
-                                    {% set value = attribute(_context, name) %}
-                                    <input type="text" name= "{{ name }}" value= "{{ value }}"  id="minamount" class="form-control" />
-                                </div>
-                             </div>
+class ControllerExtensionPaymentMultiSafePaydirdeb extends Controller
+{
 
-                            <div class="form-group">
-                                {# -- Max amount -- #}
-                                <label class="col-sm-2 control-label" for="maxamount">{{ text_max_amount }}</label>
-                                <div class="col-sm-10">
-                                    {% set name  = 'payment_multisafepay_dirdeb_max_amount_'~store.store_id %}
-                                    {% set value = attribute(_context, name) %}
-                                    <input type="text" name= "{{ name }}" value= "{{ value }}"  id="maxamount" class="form-control" />
-                                </div>
-                            </div>
+    private $error = array();
 
-                            <div class="form-group">
-                                {# -- Geo-Zone -- #}
-                                <label class="col-sm-2 control-label" for="input-msp-zone">{{ text_all_zones }}</label>
-                                <div class="col-sm-10">
-                                    {% set name  = 'payment_multisafepay_dirdeb_geo_zone_id_'~store.store_id %}
-                                    {% set value = attribute(_context, name) %}
+    public function index()
+    {
+        $this->load->language('extension/payment/multisafepay');
+        $this->load->language('extension/payment/multisafepay_dirdeb');
+        $this->load->model('setting/store');
+        $data['stores'] = $this->model_setting_store->getStores();
+        $this->document->setTitle($this->language->get('heading_title'));
+        $this->load->model('setting/setting');
 
-                                    <select name= "{{ name }}" id="input-geo-zone" class="form-control">
-                                        <option value="0">{{ text_all_zones }}</option>
-                                        {% for row in geo_zones %}
-                                            <option value="{{ row.geo_zone_id }}" {% if value == row.geo_zone_id %}selected{% endif %}>{{ row.name }}</option>
-                                        {% endfor %}
-                                    </select>
-                                </div>
-                            </div>
+        if (($this->request->server['REQUEST_METHOD'] == 'POST')) {
+            $this->load->model('setting/setting');
+            $this->model_setting_setting->editSetting('payment_multisafepay_dirdeb', $this->request->post);
+            $this->session->data['success'] = $this->language->get('text_success');
+            $this->response->redirect($this->url->link('marketplace/extension', 'user_token=' . $this->session->data['user_token'] . '&type=payment', 'SSL'));
+        }
 
-                            <div class="form-group">
-                                {# -- Sorting -- #}
-                                <label class="col-sm-2 control-label" for="input-sort-order">{{ entry_sort_order }}</label>
-                                <div class="col-sm-10">
-                                    {% set name  = 'payment_multisafepay_dirdeb_sort_order_'~store.store_id %}
-                                    {% set value = attribute(_context, name) %}
-                                    <input type="text" name= "{{ name }}" value= "{{ value }}"  id="input-sort-order" class="form-control" />
-                                </div>
-                            </div>
-
-                        {% endfor %}
-                    </div>
+        $data['text_edit'] = $this->language->get('text_edit');
+        $data['text_enabled'] = $this->language->get('text_enabled');
+        $data['text_disabled'] = $this->language->get('text_disabled');
+        $data['text_all_zones'] = $this->language->get('text_all_zones');
+        // Geo Zone
+        $this->load->model('localisation/geo_zone');
 
 
+        $data['action'] = $this->setup_link('extension/payment/multisafepay_dirdeb');
+        $data['cancel'] = $this->setup_link('marketplace/extension');
+        $data['text_set_order_status'] = $this->language->get('text_set_order_status');
+        $data['heading_title'] = $this->language->get('heading_title');
+        $data['entry_status'] = $this->language->get('entry_status');
+        $data['entry_sort_order'] = $this->language->get('entry_sort_order');
 
-                    <div class="tab-pane active" id="tab-default">
-                    <!--Module status-->
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
-                        <div class="col-sm-10">
-                            <select name="payment_multisafepay_dirdeb_status" id="input-status" class="form-control">
-                                {% if payment_multisafepay_dirdeb_status %}
-                                <option value="1" selected="selected">Enabled</option>
-                                <option value="0">Disabled</option>
-                                {% else %}
-                                <option value="1">Enabled</option>
-                                <option value="0" selected="selected">Disabled</option>
-                                {% endif %}
-                            </select>
-                        </div>
-                    </div>
 
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label" for="minamount"><span>{{ text_min_amount }}</span></label>
-                        <div class="col-sm-10">
-                            <input type="text" name="payment_multisafepay_dirdeb_min_amount" value="{{ payment_multisafepay_dirdeb_min_amount }}" id="minamount" class="form-control" />
-                        </div>
-                    </div>
+        $data['text_min_amount'] = $this->language->get('text_min_amount');
+        $data['text_max_amount'] = $this->language->get('text_max_amount');
 
-                    <!--fco tax percentage-->
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label" for="maxamount"><span>{{ text_max_amount }}</span></label>
-                        <div class="col-sm-10">
-                            <input type="text" name="payment_multisafepay_dirdeb_max_amount" value="{{ payment_multisafepay_dirdeb_max_amount }}" id="maxamount" class="form-control" />
-                        </div>
-                    </div>
+        $data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
 
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label" for="input-geo-zone">{{ text_all_zones }}</label>
-                        <div class="col-sm-10">
-                            <select name="payment_multisafepay_dirdeb_geo_zone_id" id="input-geo-zone" class="form-control">
-                                <option value="0">{{ text_all_zones }}</option>
-                                {% for geo_zone in geo_zones %}
-                                    {% if geo_zone.geo_zone_id == payment_multisafepay_dirdeb_geo_zone_id %}
-                                    <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
-                                    {% else %}
-                                    <option value="{{ geo_zone.geo_zone_id }}">{{ geo_zone.name }}</option>
-                                    {% endif %}
-                                {% endfor %}
 
-                            </select>
-                        </div>
-                    </div>
+        if (isset($this->request->post['payment_multisafepay_dirdeb_geo_zone_id'])) {
+            $data['payment_multisafepay_dirdeb_geo_zone_id'] = $this->request->post['payment_multisafepay_dirdeb_geo_zone_id'];
+        } else {
+            $data['payment_multisafepay_dirdeb_geo_zone_id'] = $this->config->get('payment_multisafepay_dirdeb_geo_zone_id');
+        }
 
-                    <!--Sorting-->
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label" for="input-sort-order">{{ entry_sort_order }}</label>
-                        <div class="col-sm-10">
-                            <input type="text" name="payment_multisafepay_dirdeb_sort_order" value="{{ payment_multisafepay_dirdeb_sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control" />
-                        </div>
-                    </div>
-                    </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-{{ footer }}
+        if (isset($this->request->post['payment_multisafepay_dirdeb_max_amount'])) {
+            $data['payment_multisafepay_dirdeb_max_amount'] = $this->request->post['payment_multisafepay_dirdeb_max_amount'];
+        } else {
+            $data['payment_multisafepay_dirdeb_max_amount'] = $this->config->get('payment_multisafepay_dirdeb_max_amount');
+        }
+        if (isset($this->request->post['payment_multisafepay_dirdeb_min_amount'])) {
+            $data['payment_multisafepay_dirdeb_min_amount'] = $this->request->post['payment_multisafepay_dirdeb_min_amount'];
+        } else {
+            $data['payment_multisafepay_dirdeb_min_amount'] = $this->config->get('payment_multisafepay_dirdeb_min_amount');
+        }
+
+        if (isset($this->request->post['payment_multisafepay_dirdeb_status'])) {
+            $data['payment_multisafepay_dirdeb_status'] = $this->request->post['payment_multisafepay_dirdeb_status'];
+        } else {
+            $data['payment_multisafepay_dirdeb_status'] = $this->config->get('payment_multisafepay_dirdeb_status');
+        }
+
+        if (isset($this->request->post['payment_multisafepay_dirdeb_sort_order'])) {
+            $data['payment_multisafepay_dirdeb_sort_order'] = $this->request->post['payment_multisafepay_dirdeb_sort_order'];
+        } else {
+            $data['payment_multisafepay_dirdeb_sort_order'] = $this->config->get('payment_multisafepay_dirdeb_sort_order');
+        }
+
+
+
+        foreach ($this->model_setting_store->getStores() as $store) {
+
+            if (isset($this->request->post['payment_multisafepay_dirdeb_geo_zone_id_' . $store['store_id'] . ''])) {
+                $data['payment_multisafepay_dirdeb_geo_zone_id_' . $store['store_id'] . ''] = $this->request->post['payment_multisafepay_dirdeb_geo_zone_id_' . $store['store_id'] . ''];
+            } else {
+                $data['payment_multisafepay_dirdeb_geo_zone_id_' . $store['store_id'] . ''] = $this->config->get('payment_multisafepay_dirdeb_geo_zone_id_' . $store['store_id']);
+            }
+
+            if (isset($this->request->post['payment_multisafepay_dirdeb_max_amount_' . $store['store_id'] . ''])) {
+                $data['payment_multisafepay_dirdeb_max_amount_' . $store['store_id'] . ''] = $this->request->post['payment_multisafepay_dirdeb_max_amount__' . $store['store_id'] . ''];
+            } else {
+                $data['payment_multisafepay_dirdeb_max_amount_' . $store['store_id'] . ''] = $this->config->get('payment_multisafepay_dirdeb_max_amount_' . $store['store_id']);
+            }
+            if (isset($this->request->post['payment_multisafepay_dirdeb_min_amount_' . $store['store_id'] . ''])) {
+                $data['payment_multisafepay_dirdeb_min_amount_' . $store['store_id'] . ''] = $this->request->post['payment_multisafepay_dirdeb_min_amount_' . $store['store_id'] . ''];
+            } else {
+                $data['payment_multisafepay_dirdeb_min_amount_' . $store['store_id'] . ''] = $this->config->get('payment_multisafepay_dirdeb_min_amount_' . $store['store_id']);
+            }
+
+            if (isset($this->request->post['payment_multisafepay_dirdeb_status_' . $store['store_id'] . ''])) {
+                $data['payment_multisafepay_dirdeb_status_' . $store['store_id'] . ''] = $this->request->post['payment_multisafepay_dirdeb_status_' . $store['store_id'] . ''];
+            } else {
+                $data['payment_multisafepay_dirdeb_status_' . $store['store_id'] . ''] = $this->config->get('payment_multisafepay_dirdeb_status_' . $store['store_id']);
+            }
+
+            if (isset($this->request->post['payment_multisafepay_dirdeb_sort_order_' . $store['store_id'] . ''])) {
+                $data['payment_multisafepay_dirdeb_sort_order_' . $store['store_id'] . ''] = $this->request->post['payment_multisafepay_dirdeb_sort_order_' . $store['store_id'] . ''];
+            } else {
+                $data['payment_multisafepay_dirdeb_sort_order_' . $store['store_id'] . ''] = $this->config->get('payment_multisafepay_dirdeb_sort_order_' . $store['store_id']);
+            }
+        }
+
+
+
+
+        $data['button_save'] = $this->language->get('button_save');
+        $data['button_cancel'] = $this->language->get('button_cancel');
+        $data['tab_general'] = $this->language->get('tab_general');
+
+        $data['breadcrumbs'] = array();
+        $data['breadcrumbs'][] = array(
+            'text' => $this->language->get('text_home'),
+            'href' => $this->setup_link('common/home', 'user_token=' . $this->session->data['user_token'], 'SSL'),
+            'separator' => false
+        );
+
+        $data['breadcrumbs'][] = array(
+            'text' => $this->language->get('text_payment'),
+            'href' => $this->setup_link('marketplace/extension'),
+            'separator' => ' :: '
+        );
+        if (isset($this->error['warning'])) {
+            $data['error_warning'] = $this->error['warning'];
+        } else {
+            $data['error_warning'] = '';
+        }
+
+        $data['breadcrumbs'][] = array(
+            'text' => $this->language->get('heading_title'),
+            'href' => $this->setup_link('extension/payment/multisafepay_dirdeb'),
+            'separator' => ' :: '
+        );
+
+
+        $this->template = 'extension/payment/multisafepay_dirdeb';
+        $data['header'] = $this->load->controller('common/header');
+        $data['column_left'] = $this->load->controller('common/column_left');
+        $data['footer'] = $this->load->controller('common/footer');
+
+        $this->response->setOutput($this->load->view($this->template, $data));
+    }
+
+    private function setup_link($route)
+    {
+        return $link = $this->url->link($route, 'user_token=' . $this->session->data['user_token'] . '&type=payment', 'SSL');
+    }
+
+}
+
+?>
