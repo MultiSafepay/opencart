@@ -58,8 +58,8 @@ s<?php
         $data['entry_sort_order'] = $this->language->get('entry_sort_order');
 
 
-        $data['text_min_amount'] = $this->language->get('text_min_amount');
-        $data['text_max_amount'] = $this->language->get('text_max_amount');
+        $data['entry_min_amount'] = $this->language->get('entry_min_amount');
+        $data['entry_max_amount'] = $this->language->get('entry_max_amount');
 
         $data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
 

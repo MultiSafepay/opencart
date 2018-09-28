@@ -61,9 +61,9 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
         $data['entry_multisafepay_siteid'] = $this->language->get('entry_multisafepay_siteid');
         $data['entry_multisafepay_secure_code'] = $this->language->get('entry_multisafepay_secure_code');
         $data['entry_multisafepay_storeid'] = $this->language->get('entry_multisafepay_storeid');
-        $data['entry_multisafepay_merchantid'] = $this->language->get('bno_multisafepay_merchantid');
-        $data['entry_multisafepay_siteid'] = $this->language->get('bno_multisafepay_siteid');
-        $data['entry_multisafepay_secure_code'] = $this->language->get('bno_multisafepay_secure_code');
+        $data['entry_multisafepay_merchantid'] = $this->language->get('entry_multisafepay_merchantid');
+        $data['entry_multisafepay_siteid'] = $this->language->get('entry_multisafepay_siteid');
+        $data['entry_multisafepay_secure_code'] = $this->language->get('entry_multisafepay_secure_code');
         $data['entry_environment'] = $this->language->get('entry_environment');
         $data['entry_confirm_order'] = $this->language->get('entry_confirm_order');
         $data['yes'] = $this->language->get('yes');
@@ -83,14 +83,13 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
         $data['entry_multisafepay_order_status_id_shipped'] = $this->language->get('entry_multisafepay_order_status_id_shipped');
         $data['entry_multisafepay_order_status_id_partial_refunded'] = $this->language->get('entry_multisafepay_order_status_id_partial_refunded');
         //start bno data
-        $data['text_min_amount'] = $this->language->get('text_min_amount');
-        $data['text_max_amount'] = $this->language->get('text_max_amount');
+        $data['entry_min_amount'] = $this->language->get('entry_min_amount');
+        $data['entry_max_amount'] = $this->language->get('entry_max_amount');
         $data['text_set_bno_data'] = $this->language->get('text_set_bno_data');
         $data['text_bno_ip_validation_option'] = $this->language->get('text_bno_ip_validation_option');
         $data['text_bno_ip_validation_address'] = $this->language->get('text_bno_ip_validation_address');
 
         $data['text_set_fco_shipping'] = $this->language->get('text_set_fco_shipping');
-        $data['entry_multisafepay_fco_tax'] = $this->language->get('entry_multisafepay_fco_tax');
         $data['entry_multisafepay_fco_free_ship'] = $this->language->get('entry_multisafepay_fco_free_ship');
         $data['entry_multisafepay_days_active'] = $this->language->get('entry_multisafepay_days_active');
         $data['entry_multisafepay_use_payment_logo'] = $this->language->get('entry_multisafepay_use_payment_logo');

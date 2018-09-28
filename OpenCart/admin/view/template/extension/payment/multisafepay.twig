@@ -437,15 +437,6 @@
                                     </select>
                                 </div>
 
-                                {# -- Use logo's during checkout -- #}
-                                <label class="col-sm-2 control-label" for="use_logo">{{ entry_multisafepay_use_payment_logo }}</label>
-                                <div class="col-sm-10">
-                                    <select name="payment_multisafepay_use_payment_logo_0" id="use_logo" class="form-control">
-                                        <option value="0" {% if payment_multisafepay_use_payment_logo ==  0 %} {{ 'selected' }}{% endif %}>No</option>
-                                        <option value="1" {% if payment_multisafepay_use_payment_logo ==  1 %} {{ 'selected' }}{% endif %}>Yes</option>
-                                    </select>
-                                </div>
-
                                 <label class="col-sm-2 control-label" for="minamount"><span>{{ text_min_amount }}</span></label>
                                 <div class="col-sm-10">
                                     <input type="text" name="payment_multisafepay_min_amount_0" value="{{ payment_multisafepay_min_amount }}" id="minamount" class="form-control" />
