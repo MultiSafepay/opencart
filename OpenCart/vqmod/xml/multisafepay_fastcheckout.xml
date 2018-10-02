@@ -12,12 +12,12 @@
             <add><![CDATA[
 		//Adding fastcheckout
        		$storeid = $this->config->get('config_store_id');
-		if ($this->config->get('payment_multisafepay_account_type_'.$storeid) == 'fastcheckout') {
+		if ($this->config->get('payment_multisafepay_account_type') == 'fastcheckout') {
                     $data['multisafepay_fastcheckout'] = $this->url->link('extension/payment/multisafepay_fastcheckout');
                 } else {
                     $data['multisafepay_fastcheckout'] = '';
                 }
-                if ($this->config->get('payment_multisafepay_enable_checkout_button_connect_'.$storeid) ) {
+                if ($this->config->get('payment_multisafepay_enable_checkout_button_connect') ) {
                     $data['enable_checkout_button_connect'] = true;
                     $data['multisafepay_fastcheckout'] = $this->url->link('extension/payment/multisafepay_fastcheckout');
                 } else {
@@ -36,12 +36,12 @@
                         
             <add><![CDATA[
                 $storeid = $this->config->get('config_store_id');
-                if ($this->config->get('payment_multisafepay_account_type_'.$storeid) == 'fastcheckout') {
+                if ($this->config->get('payment_multisafepay_account_type') == 'fastcheckout') {
                     $data['multisafepay_fastcheckout'] = $this->url->link('extension/payment/multisafepay_fastcheckout');
                 } else {
                     $data['multisafepay_fastcheckout'] = '';
                 }
-                if ($this->config->get('payment_multisafepay_enable_checkout_button_connect_'.$storeid) ) {
+                if ($this->config->get('payment_multisafepay_enable_checkout_button_connect') ) {
                     $data['enable_checkout_button_connect'] = true;
                     $data['multisafepay_fastcheckout'] = $this->url->link('extension/payment/multisafepay_fastcheckout');
                 } else {
