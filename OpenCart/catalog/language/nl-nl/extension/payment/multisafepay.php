@@ -9,6 +9,10 @@
  */
 // Heading
 // Text
+$_['text_order_history_confirmed_order'] = 'Order bevestigd om %s';
+$_['text_order_history_order_status'] = 'Order %s om %s';
+
+
 
 $_['back_to_store'] = 'Terug naar de webwinkel';
 $_['entry_multisafepay_payafter_tax'] = 'Betaal na Ontvangst B.T.W';
