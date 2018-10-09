@@ -10,8 +10,9 @@
 // Heading
 $_['heading_title'] = 'MultiSafepay';
 $_['entry_multisafepay_days_active'] = 'Days active';
+$_['entry_multisafepay_use_payment_logo'] = 'Toon logo\'s tijdens het afrekenen';
 // Text
-$_['text_multisafepay'] = '<a onclick="window.open(\'http://www.multisafepay.com\');"><img src="view/image/payment/multisafepay.png" alt="MultiSafepay" title="MultiSafepay" style="border: 1px solid #EEEEEE;" /></a>';
+$_['text_multisafepay'] = '<a onclick="window.open(\'http://www.multisafepay.com\');"><img height=40 width=auto src="view/image/payment/multisafepay.svg" alt="MultiSafepay" title="MultiSafepay" style="border: 1px solid #EEEEEE;" /></a>';
 $_['text_payment'] = 'Betaling';
 $_['text_success'] = 'Gelukt: De instellingen zijn gewijzigd!';
 $_['text_successful'] = 'Aan - altijd succesvol';

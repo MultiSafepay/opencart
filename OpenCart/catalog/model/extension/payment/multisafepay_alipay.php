@@ -61,13 +61,24 @@ class ModelExtensionPaymentMultiSafePayAlipay extends Model
         $method_data = array();
 
         if ($status) {
+
+//          if ($this->config->get('payment_multisafepay_use_payment_logo' .$appendix) == true ) {
+            if ($this->config->get('payment_multisafepay_use_payment_logo_0') == true ) {
+                $title = '<img height=32 width=auto  src="./image/msp/alipay.svg" alt="alipay" title="alipay" style="vertical-align: middle;" />';
+                $terms = $this->language->get('text_title_alipay');
+            }else{
+                $title = $this->language->get('text_title_alipay');
+                $terms = '';
+            }
+
             $method_data = array(
                 'code' => 'multisafepay_alipay',
-                'title' => $this->language->get('text_title_alipay'),
-                'terms' => '',
+                'title' => $title,
+                'terms' => $terms,
                 'sort_order' => $this->config->get('payment_multisafepay_alipay_sort_order' . $appendix)
             );
         }
+
 
         return $method_data;
     }

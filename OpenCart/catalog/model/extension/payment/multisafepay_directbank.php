@@ -63,11 +63,21 @@ class ModelExtensionPaymentMultiSafePayDirectbank extends Model
         $method_data = array();
 
         if ($status) {
+
+//          if ($this->config->get('payment_multisafepay_use_payment_logo' .$appendix) == true ) {
+            if ($this->config->get('payment_multisafepay_use_payment_logo_0') == true ) {
+                $title = '<img height=32 width=auto  src="./image/msp/directbank.svg" alt="sofort" title="sofort" style="vertical-align: middle;" />';
+                $terms = $this->language->get('text_title_sofort');
+            }else{
+                $title = $this->language->get('text_title_sofort');
+                $terms = '';
+            }
+
             $method_data = array(
-                'code' => 'multisafepay_directbank',
-                'title' => $this->language->get('text_title_directbank'),
-                'terms' => '',
-                'sort_order' => $this->config->get('payment_multisafepay_directbank_sort_order' . $appendix)
+                'code' => 'multisafepay_sofort',
+                'title' => $title,
+                'terms' => $terms,
+                'sort_order' => $this->config->get('payment_multisafepay_sofort_sort_order' . $appendix)
             );
         }
 

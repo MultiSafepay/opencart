@@ -61,10 +61,20 @@ class ModelExtensionPaymentMultiSafePayDotpay extends Model
         $method_data = array();
 
         if ($status) {
+
+//          if ($this->config->get('payment_multisafepay_use_payment_logo' .$appendix) == true ) {
+            if ($this->config->get('payment_multisafepay_use_payment_logo_0') == true ) {
+                $title = '<img height=32 width=auto src="./image/msp/dotpay.svg" alt="dotpay" title="dotpay" style="vertical-align: middle;" />';
+                $terms = $this->language->get('text_title_dotpay');
+            }else{
+                $title = $this->language->get('text_title_dotpay');
+                $terms = '';
+            }
+
             $method_data = array(
                 'code' => 'multisafepay_dotpay',
-                'title' => $this->language->get('text_title_dotpay'),
-                'terms' => '',
+                'title' => $title,
+                'terms' => $terms,
                 'sort_order' => $this->config->get('payment_multisafepay_dotpay_sort_order' . $appendix)
             );
         }
