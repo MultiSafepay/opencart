@@ -201,7 +201,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
             $msp->cart->AddAlternateTaxTables($taxtable);
 
 
-            $taxtable = Array();
+            $taxes = array();
             foreach ($products AS $product) {
 
                 $ratiotax = $this->tax->getRates($product['total'], $product['tax_class_id']);
@@ -270,7 +270,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
             }
 
             $shipping_select = 'none';
-
+            $correct_rate = 0;
             //add shippingmethod
             if ($this->session->data['shipping_method']['tax_class_id']) {
                 $shipping_tax = $this->tax->getRates($this->session->data['shipping_method']['cost'], $this->session->data['shipping_method']['tax_class_id']);
