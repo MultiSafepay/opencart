@@ -230,13 +230,9 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
                 $msp->cart->AddAlternateTaxTables($taxtable);
             }
 
-            if (isset($this->session->data['coupon'])) {
-                $coupon_set = true;
-                $this->load->model('extension/total/coupon');
-                $coupon_info = $this->model_extension_total_coupon->getCoupon($this->session->data['coupon']);
-            } else {
-                $coupon_set = false;
-            }
+
+
+
 
             $product_ids = array();
             foreach ($products AS $product) {
@@ -247,7 +243,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
             if ( in_array ($gateway, array ('PAYAFTER', 'KLARNA')) && $this->config->get('total_multisafepay_status')) {
 
                 $tax_rates = $this->tax->getRates($this->config->get('total_multisafepay_fee'),
-                                                  $this->config->get('total_multisafepay_tax_class_id'));
+                    $this->config->get('total_multisafepay_tax_class_id'));
 
                 // Default taxrate
                 $taxname = 'none';
@@ -305,6 +301,8 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
                 $msp->cart->AddAlternateTaxTables($taxtable);
             }
 
+
+            $sub_total = 0;
             //add products
             foreach ($products AS $product) {
                 // Retrieve which tax table to use.
@@ -322,25 +320,66 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
                     $taxname = 'none';
                 }
 
-                if ($coupon_set) {
-                    if ($coupon_info['type'] == 'F') {
-                        $c_item = new MspItem($product['name'], strip_tags($product['model']), $product['quantity'], $product['price'], 'KG', $product['weight']);
-                        $c_item->merchant_item_id = $product['product_id'];
-                        $c_item->SetTaxTableSelector($taxname);
-                        $msp->cart->AddItem($c_item);
-                    } else {
-                        $price_new = $product['price'] - ($product['price'] / 100 * $coupon_info['discount']);
-                        $c_item = new MspItem($product['name'], strip_tags($product['model']), $product['quantity'], $price_new, 'KG', $product['weight']);
-                        $c_item->merchant_item_id = $product['product_id'];
-                        $c_item->SetTaxTableSelector($taxname);
-                        $msp->cart->AddItem($c_item);
-                    }
-                } else {
-                    $c_item = new MspItem($product['name'], strip_tags($product['model']), $product['quantity'], $product['price'], 'KG', $product['weight']);
-                    $c_item->merchant_item_id = $product['product_id'];
-                    $c_item->SetTaxTableSelector($taxname);
-                    $msp->cart->AddItem($c_item);
+                $c_item = new MspItem($product['name'], strip_tags($product['model']), $product['quantity'], $product['price'], 'KG', $product['weight']);
+                $c_item->merchant_item_id = $product['product_id'];
+                $c_item->SetTaxTableSelector($taxname);
+                $msp->cart->AddItem($c_item);
+
+                $sub_total += $product['quantity'] * $product['price'];
+            }
+
+            if (isset($this->session->data['coupon'])) {
+                $this->load->model('extension/total/coupon');
+                $coupon_info = $this->model_extension_total_coupon->getCoupon($this->session->data['coupon']);
+
+                if ($coupon_info['type'] == 'F') {
+                    $price_new = $coupon_info['discount'];
+                }elseif ($coupon_info['type'] == 'P') {
+                    $price_new = ($sub_total / 100) * $coupon_info['discount'];
                 }
+
+                $c_item = new MspItem($coupon_info['name'], $coupon_info['name'], 1, -$price_new, '', '');
+                $c_item->merchant_item_id = 'coupon';
+                $c_item->SetTaxTableSelector('none');
+                $msp->cart->AddItem($c_item);
+            }
+
+            // Totals
+            $this->load->model('setting/extension');
+
+            $totals = array();
+            $taxes = $this->cart->getTaxes();
+            $total = 0;
+
+            // Because __call can not keep var references so we put them into an array.
+            $total_data = array(
+                'totals' => &$totals,
+                'taxes'  => &$taxes,
+                'total'  => &$total
+            );
+
+            $results = $this->model_setting_extension->getExtensions('total');
+
+            foreach ($results as $result) {
+                if ($this->config->get('total_' . $result['code'] . '_status')) {
+                    $this->load->model('extension/total/' . $result['code']);
+
+                    // We have to put the totals in an array so that they pass by reference.
+                    $this->{'model_extension_total_' . $result['code']}->getTotal($total_data);
+                }
+            }
+            foreach ($totals as $total) {
+
+                if (in_array ( $total['code'], array ('sub_total', 'total', 'shipping', 'tax', 'coupon'  )))
+                    continue;
+
+                $tax_class_id   = $this->config->get ('total_'. $total['code'] . '_tax_class_id') ?: 0;
+                $price_incl_tax = $this->tax->calculate($total['value'], $tax_class_id, $this->config->get('config_tax'));
+
+                $c_item = new MspItem($total['title'], $total['code'], 1, $this->currency->format($price_incl_tax, $this->session->data['currency'], '', false), 'KG', 0);
+                $c_item->merchant_item_id = $total['code'];
+                $c_item->SetTaxTableSelector('none');
+                $msp->cart->AddItem($c_item);
             }
 
 
@@ -351,36 +390,6 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
                 $c_item->merchant_item_id = '10101010';
                 $c_item->SetTaxTableSelector('none');
                 $msp->cart->AddItem($c_item);
-            }
-
-            //add discounts
-            if ($coupon_set) {
-                $this->load->model('extension/total/coupon');
-                $total_data = array();
-                $total = $this->cart->getTotal();
-                $start_total = $this->cart->getTotal();
-                $taxes = $this->cart->getTaxes();
-
-                $total_data_arr = array(
-                    'totals' => &$total_data,
-                    'total' => &$total,
-                    'taxes' => &$taxes
-                );
-
-                $this->model_extension_total_coupon->getTotal($total_data_arr);
-                if ($coupon_info['type'] == 'F') {
-                    if ($start_total != $total) {
-                        $discount_total = 0;
-                        $start_total = $start_total;
-                        $total = $total;
-                        $discount_total = $discount_total - ($start_total - $total);
-
-                        $c_item = new MspItem('Coupon', 'Coupon', 1, $discount_total);
-                        $c_item->merchant_item_id = '10101010';
-                        $c_item->SetTaxTableSelector('none');
-                        $msp->cart->AddItem($c_item);
-                    }
-                }
             }
 
             $msp->transaction['daysactive'] = $this->config->get('payment_multisafepay_days_active');
