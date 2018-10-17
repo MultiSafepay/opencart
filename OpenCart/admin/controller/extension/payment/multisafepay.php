@@ -128,6 +128,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
             'payment_multisafepay_secure_code',
             'payment_multisafepay_redirect_url',
             'payment_multisafepay_days_active',
+            'payment_multisafepay_use_payment_logo',
             'payment_multisafepay_confirm_order',
             'payment_multisafepay_min_amount',
             'payment_multisafepay_max_amount',

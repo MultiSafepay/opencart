@@ -103,6 +103,15 @@
                                         <input type="text" name="stores[{{ store.store_id }}][payment_multisafepay_days_active]" value="{{ stores[store.store_id].payment_multisafepay_days_active }}" id="payment_multisafepay_days_active" class="form-control" />
                                     </div>
 
+                                    {# -- Use logo's during checkout -- #}
+                                    <label class="col-sm-2 control-label" for="environment">{{ entry_multisafepay_use_payment_logo }}</label>
+                                    <div class="col-sm-10">
+                                        <select name="stores[{{ store.store_id }}][payment_multisafepay_use_payment_logo]" id="payment_multisafepay_use_payment_logo" class="form-control">
+                                            <option value="1" {% if stores[store.store_id].payment_multisafepay_use_payment_logo == '1' %} selected {% endif %}>{{ Yes }}</option>
+                                            <option value="0" {% if stores[store.store_id].payment_multisafepay_use_payment_logo == '0' %} selected {% endif %}>{{ No }}</option>
+                                        </select>
+                                    </div>
+
                                     <!--Send confirmation e-mail -->
                                     <label class="col-sm-2 control-label" for="payment_multisafepay_confirm_order">{{ entry_confirm_order }}</label>
                                     <div class="col-sm-10">
