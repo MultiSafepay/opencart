@@ -55,10 +55,19 @@ class ModelExtensionPaymentMultiSafePayIdeal extends Model
         $method_data = array();
 
         if ($status) {
+
+            if ($this->config->get('payment_multisafepay_use_payment_logo') == true ) {
+                $title = '<img  height=32 width=auto  src="./image/msp/ideal.svg" alt="ideal" title="ideal" style="vertical-align: middle;" />';
+                $terms = $this->language->get('text_title_ideal');
+            }else{
+                $title = $this->language->get('text_title_ideal');
+                $terms = '';
+            }
+
             $method_data = array(
                 'code' => 'multisafepay_ideal',
-                'title' => $this->language->get('text_title_ideal'),
-                'terms' => '',
+                'title' => $title,
+                'terms' => $terms,
                 'sort_order' => $this->config->get('payment_multisafepay_ideal_sort_order')
             );
         }

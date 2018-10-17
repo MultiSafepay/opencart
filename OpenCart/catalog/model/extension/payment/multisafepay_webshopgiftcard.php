@@ -55,10 +55,19 @@ class ModelExtensionPaymentMultiSafePayWebshopgiftcard extends Model
         $method_data = array();
 
         if ($status) {
+
+            if ($this->config->get('payment_multisafepay_use_payment_logo') == true ) {
+                $title = '<img  height=32 width=auto  src="./image/msp/webshopgiftcard.svg" alt="webshopgiftcard" title="webshopgiftcard" style="vertical-align: middle;" />';
+                $terms = $this->language->get('text_title_webshopgiftcard');
+            }else{
+                $title = $this->language->get('text_title_webshopgiftcard');
+                $terms = '';
+            }
+
             $method_data = array(
                 'code' => 'multisafepay_webshopgiftcard',
-                'title' => $this->language->get('text_title_webshopgiftcard'),
-                'terms' => '',
+                'title' => $title,
+                'terms' => $terms,
                 'sort_order' => $this->config->get('payment_multisafepay_webshopgiftcard_sort_order')
             );
         }

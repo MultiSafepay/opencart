@@ -55,10 +55,19 @@ class ModelExtensionPaymentMultiSafePayVvv extends Model
         $method_data = array();
 
         if ($status) {
+
+            if ($this->config->get('payment_multisafepay_use_payment_logo') == true ) {
+                $title = '<img  height=32 width=auto  src="./image/msp/vvv.svg" alt="vvv" title="vvv" style="vertical-align: middle;" />';
+                $terms = $this->language->get('text_title_vvv');
+            }else{
+                $title = $this->language->get('text_title_vvv');
+                $terms = '';
+            }
+
             $method_data = array(
                 'code' => 'multisafepay_vvv',
-                'title' => $this->language->get('text_title_vvv'),
-                'terms' => '',
+                'title' => $title,
+                'terms' => $terms,
                 'sort_order' => $this->config->get('payment_multisafepay_vvv_sort_order')
             );
         }

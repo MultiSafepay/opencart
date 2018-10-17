@@ -28,7 +28,7 @@
                 <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-multisafepay" class="form-horizontal">
                     <ul class="nav nav-tabs" id="tabs">
                         {% for store in stores %}
-                            <li class="tab-pane fade in {{ store.store_id == 0 ? 'active' : '' }}"><a href="#tab-store-{{ store.store_id }}" data-toggle="tab">{{ store.name }}</a></li>
+                            <li class="tab-pane {{ store.store_id == 0 ? 'active' : '' }}"><a href="#tab-store-{{ store.store_id }}" data-toggle="tab">{{ store.name }}</a></li>
                         {% endfor %}
                     </ul>
 

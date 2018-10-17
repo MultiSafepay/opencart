@@ -55,10 +55,19 @@ class ModelExtensionPaymentMultiSafePayAfterpay extends Model
         $method_data = array();
 
         if ($status) {
+
+            if ($this->config->get('payment_multisafepay_use_payment_logo') == true ) {
+                $title = '<img  height=32 width=auto  src="./image/msp/afterpay.svg" alt="afterpay" title="afterpay" style="vertical-align: middle;" />';
+                $terms = $this->language->get('text_title_afterpay');
+            }else{
+                $title = $this->language->get('text_title_afterpay');
+                $terms = '';
+            }
+
             $method_data = array(
                 'code' => 'multisafepay_afterpay',
-                'title' => $this->language->get('text_title_afterpay'),
-                'terms' => '',
+                'title' => $title,
+                'terms' => $terms,
                 'sort_order' => $this->config->get('payment_multisafepay_afterpay_sort_order')
             );
         }

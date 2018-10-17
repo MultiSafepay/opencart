@@ -55,10 +55,19 @@ class ModelExtensionPaymentMultiSafePayGiropay extends Model
         $method_data = array();
 
         if ($status) {
+
+            if ($this->config->get('payment_multisafepay_use_payment_logo') == true ) {
+                $title = '<img  height=32 width=auto  src="./image/msp/giropay.svg" alt="giropay" title="giropay" style="vertical-align: middle;" />';
+                $terms = $this->language->get('text_title_giropay');
+            }else{
+                $title = $this->language->get('text_title_giropay');
+                $terms = '';
+            }
+
             $method_data = array(
                 'code' => 'multisafepay_giropay',
-                'title' => $this->language->get('text_title_giropay'),
-                'terms' => '',
+                'title' => $title,
+                'terms' => $terms,
                 'sort_order' => $this->config->get('payment_multisafepay_giropay_sort_order')
             );
         }

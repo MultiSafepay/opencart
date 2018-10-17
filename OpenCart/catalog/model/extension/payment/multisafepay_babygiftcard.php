@@ -19,7 +19,7 @@
  * ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-class ModelExtensionPaymentMultiSafePayBabygitcard extends Model
+class ModelExtensionPaymentMultiSafePayBabygiftcard extends Model
 {
 
     public function getMethod($address, $total)
@@ -55,10 +55,19 @@ class ModelExtensionPaymentMultiSafePayBabygitcard extends Model
         $method_data = array();
 
         if ($status) {
+
+            if ($this->config->get('payment_multisafepay_use_payment_logo') == true ) {
+                $title = '<img  height=32 width=auto  src="./image/msp/babygiftcard.svg" alt="babygiftcard" title="babygiftcard" style="vertical-align: middle;" />';
+                $terms = $this->language->get('text_title_babygiftcard');
+            }else{
+                $title = $this->language->get('text_title_babygiftcard');
+                $terms = '';
+            }
+
             $method_data = array(
                 'code' => 'multisafepay_babygiftcard',
-                'title' => $this->language->get('text_title_babygiftcard'),
-                'terms' => '',
+                'title' => $title,
+                'terms' => $terms,
                 'sort_order' => $this->config->get('payment_multisafepay_babygiftcard_sort_order')
             );
         }

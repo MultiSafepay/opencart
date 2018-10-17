@@ -55,14 +55,22 @@ class ModelExtensionPaymentMultiSafePayPayafter extends Model
         $method_data = array();
 
         if ($status) {
+
+            if ($this->config->get('payment_multisafepay_use_payment_logo') == true ) {
+                $title = '<img  height=32 width=auto  src="./image/msp/payafter.svg" alt="payafter" title="payafter" style="vertical-align: middle;" />';
+                $terms = $this->language->get('text_title_payafter');
+            }else{
+                $title = $this->language->get('text_title_payafter');
+                $terms = '';
+            }
+
             $method_data = array(
                 'code' => 'multisafepay_payafter',
-                'title' => $this->language->get('text_title_payafter'),
-                'terms' => '',
+                'title' => $title,
+                'terms' => $terms,
                 'sort_order' => $this->config->get('payment_multisafepay_payafter_sort_order')
             );
         }
-
         return $method_data;
     }
 }

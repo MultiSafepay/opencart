@@ -55,6 +55,8 @@ $_['entry_multisafepay_order_status_id_shipped'] = 'Selecteer status Verzonden';
 $_['entry_multisafepay_order_status_id_partial_refunded'] = 'Selecteer gedeeltelijke refund status';
 $_['entry_status'] = 'Gateway Status:';
 $_['select_methods'] = 'Kies uw betaalmethoden';
+$_['entry_multisafepay_use_payment_logo'] = 'Toon logo\'s tijdens afrekenen';
+
 $_['yes'] = 'Ja';
 $_['no'] = 'Nee';
 $_['Enabled'] = 'Aan';

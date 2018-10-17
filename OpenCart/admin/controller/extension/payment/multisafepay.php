@@ -33,20 +33,24 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
         $this->document->setTitle($this->language->get('heading_title'));
 
         $this->load->model('setting/setting');
-        $this->load->model('setting/store');
         $this->load->model('localisation/geo_zone');
+        $this->load->model('setting/store');
 
+        $stores = $this->model_setting_store->getStores();
 
-        $data['stores'] = $this->model_setting_store->getStores();
-        $data['stores'][] = array(
+        $data['stores'][0] = array(
             'store_id' => 0,
             'name'     => $this->config->get('config_name'),
             'url'      => HTTP_SERVER . 'index.php?route=common/home&session_id=' . $this->session->getId()
         );
 
-        usort($data['stores'], function($a, $b) {
-            return $a['store_id'] - $b['store_id'];
-        });
+        foreach ($stores as $store){
+            $data['stores'][$store['store_id']] = array(
+                'store_id' => $store['store_id'],
+                'name'     => $store['name'],
+                'url'      => $store['url']
+            );
+        }
 
         if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
             foreach($data['stores'] as $store) {

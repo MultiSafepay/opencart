@@ -55,10 +55,19 @@ class ModelExtensionPaymentMultiSafePayVisa extends Model
         $method_data = array();
 
         if ($status) {
+
+            if ($this->config->get('payment_multisafepay_use_payment_logo') == true ) {
+                $title = '<img  height=32 width=auto  src="./image/msp/visa.svg" alt="visa" title="visa" style="vertical-align: middle;" />';
+                $terms = $this->language->get('text_title_visa');
+            }else{
+                $title = $this->language->get('text_title_visa');
+                $terms = '';
+            }
+
             $method_data = array(
                 'code' => 'multisafepay_visa',
-                'title' => $this->language->get('text_title_visa'),
-                'terms' => '',
+                'title' => $title,
+                'terms' => $terms,
                 'sort_order' => $this->config->get('payment_multisafepay_visa_sort_order')
             );
         }

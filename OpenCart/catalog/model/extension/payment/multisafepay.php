@@ -55,10 +55,19 @@ class ModelExtensionPaymentMultiSafePay extends Model
         $method_data = array();
 
         if ($status) {
+
+            if ($this->config->get('payment_multisafepay_use_payment_logo') == true) {
+                $title = '<img height=32 width=auto  src="./image/msp/wallet.svg" alt="wallet" title="wallet" style="vertical-align: middle;" />';
+                $terms = $this->language->get('text_title');
+            } else {
+                $title = $this->language->get('text_title');
+                $terms = '';
+            }
+
             $method_data = array(
                 'code' => 'multisafepay',
-                'title' => $this->language->get('text_title'),
-                'terms' => '',
+                'title' => $title,
+                'terms' => $terms,
                 'sort_order' => $this->config->get('payment_multisafepay_sort_order')
             );
         }

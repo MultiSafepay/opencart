@@ -32,16 +32,21 @@ class ControllerExtensionPaymentMultiSafePayalipay extends Controller
         $this->load->language('extension/payment/multisafepay_alipay');
 
         $this->load->model('setting/store');
-        $data['stores'] = $this->model_setting_store->getStores();
-        $data['stores'][] = array(
+        $stores = $this->model_setting_store->getStores();
+
+        $data['stores'][0] = array(
             'store_id' => 0,
             'name'     => $this->config->get('config_name'),
             'url'      => HTTP_SERVER . 'index.php?route=common/home&session_id=' . $this->session->getId()
         );
 
-        usort($data['stores'], function($a, $b) {
-            return $a['store_id'] - $b['store_id'];
-        });
+        foreach ($stores as $store){
+            $data['stores'][$store['store_id']] = array(
+                'store_id' => $store['store_id'],
+                'name'     => $store['name'],
+                'url'      => $store['url']
+            );
+        }
 
 
         // Geo Zone

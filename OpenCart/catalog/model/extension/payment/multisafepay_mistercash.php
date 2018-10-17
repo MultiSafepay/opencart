@@ -55,10 +55,19 @@ class ModelExtensionPaymentMultiSafePayMistercash extends Model
         $method_data = array();
 
         if ($status) {
+
+            if ($this->config->get('payment_multisafepay_use_payment_logo') == true ) {
+                $title = '<img  height=32 width=auto  src="./image/msp/mistercash.svg" alt="mistercash" title="mistercash" style="vertical-align: middle;" />';
+                $terms = $this->language->get('text_title_mistercash');
+            }else{
+                $title = $this->language->get('text_title_mistercash');
+                $terms = '';
+            }
+
             $method_data = array(
                 'code' => 'multisafepay_mistercash',
-                'title' => $this->language->get('text_title_mistercash'),
-                'terms' => '',
+                'title' => $title,
+                'terms' => $terms,
                 'sort_order' => $this->config->get('payment_multisafepay_mistercash_sort_order')
             );
         }

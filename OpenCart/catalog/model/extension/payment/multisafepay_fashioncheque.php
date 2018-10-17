@@ -55,10 +55,19 @@ class ModelExtensionPaymentMultiSafePayFashioncheque extends Model
         $method_data = array();
 
         if ($status) {
+
+            if ($this->config->get('payment_multisafepay_use_payment_logo') == true ) {
+                $title = '<img  height=32 width=auto  src="./image/msp/fashioncheque.svg" alt="fashioncheque" title="fashioncheque" style="vertical-align: middle;" />';
+                $terms = $this->language->get('text_title_fashioncheque');
+            }else{
+                $title = $this->language->get('text_title_fashioncheque');
+                $terms = '';
+            }
+
             $method_data = array(
                 'code' => 'multisafepay_fashioncheque',
-                'title' => $this->language->get('text_title_fashioncheque'),
-                'terms' => '',
+                'title' => $title,
+                'terms' => $terms,
                 'sort_order' => $this->config->get('payment_multisafepay_fashioncheque_sort_order')
             );
         }
