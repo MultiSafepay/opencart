@@ -25,7 +25,7 @@ class ControllerExtensionPaymentMultiSafePayIdeal extends Controller
 
     public function index()
     {
-        $storeid = $this->config->get('config_store_id');
+//        $storeid = $this->config->get('config_store_id');
         $this->load->language('extension/payment/multisafepay');
         $data['button_confirm'] = $this->language->get('button_confirm');
         $data['button_back'] = $this->language->get('button_back');
@@ -47,16 +47,16 @@ class ControllerExtensionPaymentMultiSafePayIdeal extends Controller
         //GET IDEAL ISSUERS
         require_once(dirname(__FILE__) . '/MultiSafepay.combined.php');
         $msp = new MultiSafepay();
-        $msp->test = $this->config->get('payment_multisafepay_environment_' . $storeid);
-        $msp->merchant['account_id'] = $this->config->get('payment_multisafepay_merchant_id_' . $storeid);
-        $msp->merchant['site_id'] = $this->config->get('payment_multisafepay_site_id_' . $storeid);
-        $msp->merchant['site_code'] = $this->config->get('payment_multisafepay_secure_code_' . $storeid);
+        $msp->test = $this->config->get('payment_multisafepay_environment');
+        $msp->merchant['account_id'] = $this->config->get('payment_multisafepay_merchant_id');
+        $msp->merchant['site_id'] = $this->config->get('payment_multisafepay_site_id');
+        $msp->merchant['site_code'] = $this->config->get('payment_multisafepay_secure_code');
         $iDealIssuers = $msp->getIdealIssuers();
 
         $idealselect = '<div id="issuerselect">'; // . $this->language->get('text_select_bank');
         $idealselect .= '<select name="issuer">';
         $idealselect .= '<option value="">' . $this->language->get('text_select_bank') . '</option>';
-        if ($this->config->get('payment_multisafepay_environment_' . $storeid)) {
+        if ($this->config->get('payment_multisafepay_environment')) {
             foreach ($iDealIssuers['issuers'] as $issuer) {
                 $idealselect .= '<option value="' . $issuer['code']['VALUE'] . '">' . $issuer['description']['VALUE'] . '</option>';
             }

@@ -29,17 +29,22 @@ class ModelExtensionPaymentMultiSafePayDotpay extends Model
         }
 
         $this->load->language('extension/payment/multisafepay');
-        $storeid = $this->config->get('config_store_id');
 
-        if ($storeid == 0) {
-            $appendix = '';
-        }else{
-            $appendix = '_' . $storeid;
+        $totalcents = $total * 100;
+
+        if ($total) {
+            if ($this->config->get('payment_multisafepay_dotpay_min_amount') && $totalcents < $this->config->get('payment_multisafepay_dotpay_min_amount')) {
+                return false;
+            }
+            if ($this->config->get('payment_multisafepay_dotpay_max_amount') && $totalcents > $this->config->get('payment_multisafepay_dotpay_max_amount')) {
+                return false;
+            }
         }
 
-        $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int) $this->config->get('payment_multisafepay_dotpay_geo_zone_id' . $appendix) . "' AND country_id = '" . (int) $address['country_id'] . "' AND (zone_id = '" . (int) $address['zone_id'] . "' OR zone_id = '0')");
 
-        if (!$this->config->get('payment_multisafepay_dotpay_geo_zone_id' . $appendix)) {
+        $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int) $this->config->get('payment_multisafepay_dotpay_geo_zone_id') . "' AND country_id = '" . (int) $address['country_id'] . "' AND (zone_id = '" . (int) $address['zone_id'] . "' OR zone_id = '0')");
+
+        if (!$this->config->get('payment_multisafepay_dotpay_geo_zone_id')) {
             $status = true;
         } elseif ($query->num_rows) {
             $status = true;
@@ -47,24 +52,12 @@ class ModelExtensionPaymentMultiSafePayDotpay extends Model
             $status = false;
         }
 
-        $totalcents = $total * 100;
-
-        if ($total) {
-            if ($this->config->get('payment_multisafepay_dotpay_min_amount' . $appendix) && $totalcents < $this->config->get('payment_multisafepay_dotpay_min_amount' . $appendix)) {
-                return false;
-            }
-            if ($this->config->get('payment_multisafepay_dotpay_max_amount' . $appendix) && $totalcents > $this->config->get('payment_multisafepay_dotpay_max_amount' . $appendix)) {
-                return false;
-            }
-        }
-
         $method_data = array();
 
         if ($status) {
 
-//          if ($this->config->get('payment_multisafepay_use_payment_logo' .$appendix) == true ) {
-            if ($this->config->get('payment_multisafepay_use_payment_logo_0') == true ) {
-                $title = '<img height=32 width=auto src="./image/msp/dotpay.svg" alt="dotpay" title="dotpay" style="vertical-align: middle;" />';
+            if ($this->config->get('payment_multisafepay_use_payment_logo') == true ) {
+                $title = '<img  height=32 width=auto  src="./image/msp/dotpay.svg" alt="dotpay" title="dotpay" style="vertical-align: middle;" />';
                 $terms = $this->language->get('text_title_dotpay');
             }else{
                 $title = $this->language->get('text_title_dotpay');
@@ -75,13 +68,11 @@ class ModelExtensionPaymentMultiSafePayDotpay extends Model
                 'code' => 'multisafepay_dotpay',
                 'title' => $title,
                 'terms' => $terms,
-                'sort_order' => $this->config->get('payment_multisafepay_dotpay_sort_order' . $appendix)
+                'sort_order' => $this->config->get('payment_multisafepay_dotpay_sort_order')
             );
         }
 
         return $method_data;
     }
-
 }
-
 ?>

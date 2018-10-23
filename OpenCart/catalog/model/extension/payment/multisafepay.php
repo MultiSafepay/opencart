@@ -31,19 +31,9 @@ class ModelExtensionPaymentMultiSafePay extends Model
 
         $this->load->language('extension/payment/multisafepay');
 
-        $storeid = $this->config->get('config_store_id');
-        if ($storeid == 0) {
-            $appendix = '';
-        }else{
-            $appendix = '_' . $storeid;
-        }
+        $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int) $this->config->get('payment_multisafepay_geo_zone_id') . "' AND country_id = '" . (int) $address['country_id'] . "' AND (zone_id = '" . (int) $address['zone_id'] . "' OR zone_id = '0')");
 
-        $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int) $this->config->get('payment_multisafepay_geo_zone_id' . $appendix) . "' AND country_id = '" . (int) $address['country_id'] . "' AND (zone_id = '" . (int) $address['zone_id'] . "' OR zone_id = '0')");
-
-        /* if ($this->config->get('payment_multisafepay_total') > 0 && $this->config->get('payment_multisafepay_total') > $total) {
-          $status = false;
-          } else */
-        if (!$this->config->get('payment_multisafepay_geo_zone_id' . $appendix)) {
+        if (!$this->config->get('payment_multisafepay_geo_zone_id')) {
             $status = true;
         } elseif ($query->num_rows) {
             $status = true;
@@ -54,22 +44,22 @@ class ModelExtensionPaymentMultiSafePay extends Model
         $totalcents = $total * 100;
 
         if ($total) {
-            if ($this->config->get('payment_multisafepay_min_amount' . $appendix) && $totalcents < $this->config->get('payment_multisafepay_min_amount' . $appendix)) {
+            if ($this->config->get('payment_multisafepay_min_amount') && $totalcents < $this->config->get('payment_multisafepay_min_amount')) {
                 return false;
             }
-            if ($this->config->get('payment_multisafepay_max_amount' . $appendix) && $totalcents > $this->config->get('payment_multisafepay_max_amount' . $appendix)) {
+            if ($this->config->get('payment_multisafepay_max_amount') && $totalcents > $this->config->get('payment_multisafepay_max_amount')) {
                 return false;
             }
         }
 
         $method_data = array();
+
         if ($status) {
 
-//          if ($this->config->get('payment_multisafepay_use_payment_logo' .$appendix) == true ) {
-            if ($this->config->get('payment_multisafepay_use_payment_logo_0') == true ) {
+            if ($this->config->get('payment_multisafepay_use_payment_logo') == true) {
                 $title = '<img height=32 width=auto  src="./image/msp/wallet.svg" alt="wallet" title="wallet" style="vertical-align: middle;" />';
                 $terms = $this->language->get('text_title');
-            }else{
+            } else {
                 $title = $this->language->get('text_title');
                 $terms = '';
             }
@@ -78,11 +68,14 @@ class ModelExtensionPaymentMultiSafePay extends Model
                 'code' => 'multisafepay',
                 'title' => $title,
                 'terms' => $terms,
-                'sort_order' => $this->config->get('payment_multisafepay_sort_order' . $appendix)
+                'sort_order' => $this->config->get('payment_multisafepay_sort_order')
             );
         }
 
+
         return $method_data;
     }
+
 }
+
 ?>

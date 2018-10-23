@@ -9,12 +9,11 @@
             <h1>{{ heading_title }}</h1>
             <ul class="breadcrumb">
                 {% for breadcrumb in breadcrumbs %}
-                <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+                    <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
                 {% endfor %}
             </ul>
         </div>
     </div>
-    
     <div class="container-fluid">
         {% if error_warning %}
             <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
@@ -28,632 +27,268 @@
             <div class="panel-body">
                 <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-multisafepay" class="form-horizontal">
                     <ul class="nav nav-tabs" id="tabs">
-                        <li class="active"><a href="#tab-default" data-toggle="tab">Default Store</a></li>
                         {% for store in stores %}
-                        	<li><a href="#tab-store-{{ store.store_id }}" data-toggle="tab">Store {{ store.name }}</a></li>
+                            <li class="tab-pane {{ store.store_id == 0 ? 'active' : '' }}"><a href="#tab-store-{{ store.store_id }}" data-toggle="tab">{{ store.name }}</a></li>
                         {% endfor %}
                     </ul>
-                    
+
                     <div class="tab-content">
                         {% for store in stores %}
-                            <div class="tab-pane" id="tab-store-{{ store.store_id }}">
-                   
+                            <div class="tab-pane fade in {{ store.store_id == 0 ? 'active' : '' }}" id="tab-store-{{ store.store_id }}">
+
+                                <!--Module status-->
                                 <div class="form-group">
-
-                                    {# -- Environment -- #}
-                                    <label class="col-sm-2 control-label" for="environment">{{ entry_environment }}</label>
+                                    <label class="col-sm-2 control-label" for="payment_multisafepay_status">{{ entry_status }}</label>
                                     <div class="col-sm-10">
-                                        {% set name  = 'payment_multisafepay_environment_'~store.store_id %}
-                                        {% set value = attribute(_context, name) %}
 
-                                        <select name= "{{ name }}" id="environment" class="form-control">
-                                            <option value="0" {% if value == '0' %}selected{% endif %}>Live account</option>
-                                            <option value="1" {% if value == '1' %}selected{% endif %}>Test account</option>
+                                        <select name="stores[{{ store.store_id }}][payment_multisafepay_status]" id="payment_multisafepay_status" class="form-control">
+                                            <option value="1" {% if stores[store.store_id].payment_multisafepay_status == 1 %} selected {% endif %}>{{ Enabled }}</option>
+                                            <option value="0" {% if stores[store.store_id].payment_multisafepay_status == 0 %} selected {% endif %}>{{ Disabled }}</option>
                                         </select>
                                     </div>
-                                    
-                                    {# -- Account_Type -- #}
-                                    <label class="col-sm-2 control-label" for="input-account-type">{{ entry_environment }}</label>
-                                    <div class="col-sm-10">
-                                        {% set name  = 'payment_multisafepay_account_type_'~store.store_id %}
-                                        {% set value = attribute(_context, name) %}
+                                </div>
 
-                                        <select name= "{{ name }}" id="input-account-type" class="form-control">
-                                            <option value="connect" {% if value == 'connect' %}selected{% endif %}>Connect</option>
-                                            <option value="fastcheckout" {% if value == 'fastcheckout' %}selected{% endif %}>Fastcheckout</option>
+                                <div class="form-group">
+                                    <!--MultiSafepay environment-->
+
+                                    <label class="col-sm-2 control-label" for="payment_multisafepay_environment">{{ entry_environment }}</label>
+                                    <div class="col-sm-10">
+                                        <select name="stores[{{ store.store_id }}][payment_multisafepay_environment]" id="payment_multisafepay_environment" class="form-control">
+                                            <option value="0" {% if stores[store.store_id].payment_multisafepay_environment == 0 %} selected {% endif %}>{{ Live }}</option>
+                                            <option value="1" {% if stores[store.store_id].payment_multisafepay_environment == 1 %} selected {% endif %}>{{ Test }}</option>
+                                        </select>
+                                    </div>
+
+                                    <!--MultiSafepay account type-->
+                                    <label class="col-sm-2 control-label" for="payment_multisafepay_account_type">{{ entry_account_type }}</label>
+                                    <div class="col-sm-10">
+                                        <select name="stores[{{ store.store_id }}][payment_multisafepay_account_type]" id="payment_multisafepay_account_type" class="form-control">
+                                            <option value="connect"      {% if stores[store.store_id].payment_multisafepay_account_type == 'connect'      %} selected {% endif %}>{{ Connect }}</option>
+                                            <option value="FastCheckout" {% if stores[store.store_id].payment_multisafepay_account_type == 'FastCheckout' %} selected {% endif %}>{{ FastCheckout }}</option>
                                         </select>
                                     </div>
 
                                     <!--Account settings-->
-                                    <label class="col-sm-2 control-label" for="input-merchant_id">{{ entry_multisafepay_merchantid }}</label>
+                                    <label class="col-sm-2 control-label" for="payment_multisafepay_merchant_id">{{ entry_multisafepay_merchantid }}</label>
                                     <div class="col-sm-10">
-                                        {% set name  = 'payment_multisafepay_merchant_id_'~store.store_id %}
-                                        {% set value = attribute(_context, name) %}
-                                        <input type="text" name= "{{ name }}" value= "{{ value }}"  id="merchant_id" class="form-control" />
+                                        <input type="text" name="stores[{{ store.store_id }}][payment_multisafepay_merchant_id]" value="{{ stores[store.store_id].payment_multisafepay_merchant_id }}" id="payment_multisafepay_merchant_id" class="form-control" />
                                     </div>
 
                                     <!--siteid settings-->
-                                    <label class="col-sm-2 control-label" for="input-siteid">{{ entry_multisafepay_siteid }}</label>
+                                    <label class="col-sm-2 control-label" for="payment_multisafepay_site_id">{{ entry_multisafepay_siteid }}</label>
                                     <div class="col-sm-10">
-                                        {% set name  = 'payment_multisafepay_site_id_'~store.store_id %}
-                                        {% set value = attribute(_context, name) %}
-                                        <input type="text" name= "{{ name }}" value= "{{ value }}"  id="siteid" class="form-control" />
+                                        <input type="text" name="stores[{{ store.store_id }}][payment_multisafepay_site_id]" value="{{ stores[store.store_id].payment_multisafepay_site_id }}" id="payment_multisafepay_site_id" class="form-control" />
                                     </div>
-                                    
 
                                     <!--site secure code-->
-                                    <label class="col-sm-2 control-label" for="input-sitesecurecode">{{ entry_multisafepay_secure_code }}</label>
+                                    <label class="col-sm-2 control-label" for="payment_multisafepay_secure_code">{{ entry_multisafepay_secure_code }}</label>
                                     <div class="col-sm-10">
-                                        {% set name  = 'payment_multisafepay_secure_code_'~store.store_id %}
-                                        {% set value = attribute(_context, name) %}
-                                        <input type="text" name= "{{ name }}" value= "{{ value }}"  id="sitesecurecode" class="form-control" />
+                                        <input type="text" name="stores[{{ store.store_id }}][payment_multisafepay_secure_code]" value="{{ stores[store.store_id].payment_multisafepay_secure_code }}" id="payment_multisafepay_secure_code" class="form-control" />
                                     </div>
-
                                 </div>
-                                
-                                <div class="form-group">
-                                   
-                                    {# -- Enable_Redirect -- #}
-                                    <label class="col-sm-2 control-label" for="input-enable_redirect">{{ entry_multisafepay_redirect_url }}</label>
-                                    <div class="col-sm-10">
-                                        {% set name  = 'payment_multisafepay_redirect_url_'~store.store_id %}
-                                        {% set value = attribute(_context, name) %}
 
-                                        <select name="{{ name }}" id="input-enable_redirect" class="form-control">
-                                            <option value="1" {% if value == '1' %}selected{% endif %}>Enabled</option>
-                                            <option value="0" {% if value == '0' %}selected{% endif %}>Disabled</option>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label" for="payment_multisafepay_redirect_url">{{ entry_multisafepay_redirect_url }}</label>
+                                    <div class="col-sm-10">
+                                        <select name="stores[{{ store.store_id }}][payment_multisafepay_redirect_url]" id="payment_multisafepay_redirect_url" class="form-control">
+                                            <option value="true"  {% if stores[store.store_id].payment_multisafepay_redirect_url == 'true'  %} selected {% endif %}>{{ Enabled }}</option>
+                                            <option value="false" {% if stores[store.store_id].payment_multisafepay_redirect_url == 'false' %} selected {% endif %}>{{ Disabled }}</option>
                                         </select>
                                     </div>
 
-                                    {# -- days Active -- #}
-                                   <label class="col-sm-2 control-label" for="input-sitesecurecode">{{ entry_multisafepay_days_active }}</label>
+                                    <!--Days active -->
+                                    <label class="col-sm-2 control-label" for="payment_multisafepay_days_active">{{ entry_multisafepay_days_active }}</label>
                                     <div class="col-sm-10">
-                                        {% set name  = 'payment_multisafepay_days_active_'~store.store_id %}
-                                        {% set value = attribute(_context, name) %}
-                                        <input type="text" name= "{{ name }}" value= "{{ value }}"  id="sitesecurecode" class="form-control" />
+                                        <input type="text" name="stores[{{ store.store_id }}][payment_multisafepay_days_active]" value="{{ stores[store.store_id].payment_multisafepay_days_active }}" id="payment_multisafepay_days_active" class="form-control" />
                                     </div>
 
                                     {# -- Use logo's during checkout -- #}
                                     <label class="col-sm-2 control-label" for="environment">{{ entry_multisafepay_use_payment_logo }}</label>
                                     <div class="col-sm-10">
-                                        {% set name  = 'payment_multisafepay_use_payment_logo_'~store.store_id %}
-                                        {% set value = attribute(_context, name) %}
-
-                                        <select name="{{ name }}" id="environment" class="form-control">
-                                            <option value="1" {% if value == '1' %}selected{% endif %}>Yes</option>
-                                            <option value="0" {% if value == '0' %}selected{% endif %}>Nod</option>
+                                        <select name="stores[{{ store.store_id }}][payment_multisafepay_use_payment_logo]" id="payment_multisafepay_use_payment_logo" class="form-control">
+                                            <option value="1" {% if stores[store.store_id].payment_multisafepay_use_payment_logo == '1' %} selected {% endif %}>{{ yes }}</option>
+                                            <option value="0" {% if stores[store.store_id].payment_multisafepay_use_payment_logo == '0' %} selected {% endif %}>{{ no }}</option>
                                         </select>
                                     </div>
 
-
-                                    {# -- Confirm order -- #}
-                                    <label class="col-sm-2 control-label" for="environment">{{ entry_confirm_order }}</label>
+                                    <!--Send confirmation e-mail -->
+                                    <label class="col-sm-2 control-label" for="payment_multisafepay_confirm_order">{{ entry_confirm_order }}</label>
                                     <div class="col-sm-10">
-                                        {% set name  = 'payment_multisafepay_confirm_order'~store.store_id %}
-                                        {% set value = attribute(_context, name) %}
-
-                                        <select name="{{ name }}" id="environment" class="form-control">
-                                            <option value="1" {% if value == '1' %}selected{% endif %}>After transaction is paid</option>
-                                            <option value="0" {% if value == '0' %}selected{% endif %}>After orderconfirmation</option>
+                                        <select name="stores[{{ store.store_id }}][payment_multisafepay_confirm_order]" id="payment_multisafepay_confirm_order" class="form-control">
+                                            <option value="1" {% if stores[store.store_id].payment_multisafepay_confirm_order == '1' %} selected {% endif %}>{{ Before }}</option>
+                                            <option value="0" {% if stores[store.store_id].payment_multisafepay_confirm_order == '0' %} selected {% endif %}>{{ After }}</option>
                                         </select>
                                     </div>
-                                    
-                                    {# -- Min amount -- #}
-                                    <label class="col-sm-2 control-label" for="minamount">{{ text_min_amount }}</label>
-                                    <div class="col-sm-10">
-                                        {% set name  = 'payment_multisafepay_min_amount_'~store.store_id %}
-                                        {% set value = attribute(_context, name) %}
-                                        <input type="text" name= "{{ name }}" value= "{{ value }}"  id="minamount" class="form-control" />
-                                    </div>
-                                    
-                                    {# -- Max amount -- #}
-                                    <label class="col-sm-2 control-label" for="maxamount">{{ text_max_amount }}</label>
-                                    <div class="col-sm-10">
-                                        {% set name  = 'payment_multisafepay_max_amount_'~store.store_id %}
-                                        {% set value = attribute(_context, name) %}
-                                        <input type="text" name= "{{ name }}" value= "{{ value }}"  id="maxamount" class="form-control" />
-                                    </div>
-                                    
 
-                                    {# -- Geo-Zone -- #}
-                                    <label class="col-sm-2 control-label" for="input-msp-zone">{{ text_all_zones }}</label>
+                                    <!--Min/Max amount-->
+                                    <label class="col-sm-2 control-label" for="payment_multisafepay_min_amount">{{ entry_min_amount }}</label>
                                     <div class="col-sm-10">
-                                        {% set name  = 'payment_multisafepay_geo_zone_id_'~store.store_id %}
-                                        {% set value = attribute(_context, name) %}
+                                        <input type="text" name="stores[{{ store.store_id }}][payment_multisafepay_min_amount]" value="{{ stores[store.store_id].payment_multisafepay_min_amount }}" id="payment_multisafepay_min_amount" class="form-control" />
+                                    </div>
 
-                                        <select name= "{{ name }}" id="input-geo-zone" class="form-control">
+                                    <label class="col-sm-2 control-label" for="payment_multisafepay_max_amount">{{ entry_max_amount }}</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" name="stores[{{ store.store_id }}][payment_multisafepay_max_amount]" value="{{ stores[store.store_id].payment_multisafepay_max_amount }}" id="payment_multisafepay_max_amount" class="form-control" />
+                                    </div>
+
+                                    <!--Geo-Zone-->
+                                    <label class="col-sm-2 control-label" for="payment_multisafepay_geo_zone_id">{{ text_all_zones }}</label>
+                                    <div class="col-sm-10">
+                                        <select name="stores[{{ store.store_id }}][payment_multisafepay_geo_zone_id]" id="payment_multisafepay_geo_zone_id" class="form-control">
                                             <option value="0">{{ text_all_zones }}</option>
-                                            {% for row in geo_zones %}
-                                                <option value="{{ row.geo_zone_id }}" {% if value == row.geo_zone_id %}selected{% endif %}>{{ row.name }}</option>
+                                            {% for geo_zone in geo_zones %}
+                                                <option value="{{ geo_zone.geo_zone_id }}"{% if geo_zone.geo_zone_id == stores[store.store_id].payment_multisafepay_geo_zone_id %} selected {% endif %}>{{ geo_zone.name }}</option>
                                             {% endfor %}
                                         </select>
                                     </div>
 
-                                    {# -- Sorting -- #}
-                                    <label class="col-sm-2 control-label" for="input-sort-order">{{ entry_sort_order }}</label>
+
+                                    <!--Sorting-->
+                                    <label class="col-sm-2 control-label" for="payment_multisafepay_sort_order">{{ entry_sort_order }}</label>
                                     <div class="col-sm-10">
-                                        {% set name  = 'payment_multisafepay_sort_order_'~store.store_id %}
-                                        {% set value = attribute(_context, name) %}
-                                        <input type="text" name= "{{ name }}" value= "{{ value }}"  id="input-sort-order" class="form-control" />
+                                        <input type="text" name="stores[{{ store.store_id }}][payment_multisafepay_sort_order]" value="{{ stores[store.store_id].payment_multisafepay_sort_order }}" id="payment_multisafepay_sort_order" class="form-control" />
                                     </div>
-                                </div>                                
-                                    
+                                </div>
+
+
                                 <div class="form-group">
-                                    
-                                    {# -- Enable_fco-button -- #}
-                                    <label class="col-sm-2 control-label" for="input-msp">{{ enable_checkout_button }}</label>
+                                    <!--MultiSafepay fco button-->
+                                    <label class="col-sm-2 control-label" for="payment_multisafepay_enable_checkout_button_connect">{{ enable_checkout_button }}</label>
                                     <div class="col-sm-10">
-                                        {% set name  = 'payment_multisafepay_enable_checkout_button_connect_'~store.store_id %}
-                                        {% set value = attribute(_context, name) %}
-
-                                        <select name="{{ name }}" id="input-msp" class="form-control">
-                                            <option value="0" {% if value == 0 %}selected{% endif %}>No</option>
-                                            <option value="1" {% if value == 1 %}selected{% endif %}>Yes</option>
+                                        <select name="stores[{{ store.store_id }}][payment_multisafepay_enable_checkout_button_connect]" id="payment_multisafepay_enable_checkout_button_connect" class="form-control">
+                                            <option value="true"  {% if stores[store.store_id].payment_multisafepay_enable_checkout_button_connect == 'true'  %} selected {% endif %}>{{ yes }}</option>
+                                            <option value="false" {% if stores[store.store_id].payment_multisafepay_enable_checkout_button_connect == 'false' %} selected {% endif %}>{{ no }}</option>
                                         </select>
                                     </div>
 
-                                    {# -- Enable_B2B field -- #}
-                                    <label class="col-sm-2 control-label" for="input-msp">{{ entry_multisafepay_b2b }}</label>
+                                    <!--FCO B2B-->
+                                    <label class="col-sm-2 control-label" for="payment_multisafepay_b2b">{{ entry_multisafepay_b2b }}</label>
                                     <div class="col-sm-10">
-                                        {% set name  = 'payment_multisafepay_b2b_'~store.store_id %}
-                                        {% set value = attribute(_context, name) %}
-
-                                        <select name="{{ name }}" id="input-msp" class="form-control">
-                                            <option value="0" {% if value == 0 %}selected{% endif %}>{{ text_disabled }}</option>
-                                            <option value="1" {% if value == 1 %}selected{% endif %}>{{ text_enabled }}</option>
+                                        <select name="stores[{{ store.store_id }}][payment_multisafepay_b2b]" id="payment_multisafepay_b2b" class="form-control">
+                                            <option value="true"  {% if stores[store.store_id].payment_multisafepay_b2b == 'true'  %} selected {% endif %}>{{ Enabled }}</option>
+                                            <option value="false" {% if stores[store.store_id].payment_multisafepay_b2b == 'false' %} selected {% endif %}>{{ Disabled }}</option>
                                         </select>
                                     </div>
 
-                                    <!--fco tax percentage-->
-                                    <label class="col-sm-2 control-label" for="fcotax">{{ entry_multisafepay_fco_tax }}</label>
-                                    <div class="col-sm-10">
-                                        {% set name  = 'payment_multisafepay_fco_tax_percent_'~store.store_id %}
-                                        {% set value = attribute(_context, name) %}
-                                        <input type="text" name= "{{ name }}" value= "{{ value }}"  id="fcotax" class="form-control" />
-                                    </div>
-                                    
                                     <!--fco free ship amount-->
-                                   <label class="col-sm-2 control-label" for="freeship">{{ entry_multisafepay_fco_free_ship }}</label>
+                                    <label class="col-sm-2 control-label" for="payment_multisafepay_fco_free_ship">{{ entry_multisafepay_fco_free_ship }}</label>
                                     <div class="col-sm-10">
-                                        {% set name  = 'payment_multisafepay_fco_free_ship_'~store.store_id %}
-                                        {% set value = attribute(_context, name) %}
-                                        <input type="text" name= "{{ name }}" value= "{{ value }}"  id="freeship" class="form-control" />
-                                    </div>   
-                                </div> 
-                                        
+                                        <input type="text" name="stores[{{ store.store_id }}][payment_multisafepay_fco_free_ship]" value="{{ stores[store.store_id].payment_multisafepay_fco_free_ship }}" id="payment_multisafepay_fco_free_ship" class="form-control" />
+                                    </div>
+                                </div>
+
+
                                 <div class="form-group">
-                                    {# -- set initialized status -- #}
-                                    <label class="col-sm-2 control-label" for="input-msp-status">{{ entry_multisafepay_order_status_id_initialized }}</label>
-                                    <div class="col-sm-10">
-                                        {% set name  = 'payment_multisafepay_order_status_id_initialized_'~store.store_id %}
-                                        {% set value = attribute(_context, name) %}
 
-                                        <select name= "{{ name }}" id="input-msp-status" class="form-control">
-                                            {% for row in order_statuses %}
-                                                <option value="{{ row.order_status_id }}" {% if value == row.order_status_id %}selected{% endif %}>{{ row.name }}</option>
+                                    <!--set initialized status-->
+                                    <label class="col-sm-2 control-label" for="payment_multisafepay_order_status_id_initialized">{{ entry_multisafepay_order_status_id_initialized }}</label>
+                                    <div class="col-sm-10">
+                                        <select name="stores[{{ store.store_id }}][payment_multisafepay_order_status_id_initialized]" id="payment_multisafepay_order_status_id_initialized" class="form-control">
+                                            {% for order_status in order_statuses %}
+                                                <option value="{{ order_status.order_status_id }}"{% if order_status.order_status_id == stores[store.store_id].payment_multisafepay_order_status_id_initialized %} selected {% endif %}>{{ order_status.name }}</option>
                                             {% endfor %}
                                         </select>
                                     </div>
-                                        
-                                    {# -- set completed status -- #}
-                                    <label class="col-sm-2 control-label" for="input-msp-status">{{ entry_multisafepay_order_status_id_completed }}</label>
-                                    <div class="col-sm-10">
-                                        {% set name  = 'payment_multisafepay_order_status_id_completed_'~store.store_id %}
-                                        {% set value = attribute(_context, name) %}
 
-                                        <select name= "{{ name }}" id="input-msp-status" class="form-control">
-                                            {% for row in order_statuses %}
-                                                <option value="{{ row.order_status_id }}" {% if value == row.order_status_id %}selected{% endif %}>{{ row.name }}</option>
+                                    <!--set completed status-->
+                                    <label class="col-sm-2 control-label" for="payment_multisafepay_order_status_id_completed">{{ entry_multisafepay_order_status_id_completed }}</label>
+                                    <div class="col-sm-10">
+                                        <select name="stores[{{ store.store_id }}][payment_multisafepay_order_status_id_completed]" id="payment_multisafepay_order_status_id_completed" class="form-control">
+                                            {% for order_status in order_statuses %}
+                                                <option value="{{ order_status.order_status_id }}"{% if order_status.order_status_id == stores[store.store_id].payment_multisafepay_order_status_id_completed %} selected {% endif %}>{{ order_status.name }}</option>
                                             {% endfor %}
                                         </select>
                                     </div>
-                     
-                                    {# -- set uncleared status -- #}
-                                    <label class="col-sm-2 control-label" for="input-msp-status">{{ entry_multisafepay_order_status_id_uncleared }}</label>
-                                    <div class="col-sm-10">
-                                        {% set name  = 'payment_multisafepay_order_status_id_uncleared_'~store.store_id %}
-                                        {% set value = attribute(_context, name) %}
 
-                                        <select name= "{{ name }}" id="input-msp-status" class="form-control">
-                                            {% for row in order_statuses %}
-                                                <option value="{{ row.order_status_id }}" {% if value == row.order_status_id %}selected{% endif %}>{{ row.name }}</option>
+                                    <!--set uncleared status-->
+                                    <label class="col-sm-2 control-label" for="payment_multisafepay_order_status_id_uncleared">{{ entry_multisafepay_order_status_id_uncleared }}</label>
+                                    <div class="col-sm-10">
+                                        <select name="stores[{{ store.store_id }}][payment_multisafepay_order_status_id_uncleared]" id="payment_multisafepay_order_status_id_uncleared" class="form-control">
+                                            {% for order_status in order_statuses %}
+                                                <option value="{{ order_status.order_status_id }}"{% if order_status.order_status_id == stores[store.store_id].payment_multisafepay_order_status_id_uncleared %} selected {% endif %}>{{ order_status.name }}</option>
                                             {% endfor %}
                                         </select>
                                     </div>
-                        
-                                    {# -- set reserved status -- #}
-                                    <label class="col-sm-2 control-label" for="input-msp-status">{{ entry_multisafepay_order_status_id_reserved }}</label>
+
+                                    <!--set reserved status-->
+                                    <label class="col-sm-2 control-label" for="payment_multisafepay_order_status_id_reserved">{{ entry_multisafepay_order_status_id_reserved }}</label>
                                     <div class="col-sm-10">
-                                        {% set name  = 'payment_multisafepay_order_status_id_reserved_'~store.store_id %}
-                                        {% set value = attribute(_context, name) %}
-
-                                        <select name= "{{ name }}" id="input-msp-status" class="form-control">
-                                            {% for row in order_statuses %}
-                                                <option value="{{ row.order_status_id }}" {% if value == row.order_status_id %}selected{% endif %}>{{ row.name }}</option>
-                                            {% endfor %}
-                                        </select>
-                                    </div>         
-
-                                    {# -- set void status -- #}
-                                    <label class="col-sm-2 control-label" for="input-msp-status">{{ entry_multisafepay_order_status_id_void }}</label>
-                                    <div class="col-sm-10">
-                                        {% set name  = 'payment_multisafepay_order_status_id_void_'~store.store_id %}
-                                        {% set value = attribute(_context, name) %}
-
-                                        <select name= "{{ name }}" id="input-msp-status" class="form-control">
-                                            {% for row in order_statuses %}
-                                                <option value="{{ row.order_status_id }}" {% if value == row.order_status_id %}selected{% endif %}>{{ row.name }}</option>
-                                            {% endfor %}
-                                        </select>
-                                    </div>    
-                                        
-                                    {# -- set declined status -- #}
-                                    <label class="col-sm-2 control-label" for="input-msp-status">{{ entry_multisafepay_order_status_id_declined }}</label>
-                                    <div class="col-sm-10">
-                                        {% set name  = 'payment_multisafepay_order_status_id_declined_'~store.store_id %}
-                                        {% set value = attribute(_context, name) %}
-
-                                        <select name= "{{ name }}" id="input-msp-status" class="form-control">
-                                            {% for row in order_statuses %}
-                                                <option value="{{ row.order_status_id }}" {% if value == row.order_status_id %}selected{% endif %}>{{ row.name }}</option>
-                                            {% endfor %}
-                                        </select>
-                                    </div>                                        
-                                        
-                                    {# -- set expired status -- #}
-                                    <label class="col-sm-2 control-label" for="input-msp-status">{{ entry_multisafepay_order_status_id_expired }}</label>
-                                    <div class="col-sm-10">
-                                        {% set name  = 'payment_multisafepay_order_status_id_expired_'~store.store_id %}
-                                        {% set value = attribute(_context, name) %}
-
-                                        <select name= "{{ name }}" id="input-msp-status" class="form-control">
-                                            {% for row in order_statuses %}
-                                                <option value="{{ row.order_status_id }}" {% if value == row.order_status_id %}selected{% endif %}>{{ row.name }}</option>
+                                        <select name="stores[{{ store.store_id }}][payment_multisafepay_order_status_id_reserved]" id="payment_multisafepay_order_status_id_reserved" class="form-control">
+                                            {% for order_status in order_statuses %}
+                                                <option value="{{ order_status.order_status_id }}"{% if order_status.order_status_id == stores[store.store_id].payment_multisafepay_order_status_id_reserved %} selected {% endif %}>{{ order_status.name }}</option>
                                             {% endfor %}
                                         </select>
                                     </div>
-                                        
-                                    {# -- set shipped status -- #}
-                                    <label class="col-sm-2 control-label" for="input-msp-status">{{ entry_multisafepay_order_status_id_shipped }}</label>
-                                    <div class="col-sm-10">
-                                        {% set name  = 'payment_multisafepay_order_status_id_shipped_'~store.store_id %}
-                                        {% set value = attribute(_context, name) %}
 
-                                        <select name= "{{ name }}" id="input-msp-status" class="form-control">
-                                            {% for row in order_statuses %}
-                                                <option value="{{ row.order_status_id }}" {% if value == row.order_status_id %}selected{% endif %}>{{ row.name }}</option>
+                                    <!--set void status-->
+                                    <label class="col-sm-2 control-label" for="payment_multisafepay_order_status_id_void">{{ entry_multisafepay_order_status_id_void }}</label>
+                                    <div class="col-sm-10">
+                                        <select name="stores[{{ store.store_id }}][payment_multisafepay_order_status_id_void]" id="payment_multisafepay_order_status_id_void" class="form-control">
+                                            {% for order_status in order_statuses %}
+                                                <option value="{{ order_status.order_status_id }}"{% if order_status.order_status_id == stores[store.store_id].payment_multisafepay_order_status_id_void %} selected {% endif %}>{{ order_status.name }}</option>
                                             {% endfor %}
                                         </select>
-                                    </div>   
+                                    </div>
 
-                                    {# -- set refunded status -- #}
-                                    <label class="col-sm-2 control-label" for="input-msp-status">{{ entry_multisafepay_order_status_id_refunded }}</label>
+                                    <!--set declined status-->
+                                    <label class="col-sm-2 control-label" for="payment_multisafepay_order_status_id_declined">{{ entry_multisafepay_order_status_id_declined }}</label>
                                     <div class="col-sm-10">
-                                        {% set name  = 'payment_multisafepay_order_status_id_refunded_'~store.store_id %}
-                                        {% set value = attribute(_context, name) %}
-
-                                        <select name= "{{ name }}" id="input-msp-status" class="form-control">
-                                            {% for row in order_statuses %}
-                                                <option value="{{ row.order_status_id }}" {% if value == row.order_status_id %}selected{% endif %}>{{ row.name }}</option>
+                                        <select name="stores[{{ store.store_id }}][payment_multisafepay_order_status_id_declined]" id="payment_multisafepay_order_status_id_declined" class="form-control">
+                                            {% for order_status in order_statuses %}
+                                                <option value="{{ order_status.order_status_id }}"{% if order_status.order_status_id == stores[store.store_id].payment_multisafepay_order_status_id_declined %} selected {% endif %}>{{ order_status.name }}</option>
                                             {% endfor %}
                                         </select>
-                                    </div>   
+                                    </div>
 
-                                    {# -- set partial_refunded status -- #}
-                                    <label class="col-sm-2 control-label" for="input-msp-status">{{ entry_multisafepay_order_status_id_partial_refunded }}</label>
+                                    <!--set expired status-->
+                                    <label class="col-sm-2 control-label" for="payment_multisafepay_order_status_id_expired">{{ entry_multisafepay_order_status_id_expired }}</label>
                                     <div class="col-sm-10">
-                                        {% set name  = 'payment_multisafepay_order_status_id_partial_refunded_'~store.store_id %}
-                                        {% set value = attribute(_context, name) %}
-
-                                        <select name= "{{ name }}" id="input-msp-status" class="form-control">
-                                            {% for row in order_statuses %}
-                                                <option value="{{ row.order_status_id }}" {% if value == row.order_status_id %}selected{% endif %}>{{ row.name }}</option>
+                                        <select name="stores[{{ store.store_id }}][payment_multisafepay_order_status_id_expired]" id="payment_multisafepay_order_status_id_expired" class="form-control">
+                                            {% for order_status in order_statuses %}
+                                                <option value="{{ order_status.order_status_id }}"{% if order_status.order_status_id == stores[store.store_id].payment_multisafepay_order_status_id_expired %} selected {% endif %}>{{ order_status.name }}</option>
                                             {% endfor %}
                                         </select>
-                                    </div>   
+                                    </div>
+
+                                    <!--set shipped status-->
+                                    <label class="col-sm-2 control-label" for="payment_multisafepay_order_status_id_shipped">{{ entry_multisafepay_order_status_id_shipped }}</label>
+                                    <div class="col-sm-10">
+                                        <select name="stores[{{ store.store_id }}][payment_multisafepay_order_status_id_shipped]" id="payment_multisafepay_order_status_id_shipped" class="form-control">
+                                            {% for order_status in order_statuses %}
+                                                <option value="{{ order_status.order_status_id }}"{% if order_status.order_status_id == stores[store.store_id].payment_multisafepay_order_status_id_shipped %} selected {% endif %}>{{ order_status.name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+
+                                    <!--set refunded status-->
+                                    <label class="col-sm-2 control-label" for="payment_multisafepay_order_status_id_refunded">{{ entry_multisafepay_order_status_id_refunded }}</label>
+                                    <div class="col-sm-10">
+                                        <select name="stores[{{ store.store_id }}][payment_multisafepay_order_status_id_refunded]" id="payment_multisafepay_order_status_id_refunded" class="form-control">
+                                            {% for order_status in order_statuses %}
+                                                <option value="{{ order_status.order_status_id }}"{% if order_status.order_status_id == stores[store.store_id].payment_multisafepay_order_status_id_refunded %} selected {% endif %}>{{ order_status.name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+
+                                    <!--set partial_refunded status-->
+                                    <label class="col-sm-2 control-label" for="payment_multisafepay_order_status_id_partial_refunded">{{ entry_multisafepay_order_status_id_partial_refunded }}</label>
+                                    <div class="col-sm-10">
+                                        <select name="stores[{{ store.store_id }}][payment_multisafepay_order_status_id_partial_refunded]" id="payment_multisafepay_order_status_id_partial_refunded" class="form-control">
+                                            {% for order_status in order_statuses %}
+                                                <option value="{{ order_status.order_status_id }}"{% if order_status.order_status_id == stores[store.store_id].payment_multisafepay_order_status_id_partial_refunded %} selected {% endif %}>{{ order_status.name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>                              
+
+                            </div>
                         {% endfor %}
-
-                        <div class="tab-pane active" id="tab-default">
-
-                            <!--Module status-->
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
-                                <div class="col-sm-10">
-                                    <select name="payment_multisafepay_status" id="input-status" class="form-control">
-                                        {% if payment_multisafepay_status %}
-                                            <option value="1" selected="selected">Enabled</option>
-                                            <option value="0">Disabled</option>
-                                        {% else %}
-                                            <option value="1">Enabled</option>
-                                            <option value="0" selected="selected">Disabled</option>
-                                        {% endif %} 
-                                    </select>
-                                </div>
-                            </div>
-                                
-                            <div class="form-group">
-                                <!--MultiSafepay environment-->
-                                <label class="col-sm-2 control-label" for="environment">{{ entry_environment }}</label>
-                                <div class="col-sm-10">
-                                    <select name="payment_multisafepay_environment_0" id="environment" class="form-control">
-                                        <option value="0"  {% if payment_multisafepay_environment == '0' %} {{ 'selected' }}{% endif %} >Live Account</option>
-                                        <option value="1"  {% if payment_multisafepay_environment == '1' %} {{ 'selected' }}{% endif %} >Test Account</option>
-                                    </select>
-                                </div>
-
-                                <!--MultiSafepay account type-->
-                                <label class="col-sm-2 control-label" for="account">{{ entry_account_type }}</label>
-                                <div class="col-sm-10">
-                                    <select name="payment_multisafepay_account_type_0" id="account" class="form-control">
-                                        <option value="connect"      {% if payment_multisafepay_account_type == 'connect'      %} {{ 'selected' }}{% endif %} >Connect</option>
-                                        <option value="fastcheckout" {% if payment_multisafepay_account_type == 'fastcheckout' %} {{ 'selected' }}{% endif %} >FastCheckout</option>
-                                    </select>
-                                </div>
-
-                                <!--Account settings-->
-                                <label class="col-sm-2 control-label" for="accountid"><span>{{ entry_multisafepay_merchantid }}</span></label>
-                                <div class="col-sm-10">
-                                    <input type="text" name="payment_multisafepay_merchant_id_0" value="{{ payment_multisafepay_merchant_id }}" id="input-api-key" class="form-control" />
-                                </div>
-
-                                <!--siteid settings-->
-                                <label class="col-sm-2 control-label" for="siteid"><span>{{ entry_multisafepay_siteid }}</span></label>
-                                <div class="col-sm-10">
-                                    <input type="text" name="payment_multisafepay_site_id_0" value="{{ payment_multisafepay_site_id }}" id="siteid" class="form-control" />
-                                </div>
-
-                                <!--site secure code-->
-                                <label class="col-sm-2 control-label" for="sitesecurecode"><span>{{ entry_multisafepay_secure_code }}</span></label>
-                                <div class="col-sm-10">
-                                    <input type="text" name="payment_multisafepay_secure_code_0" value="{{ payment_multisafepay_secure_code }}" id="sitesecurecode" class="form-control" />
-                                </div>
-                            </div>
-
-
-                            <div class="form-group">                        
-                            
-                                <!--MultiSafepay enable redirect-->
-                                <label class="col-sm-2 control-label" for="redirect">{{ entry_multisafepay_redirect_url }}</label>
-                                <div class="col-sm-10">
-                                    <select name="payment_multisafepay_redirect_url_0" id="redirect" class="form-control">
-                                        <option value="true"    {% if payment_multisafepay_redirect_url == 'true'  %} {{ 'selected' }}{% endif %}>Enabled</option>
-                                        <option value="false"   {% if payment_multisafepay_redirect_url == 'false' %} {{ 'selected' }}{% endif %}>Disabled</option>
-                                    </select>
-                                </div>
-                           
-                                <!--Days active -->
-                                <label class="col-sm-2 control-label" for="daysactive"><span>{{ entry_multisafepay_days_active }}</span></label>
-                                <div class="col-sm-10">
-                                    <input type="text" name="payment_multisafepay_days_active_0" value="{{ payment_multisafepay_days_active }}" id="daysactive" class="form-control" />
-                                </div>
-                               
-                                <label class="col-sm-2 control-label" for="environment">{{ entry_confirm_order }}</label>
-                                <div class="col-sm-10">
-                                    <select name="payment_multisafepay_confirm_order_0" id="environment" class="form-control">
-                                        <option value="0" {% if payment_multisafepay_confirm_order ==  0 %} {{ 'selected' }}{% endif %}>Before transaction</option>
-                                        <option value="1" {% if payment_multisafepay_confirm_order ==  1 %} {{ 'selected' }}{% endif %}>After paid transaction</option>
-                                    </select>
-                                </div>
-
-                                <label class="col-sm-2 control-label" for="minamount"><span>{{ text_min_amount }}</span></label>
-                                <div class="col-sm-10">
-                                    <input type="text" name="payment_multisafepay_min_amount_0" value="{{ payment_multisafepay_min_amount }}" id="minamount" class="form-control" />
-                                </div>
-
-                                <label class="col-sm-2 control-label" for="maxamount"><span>{{ text_max_amount }}</span></label>
-                                <div class="col-sm-10">
-                                    <input type="text" name="payment_multisafepay_max_amount_0" value="{{ payment_multisafepay_max_amount }}" id="maxamount" class="form-control" />
-                                </div>
-                                
-                                <label class="col-sm-2 control-label" for="input-geo-zone">{{ text_all_zones }}</label>
-                                <div class="col-sm-10">
-                                    <select name="payment_multisafepay_geo_zone_id_0" id="input-geo-zone" class="form-control">
-                                       <option value="0">{{ text_all_zones }}</option>
-                                        {% for geo_zone in geo_zones %}
-                                            {% if geo_zone.geo_zone_id  == payment_multisafepay_geo_zone_id %}
-                                                <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
-                                            {% else %}
-                                                <option value="{{ geo_zone.geo_zone_id }}">{{ geo_zone.name }}</option>
-                                            {% endif %}
-                                        {% endfor %}
-                                    </select>
-                                </div>
-
-
-                                <!--Sorting-->
-                                <label class="col-sm-2 control-label" for="input-sort-order">{{ entry_sort_order }}</label>
-                                <div class="col-sm-10">
-                                    <input type="text" name="payment_multisafepay_sort_order_0" value="{{ payment_multisafepay_sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control" />
-                                </div>
-                            </div>
-                                
-                            <div class="form-group">                        
-                                <!--MultiSafepay fco button-->
-                                <label class="col-sm-2 control-label" for="input-msp">{{ enable_checkout_button }}</label>
-                                <div class="col-sm-10">
-                                    <select name="payment_multisafepay_enable_checkout_button_connect_0" id="fcobutton" class="form-control">
-                                        <option value="true"   {% if payment_multisafepay_enable_checkout_button_connect ==  'true'   %} {{ 'selected' }}{% endif %}>{{ yes }}</option>
-                                        <option value="false"   {% if payment_multisafepay_enable_checkout_button_connect == 'false'  %} {{ 'selected' }}{% endif %}>{{ no }}</option>
-                                    </select>
-                                </div>
-                           
-
-
-                            
-                                <!--FCO B2B-->
-                                <label class="col-sm-2 control-label" for="input-msp">{{ entry_multisafepay_b2b }}</label>
-                                <div class="col-sm-10">
-                                    <select name="payment_multisafepay_b2b_0" id="b2b" class="form-control">
-                                        <option value="true"  {% if payment_multisafepay_b2b == 'true' %} {{ 'selected' }}{% endif %}>Enabled</option>
-                                        <option value="false" {% if payment_multisafepay_b2b == 'false'%} {{ 'selected' }}{% endif %}>Disabled</option>
-                                    </select>
-                                </div>
-                           
-                                <!--fco tax percentage-->
-                                <label class="col-sm-2 control-label" for="fcotax"><span>{{ entry_multisafepay_fco_tax }}</span></label>
-                                <div class="col-sm-10">
-                                    <input type="text" name="payment_multisafepay_fco_tax_percent_0" value="{{ payment_multisafepay_fco_tax_percent }}" id="fcotax" class="form-control" />
-                                </div>
-
-                                <!--fco free ship amount-->
-                                <label class="col-sm-2 control-label" for="freeship"><span>{{ entry_multisafepay_fco_free_ship }}</span></label>
-                                <div class="col-sm-10">
-                                    <input type="text" name="payment_multisafepay_fco_free_ship_0" value="{{ payment_multisafepay_fco_free_ship }}" id="freeship" class="form-control" />
-                                </div>
-
-                            </div>
-                            
-
-                            <div class="form-group">
-                                <!--set initialized status-->
-                                <label class="col-sm-2 control-label" for="initialized">{{ entry_multisafepay_order_status_id_initialized }}</label>
-                                <div class="col-sm-10">
-                                    <select name="payment_multisafepay_order_status_id_initialized_0" id="initialized" class="form-control">
-                                        {% for order_status in order_statuses %}
-                                            {% if order_status.order_status_id == payment_multisafepay_order_status_id_initialized %}
-                                                <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
-                                             {% else %}
-                                                <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
-                                            {% endif %}
-                                        {% endfor %}
-                                    </select>
-                                </div>
-
-                                <!--set completed status-->
-                                <label class="col-sm-2 control-label" for="completed">{{ entry_multisafepay_order_status_id_completed }}</label>
-                                <div class="col-sm-10">
-                                    <select name="payment_multisafepay_order_status_id_completed_0" id="completed" class="form-control">
-                                        {% for order_status in order_statuses %}
-                                            {% if order_status.order_status_id == payment_multisafepay_order_status_id_completed %}
-                                                <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
-                                             {% else %}
-                                                <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
-                                            {% endif %}
-                                        {% endfor %}
-
-                                    </select>
-                                </div>
-
-                                <!--set uncleared status-->
-                                <label class="col-sm-2 control-label" for="uncleared">{{ entry_multisafepay_order_status_id_uncleared }}</label>
-                                <div class="col-sm-10">
-                                    <select name="payment_multisafepay_order_status_id_uncleared_0" id="uncleared" class="form-control">
-                                     {% for order_status in order_statuses %}
-                                            {% if order_status.order_status_id == payment_multisafepay_order_status_id_uncleared %}
-                                                <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
-                                             {% else %}
-                                                <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
-                                            {% endif %}
-                                        {% endfor %}
-                                    </select>
-                                </div>
-
-                                <!--set reserved status-->
-                                <label class="col-sm-2 control-label" for="reserved">{{ entry_multisafepay_order_status_id_reserved }}</label>
-                                <div class="col-sm-10">
-                                    <select name="payment_multisafepay_order_status_id_reserved_0" id="reserved" class="form-control">
-                                     {% for order_status in order_statuses %}
-                                            {% if order_status.order_status_id == payment_multisafepay_order_status_id_reserved %}
-                                                <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
-                                             {% else %}
-                                                <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
-                                            {% endif %}
-                                        {% endfor %}
-                                    </select>
-                                </div>
-
-                                <!--set void status-->
-                                <label class="col-sm-2 control-label" for="void">{{ entry_multisafepay_order_status_id_void }}</label>
-                                <div class="col-sm-10">
-                                    <select name="payment_multisafepay_order_status_id_void_0" id="void" class="form-control">
-                                     {% for order_status in order_statuses %}
-                                            {% if order_status.order_status_id == payment_multisafepay_order_status_id_void %}
-                                                <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
-                                             {% else %}
-                                                <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
-                                            {% endif %}
-                                        {% endfor %}
-                                    </select>
-                                </div>
-
-                                <!--set refunded status-->
-                                <label class="col-sm-2 control-label" for="refunded">{{ entry_multisafepay_order_status_id_refunded }}</label>
-                                <div class="col-sm-10">
-                                    <select name="payment_multisafepay_order_status_id_refunded_0" id="refunded" class="form-control">
-                                        {% for order_status in order_statuses %}
-                                            {% if order_status.order_status_id == payment_multisafepay_order_status_id_refunded %}
-                                                <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
-                                             {% else %}
-                                                <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
-                                            {% endif %}
-                                        {% endfor %}
-                                    </select>
-                                </div>
-
-                                <!--set declined status-->
-                                <label class="col-sm-2 control-label" for="declined">{{ entry_multisafepay_order_status_id_declined }}</label>
-                                <div class="col-sm-10">
-                                    <select name="payment_multisafepay_order_status_id_declined_0" id="declined" class="form-control">
-                                        {% for order_status in order_statuses %}
-                                            {% if order_status.order_status_id == payment_multisafepay_order_status_id_declined %}
-                                                <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
-                                             {% else %}
-                                                <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
-                                            {% endif %}
-                                        {% endfor %}
-                                    </select>
-                                </div>
-
-                                <!--set expired status-->
-                                <label class="col-sm-2 control-label" for="expired">{{ entry_multisafepay_order_status_id_expired }}</label>
-                                <div class="col-sm-10">
-                                    <select name="payment_multisafepay_order_status_id_expired_0" id="expired" class="form-control">
-                                        {% for order_status in order_statuses %}
-                                            {% if order_status.order_status_id == payment_multisafepay_order_status_id_expired %}
-                                                <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
-                                             {% else %}
-                                                <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
-                                            {% endif %}
-                                        {% endfor %}
-                                    </select>
-                                </div>
-
-                                <!--set shipped status-->
-                                <label class="col-sm-2 control-label" for="shipped">{{ entry_multisafepay_order_status_id_shipped }}</label>
-                                <div class="col-sm-10">
-                                    <select name="payment_multisafepay_order_status_id_shipped_0" id="shipped" class="form-control">
-                                        {% for order_status in order_statuses %}
-                                            {% if order_status.order_status_id == payment_multisafepay_order_status_id_shipped %}
-                                                <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
-                                             {% else %}
-                                                <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
-                                            {% endif %}
-                                        {% endfor %}
-                                    </select>
-                                </div>
-                            
-                                <!--set partial_refunded status-->
-                                <label class="col-sm-2 control-label" for="partial_refunded">{{ entry_multisafepay_order_status_id_partial_refunded }}</label>
-                                <div class="col-sm-10">
-                                    <select name="payment_multisafepay_order_status_id_partial_refunded_0" id="partial_refunded" class="form-control">
-                                        {% for order_status in order_statuses %}
-                                            {% if order_status.order_status_id == payment_multisafepay_order_status_id_partial_refunded %}
-                                                <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
-                                             {% else %}
-                                                <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
-                                            {% endif %}
-                                        {% endfor %}
-                                    </select>
-                                </div>
-                            </div>
-
-                    </div>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 </div>
-{{footer}}
+{{ footer }}
+

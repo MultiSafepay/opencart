@@ -44,8 +44,8 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
         $data['gateway'] = '';
 
 
-        if ($this->config->get('payment_multisafepay_account_type_' . $storeid) != 'fastcheckout') {
-            $data['msp_gateway'] = ($this->config->get('payment_multisafepay_gateway_selection_' . $storeid) == 1) ? true : false;
+        if ($this->config->get('payment_multisafepay_account_type') != 'fastcheckout') {
+            $data['msp_gateway'] = ($this->config->get('payment_multisafepay_gateway_selection') == 1) ? true : false;
         } else {
             $data['msp_gateway'] = false;
         }
@@ -88,8 +88,8 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
 
 
 
-        if ($this->config->get('payment_multisafepay_account_type_' . $storeid) != 'fastcheckout') {
-            $multisafepay_redirect_url = $this->config->get('payment_multisafepay_redirect_url_' . $storeid);
+        if ($this->config->get('payment_multisafepay_account_type') != 'fastcheckout') {
+            $multisafepay_redirect_url = $this->config->get('payment_multisafepay_redirect_url');
             if ($multisafepay_redirect_url == 1) {
                 $redirect_url = true;
             } else {
@@ -109,20 +109,20 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
             //MSP SET DATA FOR TRANSACTION REQUEST
             require_once(dirname(__FILE__) . '/MultiSafepay.combined.php');
             $msp = new MultiSafepay();
-            $msp->test = $this->config->get('payment_multisafepay_environment_' . $storeid);
+            $msp->test = $this->config->get('payment_multisafepay_environment');
 
             $storeid = $this->config->get('config_store_id');
 
 
-            $msp->merchant['account_id'] = $this->config->get('payment_multisafepay_merchant_id_' . $storeid);
-            $msp->merchant['site_id'] = $this->config->get('payment_multisafepay_site_id_' . $storeid);
-            $msp->merchant['site_code'] = $this->config->get('payment_multisafepay_secure_code_' . $storeid);
+            $msp->merchant['account_id'] = $this->config->get('payment_multisafepay_merchant_id');
+            $msp->merchant['site_id'] = $this->config->get('payment_multisafepay_site_id');
+            $msp->merchant['site_code'] = $this->config->get('payment_multisafepay_secure_code');
 
 
             $msp->merchant['notification_url'] = $this->url->link('extension/payment/multisafepay/callback&type=initial', '', 'SSL');
             $msp->merchant['cancel_url'] = $this->url->link('checkout/checkout', '', 'SSL');
             $msp->merchant['redirect_url'] = $this->url->link('checkout/success', '', 'SSL');
-            $msp->merchant['close_window'] = $this->config->get('payment_multisafepay_redirect_url_' . $storeid);
+            $msp->merchant['close_window'] = $this->config->get('payment_multisafepay_redirect_url');
 
             $msp->customer['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
             $msp->customer['locale'] = $locale;
@@ -159,7 +159,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
 
             $orderid = $order_info['order_id'];
             $notify = false;
-            $newStatus = $this->config->get('payment_multisafepay_order_status_id_initialized_' . $storeid);
+            $newStatus = $this->config->get('payment_multisafepay_order_status_id_initialized');
             $confirm_message = "Order Created at " . date('Y/m/d H:i:s', time());
 
 
@@ -201,7 +201,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
             $msp->cart->AddAlternateTaxTables($taxtable);
 
 
-            $taxes = array();
+            $taxtable = Array();
             foreach ($products AS $product) {
 
                 $ratiotax = $this->tax->getRates($product['total'], $product['tax_class_id']);
@@ -270,7 +270,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
             }
 
             $shipping_select = 'none';
-            $correct_rate = 0;
+
             //add shippingmethod
             if ($this->session->data['shipping_method']['tax_class_id']) {
                 $shipping_tax = $this->tax->getRates($this->session->data['shipping_method']['cost'], $this->session->data['shipping_method']['tax_class_id']);
@@ -383,7 +383,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
                 }
             }
 
-            $msp->transaction['daysactive'] = $this->config->get('payment_multisafepay_days_active_' . $storeid);
+            $msp->transaction['daysactive'] = $this->config->get('payment_multisafepay_days_active');
             //$msp->transaction['amount'] = round($order_info['total'] * 100);
             $msp->transaction['amount'] = round(($order_info['total'] * $order_info['currency_value']) * 100); //FIXES PLGOPN-14
             $msp->plugin_name = 'OpenCart';
@@ -411,8 +411,8 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
 
                 $this->load->model('checkout/order');
 
-                if (!$this->config->get('payment_multisafepay_confirm_order_' . $storeid)) {
-                    $this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('payment_multisafepay_order_status_id_initialized_' . $storeid));
+                if (!$this->config->get('payment_multisafepay_confirm_order')) {
+                    $this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('payment_multisafepay_order_status_id_initialized'), '', true);
                 }
 
                 header('Location: ' . $url);
@@ -486,10 +486,10 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
 
             $locale = $loc1[0];
 
-            $msp->test = $this->config->get('payment_multisafepay_environment_' . $storeid);
-            $msp->merchant['account_id'] = $this->config->get('payment_multisafepay_merchant_id_' . $storeid);
-            $msp->merchant['site_id'] = $this->config->get('payment_multisafepay_site_id_' . $storeid);
-            $msp->merchant['site_code'] = $this->config->get('payment_multisafepay_secure_code_' . $storeid);
+            $msp->test = $this->config->get('payment_multisafepay_environment');
+            $msp->merchant['account_id'] = $this->config->get('payment_multisafepay_merchant_id');
+            $msp->merchant['site_id'] = $this->config->get('payment_multisafepay_site_id');
+            $msp->merchant['site_code'] = $this->config->get('payment_multisafepay_secure_code');
             $msp->merchant['notification_url'] = $this->url->link('extension/payment/multisafepay/fastcheckout&type=initial', '', 'SSL');
             $msp->merchant['redirect_url'] = $this->url->link('checkout/success', '', 'SSL');
             $msp->merchant['cancel_url'] = $this->url->link('checkout/cart', '', 'SSL');
@@ -563,8 +563,8 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
 
             $correct_rate = round($rate, 2) / 100;
 
-            if ($this->config->get('fco_tax_percent_' . $storeid) != '') {
-                $rule = new MspDefaultTaxRule($this->config->get('fco_tax_percent_' . $storeid), 'true'); // Tax rate, shipping taxed
+            if ($this->config->get('fco_tax_percent') != '') {
+                $rule = new MspDefaultTaxRule($this->config->get('fco_tax_percent'), 'true'); // Tax rate, shipping taxed
             } else {
                 $rule = new MspDefaultTaxRule(0, 'true'); // Tax rate, shipping taxed
             }
@@ -767,7 +767,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
             $msp->transaction['currency'] = $order_info['currency_code'];
             $msp->transaction['amount'] = round($total * 100, 0); // Has to be in eurocents, no fraction!
             $msp->transaction['description'] = $this->getOrderDescription($order_id);
-            $msp->transaction['daysactive'] = $this->config->get('payment_multisafepay_days_active_' . $storeid);
+            $msp->transaction['daysactive'] = $this->config->get('payment_multisafepay_days_active');
             $msp->plugin_name = 'OpenCart' . VERSION;
             $msp->version = '(2.0.0)';
 
@@ -906,11 +906,11 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
             }
 
             $msp = new MultiSafepay();
-            $msp->test = $this->config->get('payment_multisafepay_environment_' . $storeid);
+            $msp->test = $this->config->get('payment_multisafepay_environment');
 
-            $msp->merchant['account_id'] = $this->config->get('payment_multisafepay_merchant_id_' . $storeid);
-            $msp->merchant['site_id'] = $this->config->get('payment_multisafepay_site_id_' . $storeid);
-            $msp->merchant['site_code'] = $this->config->get('payment_multisafepay_secure_code_' . $storeid);
+            $msp->merchant['account_id'] = $this->config->get('payment_multisafepay_merchant_id');
+            $msp->merchant['site_id'] = $this->config->get('payment_multisafepay_site_id');
+            $msp->merchant['site_code'] = $this->config->get('payment_multisafepay_secure_code');
 
             $msp->transaction['id'] = $_GET['transactionid'];
             $details = $msp->details;
@@ -1095,7 +1095,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
 
             // Change status to pending
             $this->load->language('extension/payment/multisafepay');
-            $initialorderstatus = $this->config->get('payment_multisafepay_order_status_id_initialized_' . $storeid);
+            $initialorderstatus = $this->config->get('payment_multisafepay_order_status_id_initialized');
             $comment = $this->language->get('initial');
 
             // Send a message that will be displayed at the end of fastcheckout process.
@@ -1107,53 +1107,53 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
             switch ($status) {
                 // waiting
                 case "initialized":
-                    $neworderstatus = $this->config->get('payment_multisafepay_order_status_id_initialized_' . $storeid);
+                    $neworderstatus = $this->config->get('payment_multisafepay_order_status_id_initialized');
                     $comment = $this->language->get('initialized');
                     break;
                 // payment complete
                 case "completed":
-                    $neworderstatus = $this->config->get('payment_multisafepay_order_status_id_completed_' . $storeid);
+                    $neworderstatus = $this->config->get('payment_multisafepay_order_status_id_completed');
                     $comment = $this->language->get('completed');
                     $notify = true; // Notify user
                     break;
                 // waiting (credit cards or direct debit)
                 case 'reversed':
-                    $neworderstatus = $this->config->get('payment_multisafepay_order_status_id_reversed_' . $storeid);
+                    $neworderstatus = $this->config->get('payment_multisafepay_order_status_id_reversed');
                     break;
                 case 'reserved':
-                    $neworderstatus = $this->config->get('payment_multisafepay_order_status_id_reserved_' . $storeid);
+                    $neworderstatus = $this->config->get('payment_multisafepay_order_status_id_reserved');
                     break;
                 case "uncleared":
-                    $neworderstatus = $this->config->get('payment_multisafepay_order_status_id_uncleared_' . $storeid);
+                    $neworderstatus = $this->config->get('payment_multisafepay_order_status_id_uncleared');
                     $comment = $this->language->get('uncleared');
                     break;
                 // canceled
                 case "void":
-                    $neworderstatus = $this->config->get('payment_multisafepay_order_status_id_void_' . $storeid);
+                    $neworderstatus = $this->config->get('payment_multisafepay_order_status_id_void');
                     $comment = $this->language->get('void');
                     break;
                 // declined
                 case "declined":
-                    $neworderstatus = $this->config->get('payment_multisafepay_order_status_id_declined_' . $storeid);
+                    $neworderstatus = $this->config->get('payment_multisafepay_order_status_id_declined');
                     $comment = $this->language->get('declined');
                     break;
                 // refunded
                 case "refunded":
-                    $neworderstatus = $this->config->get('payment_multisafepay_order_status_id_refunded_' . $storeid);
+                    $neworderstatus = $this->config->get('payment_multisafepay_order_status_id_refunded');
                     $comment = $this->language->get('refunded');
                     break;
                 case "partial_refunded":
-                    $neworderstatus = $this->config->get('payment_multisafepay_order_status_id_partial_refunded_' . $storeid);
+                    $neworderstatus = $this->config->get('payment_multisafepay_order_status_id_partial_refunded');
                     $comment = $this->language->get('refunded');
                     break;
                 case "shipped":
-                    $neworderstatus = $this->config->get('payment_multisafepay_order_status_id_shipped_' . $storeid);
+                    $neworderstatus = $this->config->get('payment_multisafepay_order_status_id_shipped');
                     $comment = $this->language->get('shipped');
                     break;
 
                 // expired
                 case "expired":
-                    $neworderstatus = $this->config->get('payment_multisafepay_order_status_id_expired_' . $storeid);
+                    $neworderstatus = $this->config->get('payment_multisafepay_order_status_id_expired');
                     $comment = $this->language->get('expired');
                     break;
                 default:
@@ -1165,7 +1165,10 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
             // If order status doesn't change - return
             $order_data = $this->model_checkout_order->getOrder($msp->transaction['id']);
             if ($order_data['order_status_id'] != $neworderstatus) {
-                $this->model_checkout_order->addOrderHistory($msp->transaction['id'], $neworderstatus, $comment);
+                //$this->model_checkout_order->addOrderHistory($msp->transaction['id'], $initialorderstatus, $comment, true);
+                $this->model_checkout_order->addOrderHistory($msp->transaction['id'], $neworderstatus, $comment, true);
+                //$this->model_checkout_order->confirm($msp->transaction['id'], $$neworderstatus, $comment, true);
+                //$this->model_checkout_order->update($msp->transaction['id'], $neworderstatus, $comment, true);
             }
 
             if ($initial) {
@@ -1269,9 +1272,6 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
      */
     public function callback()
     {
-        $this->language->load('extension/payment/multisafepay');
-
-
         $initial_request = (isset($_GET['type']) == 'initial');
 
         $order_number = $_GET['transactionid'];
@@ -1284,10 +1284,10 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
             require_once(dirname(__FILE__) . '/MultiSafepay.combined.php');
 
             $msp = new MultiSafepay();
-            $msp->test = $this->config->get('payment_multisafepay_environment_' . $storeid);
-            $msp->merchant['account_id'] = $this->config->get('payment_multisafepay_merchant_id_' . $storeid);
-            $msp->merchant['site_id'] = $this->config->get('payment_multisafepay_site_id_' . $storeid);
-            $msp->merchant['site_code'] = $this->config->get('payment_multisafepay_secure_code_' . $storeid);
+            $msp->test = $this->config->get('payment_multisafepay_environment');
+            $msp->merchant['account_id'] = $this->config->get('payment_multisafepay_merchant_id');
+            $msp->merchant['site_id'] = $this->config->get('payment_multisafepay_site_id');
+            $msp->merchant['site_code'] = $this->config->get('payment_multisafepay_secure_code');
 
             $msp->transaction['id'] = $order_number;
             $status = $msp->getStatus();
@@ -1346,45 +1346,45 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
              */
             switch ($status) {
                 case 'completed':
-                    $newStatus = $this->config->get('payment_multisafepay_order_status_id_completed_' . $storeid);
+                    $newStatus = $this->config->get('payment_multisafepay_order_status_id_completed');
                     $success = true;
                     break;
                 case 'initialized':
-                    $newStatus = $this->config->get('payment_multisafepay_order_status_id_initialized_' . $storeid);
+                    $newStatus = $this->config->get('payment_multisafepay_order_status_id_initialized');
                     $success = true;
                     break;
                 case 'uncleared':
-                    $newStatus = $this->config->get('payment_multisafepay_order_status_id_uncleared_' . $storeid);
+                    $newStatus = $this->config->get('payment_multisafepay_order_status_id_uncleared');
                     break;
                 case 'reserved':
-                    $newStatus = $this->config->get('payment_multisafepay_order_status_id_reserved_' . $storeid);
+                    $newStatus = $this->config->get('payment_multisafepay_order_status_id_reserved');
                     break;
                 case 'void':
-                    $newStatus = $this->config->get('payment_multisafepay_order_status_id_void_' . $storeid);
+                    $newStatus = $this->config->get('payment_multisafepay_order_status_id_void');
                     break;
                 case 'cancelled':
-                    $newStatus = $this->config->get('payment_multisafepay_order_status_id_void_' . $storeid);
+                    $newStatus = $this->config->get('payment_multisafepay_order_status_id_void');
                     break;
                 case 'declined':
-                    $newStatus = $this->config->get('payment_multisafepay_order_status_id_declined_' . $storeid);
+                    $newStatus = $this->config->get('payment_multisafepay_order_status_id_declined');
                     break;
                 case 'reversed':
-                    $newStatus = $this->config->get('payment_multisafepay_order_status_id_reversed_' . $storeid);
+                    $newStatus = $this->config->get('payment_multisafepay_order_status_id_reversed');
                     break;
                 case 'refunded':
-                    $newStatus = $this->config->get('payment_multisafepay_order_status_id_refunded_' . $storeid);
+                    $newStatus = $this->config->get('payment_multisafepay_order_status_id_refunded');
                     break;
                 case 'partial_refunded':
-                    $newStatus = $this->config->get('payment_multisafepay_order_status_id_partial_refunded_' . $storeid);
+                    $newStatus = $this->config->get('payment_multisafepay_order_status_id_partial_refunded');
                     break;
                 case 'expired':
-                    $newStatus = $this->config->get('payment_multisafepay_order_status_id_expired_' . $storeid);
+                    $newStatus = $this->config->get('payment_multisafepay_order_status_id_expired');
                     break;
                 case 'shipped':
-                    $newStatus = $this->config->get('payment_multisafepay_order_status_id_shipped_' . $storeid);
+                    $newStatus = $this->config->get('payment_multisafepay_order_status_id_shipped');
                     break;
                 default:
-                    $newStatus = $this->config->get('payment_multisafepay_order_status_id_initialized_' . $storeid);
+                    $newStatus = $this->config->get('payment_multisafepay_order_status_id_initialized');
                     $displaylink = '<p><a href="' . $this->url->link('extension/payment/multisafepay/_multisafepayfailure', '', 'SSL') . '">Terug naar ' . $this->config->get('config_name') . '</a></p>';
                     $displaymessage = "Payment failed";
                     break;
@@ -1395,15 +1395,13 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
              */
             if ($success) {
                 $return_link = $this->url->link('checkout/success', '', 'SSL');
-                $message = sprintf ($this->language->get('text_order_history_confirmed_order'),  date('Y/m/d H:i:s', time()));
+                $confirm_message = "Confirmed order at " . date('Y/m/d H:i:s', time());
             } else {
                 $return_link = $this->url->link('extension/payment/multisafepay/_multisafepayfailure', '', 'SSL');
-                $message = sprintf ($this->language->get('text_order_history_order_status'),  $status, date('Y/m/d H:i:s', time()));
+                $confirm_message = "Order " . $status . " at " . date('Y/m/d H:i:s', time());
             }
 
-
-
-
+            $message = "Order " . $status . " at " . date('Y/m/d H:i:s ', time());
 
             /*
              * 	MSP returned data is processed so update the order
@@ -1414,8 +1412,9 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
             if ($status != 'shipped') {
                 if ($order['order_status_id'] != $newStatus && $order['order_status_id'] != '3') {
 
-                    if ($order['order_status_id'] != $this->config->get('payment_multisafepay_order_status_id_completed_' . $storeid)) {
-                        $this->model_checkout_order->addOrderHistory($orderid, $newStatus, $message);
+                    if ($order['order_status_id'] != $this->config->get('payment_multisafepay_order_status_id_completed')) {
+                        // $this->model_checkout_order->update($orderid, $newStatus, $message, false);
+                        $this->model_checkout_order->addOrderHistory($orderid, $newStatus, $message, true);
                     }
                 }
             }
@@ -1463,7 +1462,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
         $multisafepay_test = 'https://testapi.multisafepay.com/ewx/';
         $multisafepay_live = 'https://api.multisafepay.com/ewx/';
 
-        if ($this->config->get('payment_multisafepay_environment_' . $storeid) == 0) {
+        if ($this->config->get('payment_multisafepay_environment') == 0) {
             return true;
         } else {
             return false;
@@ -1512,7 +1511,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
                 if ($result['code'] != 'weight' && $result['code'] != 'free' && $result['code'] != 'item') {
                     $quote = $this->{'model_extension_shipping_' . $result['code']}->getQuote($address_data);
 
-                    if ($amount <= $this->config->get('payment_multisafepay_fco_free_ship_' . $storeid)) {
+                    if ($amount <= $this->config->get('payment_multisafepay_fco_free_ship')) {
                         if ($quote) {
                             $quote_data[$result['code']] = array(
                                 'title' => $quote['title'],
@@ -1597,7 +1596,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
                     }
 
 
-                    if ($amount >= $this->config->get('payment_multisafepay_fco_free_ship_' . $storeid) && $this->config->get('payment_multisafepay_fco_free_ship_' . $storeid) != '') {
+                    if ($amount >= $this->config->get('payment_multisafepay_fco_free_ship') && $this->config->get('payment_multisafepay_fco_free_ship') != '') {
                         $status = true;
                     }
 
