@@ -154,7 +154,7 @@
 
                                 <div class="form-group">
                                     <!--MultiSafepay fco button-->
-                                    <label class="col-sm-2 control-label" for="payment_multisafepay_enable_checkout_button_connect">{{ enable_checkout_button }}</label>
+                                    <label class="col-sm-2 control-label" for="payment_multisafepay_enable_checkout_button_connect">{{ entry_multisafepay_checkout_button }}</label>
                                     <div class="col-sm-10">
                                         <select name="stores[{{ store.store_id }}][payment_multisafepay_enable_checkout_button_connect]" id="payment_multisafepay_enable_checkout_button_connect" class="form-control">
                                             <option value="true"  {% if stores[store.store_id].payment_multisafepay_enable_checkout_button_connect == 'true'  %} selected {% endif %}>{{ yes }}</option>
