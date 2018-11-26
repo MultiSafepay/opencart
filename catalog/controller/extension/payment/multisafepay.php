@@ -410,10 +410,8 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
             if (!isset($msp->error)) {
 
                 $this->load->model('checkout/order');
+                $this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('payment_multisafepay_order_status_id_initialized'), '');
 
-                if (!$this->config->get('payment_multisafepay_confirm_order')) {
-                    $this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('payment_multisafepay_order_status_id_initialized'), '', true);
-                }
 
                 header('Location: ' . $url);
                 exit;
