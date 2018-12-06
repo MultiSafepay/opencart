@@ -177,13 +177,6 @@ class ControllerExtensionPaymentmultisafepayfastcheckout extends Controller
 
         $correct_rate = round($rate, 2) / 100;
 
-        if ($this->config->get('payment_multisafepay_fco_tax_percent') != '') {
-            $rule = new MspDefaultTaxRule($this->config->get('payment_multisafepay_fco_tax_percent'), 'true'); // Tax rate, shipping taxed
-        } else {
-            $rule = new MspDefaultTaxRule(0, 'true'); // Tax rate, shipping taxed
-        }
-
-        $msp->cart->AddDefaultTaxRules($rule);
 
         // Tax for products
         $taxtable = Array();
