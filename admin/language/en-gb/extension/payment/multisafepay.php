@@ -27,12 +27,10 @@ $_['Live']          = 'Live account';
 $_['Test']          = 'Test account';
 $_['Connect']       = 'Connect';
 $_['FastCheckout']  = 'Only FastCheckout';
-$_['Before']        = 'After order confirmation';
-$_['After']         = 'After payment is completed';
+
 
 // Entry's
 $_['entry_account_type']                    = 'Select account type';
-$_['entry_confirm_order']                   = 'Send order confirmation';
 $_['entry_environment']                     = 'Type account';
 $_['entry_min_amount']                      = 'Min. ordertotal in cents';
 $_['entry_max_amount']                      = 'Max. ordertotal in cents';

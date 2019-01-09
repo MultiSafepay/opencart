@@ -69,8 +69,6 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
         $data['text_edit']      = $this->language->get('text_edit');
         $data['text_all_zones'] = $this->language->get('text_all_zones');
 
-        $data['After']          = $this->language->get('After');
-        $data['Before']         = $this->language->get('Before');
         $data['Disabled']       = $this->language->get('Disabled');
         $data['Enabled']        = $this->language->get('Enabled');
         $data['Connect']        = $this->language->get('Connect');
@@ -81,7 +79,6 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
         $data['no']             = $this->language->get('no');
 
         $data['entry_account_type']                 = $this->language->get('entry_account_type');
-        $data['entry_confirm_order']                = $this->language->get('entry_confirm_order');
         $data['entry_environment']                  = $this->language->get('entry_environment');
         $data['entry_min_amount']                   = $this->language->get('entry_min_amount');
         $data['entry_max_amount']                   = $this->language->get('entry_max_amount');
@@ -125,7 +122,6 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
             'payment_multisafepay_redirect_url',
             'payment_multisafepay_days_active',
             'payment_multisafepay_use_payment_logo',
-            'payment_multisafepay_confirm_order',
             'payment_multisafepay_min_amount',
             'payment_multisafepay_max_amount',
             'payment_multisafepay_geo_zone_id',

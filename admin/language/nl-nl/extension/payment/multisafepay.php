@@ -26,12 +26,10 @@ $_['Live']          = 'Live account';
 $_['Test']          = 'Test account';
 $_['Connect']       = 'Connect';
 $_['FastCheckout']  = 'Alleen FastCheckout';
-$_['Before']        = 'Na de orderbevestiging';
-$_['After']         = 'Nadat de betaling is gedaan';
+
 
 // Entry's
 $_['entry_account_type']                    = 'Type account';
-$_['entry_confirm_order']                   = 'Orderbevestiging sturen';
 $_['entry_environment']                     = 'Type account';
 $_['entry_min_amount']                      = 'Min. orderbedrag (centen)';
 $_['entry_max_amount']                      = 'Max. orderbedrag (centen)';

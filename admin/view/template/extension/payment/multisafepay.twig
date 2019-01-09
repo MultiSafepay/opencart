@@ -112,15 +112,6 @@
                                         </select>
                                     </div>
 
-                                    <!--Send confirmation e-mail -->
-                                    <label class="col-sm-2 control-label" for="payment_multisafepay_confirm_order">{{ entry_confirm_order }}</label>
-                                    <div class="col-sm-10">
-                                        <select name="stores[{{ store.store_id }}][payment_multisafepay_confirm_order]" id="payment_multisafepay_confirm_order" class="form-control">
-                                            <option value="1" {% if stores[store.store_id].payment_multisafepay_confirm_order == '1' %} selected {% endif %}>{{ Before }}</option>
-                                            <option value="0" {% if stores[store.store_id].payment_multisafepay_confirm_order == '0' %} selected {% endif %}>{{ After }}</option>
-                                        </select>
-                                    </div>
-
                                     <!--Min/Max amount-->
                                     <label class="col-sm-2 control-label" for="payment_multisafepay_min_amount">{{ entry_min_amount }}</label>
                                     <div class="col-sm-10">
