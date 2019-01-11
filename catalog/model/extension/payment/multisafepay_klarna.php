@@ -57,7 +57,7 @@ class ModelExtensionPaymentMultiSafePayKlarna extends Model
         if ($status) {
 
             if ($this->config->get('payment_multisafepay_use_payment_logo') == true ) {
-                $title = '<img  height=32 width=auto  src="./image/msp/klarna.svg" alt="klarna" title="klarna" style="vertical-align: middle;" />';
+                $title = '<img  height=32 width=auto  src="./image/multisafepay/klarna.svg" alt="klarna" title="klarna" style="vertical-align: middle;" />';
                 $terms = $this->language->get('text_title_klarna');
             }else{
                 $title = $this->language->get('text_title_klarna');

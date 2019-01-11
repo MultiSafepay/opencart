@@ -57,7 +57,7 @@ class ModelExtensionPaymentMultiSafePayLief extends Model
         if ($status) {
 
             if ($this->config->get('payment_multisafepay_use_payment_logo') == true ) {
-                $title = '<img  height=32 width=auto  src="./image/msp/lief.svg" alt="lief" title="lief" style="vertical-align: middle;" />';
+                $title = '<img  height=32 width=auto  src="./image/multisafepay/lief.svg" alt="lief" title="lief" style="vertical-align: middle;" />';
                 $terms = $this->language->get('text_title_lief');
             }else{
                 $title = $this->language->get('text_title_lief');

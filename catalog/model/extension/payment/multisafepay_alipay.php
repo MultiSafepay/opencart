@@ -57,7 +57,7 @@ class ModelExtensionPaymentMultiSafePayAlipay extends Model
         if ($status) {
 
             if ($this->config->get('payment_multisafepay_use_payment_logo') == true ) {
-                $title = '<img  height=32 width=auto  src="./image/msp/alipay.svg" alt="alipay" title="alipay" style="vertical-align: middle;" />';
+                $title = '<img  height=32 width=auto  src="./image/multisafepay/alipay.svg" alt="alipay" title="alipay" style="vertical-align: middle;" />';
                 $terms = $this->language->get('text_title_alipay');
             }else{
                 $title = $this->language->get('text_title_alipay');
