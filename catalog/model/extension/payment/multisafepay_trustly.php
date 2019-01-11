@@ -57,7 +57,7 @@ class ModelExtensionPaymentMultiSafePayTrustly extends Model
         if ($status) {
 
             if ($this->config->get('payment_multisafepay_use_payment_logo') == true ) {
-                $title = '<img  height=32 width=auto  src="./image/msp/trustly.svg" alt="trustly" title="trustly" style="vertical-align: middle;" />';
+                $title = '<img  height=32 width=auto  src="./image/multisafepay/trustly.svg" alt="trustly" title="trustly" style="vertical-align: middle;" />';
                 $terms = $this->language->get('text_title_trustly');
             }else{
                 $title = $this->language->get('text_title_trustly');

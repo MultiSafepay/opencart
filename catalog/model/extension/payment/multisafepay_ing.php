@@ -57,7 +57,7 @@ class ModelExtensionPaymentMultiSafePayIng extends Model
         if ($status) {
 
             if ($this->config->get('payment_multisafepay_use_payment_logo') == true ) {
-                $title = '<img  height=32 width=auto  src="./image/msp/ing.svg" alt="ing" title="ing" style="vertical-align: middle;" />';
+                $title = '<img  height=32 width=auto  src="./image/multisafepay/ing.svg" alt="ing" title="ing" style="vertical-align: middle;" />';
                 $terms = $this->language->get('text_title_ing');
             }else{
                 $title = $this->language->get('text_title_ing');
