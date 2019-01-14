@@ -8,6 +8,7 @@
  * @package 1.4
  * @copyright 2010 MultiSafePay.
  */
+
 // Heading
 $_['heading_title'] = 'MultiSafepay';
 
@@ -45,13 +46,14 @@ $_['entry_multisafepay_secure_code']        = 'Site Code';
 $_['entry_multisafepay_use_payment_logo']   = 'Toon logo\'s';
 $_['entry_sort_order']                      = 'Sorteervolgorde';
 $_['entry_status']                          = 'Status';
-$_['entry_multisafepay_order_status_id_initialized']      = 'Status Initialized';
-$_['entry_multisafepay_order_status_id_completed']        = 'Status Completed';
-$_['entry_multisafepay_order_status_id_uncleared']        = 'Status Uncleared';
-$_['entry_multisafepay_order_status_id_reserved']         = 'Status Reserved';
-$_['entry_multisafepay_order_status_id_void']             = 'Status Void';
-$_['entry_multisafepay_order_status_id_refunded']         = 'Status Refunded';
-$_['entry_multisafepay_order_status_id_declined']         = 'Status Declined';
-$_['entry_multisafepay_order_status_id_expired']          = 'Status Expired';
-$_['entry_multisafepay_order_status_id_shipped']          = 'Status Shipped';
-$_['entry_multisafepay_order_status_id_partial_refunded'] = 'Status part. refunded';
+
+$_['entry_multisafepay_order_status_id_initialized']      = 'Status Wacht op Betaling';
+$_['entry_multisafepay_order_status_id_completed']        = 'Status Afgerond';
+$_['entry_multisafepay_order_status_id_uncleared']        = 'Status Wacht op goedkeuring';
+$_['entry_multisafepay_order_status_id_reserved']         = 'Status Gereserveerd';
+$_['entry_multisafepay_order_status_id_void']             = 'Status Mislukt';
+$_['entry_multisafepay_order_status_id_refunded']         = 'Status Teruggestort';
+$_['entry_multisafepay_order_status_id_declined']         = 'Status Afgewezen';
+$_['entry_multisafepay_order_status_id_expired']          = 'Status Verlopen';
+$_['entry_multisafepay_order_status_id_shipped']          = 'Status Verzonden';
+$_['entry_multisafepay_order_status_id_partial_refunded'] = 'Status deels teruggestort';
