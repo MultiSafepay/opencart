@@ -843,53 +843,29 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
      */
     public function fastcheckout()
     {
-
         if (isset($_GET['type'])) {
+
             if ($_GET['type'] == 'shipping') {
+
+                $shippers = $this->_getShippingOptions();
+
                 $xml = '<?xml version="1.0" encoding="UTF-8"?>';
                 $xml .= '<shipping-info>';
-                $weight = 0;
-                $weight = $_GET['weight'];
-                $weight = str_replace(',', '.', $weight);
-                $countrycode = strtoupper($_GET['countrycode']);
-                $shippers = array();
-                $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "country WHERE iso_code_2 = '" . $this->sanitize($countrycode) . "' AND status = '1'");
-                $country = $query->row;
-                $country_id = 0;
-
-                if (array_key_exists('country_id', $country)) {
-                    $country_id = $country['country_id'];
-                }
-
-                $shippers = $this->getShippingOptions($country_id);
-
-                $this->load->model('localisation/country');
-                //$country_info 									= 	$this->model_localisation_country->getCountry($country_id);
-
-
                 foreach ($shippers as $key => $value) {
-                    foreach ($value['quote'] as $key => $value) {
-                        $ship = '<shipping>';
-                        $ship .= '<shipping-name>' . $value['title'] . '</shipping-name>';
-                        $ship .= '<shipping-cost currency="' . $_GET['currency'] . '">' . $value['cost'] . '</shipping-cost>';
-                        $ship .= '</shipping>';
-                        $shippers[] = $ship;
-                    }
-                }
-
-                $shippers = array_unique($shippers, SORT_REGULAR);
-                $v = 0;
-                while (isset($shippers[$v])) {
-                    $xml .= $shippers[$v];
-                    $v++;
+                    $xml .= '<shipping>';
+                    $xml .= '<shipping-name>' . $value['title'] . '</shipping-name>';
+                    $xml .= '<shipping-cost currency="' . $_GET['currency'] . '">' . $value['cost'] . '</shipping-cost>';
+                    $xml .= '</shipping>';
                 }
                 $xml .= '</shipping-info>';
-                //header ("Content-Type:text/xml");
-                print_r($xml);
 
+//                header ("Content-Type:text/xml");
+                print_r($xml);
                 exit;
+
             }
         }
+
         if (isset($_GET['transactionid'])) {
 
             $initial = false;
@@ -1186,6 +1162,156 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
         }
     }
 
+
+
+    private function _getShippingOptions()
+    {
+        $countrycode = strtoupper($_GET['countrycode']);
+        $items_count = $_GET['items_count'];
+        $order_amount= $_GET['amount'];
+        $weight      = $_GET['weight'];
+        $zipcode      = $_GET['zipcode'];
+
+        $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "country WHERE iso_code_2 = '" . $this->sanitize($countrycode) . "' AND status = '1'");
+        $country = $query->row;
+        if (array_key_exists('country_id', $country)) {
+            $country_id = $country['country_id'];
+        }else{
+            $country_id = 0;
+        }
+
+        $data = array(
+            'firstname'     => '',
+            'lastname'      => '',
+            'company'       => '',
+            'address_1'     => '',
+            'address_2'     => '',
+            'postcode'      => $zipcode,
+            'city'          => '',
+            'zone_id'       => '',
+            'zone'          => '',
+            'zone_code'     => '',
+            'country_id'    => $country_id,
+            'country'       => '',
+            'iso_code_2'    => $countrycode,
+            'iso_code_3'    => '',
+            'address_format'=> ''
+        );
+
+
+        $quote_data = array();
+
+        // Load interface for getting extension information
+        $this->load->model('setting/extension');
+
+        // All Shipping methods...
+        $results = $this->model_setting_extension->getExtensions('shipping');
+
+
+        // Get Geo_zone from shipping-address
+        $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE country_id = '" . $data['country_id'] . "' AND (zone_id = '" . $data['zone_id'] . "' OR zone_id = '0')");
+        if (!empty($query->row['geo_zone_id'])) {
+            $shipping_address_geo_zone_id  = $query->row['geo_zone_id'];
+        }else{
+            $shipping_address_geo_zone_id  = 0;
+        }
+
+        foreach ($results as $result) {
+
+            $method = $result['code'];
+
+            $shipping_method_enabled = $this->config->get(sprintf ('shipping_%s_status', $method));
+            $shipping_geo_zone_id    = $this->config->get(sprintf ('shipping_%s_geo_zone_id', $method));
+
+
+
+            if ($shipping_method_enabled == false ) {
+                continue;
+            }
+
+            if ($shipping_geo_zone_id != 0) {
+                $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . $shipping_geo_zone_id . "' AND country_id = '" . $data['country_id'] . "' AND (zone_id = '" . $data['zone_id'] . "' OR zone_id = '0')");
+                if (! $query->num_rows  && $shipping_geo_zone_id != 0) {
+                    continue;
+                }
+            }
+
+
+            $this->load->model('extension/shipping/' . $method);
+            $this->load->language('extension/shipping/'. $method);
+
+            $add = false;
+
+            switch ( $method ) {
+
+                case 'free':
+                    $amount_for_free_shipping = $this->config->get(sprintf ('shipping_%s_total', $method));
+
+
+                    if ($order_amount < $amount_for_free_shipping){
+                        break;
+                    }
+
+                    $cost   = (double) $this->config->get(sprintf ('shipping_%s_cost', $method));
+                    $tax_id = $this->config->get(sprintf ('shipping_%s_tax_class_id', $method));
+                    $title  = $this->language->get('text_description');
+                    $add    = true;
+                    break;
+
+
+                case 'flat':
+                    $cost   = $this->config->get(sprintf ('shipping_%s_cost', $method));
+                    $tax_id = $this->config->get(sprintf ('shipping_%s_tax_class_id', $method));
+                    $title  = $this->language->get('text_description');
+                    $add    = true;
+                    break;
+
+
+                case 'item':
+                    $cost   = $this->config->get(sprintf ('shipping_%s_cost', $method)) * $items_count;
+                    $tax_id = $this->config->get(sprintf ('shipping_%s_tax_class_id', $method));
+                    $title  = $this->language->get('text_description');
+                    $add    = true;
+                    break;
+
+
+                case 'weight':
+
+                    $tax_id = $this->config->get(sprintf ('shipping_%s_tax_class_id', $method));
+                    $title  = $this->language->get('text_title');
+
+                    $rates_flat = $this->config->get(sprintf ('shipping_%s_%s_rate', $method, $shipping_address_geo_zone_id));
+                    $rates =  array_filter(explode(',', $rates_flat));
+
+                    foreach ($rates as $rate) {
+                        list ($max_weight, $cost) = explode(':', $rate);
+                        if ($weight <= $max_weight) {
+                            // $cost already contains the amount
+                            $add = true;
+                            break;
+                        }
+                    }
+                    break;
+            }
+
+
+            if ( $add ) {
+
+                $quote_data[$method] = array(
+                    'code'          => $method . '.' . $method,
+                    'title'         => $title,
+                    'cost'          => $cost,
+                    'tax_class_id'  => $tax_id,
+                    'text'          => $cost,
+                );
+            }
+
+        }
+
+        return $quote_data;
+    }
+
+
     function generatePassword($length = 12)
     {
         return substr(md5(rand() . rand()), 0, $length);
@@ -1237,7 +1363,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
     {
         $methods = $this->getShippingMethodsFiltered($country, $countryCode, $weight, $size, $transactionId);
 
-        $outxml .= '<shipping-info>';
+        $outxml = '<shipping-info>';
         foreach ($methods as $method) {
             $outxml .= '<shipping>';
             $outxml .= '<shipping-name>';
@@ -1260,6 +1386,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
     // 'currency' => 'EUR' (currently only this supported)
     private function getShippingMethodsFiltered($country, $countryCode, $weight, $size, $transactionId)
     {
+
         $out = array();
 
         $shippingopts = $this->getShippingOptionsISO2($countryCode);
@@ -1279,6 +1406,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
      */
     public function callback()
     {
+
         $initial_request = (isset($_GET['type']) == 'initial');
 
         $order_number = $_GET['transactionid'];
@@ -1692,6 +1820,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
     // Try to guess shipping costs based on ISO2 country code
     private function getShippingOptionsISO2($country_iso2)
     {
+
         // First convert iso2 code to country_id
         $this->load->model('localisation/country');
 
