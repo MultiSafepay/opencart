@@ -57,6 +57,7 @@ $_['text_title_maestro'] = 'Maestro';
 $_['text_title_mastercard'] = 'Mastercard';
 $_['text_title_mistercash'] = 'Bancontact';
 $_['text_title_parfumcadeaukaart'] = 'Parfum Cadeaukaart';
+$_['text_title_webshopgiftcard'] = 'Webshop giftcard';
 $_['text_title_payafter'] = 'Pay After Delivery';
 $_['text_title_paypal'] = 'PayPal';
 $_['text_title_paysafecard'] = 'PaySafeCard';
