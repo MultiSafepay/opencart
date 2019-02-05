@@ -26,7 +26,6 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
     public function index()
     {
         $this->load->model('checkout/order');
-        $storeid = $this->config->get('config_store_id');
 
         $data['button_confirm'] = $this->language->get('button_confirm');
         $data['button_back'] = $this->language->get('button_back');
@@ -65,7 +64,6 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
     {
         $this->language->load('extension/payment/multisafepay');
 
-        $storeid = $this->config->get('config_store_id');
         $db = new DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
         // Language Detection
         $languages = array();
@@ -86,23 +84,15 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
             $locale = $loc1[1];
         }
 
-
-
         if ($this->config->get('payment_multisafepay_account_type') != 'fastcheckout') {
-            $multisafepay_redirect_url = $this->config->get('payment_multisafepay_redirect_url');
-            if ($multisafepay_redirect_url == 1) {
-                $redirect_url = true;
-            } else {
-                $redirect_url = false;
-            }
 
             $this->load->model('checkout/order');
             $order_info = $this->model_checkout_order->getOrder($this->request->post['cartId']);
-            $itemsstring = '';
 
             $html = "<ul>";
             foreach ($this->cart->getProducts() as $product) {
-                $html .= '<li>' . $product['quantity'] . ' x ' . $product['name'] . ' </li>';
+                $product_name = $this->_getProductName($product);
+                $html .= '<li>' . $product['quantity'] . ' x ' . $product_name . ' </li>';
             }
             $html .= "</ul>";
 
@@ -151,23 +141,9 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
                 $msp->delivery['housenumber'] = $order_info['shipping_address_2'];
             }
 
-
-            $msp->transaction['id'] = $order_info['order_id']; //round($order_info['total'] * $order_info['currency_value'] * 100);
+            $msp->transaction['id'] = $order_info['order_id'];
             $msp->transaction['currency'] = $order_info['currency_code'];
-
             $msp->transaction['description'] = 'Order #' . $msp->transaction['id'];
-
-
-            $orderid = $order_info['order_id'];
-            $notify = false;
-            $newStatus = $this->config->get('payment_multisafepay_order_status_id_initialized');
-            $confirm_message = "Order Created at " . date('Y/m/d H:i:s', time());
-
-
-            //Enable to show the order before the transaction. Side effect, no confirmation email is send.
-            //$this->db->query("UPDATE `" . DB_PREFIX . "order` SET order_status_id = '" . (int)$newStatus . "', date_modified = NOW() WHERE order_id = '" . (int)$orderid . "'");
-            //$this->db->query("INSERT INTO " . DB_PREFIX . "order_history SET order_id = '" . (int)$orderid . "', order_status_id = '" . (int)$newStatus . "', notify = '" . (int)$notify . "', comment = '" . $this->db->escape($confirm_message) . "', date_added = NOW()");
-
 
             if ($this->customer->isLogged()) {
                 $msp->transaction['var1'] = $this->customer->getId() . '|' . $this->customer->getBalance();
@@ -194,15 +170,13 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
             $products = $this->cart->getProducts();
 
             // Tax for products
-
             $taxname = 'none';
             $taxtable = new MspAlternateTaxTable($taxname, 'true');
             $taxrule = new MspAlternateTaxRule(0.00);
             $taxtable->AddAlternateTaxRules($taxrule);
             $msp->cart->AddAlternateTaxTables($taxtable);
 
-
-            $taxtable = Array();
+            $taxes    = array();
             foreach ($products AS $product) {
 
                 $ratiotax = $this->tax->getRates($product['total'], $product['tax_class_id']);
@@ -224,23 +198,17 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
 
             $unique_taxes = array_unique($taxes, SORT_REGULAR);
             foreach ($unique_taxes as $tax) {
-                $taxname = $tax['name'];
                 $taxtable = new MspAlternateTaxTable($tax['name'], 'true');
                 $taxrule = new MspAlternateTaxRule($tax['rate'] / 100);
                 $taxtable->AddAlternateTaxRules($taxrule);
                 $msp->cart->AddAlternateTaxTables($taxtable);
             }
 
-
-
-
-
             $product_ids = array();
             foreach ($products AS $product) {
                 $product_ids[$product['product_id']] = $product['product_id'];
             }
 
-            // Check if Extra Fee PAD is configured. ( Not MultiStore yet)
             if ( in_array ($gateway, array ('PAYAFTER', 'KLARNA')) && $this->config->get('total_multisafepay_status')) {
 
                 $tax_rates = $this->tax->getRates($this->config->get('total_multisafepay_fee'),
@@ -321,8 +289,10 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
                     $taxname = 'none';
                 }
 
-                $c_item = new MspItem($product['name'], strip_tags($product['model']), $product['quantity'], $product['price'], 'KG', $product['weight']);
-                $c_item->merchant_item_id = $product['product_id'];
+                $product_name = $this->_getProductName($product);
+
+                $c_item = new MspItem($product_name, strip_tags($product['model']), $product['quantity'], $product['price'], 'KG', $product['weight']);
+                $c_item->merchant_item_id = $this->_getUniqueProductID($product);
                 $c_item->SetTaxTableSelector($taxname);
                 $msp->cart->AddItem($c_item);
 
@@ -352,7 +322,6 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
             $taxes = $this->cart->getTaxes();
             $total = 0;
 
-            // Because __call can not keep var references so we put them into an array.
             $total_data = array(
                 'totals' => &$totals,
                 'taxes'  => &$taxes,
@@ -394,7 +363,6 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
             }
 
             $msp->transaction['daysactive'] = $this->config->get('payment_multisafepay_days_active');
-            //$msp->transaction['amount'] = round($order_info['total'] * 100);
             $msp->transaction['amount'] = round(($order_info['total'] * $order_info['currency_value']) * 100); //FIXES PLGOPN-14
             $msp->plugin_name = 'OpenCart';
             $msp->version = '(2.2.0)';
@@ -411,7 +379,6 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
                 $msp->extravars = $this->request->post['issuer'];
                 $url = $msp->startDirectXMLTransaction();
             } else {
-                //$url 								= 	$msp->startCheckout();
                 $url = $msp->startTransaction();
             }
 
@@ -541,9 +508,6 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
                 }
 
 
-
-
-                //Added 2-1-12. Process store credit if positive balance. This is added as a negative product amount like we did with the coupon.
                 if ($this->customer->getBalance() > 0) {
                     $credit = 0 - $this->customer->getBalance();
                     $c_item = new MspItem('Credit', 'Credit', 1, $credit);
@@ -559,9 +523,6 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
             }
 
             // Taxes
-            // Default tax for shipping
-            // Workaround: get tax from the first product as default
-            // TODO -> Add configurable defaul tax class
             $keys = array_keys($products);
 
             $defrates = $this->tax->getRates($products[$keys[0]]['price'], $products[$keys[0]]['tax_class_id']);
@@ -569,8 +530,6 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
             foreach ($defrates AS $defrate) {
                 $rate = $defrate['rate'];
             }
-
-            $correct_rate = round($rate, 2) / 100;
 
             if ($this->config->get('fco_tax_percent') != '') {
                 $rule = new MspDefaultTaxRule($this->config->get('fco_tax_percent'), 'true'); // Tax rate, shipping taxed
@@ -581,9 +540,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
             $msp->cart->AddDefaultTaxRules($rule);
 
             // Tax for products
-            $taxtable = Array();
             foreach ($products AS $product) {
-
                 $ratiotax = $this->tax->getRates($product['total'], $product['tax_class_id']);
                 foreach ($ratiotax AS $tax_array) {
                     $taxes[] = $tax_array;
@@ -593,22 +550,17 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
             $unique_taxes = $taxes;
 
             foreach ($unique_taxes as $tax) {
-                $taxname = $tax['name'];
-                //TODO -> ADD CONFIGURABLE OPTION TO SET SHIPPING TAX INC OR EXC;
                 $taxtable = new MspAlternateTaxTable($tax['name'], 'true');
                 $taxrule = new MspAlternateTaxRule($tax['rate'] / 100);
                 $taxtable->AddAlternateTaxRules($taxrule);
                 $msp->cart->AddAlternateTaxTables($taxtable);
             }
 
-
             $taxname = 'none';
-            //TODO -> ADD CONFIGURABLE OPTION TO SET SHIPPING TAX INC OR EXC;
             $taxtable = new MspAlternateTaxTable($taxname, 'true');
             $taxrule = new MspAlternateTaxRule(0);
             $taxtable->AddAlternateTaxRules($taxrule);
             $msp->cart->AddAlternateTaxTables($taxtable);
-
 
             // Cart content
             foreach ($products AS $product) {
@@ -626,29 +578,13 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
                     $taxname = 'none';
                 }
 
-                $c_item = new MspItem($product['name'], strip_tags($product['model']), $product['quantity'], $product['price'], 'KG', $product['weight']);
-                $c_item->merchant_item_id = $product['product_id'];
+                $product_name = $this->_getProductName($product);
+
+                $c_item = new MspItem($product_name, strip_tags($product['model']), $product['quantity'], $product['price'], 'KG', $product['weight']);
+                $c_item->merchant_item_id = $this->_getUniqueProductID($product);
                 $c_item->SetTaxTableSelector($taxname);
                 $msp->cart->AddItem($c_item);
             }
-
-            // Agreement acceptance.
-            /* if($this->config->get('multisafepayoc_tos_url')) {
-              $field = new MspCustomField('acceptagreements', 'checkbox', '');
-              $link = trim( $this->config->get('multisafepayoc_tos_url') );
-              $description = array(
-              'nl' => 'Ik ga akkoord met de <a href="'.$link.'" target="_blank">algemene voorwaarden</a>',
-              'en' => 'I accept the <a href="'.$link.'" target="_blank">terms and conditions</a>',
-              );
-              $field->descriptionRight = array('value' => $description);
-              $error = array(
-              'nl' => 'U dient akkoord te gaan met de algemene voorwaarden',
-              'en' => 'Please accept the terms and conditions',
-              );
-              $validation = new MspCustomFieldValidation('regex', '^[1]$', $error);
-              $field->AddValidation($validation);
-              $msp->fields->AddField($field);
-              } */
 
             // Precreate order
             $mspcust = $msp->details['customer'];
@@ -695,7 +631,6 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
                 'accept_language' => '',
                 'tax' => '',
                 'vouchers' => array(),
-                //'products'                		=> 	$products,
                 'totals' => $emptyar,
                 'download' => $emptyar,
                 'option' => $emptyar,
@@ -763,13 +698,11 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
 
             //Create an order
             $this->load->model('checkout/order');
+
             // Create an order (pass second argument so we will only update our database with info from MultiSafepay)
             $order_info = $this->model_checkout_order->getOrder($this->request->post['cartId']);
-            //$order_id = $this->session->data['last_order_id']+1;
-            //$order_id = $this->model_checkout_order->create($order_data);
             $order_id = $this->model_checkout_order->addOrder($order_data);
 
-            //echo $total;exit;
             // Transaction info.
             $msp->transaction['id'] = $order_id;
             $order_data['order_id'] = $order_id;
@@ -779,7 +712,6 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
             $msp->transaction['daysactive'] = $this->config->get('payment_multisafepay_days_active');
             $msp->plugin_name = 'OpenCart' . VERSION;
             $msp->version = '(2.0.0)';
-
 
             $msp->plugin['shop'] = 'OpenCart';
             $msp->plugin['shop_version'] = VERSION;
@@ -806,11 +738,37 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
             if ($msp->error) {
                 echo 'Error: ' . $msp->error;
             } else {
-                //$this->redirect($url);
                 $this->response->redirect($url);
             }
         }
     }
+
+
+    private function _getProductName($product){
+
+        $options = '';
+        foreach ($product['option'] as $option){
+            $options .= $option['name'] . ': ' . $option['value'] . ', ';
+        }
+
+        if ($options){
+            $options = ' (' . substr($options,0, -1) . ')';
+        }
+
+        $product_name = $product['name'] . $options;
+        return $product_name;
+    }
+
+    private function _getUniqueProductID ($product){
+
+        $merchant_item_id = $product['product_id'];
+        foreach ($product['option'] as $option){
+            $merchant_item_id .= '-' . $option['product_option_id'];
+        }
+
+        return $merchant_item_id;
+    }
+
 
 
     private function _getAmount($order_info, $amount)
