@@ -36,7 +36,9 @@ class ControllerExtensionPaymentmultisafepayfastcheckout extends Controller
     public function process()
     {
         $storeid = $this->config->get('config_store_id');
-        include_once('MultiSafepay.combined.php');
+
+        require_once(DIR_APPLICATION . 'controller/extension/payment/MultiSafepay.combined.php');
+
         $msp = new MultiSafepay();
         $this->load->model('extension/total/coupon');
         $total_data = array();
@@ -576,7 +578,8 @@ class ControllerExtensionPaymentmultisafepayfastcheckout extends Controller
     public function callback()
     {
         chdir('system/multisafepayoc');
-        include_once('MultiSafepay.combined.php');
+
+        require_once(DIR_APPLICATION . 'controller/extension/payment/MultiSafepay.combined.php');
 
         if (isset($this->session->data['coupon'])) {
             unset($this->session->data['coupon']);

@@ -45,7 +45,8 @@ class ControllerExtensionPaymentMultiSafePayIdeal extends Controller
 
 
         //GET IDEAL ISSUERS
-        require_once(dirname(__FILE__) . '/MultiSafepay.combined.php');
+        require_once(DIR_APPLICATION . 'controller/extension/payment/MultiSafepay.combined.php');
+
         $msp = new MultiSafepay();
         $msp->test = $this->config->get('payment_multisafepay_environment');
         $msp->merchant['account_id'] = $this->config->get('payment_multisafepay_merchant_id');
