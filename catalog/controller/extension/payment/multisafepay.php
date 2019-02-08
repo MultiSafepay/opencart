@@ -432,7 +432,6 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
                 $data['charset'] = $this->language->get('charset');
                 $data['language'] = $this->language->get('code');
                 $data['heading_title'] = sprintf($this->language->get('heading_title'), $this->config->get('config_name'));
-                $data['text_success_wait'] = sprintf($this->language->get('text_success_wait'), $this->url->link('checkout/success', '', 'SSL'));
                 $data['text_failure'] = $this->language->get('text_failure');
                 $data['text_failure_wait'] = sprintf($this->language->get('text_failure_wait'), $this->url->link('checkout/checkout', '', 'SSL'));
                 $data['button_continue'] = $this->language->get('button_continue');
@@ -1087,7 +1086,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
 
             // Send a message that will be displayed at the end of fastcheckout process.
             $shopaddress = $this->config->get('config_url');
-            $goback = $this->language->get('Ga terug naar de website');
+            $goback = $this->language->get('back_to_store');
 
 
             $notify = false;
