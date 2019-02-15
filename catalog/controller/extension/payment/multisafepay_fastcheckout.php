@@ -227,9 +227,10 @@ class ControllerExtensionPaymentmultisafepayfastcheckout extends Controller
 
 
             $product['weight'] = $product['weight'] / $product['quantity'];
+            $product_name = $this->_getProductName($product);
 
-            $c_item = new MspItem($product['name'], strip_tags($product['model']), $product['quantity'], $product['price'], 'KG', $product['weight']);
-            $c_item->merchant_item_id = $product['product_id'];
+            $c_item = new MspItem($product_name, strip_tags($product['model']), $product['quantity'], $product['price'], 'KG', $product['weight']);
+            $c_item->merchant_item_id = $this->_getUniqueProductID($product);;
             $c_item->SetTaxTableSelector($taxname);
             $msp->cart->AddItem($c_item);
         }
@@ -538,6 +539,33 @@ class ControllerExtensionPaymentmultisafepayfastcheckout extends Controller
 
         return $this->getShippingOptions($country_id);
     }
+
+
+    private function _getProductName($product){
+
+        $options = '';
+        foreach ($product['option'] as $option){
+            $options .= $option['name'] . ': ' . $option['value'] . ', ';
+        }
+
+        if ($options){
+            $options = ' (' . substr($options,0, -1) . ')';
+        }
+
+        $product_name = $product['name'] . $options;
+        return $product_name;
+    }
+
+    private function _getUniqueProductID ($product){
+
+        $merchant_item_id = $product['product_id'];
+        foreach ($product['option'] as $option){
+            $merchant_item_id .= '-' . $option['product_option_id'];
+        }
+
+        return $merchant_item_id;
+    }
+
 
     private function getOrderDescription($order_id)
     {
