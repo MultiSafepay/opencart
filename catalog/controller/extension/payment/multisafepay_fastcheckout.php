@@ -438,11 +438,11 @@ class ControllerExtensionPaymentmultisafepayfastcheckout extends Controller
         $msp->transaction['amount'] = round($total * 100, 0); // Has to be in eurocents, no fraction!
         $msp->transaction['description'] = $this->getOrderDescription($order_id);
         $msp->plugin_name = 'OpenCart' . VERSION;
-        $msp->version = '2.2.0';
+        $msp->version = '2.2.1-rc1';
 
         $msp->plugin['shop'] = 'OpenCart';
         $msp->plugin['shop_version'] = VERSION;
-        $msp->plugin['plugin_version'] = '2.2.0';
+        $msp->plugin['plugin_version'] = '2.2.1-rc1';
         $msp->plugin['partner'] = '';
         $msp->plugin['shop_root_url'] = '';
 
