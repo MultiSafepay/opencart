@@ -1,6 +1,6 @@
 <modification>
     <id><![CDATA[Multisafepay Fastcheckout]]></id>
-    <version><![CDATA[2.2.1-rc1]]></version>
+    <version><![CDATA[2.2.1]]></version>
     <vqmver><![CDATA[2.3.2]]></vqmver>
     <author><![CDATA[MultiSafepay]]></author>
     <file name="catalog/controller/checkout/cart.php">
