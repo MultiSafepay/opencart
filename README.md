@@ -1,48 +1,27 @@
-# OpenCart 3.x
-MultiSafepay plugin for OpenCart 3.x
+<p align="center">
+  <img src="https://www.multisafepay.com/img/multisafepaylogo.svg" width="400px" position="center">
+</p>
 
-This plugin allows you to integrate all payment methods and giftcards offered by MultiSafepay into your OpenCart webshop.
+# MultiSafepay plugin for OpenCart 3.x
 
-This plugin has support for:
+Easily integrate MultiSafepay payment solutions into your OpenCart webshop with the free and completely new MultiSafepay OpenCart plugin.
 
-Payment methods:
+[![Latest Stable Version](https://img.shields.io/github/release/multisafepay/opencart.svg)](https://github.com/MultiSafepay/Opencart)
 
-1. AfterPay
-2. Alipay
-3. American Express
-4. Bancontact
-5. Bank transfer
-6. Belfius
-7. Direct Debit
-8. Dotpay
-9. E-Invoicing
-10. Giropay
-11. iDEAL
-12. ING Home'Pay
-13. KBC
-14. Klarna
-15. Maestro
-16. Mastercard
-17. Pay After Delivery
-18. PayPal
-19. Paysafecard
-20. Santander Betaalplan
-21. Sofort Banking
-22. Trustly
-23. Visa
+## About MultiSafepay ##
+MultiSafepay is a collecting payment service provider which means we take care of the agreements, technical details and payment collection required for each payment method. You can start selling online today and manage all your transactions from one place.
+## Supported Payment Methods ##
+The supported Payment Methods & Giftcards for this plugin can be found over here: [Payment Methods & Giftcards](https://docs.multisafepay.com/plugins/opencart/faq/#available-payment-methods-in-opencart)
 
-These payment methods can be used when officially released by MultiSafepay.
+## Requirements
+- To use the plugin you need a MultiSafepay account. You can create a test account on https://testmerchant.multisafepay.com/signup
+- OpenCart 3.x
 
-The following giftcards are supported:
+## Installation through SFTP
+1. Plugin_OpenCart_x.x.x.zip
+2. Upload the folders to the root directory of your OpenCart webshop
 
-1. Babygiftcard
-2. Boekenbon
-3. Erotiekbon
-4. Fashioncheque
-5. Gezondheidsbon
-6. Lief kadokaart
-7. Parfumcadeaukaart
-8. VVV Cadeaukaart
-9. Webshop Giftcard
+For additional information or instructions please see our [installation & configuration manual](https://docs.multisafepay.com/plugins/opencart/manual/)
 
-For support you can contact MultiSafepay by email using <techsupport@multisafepay.com>
+## Support
+You can create issues on our repository. If you need any additional help or support, please contact <a href="mailto:techsupport@multisafepay.com">techsupport@multisafepay.com</a>
