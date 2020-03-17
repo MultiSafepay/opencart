@@ -21,6 +21,7 @@
  */
 class ModelExtensionPaymentMultiSafePayWebshopgiftcard extends Model
 {
+    const MAX_PAYMENT_METHOD_LENGTH = 128;
 
     public function getMethod($address, $total)
     {
@@ -55,24 +56,30 @@ class ModelExtensionPaymentMultiSafePayWebshopgiftcard extends Model
         $method_data = array();
 
         if ($status) {
-
-            if ($this->config->get('payment_multisafepay_use_payment_logo') == true ) {
-                $title = '<img  height=32 width=auto  src="./image/multisafepay/webshopgiftcard.svg" alt="webshopgiftcard" title="webshopgiftcard" style="vertical-align: middle;" />';
-                $terms = $this->language->get('text_title_webshopgiftcard');
-            }else{
-                $title = $this->language->get('text_title_webshopgiftcard');
-                $terms = '';
-            }
-
             $method_data = array(
                 'code' => 'multisafepay_webshopgiftcard',
-                'title' => $title,
-                'terms' => $terms,
+                'title' => $this->getTitle(),
+                'terms' => '',
                 'sort_order' => $this->config->get('payment_multisafepay_webshopgiftcard_sort_order')
             );
         }
 
         return $method_data;
+    }
+
+    private function getTitle()
+    {
+        $title = $this->language->get('text_title_webshopgiftcard');
+        if (!$this->config->get('payment_multisafepay_use_payment_logo')){
+            return $title;
+        }
+        $baseUrl = $this->request->server['HTTPS'] ? $this->config->get('config_ssl') : $this->config->get('config_url');
+        $logo = '<img height=32 src="' . $baseUrl . 'image/multisafepay/webshopgiftcard.svg" alt="webshopgiftcard"/>';
+        $titleWithLogo = $logo . '  ' . $title;
+        if (mb_strlen($titleWithLogo) > self::MAX_PAYMENT_METHOD_LENGTH) {
+            return $title;
+        }
+        return $titleWithLogo;
     }
 }
 ?>
