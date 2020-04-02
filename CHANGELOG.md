@@ -1,5 +1,5 @@
-## 2.3.0-RC1
-Release date: March 31th, 2020
+## 2.3.0
+Release date: April 2nd, 2020
 
 ### Added
 + PLGOPNS-178: Add Apple Pay
