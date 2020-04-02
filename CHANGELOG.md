@@ -1,3 +1,14 @@
+## 2.3.0
+Release date: April 2nd, 2020
+
+### Added
++ PLGOPNS-178: Add Apple Pay
+
+### Fixed
++ PLGOPNS-170: Fix payment methods not visible in backend order
+
+***
+
 ## 2.2.1
 Release date: March 27th, 2019
 ### Added
