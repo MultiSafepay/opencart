@@ -19,7 +19,7 @@
  * ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-class ModelExtensionPaymentMultiSafePayVisa extends Model
+class ModelExtensionPaymentMultiSafePayApplepay extends Model
 {
     const MAX_PAYMENT_METHOD_LENGTH = 128;
 
@@ -34,18 +34,18 @@ class ModelExtensionPaymentMultiSafePayVisa extends Model
         $totalcents = $total * 100;
 
         if ($total) {
-            if ($this->config->get('payment_multisafepay_visa_min_amount') && $totalcents < $this->config->get('payment_multisafepay_visa_min_amount')) {
+            if ($this->config->get('payment_multisafepay_applepay_min_amount') && $totalcents < $this->config->get('payment_multisafepay_applepay_min_amount')) {
                 return false;
             }
-            if ($this->config->get('payment_multisafepay_visa_max_amount') && $totalcents > $this->config->get('payment_multisafepay_visa_max_amount')) {
+            if ($this->config->get('payment_multisafepay_applepay_max_amount') && $totalcents > $this->config->get('payment_multisafepay_applepay_max_amount')) {
                 return false;
             }
         }
 
 
-        $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int) $this->config->get('payment_multisafepay_visa_geo_zone_id') . "' AND country_id = '" . (int) $address['country_id'] . "' AND (zone_id = '" . (int) $address['zone_id'] . "' OR zone_id = '0')");
+        $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int) $this->config->get('payment_multisafepay_applepay_geo_zone_id') . "' AND country_id = '" . (int) $address['country_id'] . "' AND (zone_id = '" . (int) $address['zone_id'] . "' OR zone_id = '0')");
 
-        if (!$this->config->get('payment_multisafepay_visa_geo_zone_id')) {
+        if (!$this->config->get('payment_multisafepay_applepay_geo_zone_id')) {
             $status = true;
         } elseif ($query->num_rows) {
             $status = true;
@@ -56,11 +56,24 @@ class ModelExtensionPaymentMultiSafePayVisa extends Model
         $method_data = array();
 
         if ($status) {
+            $hideApplePayScript = "Only for Apple devices
+            <script type='text/javascript' id='msp_applepayscript'>
+                var applePayBlock = document.querySelector('input[value=\"multisafepay_applepay\"]').parentElement.parentElement;
+                applePayBlock.style.display = 'none';
+                try {
+                    if (window.ApplePaySession && window.ApplePaySession.canMakePayments()) {
+                        applePayBlock.style.display = 'block';
+                    }
+                } catch (error) {
+                    console.warn('MultiSafepay error when trying to initialize Apple Pay:', error);
+                }
+            </script>";
+
             $method_data = array(
-                'code' => 'multisafepay_visa',
+                'code' => 'multisafepay_applepay',
                 'title' => $this->getTitle(),
-                'terms' => '',
-                'sort_order' => $this->config->get('payment_multisafepay_visa_sort_order')
+                'terms' => $hideApplePayScript,
+                'sort_order' => $this->config->get('payment_multisafepay_applepay_sort_order')
             );
         }
 
@@ -69,12 +82,12 @@ class ModelExtensionPaymentMultiSafePayVisa extends Model
 
     private function getTitle()
     {
-        $title = $this->language->get('text_title_visa');
+        $title = $this->language->get('text_title_applepay');
         if (!$this->config->get('payment_multisafepay_use_payment_logo')){
             return $title;
         }
         $baseUrl = $this->request->server['HTTPS'] ? $this->config->get('config_ssl') : $this->config->get('config_url');
-        $logo = '<img height=32 src="' . $baseUrl . 'image/multisafepay/visa.svg" alt="visa"/>';
+        $logo = '<img height=32 src="' . $baseUrl . 'image/multisafepay/applepay.svg" alt="applepay"/>';
         $titleWithLogo = $logo . '  ' . $title;
         if (mb_strlen($titleWithLogo) > self::MAX_PAYMENT_METHOD_LENGTH) {
             return $title;
@@ -82,4 +95,5 @@ class ModelExtensionPaymentMultiSafePayVisa extends Model
         return $titleWithLogo;
     }
 }
+
 ?>

@@ -12,6 +12,7 @@ $_['text_title']                    = 'MultiSafepay iDeal, Visa, MasterCard, Ban
 $_['text_title_afterpay']           = 'AfterPay';
 $_['text_title_alipay']             = 'Alipay';
 $_['text_title_amex']               = 'American Express';
+$_['text_title_applepay']           = 'Apple Pay';
 $_['text_title_banktrans']          = 'Bank Transfer';
 $_['text_title_belfius']            = 'Belfius';
 $_['text_title_dirdeb']             = 'Direct Debit';
