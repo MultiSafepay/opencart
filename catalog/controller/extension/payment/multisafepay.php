@@ -291,7 +291,15 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
 
                 $product_name = $this->_getProductName($product);
 
-                $c_item = new MspItem($product_name, strip_tags($product['model']), $product['quantity'], $product['price'], 'KG', $product['weight']);
+                $c_item = new MspItem(
+                    html_entity_decode($product_name, ENT_COMPAT, 'UTF-8'),
+                    html_entity_decode(strip_tags($product['model']), ENT_COMPAT, 'UTF-8'),
+                    $product['quantity'],
+                    $product['price'],
+                    'KG',
+                    $product['weight']
+                );
+
                 $c_item->merchant_item_id = $this->_getUniqueProductID($product);
                 $c_item->SetTaxTableSelector($taxname);
                 $msp->cart->AddItem($c_item);
@@ -580,7 +588,15 @@ class ControllerExtensionPaymentMultiSafePay extends Controller
 
                 $product_name = $this->_getProductName($product);
 
-                $c_item = new MspItem($product_name, strip_tags($product['model']), $product['quantity'], $product['price'], 'KG', $product['weight']);
+                $c_item = new MspItem(
+                    html_entity_decode($product_name, ENT_COMPAT, 'UTF-8'),
+                    html_entity_decode(strip_tags($product['model']), ENT_COMPAT, 'UTF-8'),
+                    $product['quantity'],
+                    $product['price'],
+                    'KG',
+                    $product['weight']
+                );
+
                 $c_item->merchant_item_id = $this->_getUniqueProductID($product);
                 $c_item->SetTaxTableSelector($taxname);
                 $msp->cart->AddItem($c_item);

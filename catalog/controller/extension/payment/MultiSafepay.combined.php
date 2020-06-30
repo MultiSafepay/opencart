@@ -3337,43 +3337,10 @@ class MspItem
      * @param double $numeric_weight the weight of the item
      *
      */
-    function xmlEscape($str)
-    {
-        //$ts = array("/[�-�]/", "/�/", "/�/", "/[�-�]/", "/[�-�]/", "/�/", "/�/", "/[�-��]/", "/�/", "/[�-�]/", "/[�-�]/", "/[�-�]/", "/�/", "/�/", "/[�-�]/", "/[�-�]/", "/�/", "/�/", "/[�-��]/", "/�/", "/[�-�]/", "/[�-�]/");
-        //$tn = array("A", "AE", "C", "E", "I", "D", "N", "O", "X", "U", "Y", "a", "ae", "c", "e", "i", "d", "n", "o", "x", "u", "y");
-        //$str = preg_replace($ts, $tn, $str);
-        //$str = mb_convert_encoding($str, 'UTF-8');
-        //$str = htmlspecialchars($string, ENT_QUOTES);
-        return htmlspecialchars($str, ENT_COMPAT, "UTF-8");
-    }
-
-    /*
-     * Returns the string with all XML escaping removed
-     */
-
-    function xmlUnescape($str)
-    {
-        return html_entity_decode($str, ENT_COMPAT, "UTF-8");
-    }
-
-    /**
-     * {@link http://code.google.com/apis/checkout/developer/index.html#tag_item <item>}
-     *
-     * @param string $name the name of the item -- required
-     * @param string $desc the description of the item -- required
-     * @param integer $qty the number of units of this item the customer has
-     *                    in its shopping cart -- required
-     * @param double $price the unit price of the item -- required
-     * @param string $item_weight the weight unit used to specify the item's
-     *                            weight,
-     *                            one of 'LB' (pounds) or 'KG' (kilograms)
-     * @param double $numeric_weight the weight of the item
-     *
-     */
     function __construct($name, $desc, $qty, $price, $item_weight = '', $numeric_weight = '')
     {
-        $this->item_name = $this->xmlEscape($name);
-        $this->item_description = $this->xmlEscape($desc);
+        $this->item_name = $name;
+        $this->item_description = $desc;
         $this->unit_price = $price;
         $this->quantity = $qty;
 
