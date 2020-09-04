@@ -1,0 +1,8 @@
+.DS_Store
+/.idea/
+/.dist/
+/composer.lock
+/src/system/library/multisafepay/vendor/
+/src/patches-for-third-party-integrations
+/coverage.xml
+/phpunit.xml

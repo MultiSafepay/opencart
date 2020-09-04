@@ -1,0 +1,155 @@
+<?xml version="1.0"?>
+<ruleset name="MultiSafepayOpenCart">
+    <description>A custom coding standard for OpenCart extensions.</description>
+    <exclude-pattern>*/bin/*</exclude-pattern>
+    <exclude-pattern>*/tests/*</exclude-pattern>
+    <exclude-pattern>*/src/system/library/multisafepay/*</exclude-pattern>
+    <exclude-pattern>*/src/image/*</exclude-pattern>
+    <!-- Exclude: PHPUnit tests files -->
+    <exclude-pattern>*/src/system/config/*</exclude-pattern>
+    <exclude-pattern>*/src/system/library/session/*</exclude-pattern>
+    <exclude-pattern>*/src/admin/controller/startup/*</exclude-pattern>
+    <exclude-pattern>*/src/admin/view/javascript/multisafepay/dragula.js</exclude-pattern>
+    <config name="installed_paths" value="src/system/library/multisafepay/vendor/object-calisthenics/phpcs-calisthenics-rules/src/ObjectCalisthenics"/>
+
+    <!-- Rule 1: Only X indentation level per function/method (with default values) -->
+    <rule ref="ObjectCalisthenics.Metrics.MaxNestingLevel">
+        <properties>
+            <!-- goal is 2 -->
+            <property name="maxNestingLevel" value="2"/>
+        </properties>
+    </rule>
+
+    <!-- Rule 2: There is no "else" -->
+    <rule ref="ObjectCalisthenics.ControlStructures.NoElse"/>
+
+    <!-- Rule 3: Only one object operator (->) per line (with default values) -->
+    <rule ref="ObjectCalisthenics.CodeAnalysis.OneObjectOperatorPerLine">
+        <properties>
+            <property name="variablesHoldingAFluentInterface" type="array" value="$queryBuilder,$containerBuilder"/>
+            <property name="methodsStartingAFluentInterface" type="array" value="createQueryBuilder"/>
+            <property name="methodsEndingAFluentInterface" type="array" value="execute,getQuery"/>
+        </properties>
+    </rule>
+
+    <!-- Rule 4: Do not abbreviate (with default values) -->
+    <rule ref="ObjectCalisthenics.NamingConventions.ElementNameMinimalLength">
+        <exclude-pattern>*/src/*/language/*/extension/payment/multisafepay.php</exclude-pattern>
+        <properties>
+            <property name="minLength" value="3"/>
+            <property name="allowedShortNames" type="array" value="i,id,to,up"/>
+        </properties>
+    </rule>
+
+    <!-- Rule 5: Keep your classes small (with default values) -->
+    <rule ref="ObjectCalisthenics.Files.ClassTraitAndInterfaceLength">
+        <exclude-pattern>*/src/system/library/multisafepay.php</exclude-pattern>
+        <properties>
+            <!-- goal is 200 -->
+            <property name="maxLength" value="1000"/>
+        </properties>
+    </rule>
+    <rule ref="ObjectCalisthenics.Files.FunctionLength">
+        <properties>
+            <!-- goal is 200 -->
+            <property name="maxLength" value="500"/>
+        </properties>
+    </rule>
+    <rule ref="ObjectCalisthenics.Metrics.PropertyPerClassLimit">
+        <properties>
+            <!-- goal is 10 -->
+            <property name="maxCount" value="10"/>
+        </properties>
+    </rule>
+    <rule ref="ObjectCalisthenics.Metrics.MethodPerClassLimit">
+        <exclude-pattern>*/src/system/library/multisafepay.php</exclude-pattern>
+        <properties>
+            <!-- goal is 10 -->
+            <property name="maxCount" value="60"/>
+        </properties>
+    </rule>
+
+    <!-- Rule 6: Do not Use Getters and Setters -->
+    <rule ref="ObjectCalisthenics.Classes.ForbiddenPublicProperty"/>
+    <rule ref="ObjectCalisthenics.NamingConventions.NoSetter"/>
+
+
+    <!-- Rule 7: Closing PHP tags are not allowed -->
+    <rule ref="Zend.Files.ClosingTag">
+        <severity>5</severity>
+        <type>error</type>
+    </rule>
+
+    <!-- Rule 8: Test the blank spaces in inline declarations -->
+    <rule ref="Squiz.ControlStructures.InlineIfDeclaration" />
+
+    <!-- Rule 9: Check for whitespace after lines of code and checks for spaces/indents on empty lines -->
+    <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace">
+        <severity>1</severity>
+        <type>warning</type>
+    </rule>
+    <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace.StartFile" />
+    <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace.EndFile" />
+    <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace.EmptyLines" />
+
+    <!-- Rule 10: Check to ensure no PHP deprecated functions have been used -->
+    <rule ref="Generic.PHP.DeprecatedFunctions">
+        <severity>5</severity>
+        <type>error</type>
+    </rule>
+
+    <!-- Rule 11: PHP opening tag must be full <?php, no shorthand or ASP tags -->
+    <rule ref="Generic.PHP.DisallowShortOpenTag">
+        <severity>5</severity>
+        <type>error</type>
+    </rule>
+
+    <!-- Rule 12: In PHP files make sure there is no character before the opening tag -->
+    <rule ref="Generic.PHP.CharacterBeforePHPOpeningTag"/>
+
+    <!-- Rule 13: true, false, null etc should all be lowercase only -->
+    <rule ref="Generic.PHP.LowerCaseConstant" />
+
+    <!-- Rule 14: Type casting should be immediately followed by the variable, no space -->
+    <rule ref="Generic.Formatting.NoSpaceAfterCast" />
+
+    <!-- Rule 15: Pass by reference is now only supported in the method/function params -->
+    <rule ref="Generic.Functions.CallTimePassByReference" />
+
+    <!-- Rule 16: keep the spacing between function/method params space after comma -->
+    <rule ref="Generic.Functions.FunctionCallArgumentSpacing" />
+
+    <!-- Rule 17: method names should always be camel case -->
+    <rule ref="Generic.NamingConventions.CamelCapsFunctionName"/>
+
+    <!-- Rule 18: constants should always be uppercase -->
+    <rule ref="Generic.NamingConventions.UpperCaseConstantName"/>
+
+    <!-- Rule 19: Detect BOMs to avoid curruptions -->
+    <rule ref="Generic.Files.ByteOrderMark"/>
+
+    <!-- Rule 20: To do comments should be reported and completed -->
+    <rule ref="Generic.Commenting.Todo.CommentFound"/>
+
+    <!-- Rule 21: Fix me comments should be reported and fixed -->
+    <rule ref="Generic.Commenting.Fixme.CommentFound"/>
+
+    <!-- Rule 22: Check that line endings are only \n -->
+    <rule ref="Generic.Files.LineEndings">
+        <properties>
+            <property name="eolChar" value="\n"/>
+        </properties>
+    </rule>
+
+    <!-- Rule 22: Check that line endings are only \n -->
+    <rule ref="Generic.WhiteSpace.DisallowSpaceIndent">
+        <exclude-pattern>*.tpl</exclude-pattern>
+        <exclude-pattern>*.css</exclude-pattern>
+        <exclude-pattern>*.html</exclude-pattern>
+        <exclude-pattern>*.ini</exclude-pattern>
+        <exclude-pattern>*.txt</exclude-pattern>
+        <severity>1</severity>
+        <type>warning</type>
+    </rule>
+
+</ruleset>

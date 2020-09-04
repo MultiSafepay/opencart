@@ -1,0 +1,181 @@
+/* MultiSafepay Multi Store Store Switcher */
+.multisafepay-admin-page #store-switcher {
+    max-width: 300px;
+    display: inline-table;
+    height: 36px;
+    vertical-align: middle;
+}
+
+/* MultiSafepay Maintenance Tab */
+#multisafepay-maintenance .table-wrapper-scroll {
+    position: relative;
+    height: 250px;
+    overflow: auto;
+    display: block;
+}
+
+/* MultiSafepay Payment Methods Tabs */
+.multisafepay-admin-page #tab-payment-methods .payment-methods-filter-panel {
+    /*background-color: #00acf1;*/
+    /*border-color: #00acf1;*/
+    padding: 10px 19px;
+}
+.multisafepay-admin-page #tab-payment-methods .panel-group .panel .panel-body p img.payment-logo {
+    width: 80px;
+    padding: 5px;
+    margin-right: 20px;
+}
+
+.multisafepay-admin-page #tab-payment-methods .payment-methods-filter-panel .form-group {
+    margin-left:0px;
+    margin-right:0px
+}
+.multisafepay-admin-page #tab-payment-methods .panel-group .panel .panel-heading {
+    padding: 0;
+    border: none;
+}
+.multisafepay-admin-page #tab-payment-methods .panel-group .panel .panel-heading h4.panel-title div.icon {
+    display: inline-block;
+    margin: 0 10px 0 0;
+    width: 20px;
+    text-align: center;
+    line-height: 20px;
+    border: 1px solid;
+    font-size: 13px;
+}
+
+.multisafepay-admin-page #tab-payment-methods .panel-group .panel .panel-heading h4.panel-title div.icon:hover {
+    cursor: move;
+}
+.multisafepay-admin-page #tab-payment-methods .panel-group .panel .panel-heading h4.panel-title a {
+    display: block;
+    line-height: 40px;
+}
+.multisafepay-admin-page #tab-payment-methods .panel-group .panel .panel-heading a {
+    padding: 0 15px;
+    background-color: #00acf1;
+    border-color: #00acf1;
+    color: #FFFFFF;
+}
+.multisafepay-admin-page #tab-payment-methods .panel-group .panel .panel-heading a.collapsed:after {
+    font-family: 'FontAwesome';
+    content: "\f067";
+    float: right;
+    font-size: 15px;
+    line-height: 40px;
+}
+.multisafepay-admin-page #tab-payment-methods .panel-group .panel .panel-heading a.collapsed {
+    background-color: #f6f6f6;
+    border-color: #dcdcdc;
+    color: #4c4d5a;
+}
+.multisafepay-admin-page #tab-payment-methods .panel-group .panel .panel-heading a.has-warning {
+    background-color: #f5c1bb;
+    border-color: #f3b5ad;
+    color: #c72f1d;
+}
+.multisafepay-admin-page #tab-payment-methods .panel-group .panel .panel-heading a:after {
+    font-family: 'FontAwesome';
+    content: "\f068";
+    float: right;
+    font-size: 15px;
+    line-height: 40px;
+}
+
+/* MultiSafepay Support Tab */
+.multisafepay-admin-page #multisafepay-support td.version-table-row {
+    padding: 5px 10px 5px 0;
+}
+
+.multisafepay-admin-page #multisafepay-support td.multisafepay-bold {
+    font-weight: 700;
+    padding-left: 15px;
+}
+
+.multisafepay-admin-page #multisafepay-support h2 {
+    font-size: 19px;
+    font-weight: bold;
+    margin-top: 35px;
+}
+
+/* Refund Tab */
+#multisafepay-order-tab .pull-right button {
+    margin-bottom: 25px;
+}
+
+/* Drag and Drop */
+.multisafepay-admin-page #tab-payment-methods .panel-group .panel .panel-heading .panel-title a.collapsed .drag-and-drop-control {
+    background-color: #f6f6f6;
+    border: 1px solid #dcdcdc;
+}
+.multisafepay-admin-page #tab-payment-methods .panel-group .panel .panel-heading .panel-title a .drag-and-drop-control {
+    position: relative;
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    padding: 0;
+    margin: 5px 0;
+    text-align: center;
+    border: 1px solid #FFFFFF;
+    cursor: move;
+}
+.multisafepay-admin-page #tab-payment-methods .panel-group .panel .panel-heading .panel-title a .drag-and-drop-control:after {
+    font-size: 14px;
+    line-height: 30px;
+    text-align: center;
+    content: "\f047";
+    font-family: 'FontAwesome';
+}
+.multisafepay-admin-page #tab-payment-methods .panel-group .panel .panel-heading .panel-title a .title {
+    display: inline-block;
+    margin-left: 10px;
+}
+.multisafepay-admin-page #tab-payment-methods .panel-group .panel .panel-heading .panel-title a .drag-and-drop i {
+    padding: 0px;
+    color: #4c4d5a;
+}
+.panel-group-field .panel-heading .panel-title .grabbable {
+    width: 25px;
+    text-align: left;
+    display: inline-block;
+    margin-right: 15px;
+}
+.drag-active {
+    background: #fcfcfc;
+    opacity: 0.4;
+}
+.gu-mirror {
+    position: fixed !important;
+    margin: 0 !important;
+    z-index: 9999 !important;
+    opacity: 0.8;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
+    filter: alpha(opacity=80);
+}
+.gu-hide {
+    display: none !important;
+}
+.gu-unselectable {
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    user-select: none !important;
+}
+.gu-transit {
+    opacity: 0.2;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
+    filter: alpha(opacity=20);
+}
+.grabbable {
+    max-width: 80px;
+    cursor: move;
+    cursor: grab;
+    cursor: -moz-grab;
+    cursor: -webkit-grab;
+}
+.grabbable:active {
+    cursor: grabbing;
+    cursor: -moz-grabbing;
+    cursor: -webkit-grabbing;
+}

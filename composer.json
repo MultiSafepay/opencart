@@ -1,0 +1,50 @@
+{
+  "name": "multisafepay/opencart-plugin",
+  "description": "MultiSafepay OpenCart Plugin",
+  "type": "opencart-plugin",
+  "license": "MIT",
+  "require": {
+    "php": "^7.1",
+    "ext-json": "*",
+    "php-http/curl-client": "^2.1",
+    "php-http/guzzle6-adapter": "^2.0",
+    "guzzlehttp/psr7": "^1.6",
+    "http-interop/http-factory-guzzle": "^1.0",
+    "multisafepay/php-sdk": "3.0.2"
+  },
+  "require-dev": {
+    "phpunit/phpunit" : "^7.5",
+    "squizlabs/php_codesniffer": "^3.5",
+    "object-calisthenics/phpcs-calisthenics-rules": "^3.7",
+    "fzaninotto/faker": "^1.9",
+    "phpro/grumphp": "^0.19.1"
+  },
+  "authors": [{
+    "name": "MultiSafepay",
+    "email": "integration@multisafepay.com",
+    "homepage": "https://www.multisafepay.com",
+    "role": "Developer"
+  }],
+  "autoload": {
+    "psr-4": {
+      "MultiSafepay\\": "src/"
+    }
+  },
+  "scripts": {
+    "phpcs": "src/system/library/multisafepay/vendor/bin/phpcs --standard=phpcs.xml src",
+    "opencart-tests": "src/system/library/multisafepay/vendor/bin/phpunit",
+    "catalog-tests": "src/system/library/multisafepay/vendor/bin/phpunit --testsuite catalog-tests",
+    "admin-tests": "src/system/library/multisafepay/vendor/bin/phpunit --testsuite admin-tests",
+    "system-tests": "src/system/library/multisafepay/vendor/bin/phpunit --testsuite system-tests",
+    "language-tests": "src/system/library/multisafepay/vendor/bin/phpunit --testsuite language-tests",
+    "run-grumphp": "php src/system/library/multisafepay/vendor/bin/grumphp run"
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "MultiSafepay\\Tests\\": "tests/"
+    }
+  },
+  "config": {
+    "vendor-dir": "src/system/library/multisafepay/vendor/"
+  }
+}

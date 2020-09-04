@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit
+        bootstrap="tests/bootstrap.php"
+        backupGlobals="false"
+        colors="true"
+        convertErrorsToExceptions="true"
+        convertNoticesToExceptions="true"
+        convertWarningsToExceptions="true"
+        stopOnError="false"
+        stopOnFailure="false"
+        stopOnRisky="false"
+        stderr="true">
+    <testsuites>
+        <testsuite name="catalog-tests">
+            <directory suffix="Test.php">./tests/unit/catalog/</directory>
+        </testsuite>
+        <testsuite name="admin-tests">
+            <directory suffix="AdminTest.php">./tests/unit/admin/</directory>
+        </testsuite>
+        <testsuite name="system-tests">
+            <directory suffix="SystemTest.php">./tests/unit/system/</directory>
+        </testsuite>
+        <testsuite name="language-tests">
+            <directory suffix="LanguageTest.php">./tests/unit/language/</directory>
+        </testsuite>
+    </testsuites>
+    <php>
+        <!-- ROOT PATH TO THE OPENCART APPLICATION -->
+        <env name="OC_ROOT" value="" />
+        <!-- ROOT PATH TO THE TESTS FOLDER  -->
+        <env name="TEST_ROOT" value="" />
+        <!-- URL WHERE IS THE OPENCART STORE -->
+        <env name="HTTP_SERVER" value="" />
+        <!-- CONFIG FILE NAME TO INIT THE TEST ENVIROMENT TEST  -->
+        <env name="TEST_CONFIG" value="test-config" />
+        <!-- SELECT A CURRENCY VALUE BY DEFAULT -->
+        <env name="CURRENCY_CODE" value="EUR" />
+        <!-- SELECT A LANGAUGE CODE BY DEFAULT -->
+        <env name="LANGUAGE_CODE" value="en-gb" />
+        <!-- ADMIN OPENCART USERNAME  -->
+        <env name="OC_ADMIN_USERNAME" value="" />
+        <!-- ADMIN OPENCART PASSWORD  -->
+        <env name="OC_ADMIN_PASSWORD" value="" />
+    </php>
+    <filter>
+        <whitelist processUncoveredFilesFromWhitelist="false">
+            <directory suffix=".php">./src</directory>
+            <exclude>
+                <directory>./tests</directory>
+                <directory>./src/image</directory>
+                <directory>./src/admin/controller/startup</directory>
+                <directory>./src/system/library/session</directory>
+                <directory>./src/system/config</directory>
+                <directory>./src/system/library/multisafepay/vendor</directory>
+            </exclude>
+        </whitelist>
+    </filter>
+    <logging>
+        <log type="coverage-clover" target="./coverage.xml"/>
+    </logging>
+</phpunit>

@@ -1,0 +1,17 @@
+grumphp:
+    hooks_dir: ~
+    hooks_preset: local
+    process_timeout: 500
+    additional_info: "\nTo get full grumphp documentation at: https://github.com/phpro/grumphp/\n"
+    fixer:
+        enabled: false
+        fix_by_default: false
+    tasks:
+        phpcs:
+            standard: phpcs.xml
+        phpunit:
+            config_file: phpunit.xml
+            testsuite: 'catalog-tests, admin-tests, system-tests, language-tests'
+    testsuites:
+        git_pre_commit:
+            tasks: ['phpcs', 'phpunit']
