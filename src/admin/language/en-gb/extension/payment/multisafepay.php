@@ -192,7 +192,7 @@ $_['text_help_second_chance']       			        = 'When a customer initiates but 
                                                         . 'MultiSafepay will include a link to allow the consumer to finalize the payment. '
                                                         . 'The first Second Chance email is sent 1 hour after the transaction was initiated and the second after 24 hours. '
                                                         . 'To receive second chance emails, this option must also be activated within your MultiSafepay account, otherwise it will not work.';
-$_['text_help_currency']                                = 'You can select the currencies for which you want to show this payment method. Leave black for no restriction. (Autocomplete)';
+$_['text_help_currency']                                = 'You can select the currencies for which you want to show this payment method. Leave black for no restriction.';
 $_['text_help_initialize_payment_request']              = 'You can generate an order from the admin with this order status  assigned, this order will include a payment link in the email sent to the customer. We recommend using this order status, only for this purpose';
 $_['text_help_order_status_id_initialized']             = 'Default initialized order status for all payment methods. Later in each payment method settings is possible to customize any other for each one.';
 $_['text_help_customer_group']                          = 'You can select the consumer group to which you want to show this payment method. Leave black for no restriction.';

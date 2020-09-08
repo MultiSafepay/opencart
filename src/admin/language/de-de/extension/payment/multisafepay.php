@@ -191,7 +191,7 @@ $_['text_help_second_chance']       			        = 'Wenn ein Kunde eine Zahlung in
                                                         . 'In diese E-Mails fügt MultiSafepay einen Links ein, der es gestattet, die Zahlung abzuschließen. '
                                                         . 'Die erste Second-Chance-E-Mail wird eine Stunde nach der Initiierung der Zahlung gesendet und die zweite nach 24 Stunden. '
                                                         . 'Um E-Mails der zweiten Chance zu erhalten, muss diese Option auch in Ihrem MultiSafepay-Konto aktiviert sein, da sie sonst nicht funktioniert.';
-$_['text_help_currency']                                = 'Sie können die Währungen auswählen, für die diese Zahlungsweise angezeigt wird. Für ohne Einschränkungen frei lassen. (automatische Vervollständigung)';
+$_['text_help_currency']                                = 'Sie können die Währungen auswählen, für die diese Zahlungsweise angezeigt wird. Für ohne Einschränkungen frei lassen.';
 $_['text_help_initialize_payment_request']              = 'Wir werden diese Zahlungsweise für die e-Mail verwenden, die den Zahlungs-Link enthält, wenn ein Auftrag in Admin. erzeugt wird.';
 $_['text_help_order_status_id_initialized']             = 'Standardmäßig initialisierter Bestellstatus für alle Zahlungsmethoden. Später in jeder Zahlungsmethode können Einstellungen für jede andere angepasst werden.';
 $_['text_help_customer_group']                          = 'Sie können die Kundengruppe auswählen, für die diese Zahlungsweise angezeigt wird. Für ohne Einschränkungen frei lassen.';

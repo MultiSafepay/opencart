@@ -44,8 +44,6 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
 
         $this->load->model('setting/setting');
 
-        $this->load->model('localisation/currency');
-
         $this->load->model(self::ROUTE);
 
         $data = $this->getSupportTabData();
@@ -147,9 +145,11 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
         $this->load->model('customer/customer_group');
         $data['customer_groups'] = $this->model_customer_customer_group->getCustomerGroups(array('sort' => 'cg.sort_order'));
 
+        $this->load->model('localisation/currency');
+        $data['currencies'] = $this->model_localisation_currency->getCurrencies();
+
         $fields = $this->getFields();
         $data['payment_methods_fields_values'] = $this->getPaymentMethodsFieldsValues($data['store_id']);
-        $data['payment_methods_currencies'] = $this->getCurrencyAllowedByPaymentMethods($data['store_id']);
 
         foreach ($fields as $field) {
             if (isset($this->request->post[$field])) {
@@ -194,99 +194,6 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
         $this->response->setOutput(json_encode($json));
     }
 
-    /**
-     * Return currency allowed by each payment methods
-     *
-     * @param int $store_id
-     * @return array
-     *
-     */
-    public function getCurrencyAllowedByPaymentMethods($store_id = 0) {
-        $gateways = $this->multisafepay->getGateways();
-        $payment_methods_fields_values = $this->getPaymentMethodsFieldsValues($store_id);
-        $currencies = array();
-        foreach($gateways as $gateway) {
-            $currencies[$gateway['code']] = array();
-            if(isset($payment_methods_fields_values[$gateway['code']]['currency']) && !empty($payment_methods_fields_values[$gateway['code']]['currency'])) {
-               $currencies[$gateway['code']] = $this->extractCurrenciesByPaymentMethod($payment_methods_fields_values[$gateway['code']]['currency']);
-            }
-        }
-        return $currencies;
-    }
-
-    /**
-     * Returns an array with all the currencies in the store, ordered with key currency_id
-     *
-     * @return array $currencies_info
-     *
-     */
-    private function getCurrenciesArray() {
-        $this->load->model('localisation/currency');
-        $currencies_info = array();
-        $currencies = $this->model_localisation_currency->getCurrencies();
-        foreach ($currencies as $currency) {
-            $currencies_info[$currency['currency_id']] = array(
-                'currency_id' => $currency['currency_id'],
-                'title'       => $currency['title'],
-                'code'        => $currency['code']
-            );
-        }
-        return $currencies_info;
-    }
-
-    /**
-     * Returns an array with the currency data, related and allowed to each payment method
-     * according with the settings, used in getCurrencyAllowedByPaymentMethods function
-     *
-     * @param mixed array|string $currencies
-     * @return array $currencies_info
-     *
-     */
-    private function extractCurrenciesByPaymentMethod($currencies) {
-        if(!is_array($currencies)) {
-            $currencies = json_decode($currencies);
-        }
-        $this->load->model('localisation/currency');
-        $currencies_info = array();
-        $currency_info = $this->getCurrenciesArray();
-        foreach ($currencies as $currency_id) {
-            $currencies_info[$currency_id] = array(
-                'currency_id' => $currency_id,
-                'title'       => $currency_info[$currency_id]['title'],
-                'code'        => $currency_info[$currency_id]['code']
-            );
-        }
-        return $currencies_info;
-    }
-
-    /**
-     * Return values from currency based in the input
-     *
-     */
-    public function autocompleteCurrency() {
-        $json = array();
-
-        if (isset($this->request->get['filter_name'])) {
-            $this->load->model(self::ROUTE);
-
-            $filter_data = array(
-                'filter_name' => $this->request->get['filter_name'],
-            );
-
-            $results = $this->model_extension_payment_multisafepay->getCurrencies($filter_data);
-
-            foreach ($results as $result) {
-                $json[] = array(
-                    'currency_id' => $result['currency_id'],
-                    'title'       => strip_tags(html_entity_decode($result['title'], ENT_QUOTES, 'UTF-8')),
-                    'code'        => $result['code']
-                );
-            }
-        }
-
-        $this->response->addHeader('Content-Type: application/json');
-        $this->response->setOutput(json_encode($json));
-    }
 
     /**
      * Uninstall default action for this admin extension controller

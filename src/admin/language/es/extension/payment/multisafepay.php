@@ -192,7 +192,7 @@ $_['text_help_second_chance']       			        = 'Cuando un cliente inicia un pa
                                                         . 'hay un enlace de pago que permitirá al cliente finalizar el pago.'
                                                         . 'El primer correo electrónico se envía después de 1 hora y el segundo después de 24 '
                                                         . 'horas de que se ha iniciado la transacción. Para recibir correos electrónicos de segunda oportunidad, esta opción también debe estar activada dentro de su cuenta MultiSafepay; de lo contrario, no funcionará.';
-$_['text_help_currency']                                = 'Seleccione la moneda para restringir estos métodos de pago. Déjelo en blanco si no desea configurar restricciones. (Autocompletar)';
+$_['text_help_currency']                                = 'Seleccione la moneda para restringir estos métodos de pago. Déjelo en blanco si no desea configurar restricciones.';
 $_['text_help_initialize_payment_request']              = 'Puede generar un pedido desde el administrador, con este estado de pedido asignado, de esta forma este pedido incluirá un enlace de pago en el correo electrónico enviado al cliente. Recomendamos utilizar este estado de pedido, solo con esta finalidad';
 $_['text_help_order_status_id_initialized']             = 'Estado de pedido inicializado predeterminado para todos los métodos de pago. Más adelante, en la configuración de cada método de pago, es posible personalizar cualquier otro para cada uno.';
 $_['text_help_customer_group']                          = 'Seleccione un grupo de clientes para restringir este método de pago a los seleccionados. Déjelo en blanco si no desea configurar restricciones.';

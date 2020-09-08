@@ -191,7 +191,7 @@ $_['text_help_second_chance']       			        = 'Wanneer een klant een betaling
                                                         . 'twee Second Chance herinneringsmails sturen. In de e-mails zal MultiSafepay '
                                                         . 'een link toevoegen waarmee de consument de betaling af kan ronden. De eerste Second Chance-e-mail wordt 1 uur '
                                                         . 'na het initiëren van de transactie verstuurd en de tweede na 24 uur. Om tweedekans-e-mails te ontvangen, moet deze optie ook geactiveerd zijn binnen uw MultiSafepay-account, anders werkt het niet.';
-$_['text_help_currency']                                = 'U kunt de valuta\'s selecteren waarvoor u deze betaalmethode wilt weergeven. Laat zwart voor geen beperkingen. (Autocomplete)';
+$_['text_help_currency']                                = 'U kunt de valuta\'s selecteren waarvoor u deze betaalmethode wilt weergeven. Laat zwart voor geen beperkingen.';
 $_['text_help_initialize_payment_request']              = 'U kunt een bestelling van de beheerder genereren met deze bestelstatus toegewezen, dus deze bestelling bevat een betalingslink in de e-mail die naar de klant wordt gestuurd. We raden aan deze bestelstatus alleen voor dit doel te gebruiken';
 $_['text_help_order_status_id_initialized']             = 'Standaard geïnitialiseerde bestelstatus voor alle betaalmethoden. Later in elke betalingsmethode is het mogelijk om elke andere voor elke instelling aan te passen.';
 $_['text_help_customer_group']                          = 'Wij zullen deze orderstatus gebruiken voor de email met betaallink wanneer een order gegenereerd word in de admin.';
