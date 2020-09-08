@@ -198,9 +198,10 @@ $_['text_help_customer_group']                          = 'Wij zullen deze order
 $_['text_help_drag_and_drop']                           = 'Sleep dit element en zet het neer om de volgorde in te stellen waarin deze betaalmethode in de winkel wordt getoond';
 $_['text_help_generate_payment_links_status']           = 'Meer informatie over het genereren van een bestelling met betalingslink vindt u in onze <a href="https://docs.multisafepay.com/integrations/plugins/opencart/faq/" target="_blank">documentatie</a>';
 $_['text_help_generate_payment_links']                  = 'Als u een bestelling genereert vanuit de OpenCart-administratie en de bestelstatus toewijst die is geselecteerd in het volgende veld, ontvangt de gebruiker de bestelgegevens in de e-mail, inclusief een betalingslink';
-$_['error_permission']				                    = 'Waarschuwing: U heeft geen toestemming om betaalmethode MultiSafepay te wijzigen.';
-$_['error_check_form']   		                        = 'Waarschuwing: Controleer het formulier graag nogmaals en let op foutmeldingen.';
-$_['error_empty_api_key']		                        = 'Waarschuwing: API Key kan niet leeg zijn voor de geselecteerde omgeving.';
-$_['error_invalid_api_key']		                        = 'Waarschuwing: API Key lijkt niet geldig.';
-$_['error_gateways_not_available']	                    = 'Waarschuwing: Het lijkt erop dat enkele betaalmethoden niet beschikbaar zijn in uw MultiSafepay Account. U moet deze uitschakelen.';
-$_['error_gateway_not_available']	                    = 'Gateway: %s zijn niet beschikbaar in uw MultiSafepay account.';
+$_['error_permission']				                    = 'Waarschuwing: U heeft geen toestemming om betaalmethode MultiSafepay te wijzigen';
+$_['error_check_form']   		                        = 'Waarschuwing: Controleer het formulier graag nogmaals en let op foutmeldingen';
+$_['error_empty_api_key']		                        = 'Waarschuwing: API Key kan niet leeg zijn voor de geselecteerde omgeving';
+$_['error_invalid_api_key']		                        = 'Waarschuwing: API Key lijkt niet geldig';
+$_['error_gateways_not_available']	                    = 'Waarschuwing: Het lijkt erop dat enkele betaalmethoden niet beschikbaar zijn in uw MultiSafepay Account. U moet deze uitschakelen';
+$_['error_gateway_not_available']	                    = 'Gateway: %s zijn niet beschikbaar in uw MultiSafepay account';
+$_['error_php_version']	                                = 'Het lijkt erop dat uw PHP-bibliotheek verouderd is. Deze extensie vereist PHP 7.1 of hoger';

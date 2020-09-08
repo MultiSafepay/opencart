@@ -197,9 +197,10 @@ $_['text_help_customer_group']                          = 'Seleziona un gruppo d
 $_['text_help_drag_and_drop']                           = 'Trascina e rilascia questo elemento per impostare l\'ordine in cui questo metodo di pagamento verrà mostrato nel negozio';
 $_['text_help_generate_payment_links_status']           = 'Maggiori informazioni su come generare un ordine con link di pagamento in la nostra <a href="https://docs.multisafepay.com/integrations/plugins/opencart/faq/" target="_blank">documentazione</a>';
 $_['text_help_generate_payment_links']                  = 'Se si genera un ordine dall\'amministrazione OpenCart e si assegna lo stato dell\'ordine selezionato nel campo successivo, l\'utente riceverà i dettagli dell\'ordine per posta, incluso un collegamento di pagamento.';
-$_['error_permission']				                    = 'Avviso: non hai il permesso di modificare le informazioni per i pagamenti MultiSafepay.';
-$_['error_check_form']   		                        = 'Avviso: per favore, controlla attentamente il form e controlla le notifiche degli errori.';
-$_['error_empty_api_key']		                        = 'Avviso: la chiave API non può essere vuota.';
-$_['error_invalid_api_key']		                        = 'Avviso: la chiave API non sembra essere valida.';
-$_['error_gateways_not_available']	                    = 'Avviso: sembra che alcuni metodi di pagamento non siano disponibili nel tuo account MultiSafepay, per favore disabilitali.';
-$_['error_gateway_not_available']	                    = 'Gateway: %s non sono disponibili nel tuo account MultiSafepay.';
+$_['error_permission']				                    = 'Avviso: non hai il permesso di modificare le informazioni per i pagamenti MultiSafepay';
+$_['error_check_form']   		                        = 'Avviso: per favore, controlla attentamente il form e controlla le notifiche degli errori';
+$_['error_empty_api_key']		                        = 'Avviso: la chiave API non può essere vuota';
+$_['error_invalid_api_key']		                        = 'Avviso: la chiave API non sembra essere valida';
+$_['error_gateways_not_available']	                    = 'Avviso: sembra che alcuni metodi di pagamento non siano disponibili nel tuo account MultiSafepay, per favore disabilitali';
+$_['error_gateway_not_available']	                    = 'Gateway: %s non sono disponibili nel tuo account MultiSafepay';
+$_['error_php_version']	                                = 'Sembra che la tua libreria PHP non sia aggiornata. Questa estensione richiede PHP 7.1 o superiore';

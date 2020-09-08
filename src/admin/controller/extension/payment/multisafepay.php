@@ -59,8 +59,9 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
             $data['files'] = $this->model_extension_payment_multisafepay->getOldFilesThatCurrentlyExist();
         }
 
-        $data['needs_upgrade'] = $this->model_extension_payment_multisafepay->checkForNewVersions();
+        $data['error_php_version'] = $this->checkPhpVersion();
 
+        $data['needs_upgrade'] = $this->model_extension_payment_multisafepay->checkForNewVersions();
         if($data['needs_upgrade']) {
             $data['text_needs_upgrade_warning'] = sprintf($this->language->get('text_needs_upgrade_warning'), 'https://github.com/multisafepay/opencart');
         }
@@ -168,6 +169,19 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
         $data['footer']     = $this->load->controller('common/footer');
 
         $this->response->setOutput($this->load->view(self::ROUTE, $data));
+    }
+
+    /**
+     * Return error message is PHP Version is not supported by the extension
+     *
+     * @return mixed string|bool
+     */
+    public function checkPhpVersion() {
+        $this->load->language($this->route);
+        if(version_compare(PHP_VERSION, '7.1.0', '<')) {
+            return $this->language->get('error_php_version');
+        }
+        return false;
     }
 
     /**

@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 + PLGOPNS-244: [refactor] Set currency field for each payment method using the same type field of customer groups
++ PLGOPNS-246: Add a notification message if PHP version is not supported by the plugin.
+
 
 ## 3.0.0
 Release date: August, 2020
