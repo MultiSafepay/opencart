@@ -140,9 +140,16 @@
                             </div>
                             {# -- Days active  -- #}
                             <div class="form-group">
-                                <label class="col-sm-2 control-label" for="payment-multisafepay-days-active">{{ entry_multisafepay_days_active }}</label>
-                                <div class="col-sm-10">
+                                <label class="col-sm-2 control-label" for="payment-multisafepay-unit-lifetime-payment-link"><span data-toggle="tooltip" title="{{ text_help_lifetime_payment_link }}">{{ entry_multisafepay_lifetime_payment_link }}</span></label>
+                                <div class="col-sm-5">
                                     <input type="text" name="payment_multisafepay_days_active" value="{{ payment_multisafepay_days_active }}" id="payment-multisafepay-days-active" placeholder="{{ entry_multisafepay_days_active }}" class="form-control" />
+                                </div>
+                                <div class="col-sm-5">
+                                    <select name="payment_multisafepay_unit_lifetime_payment_link" id="payment-multisafepay-unit-lifetime-payment-link" class="form-control">
+                                        <option value="days" {% if payment_multisafepay_unit_lifetime_payment_link == 'days' %} selected {% endif %}>{{ text_days }}</option>
+                                        <option value="hours" {% if payment_multisafepay_unit_lifetime_payment_link == 'hours' %} selected {% endif %}>{{ text_hours }}</option>
+                                        <option value="seconds" {% if payment_multisafepay_unit_lifetime_payment_link == 'seconds' %} selected {% endif %}>{{ text_seconds }}</option>
+                                    </select>
                                 </div>
                             </div>
                             {# -- Use Second Chance-- #}

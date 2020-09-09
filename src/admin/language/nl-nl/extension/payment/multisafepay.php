@@ -68,6 +68,9 @@ $_['text_show_gift_cards']                              = 'Toon alleen cadeaubon
 $_['text_show_gateways']                                = 'Toon alleen betalingsgateways';
 $_['text_gateway_docs_info']                            = 'Lees meer over %s op onze <a href="%s" target="_blank">documentatiepagina</a>.';
 $_['text_order_status_id_initialized_default']          = 'Gebruik de standaard bestelstatus geïnitialiseerd';
+$_['text_days']                                         = 'Dagen';
+$_['text_hours']                                        = 'Uren';
+$_['text_seconds']                                      = 'Seconden';
 $_['entry_account_type']                    			= 'Selecteer het type account';
 $_['entry_environment']                     		    = 'Type account';
 $_['entry_debug_mode']					 				= 'Debug-modus';
@@ -78,6 +81,7 @@ $_['entry_customer_group']                              = 'Klantengroep';
 $_['entry_multisafepay_google_analytics_account_id']    = 'Google Analytics-account-ID';
 $_['entry_multisafepay_second_chance']       			= 'Second Chance status';
 $_['entry_multisafepay_days_active']        			= 'Dagen actief';
+$_['entry_multisafepay_lifetime_payment_link']          = 'Levensduur van betaallink';
 $_['entry_multisafepay_api_key']        				= 'Live API-sleutel';
 $_['entry_multisafepay_sandbox_api_key']        		= 'Test API-sleutel';
 $_['entry_multisafepay_use_payment_logo']   			= 'Gebruik logo\'s tijdens het afrekenen';
@@ -198,6 +202,7 @@ $_['text_help_customer_group']                          = 'Wij zullen deze order
 $_['text_help_drag_and_drop']                           = 'Sleep dit element en zet het neer om de volgorde in te stellen waarin deze betaalmethode in de winkel wordt getoond';
 $_['text_help_generate_payment_links_status']           = 'Meer informatie over het genereren van een bestelling met betalingslink vindt u in onze <a href="https://docs.multisafepay.com/integrations/plugins/opencart/faq/" target="_blank">documentatie</a>';
 $_['text_help_generate_payment_links']                  = 'Als u een bestelling genereert vanuit de OpenCart-administratie en de bestelstatus toewijst die is geselecteerd in het volgende veld, ontvangt de gebruiker de bestelgegevens in de e-mail, inclusief een betalingslink';
+$_['text_help_lifetime_payment_link']				    = 'Dit geeft de levensduur van een betaallink aan. Standaard is 30 dagen. Dit betekent dat de klant 30 dagen de tijd heeft om de transactie af te ronden via de betaallink';
 $_['error_permission']				                    = 'Waarschuwing: U heeft geen toestemming om betaalmethode MultiSafepay te wijzigen';
 $_['error_check_form']   		                        = 'Waarschuwing: Controleer het formulier graag nogmaals en let op foutmeldingen';
 $_['error_empty_api_key']		                        = 'Waarschuwing: API Key kan niet leeg zijn voor de geselecteerde omgeving';

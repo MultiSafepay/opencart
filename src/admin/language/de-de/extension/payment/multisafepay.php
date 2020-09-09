@@ -67,6 +67,9 @@ $_['text_show_gift_cards']                              = 'Nur Geschenkkarten an
 $_['text_show_gateways']                                = 'Nur Zahlungsgateways anzeigen';
 $_['text_gateway_docs_info']                            = 'Weitere Informationen zu % s finden Sie auf unserer <a href="%s" target="_blank">Dokumentationsseite</a>.';
 $_['text_order_status_id_initialized_default']          = 'Verwenden Sie den initialisierten Standardbestellstatus';
+$_['text_days']                                         = 'Tage';
+$_['text_hours']                                        = 'Std';
+$_['text_seconds']                                      = 'Sekunden';
 $_['entry_account_type']                    			= 'Wählen Sie einen Kontotyp aus';
 $_['entry_environment']                     		    = 'Kontotyp';
 $_['entry_debug_mode']					 				= 'Debug-Modus';
@@ -77,6 +80,7 @@ $_['entry_customer_group']                              = 'Kundengruppe';
 $_['entry_multisafepay_google_analytics_account_id']    = 'Konto-ID Google Analytics ';
 $_['entry_multisafepay_second_chance']       			= 'Status Second Chance';
 $_['entry_multisafepay_days_active']        			= 'Aktive Tage';
+$_['entry_multisafepay_lifetime_payment_link']          = 'Lebensdauer des Zahlungslinks';
 $_['entry_multisafepay_api_key']        				= 'Live API Key';
 $_['entry_multisafepay_sandbox_api_key']        		= 'Test API Key';
 $_['entry_multisafepay_use_payment_logo']   			= 'Bei der Abmeldung Logos verwenden';
@@ -198,6 +202,7 @@ $_['text_help_customer_group']                          = 'Sie können die Kunde
 $_['text_help_drag_and_drop']                           = 'Ziehen Sie dieses Element per Drag & Drop, um die Reihenfolge festzulegen, in der diese Zahlungsmethode im Geschäft angezeigt wird';
 $_['text_help_generate_payment_links_status']           = 'Weitere Informationen zum Generieren einer Bestellung mit Zahlungslink finden Sie in unserer <a href="https://docs.multisafepay.com/integrations/plugins/opencart/faq/" target="_blank">Dokumentation</a>';
 $_['text_help_generate_payment_links']                  = 'Wenn Sie eine Bestellung aus der OpenCart-Administration generieren und den im folgenden Feld ausgewählten Bestellstatus zuweisen, erhält der Benutzer die Bestelldetails per E-Mail, einschließlich eines Zahlungslinks';
+$_['text_help_lifetime_payment_link']				    = 'Dies zeigt die Lebensdauer eines Zahlungslinks an. Standardmäßig sind es 30 Tage. Dies bedeutet, dass der Kunde 30 Tage Zeit hat, um die Transaktion über den Zahlungslink abzuschließen';
 $_['error_permission']				                    = 'Warnung: Sie haben keine Berechtigung zur Änderung der Zahlungsweise MultiSafepay';
 $_['error_check_form']   		                        = 'Warnung: Bitte das Formular sorgfältig prüfen und nach Fehlermeldungen suchen';
 $_['error_empty_api_key']		                        = 'Warnung: API Key kann für die ausgewählte Umgebung nicht leer sein';

@@ -383,6 +383,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
             'payment_multisafepay_sandbox_api_key',
             'payment_multisafepay_api_key',
             'payment_multisafepay_google_analytics_account_id',
+            'payment_multisafepay_unit_lifetime_payment_link',
             'payment_multisafepay_days_active',
             'payment_multisafepay_second_chance',
             'payment_multisafepay_use_payment_logo',

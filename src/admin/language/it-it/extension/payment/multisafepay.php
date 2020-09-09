@@ -67,6 +67,9 @@ $_['text_show_gift_cards']                              = 'Mostra solo buoni reg
 $_['text_show_gateways']                                = 'Mostra solo i gateway di pagamento';
 $_['text_gateway_docs_info']                            = 'Maggiori informazioni su %s sulla nostra <a href="%s" target="_blank">pagina di documentazione</a>.';
 $_['text_order_status_id_initialized_default']          = 'Usa lo stato dell\'ordine predefinito inizializzato';
+$_['text_days']                                         = 'Giorni';
+$_['text_hours']                                        = 'Ore';
+$_['text_seconds']                                      = 'Secondi';
 $_['entry_account_type']                    			= 'Seleziona il tipo di account';
 $_['entry_environment']                     		    = 'Tipo di account';
 $_['entry_debug_mode']					 				= 'Modalità debug';
@@ -77,6 +80,7 @@ $_['entry_customer_group']                              = 'Gruppo consumatori';
 $_['entry_multisafepay_google_analytics_account_id']    = 'Account ID di Google Analytics';
 $_['entry_multisafepay_second_chance']       			= 'Status di Second Chance';
 $_['entry_multisafepay_days_active']        			= 'Giorni attivo';
+$_['entry_multisafepay_lifetime_payment_link']          = 'Durata del collegamento di pagamento';
 $_['entry_multisafepay_api_key']        				= 'Chiave API per live';
 $_['entry_multisafepay_sandbox_api_key']        		= 'Chiave API per test';
 $_['entry_multisafepay_use_payment_logo']   			= 'Utilizza loghi durante il checkout';
@@ -197,6 +201,7 @@ $_['text_help_customer_group']                          = 'Seleziona un gruppo d
 $_['text_help_drag_and_drop']                           = 'Trascina e rilascia questo elemento per impostare l\'ordine in cui questo metodo di pagamento verrà mostrato nel negozio';
 $_['text_help_generate_payment_links_status']           = 'Maggiori informazioni su come generare un ordine con link di pagamento in la nostra <a href="https://docs.multisafepay.com/integrations/plugins/opencart/faq/" target="_blank">documentazione</a>';
 $_['text_help_generate_payment_links']                  = 'Se si genera un ordine dall\'amministrazione OpenCart e si assegna lo stato dell\'ordine selezionato nel campo successivo, l\'utente riceverà i dettagli dell\'ordine per posta, incluso un collegamento di pagamento.';
+$_['text_help_lifetime_payment_link']				    = 'Ciò indica la durata di un collegamento di pagamento. L\'impostazione predefinita è 30 giorni. Ciò significa che il cliente ha 30 giorni di tempo per completare la transazione utilizzando il link di pagamento';
 $_['error_permission']				                    = 'Avviso: non hai il permesso di modificare le informazioni per i pagamenti MultiSafepay';
 $_['error_check_form']   		                        = 'Avviso: per favore, controlla attentamente il form e controlla le notifiche degli errori';
 $_['error_empty_api_key']		                        = 'Avviso: la chiave API non può essere vuota';

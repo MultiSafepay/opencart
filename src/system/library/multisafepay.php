@@ -269,9 +269,22 @@ class Multisafepay {
             $msp_order->addDelivery($customer_shipping);
         }
 
-        // Order Request: Days Active
-        if ($this->config->get('payment_multisafepay_days_active')) {
-            $msp_order->addDaysActive((int)$this->config->get('payment_multisafepay_days_active'));
+        // Order Request: Lifetime of payment link.
+        if ($this->config->get('payment_multisafepay_days_active') && $this->config->get('payment_multisafepay_unit_lifetime_payment_link')) {
+            $payment_multisafepay_unit_lifetime_payment_link = $this->config->get('payment_multisafepay_unit_lifetime_payment_link');
+            switch ($payment_multisafepay_unit_lifetime_payment_link) {
+                case 'days':
+                    $msp_order->addDaysActive((int)$this->config->get('payment_multisafepay_days_active'));
+                    break;
+                case 'hours':
+                    $hours = (int)$this->config->get('payment_multisafepay_days_active') * 60 * 60;
+                    $msp_order->addSecondsActive((int)$hours);
+                    break;
+                case 'seconds':
+                    $msp_order->addSecondsActive((int)$this->config->get('payment_multisafepay_days_active'));
+                    break;
+            }
+
         }
 
         return $msp_order;
@@ -290,7 +303,6 @@ class Multisafepay {
         if (!$msp_order) {
             return false;
         }
-
         $this->language->load(self::ROUTE);
         $sdk = $this->getSdkObject();
         $transaction_manager = $sdk->getTransactionManager();
