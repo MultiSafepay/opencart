@@ -6,7 +6,6 @@
   "require": {
     "php": "^7.1",
     "ext-json": "*",
-    "php-http/curl-client": "^2.1",
     "php-http/guzzle6-adapter": "^2.0",
     "guzzlehttp/psr7": "^1.6",
     "http-interop/http-factory-guzzle": "^1.0",
