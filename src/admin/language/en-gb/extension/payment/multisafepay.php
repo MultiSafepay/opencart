@@ -211,3 +211,4 @@ $_['error_invalid_api_key']		                        = 'Warning: API Key does no
 $_['error_gateways_not_available']	                    = 'Warning: It seems that some payment methods are not available in your MultiSafepay account. You must disable them';
 $_['error_gateway_not_available']	                    = 'Gateway: %s is not available for your MultiSafepay account';
 $_['error_php_version']	                                = 'It seems your PHP library is outdated. This extension requires PHP 7.1 or higher';
+$_['error_days_active']	                                = 'The value for the timelife of a payment link should be as minimum 1';

@@ -209,3 +209,4 @@ $_['error_invalid_api_key']		                        = 'Avviso: la chiave API no
 $_['error_gateways_not_available']	                    = 'Avviso: sembra che alcuni metodi di pagamento non siano disponibili nel tuo account MultiSafepay, per favore disabilitali';
 $_['error_gateway_not_available']	                    = 'Gateway: %s non sono disponibili nel tuo account MultiSafepay';
 $_['error_php_version']	                                = 'Sembra che la tua libreria PHP non sia aggiornata. Questa estensione richiede PHP 7.1 o superiore';
+$_['error_days_active']	                                = 'La durata di un collegamento di pagamento dovrebbe essere almeno 1';

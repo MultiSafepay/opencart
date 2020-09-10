@@ -211,3 +211,4 @@ $_['error_invalid_api_key']		                        = 'Advertencia: la clave AP
 $_['error_gateways_not_available']	                    = 'Advertencia: Parece que algunos métodos de pago no están disponibles en su cuenta MultiSafepay. ¡Debes desactivarlos!';
 $_['error_gateway_not_available']	                    = 'El método de pago: %s no está disponible en su cuenta MultiSafepay';
 $_['error_php_version']	                                = 'Parece que su biblioteca PHP está desactualizada. Esta extensión requiere PHP 7.1 o superior';
+$_['error_days_active']	                                = 'El tiempo de vida del enlace de pago debe ser como mínimo 1';

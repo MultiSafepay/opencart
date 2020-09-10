@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 + PLGOPNS-244: [refactor] Set currency field for each payment method using the same type field of customer groups
 + PLGOPNS-246: Add a notification message if PHP version is not supported by the plugin.
 + PLGOPNS-243: Improve fields related with lifetime of the payment link in the settings
++ PLGOPNS-253: Validate the field timelife of payment link to avoid negative number
 
 ## 3.0.0
 Release date: August, 2020

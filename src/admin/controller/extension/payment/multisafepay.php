@@ -415,6 +415,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
             'maintenance'       => 'string',
             'api_key'           => 'string',
             'sandbox_api_key'   => 'string',
+            'days_active'       => 'string',
             'gateway'           => 'array',
         );
     }
@@ -449,31 +450,24 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
 
         $this->load->model(self::ROUTE);
 
-        // user permissions
         if (!$this->user->hasPermission('modify', self::ROUTE)) {
             $this->error['warning'] = $this->language->get('error_check_form');
             return !$this->error;
         }
 
-
-        // If there are old files and extensions
         $old_files = $this->model_extension_payment_multisafepay->removeOldExtensionsAndFiles();
         if($old_files) {
             $this->error['maintenance'] = $this->language->get('text_maintenance_warning');
             return !$this->error;
         }
 
-        // Enviroment sandbox and api keys.
         if (($this->request->post['payment_multisafepay_environment'] == '1') && $this->request->post['payment_multisafepay_sandbox_api_key'] === '') {
             $this->error['sandbox_api_key'] = $this->language->get('error_empty_api_key');
         }
-
-        // Production enviroment and api keys.
         if (($this->request->post['payment_multisafepay_environment'] == '0') && $this->request->post['payment_multisafepay_api_key'] === '') {
             $this->error['api_key'] = $this->language->get('error_empty_api_key');
         }
 
-        // Validate if enable payment extensions are available for the merchant
         $this->registry->set('multisafepay', new Multisafepay($this->registry));
         $gateways = $this->multisafepay->getGateways();
         $enviroment = (empty($this->request->post['payment_multisafepay_environment'])) ? true : false;
@@ -495,6 +489,10 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
 
         if(!empty($this->error['gateway'])) {
             $this->error['warning'] = $this->language->get('error_gateways_not_available');
+        }
+
+        if (!isset($this->request->post['payment_multisafepay_days_active']) || $this->request->post['payment_multisafepay_days_active'] < 1) {
+            $this->error['days_active'] = $this->language->get('error_days_active');
         }
 
         if($this->error) {

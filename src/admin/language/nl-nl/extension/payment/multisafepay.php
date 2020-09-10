@@ -210,3 +210,4 @@ $_['error_invalid_api_key']		                        = 'Waarschuwing: API Key li
 $_['error_gateways_not_available']	                    = 'Waarschuwing: Het lijkt erop dat enkele betaalmethoden niet beschikbaar zijn in uw MultiSafepay Account. U moet deze uitschakelen';
 $_['error_gateway_not_available']	                    = 'Gateway: %s zijn niet beschikbaar in uw MultiSafepay account';
 $_['error_php_version']	                                = 'Het lijkt erop dat uw PHP-bibliotheek verouderd is. Deze extensie vereist PHP 7.1 of hoger';
+$_['error_days_active']	                                = 'De levensduur van een betaallink moet minimaal 1 zijn';

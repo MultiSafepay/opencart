@@ -210,3 +210,4 @@ $_['error_invalid_api_key']		                        = 'Warnung; API Key scheint
 $_['error_gateways_not_available']	                    = 'Warnung: Es scheint, dass einige Zahlungsweisen in Ihrem MultiSafepay-Konto nicht verfügbar sind. Sie müssen Sie deaktivieren';
 $_['error_gateway_not_available']	                    = 'Gateway: %s sind nicht verfügbar in ihrem MultiSafepay-Konto';
 $_['error_php_version']	                                = 'Es scheint, dass Ihre PHP-Bibliothek veraltet ist. Diese Erweiterung erfordert PHP 7.1 oder höher';
+$_['error_days_active']	                                = 'Die Lebensdauer einer Zahlungsverbindung sollte mindestens 1 betragen';
