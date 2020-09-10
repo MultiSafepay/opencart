@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 + PLGOPNS-243: Improve fields related with lifetime of the payment link in the settings
 + PLGOPNS-253: Validate the field timelife of payment link to avoid negative number
 + PLGOPNS-252: Improve description for each payment method on backoffice
-
++ PLGOPNS-254: Change settings in phpcs.xml file to allow functions bigger than 500 lines
 
 ## 3.0.0
 Release date: August, 2020

@@ -52,7 +52,7 @@
     <rule ref="ObjectCalisthenics.Files.FunctionLength">
         <properties>
             <!-- goal is 200 -->
-            <property name="maxLength" value="500"/>
+            <property name="maxLength" value="550"/>
         </properties>
     </rule>
     <rule ref="ObjectCalisthenics.Metrics.PropertyPerClassLimit">
