@@ -517,10 +517,10 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
         $support_variables =  array(
             'support_row_value_multisafepay_version' => $plugin_version,
             'support_row_value_multisafepay_version_oc_supported' => '3.0.0.0, 3.0.0.1, 3.0.0.2, 3.0.1.0, 3.0.1.1, 3.0.1.2, 3.0.2.0, 3.0.3.0, 3.0.3.1, 3.0.3.2, 3.0.3.3, 3.0.3.4, 3.0.3.5, 3.0.3.6',
-            'support_manual_link' => 'https://docs.multisafepay.com/support-tab/opencart/manual',
+            'support_manual_link' => 'https://docs.multisafepay.com/integrations/plugins/opencart/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms',
             'support_changelog_link' => 'https://github.com/MultiSafepay/OpenCart/blob/master/CHANGELOG.md',
-            'support_faq_link' => 'https://docs.multisafepay.com/support-tab/opencart/faq',
-            'support_api_documentation_link' => 'https://docs.multisafepay.com/support-tab/api',
+            'support_faq_link' => 'https://docs.multisafepay.com/integrations/plugins/opencart/faq/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms',
+            'support_api_documentation_link' => 'https://docs.multisafepay.com/api/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms',
             'support_multisafepay_github_link' => 'https://github.com/MultiSafepay/OpenCart',
             'support_create_test_account' => 'https://testmerchant.multisafepay.com/signup',
             'support_telephone' => 'tel:+31208500501',

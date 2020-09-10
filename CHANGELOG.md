@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 + PLGOPNS-253: Validate the field timelife of payment link to avoid negative number
 + PLGOPNS-252: Improve description for each payment method on backoffice
 + PLGOPNS-254: Change settings in phpcs.xml file to allow functions bigger than 500 lines
++ PLGOPNS-249: [refactor] Include Analytics tracking parameters in outbound links to docs pages and to MultiSafepay website
 
 ## 3.0.0
 Release date: August, 2020
