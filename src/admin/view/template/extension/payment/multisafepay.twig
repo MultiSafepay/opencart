@@ -360,6 +360,9 @@
                                                             {% if gateway.image %}
                                                                 <img src="../image/catalog/multisafepay/{{ gateway.image }}.png" class="payment-logo" alt="{{ gateway.description }}" title="{{ gateway.description }}" />
                                                             {% endif %}
+                                                            {% if gateway.brief_description %}
+                                                                {{ gateway.brief_description }}
+                                                            {% endif %}
                                                             {{ gateway.docs }}
                                                         </p>
                                                         <hr>
