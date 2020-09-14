@@ -11,6 +11,7 @@ Release date: August, 14th 2020
 + PLGOPNS-243: Improve fields related with lifetime of the payment link in the settings
 + PLGOPNS-253: Validate the field lifetime of payment link to avoid negative number
 + PLGOPNS-252: Improve description for each payment method on backoffice
++ PLGOPNS-265: Change the PHP-SDK dependency from version 3.0.2 to version 4.0.0
 
 ## 3.0.0
 Release date: August, 2020
