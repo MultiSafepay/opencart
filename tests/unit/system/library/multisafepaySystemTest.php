@@ -61,7 +61,6 @@ class MultiSafePaySystemTest extends OpenCartMultiSafepayTest {
         $this->assertArrayHasKey('city', $response['customer']);
         $this->assertArrayHasKey('state', $response['customer']);
         $this->assertArrayHasKey('country', $response['customer']);
-        $this->assertArrayHasKey('country_name', $response['customer']);
         $this->assertArrayHasKey('phone', $response['customer']);
         $this->assertArrayHasKey('email', $response['customer']);
         $this->assertArrayHasKey('ip_address', $response['customer']);
@@ -76,7 +75,6 @@ class MultiSafePaySystemTest extends OpenCartMultiSafepayTest {
         $this->assertNotEmpty($response['customer']['city']);
         $this->assertNotEmpty($response['customer']['state']);
         $this->assertNotEmpty($response['customer']['country']);
-        $this->assertNotEmpty($response['customer']['country_name']);
         $this->assertNotEmpty($response['customer']['phone']);
         $this->assertNotEmpty($response['customer']['email']);
         $this->assertNotEmpty($response['customer']['ip_address']);
@@ -95,7 +93,6 @@ class MultiSafePaySystemTest extends OpenCartMultiSafepayTest {
         $this->assertArrayHasKey('city', $response['delivery']);
         $this->assertArrayHasKey('state', $response['delivery']);
         $this->assertArrayHasKey('country', $response['delivery']);
-        $this->assertArrayHasKey('country_name', $response['delivery']);
         $this->assertArrayHasKey('phone', $response['delivery']);
         $this->assertArrayHasKey('email', $response['delivery']);
         $this->assertArrayHasKey('ip_address', $response['delivery']);
@@ -110,7 +107,6 @@ class MultiSafePaySystemTest extends OpenCartMultiSafepayTest {
         $this->assertNotEmpty($response['delivery']['city']);
         $this->assertNotEmpty($response['delivery']['state']);
         $this->assertNotEmpty($response['delivery']['country']);
-        $this->assertNotEmpty($response['delivery']['country_name']);
         $this->assertNotEmpty($response['delivery']['phone']);
         $this->assertNotEmpty($response['delivery']['email']);
         $this->assertNotEmpty($response['delivery']['ip_address']);
@@ -213,7 +209,6 @@ class MultiSafePaySystemTest extends OpenCartMultiSafepayTest {
         $this->assertEquals('Noord-Holland', $response['customer']['city']);
         $this->assertEquals('Noord-Holland', $response['customer']['state']);
         $this->assertEquals('NL', $response['customer']['country']);
-        $this->assertEquals('Netherlands', $response['customer']['country_name']);
         $this->assertEquals('0031345678933', $response['customer']['phone']);
         $this->assertEquals('integration@multisafepay.com', $response['customer']['email']);
         $this->assertEquals('127.0.0.1', $response['customer']['ip_address']);
@@ -232,7 +227,6 @@ class MultiSafePaySystemTest extends OpenCartMultiSafepayTest {
         $this->assertEquals('Noord-Holland', $response['delivery']['city']);
         $this->assertEquals('Noord-Holland', $response['delivery']['state']);
         $this->assertEquals('NL', $response['delivery']['country']);
-        $this->assertEquals('Netherlands', $response['delivery']['country_name']);
         $this->assertEquals('0031345678933', $response['delivery']['phone']);
         $this->assertEquals('integration@multisafepay.com', $response['delivery']['email']);
         $this->assertEquals('127.0.0.1', $response['delivery']['ip_address']);
@@ -372,7 +366,6 @@ class MultiSafePaySystemTest extends OpenCartMultiSafepayTest {
         $this->assertEquals('Noord-Holland', $response['customer']['city']);
         $this->assertEquals('Noord-Holland', $response['customer']['state']);
         $this->assertEquals('NL', $response['customer']['country']);
-        $this->assertEquals('Netherlands', $response['customer']['country_name']);
         $this->assertEquals('0031345678933', $response['customer']['phone']);
         $this->assertEquals('integration@multisafepay.com', $response['customer']['email']);
         $this->assertEquals('127.0.0.1', $response['customer']['ip_address']);
@@ -391,7 +384,6 @@ class MultiSafePaySystemTest extends OpenCartMultiSafepayTest {
         $this->assertEquals('Noord-Holland', $response['delivery']['city']);
         $this->assertEquals('Noord-Holland', $response['delivery']['state']);
         $this->assertEquals('NL', $response['delivery']['country']);
-        $this->assertEquals('Netherlands', $response['delivery']['country_name']);
         $this->assertEquals('0031345678933', $response['delivery']['phone']);
         $this->assertEquals('integration@multisafepay.com', $response['delivery']['email']);
         $this->assertEquals('127.0.0.1', $response['delivery']['ip_address']);
@@ -587,7 +579,6 @@ class MultiSafePaySystemTest extends OpenCartMultiSafepayTest {
         $this->assertEquals('Malaga', $response['customer']['city']);
         $this->assertEquals('Malaga', $response['customer']['state']);
         $this->assertEquals('ES', $response['customer']['country']);
-        $this->assertEquals('Spain', $response['customer']['country_name']);
         $this->assertEquals('0034691246168', $response['customer']['phone']);
         $this->assertEquals('integration@multisafepay.com', $response['customer']['email']);
         $this->assertEquals('127.0.0.1', $response['customer']['ip_address']);
@@ -606,7 +597,6 @@ class MultiSafePaySystemTest extends OpenCartMultiSafepayTest {
         $this->assertEquals('Malaga', $response['delivery']['city']);
         $this->assertEquals('Malaga', $response['delivery']['state']);
         $this->assertEquals('ES', $response['delivery']['country']);
-        $this->assertEquals('Spain', $response['delivery']['country_name']);
         $this->assertEquals('0034691246168', $response['delivery']['phone']);
         $this->assertEquals('integration@multisafepay.com', $response['delivery']['email']);
         $this->assertEquals('127.0.0.1', $response['delivery']['ip_address']);
@@ -688,7 +678,6 @@ class MultiSafePaySystemTest extends OpenCartMultiSafepayTest {
         $this->assertEquals('Malaga', $response['customer']['city']);
         $this->assertEquals('Malaga', $response['customer']['state']);
         $this->assertEquals('ES', $response['customer']['country']);
-        $this->assertEquals('Spain', $response['customer']['country_name']);
         $this->assertEquals('0034691246168', $response['customer']['phone']);
         $this->assertEquals('integration@multisafepay.com', $response['customer']['email']);
         $this->assertEquals('127.0.0.1', $response['customer']['ip_address']);
@@ -707,7 +696,6 @@ class MultiSafePaySystemTest extends OpenCartMultiSafepayTest {
         $this->assertEquals('Malaga', $response['delivery']['city']);
         $this->assertEquals('Malaga', $response['delivery']['state']);
         $this->assertEquals('ES', $response['delivery']['country']);
-        $this->assertEquals('Spain', $response['delivery']['country_name']);
         $this->assertEquals('0034691246168', $response['delivery']['phone']);
         $this->assertEquals('integration@multisafepay.com', $response['delivery']['email']);
         $this->assertEquals('127.0.0.1', $response['delivery']['ip_address']);
@@ -790,7 +778,6 @@ class MultiSafePaySystemTest extends OpenCartMultiSafepayTest {
         $this->assertEquals('Malaga', $response['customer']['city']);
         $this->assertEquals('Malaga', $response['customer']['state']);
         $this->assertEquals('ES', $response['customer']['country']);
-        $this->assertEquals('Spain', $response['customer']['country_name']);
         $this->assertEquals('0034691246168', $response['customer']['phone']);
         $this->assertEquals('integration@multisafepay.com', $response['customer']['email']);
         $this->assertEquals('127.0.0.1', $response['customer']['ip_address']);
@@ -809,7 +796,6 @@ class MultiSafePaySystemTest extends OpenCartMultiSafepayTest {
         $this->assertEquals('Malaga', $response['delivery']['city']);
         $this->assertEquals('Malaga', $response['delivery']['state']);
         $this->assertEquals('ES', $response['delivery']['country']);
-        $this->assertEquals('Spain', $response['delivery']['country_name']);
         $this->assertEquals('0034691246168', $response['delivery']['phone']);
         $this->assertEquals('integration@multisafepay.com', $response['delivery']['email']);
         $this->assertEquals('127.0.0.1', $response['delivery']['ip_address']);
@@ -891,7 +877,6 @@ class MultiSafePaySystemTest extends OpenCartMultiSafepayTest {
         $this->assertArrayHasKey('city', $response);
         $this->assertArrayHasKey('state', $response);
         $this->assertArrayHasKey('country', $response);
-        $this->assertArrayHasKey('country_name', $response);
         $this->assertArrayHasKey('ip_address', $response);
         $this->assertArrayHasKey('locale', $response);
         $this->assertArrayHasKey('user_agent', $response);
@@ -907,7 +892,6 @@ class MultiSafePaySystemTest extends OpenCartMultiSafepayTest {
         $this->assertArrayHasKey('city', $response);
         $this->assertArrayHasKey('state', $response);
         $this->assertArrayHasKey('country', $response);
-        $this->assertArrayHasKey('country_name', $response);
         $this->assertArrayHasKey('ip_address', $response);
         $this->assertArrayHasKey('locale', $response);
         $this->assertArrayHasKey('user_agent', $response);
