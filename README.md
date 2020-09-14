@@ -19,7 +19,7 @@ The supported Payment Methods & Giftcards for this plugin can be found over here
 - Tested on PHP 7.2, 7.3
 
 ## Installation and Upgrade
-### How to install the extension through OpenCart installer tool
+### How to install the plugin through OpenCart installer tool
 1. Download the Plugin_OpenCart_3.x.x.ocmod.zip
 2. Go to your OpenCart admin page and click in the menu item "Extensions" > "Installer"
 3. Click on the upload button and select in your computer the downloaded file
@@ -28,11 +28,11 @@ The supported Payment Methods & Giftcards for this plugin can be found over here
 6. On the upper right corner of the screen, click on the blue button with a cog wheel icon, and then click on the refresh icon to clean both caches. 
 7. Go to "Extensions" > "Modifications" and click on refresh button.
 8. Go to "Extensions" > "Payments" > "MultiSafepay" and click in the button with the install icon.
-9. You just installed the extension. Now you need to setup the settings. 
+9. You just installed the plugin. Now you need to setup the settings. 
 
 For additional information or instructions please see our [installation & configuration manual](https://docs.multisafepay.com/plugins/opencart/manual/)
 
-### How to upgrade the extension from version 2.3.0 to 3.0.0
+### How to upgrade the plugin from version 2.3.0 to 3.0.0
 1. Download the Plugin_OpenCart_3.x.x.ocmod.zip
 2. Go to your OpenCart admin page and click in the menu item "Extensions" > "Installer"
 3. Click on the upload button and select in your computer the downloaded file
@@ -42,12 +42,12 @@ For additional information or instructions please see our [installation & config
 7. Go to "Extensions" > "Modifications" and click on refresh button.
 8. Go to "Extensions" > "Payments" > "MultiSafepay" and click in the edit button to access the settings page.
 9. You will see a warning notification message, indicating is needed to make some maintenance tasks to delete old extension files. 
-10. Go to "Maintenance" tab and at the end of the list; click on the button to delete old extension files. 
-11. Setup all the fields required in the extension. 
+10. Go to "Maintenance" tab and at the end of the list; click on the button to delete old plugin files. 
+11. Setup all the fields required in the plugin. 
 
 For additional information or instructions please see our [installation & configuration manual](https://docs.multisafepay.com/plugins/opencart/manual/)
 
-### How to upgrade the extension from version lower or equals than 2.2.1 to 3.0.0
+### How to upgrade the plugin from version lower or equals than 2.2.1 to 3.0.0
 Please contact one of our integration specialist to receive help and guide on this process: <a href="mailto:integration@multisafepay.com">integration@multisafepay.com</a>
 
 ## Support
