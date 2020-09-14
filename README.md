@@ -47,7 +47,7 @@ For additional information or instructions please see our [installation & config
 
 For additional information or instructions please see our [installation & configuration manual](https://docs.multisafepay.com/plugins/opencart/manual/)
 
-### How to upgrade the plugin from version lower or equals than 2.2.1 to 3.0.0
+### How to upgrade the plugin from version lower or equals than 2.2.1 to 3.X.X
 Please contact one of our integration specialist to receive help and guide on this process: <a href="mailto:integration@multisafepay.com">integration@multisafepay.com</a>
 
 ## Support
