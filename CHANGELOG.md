@@ -5,16 +5,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## 3.1.0
-Release date: August, 14th 2020
+Release date: September, 14th 2020
 
 + PLGOPNS-246: Add a notification message if PHP version is not supported by the plugin.
 + PLGOPNS-243: Improve fields related with lifetime of the payment link in the settings
 + PLGOPNS-253: Validate the field lifetime of payment link to avoid negative number
 + PLGOPNS-252: Improve description for each payment method on backoffice
-+ PLGOPNS-265: Change the PHP-SDK dependency from version 3.0.2 to version 4.0.0
 
 ## 3.0.0
-Release date: August, 2020
+Release date: September, 7th 2020
 
 ### Improvements 
 + PLGOPNS-133: New opencart rewrite
