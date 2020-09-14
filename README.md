@@ -32,7 +32,7 @@ The supported Payment Methods & Giftcards for this plugin can be found over here
 
 For additional information or instructions please see our [installation & configuration manual](https://docs.multisafepay.com/plugins/opencart/manual/)
 
-### How to upgrade the plugin from version 2.3.0 to 3.0.0
+### How to upgrade the plugin from version 2.3.0 to 3.X.X
 1. Download the Plugin_OpenCart_3.x.x.ocmod.zip
 2. Go to your OpenCart admin page and click in the menu item "Extensions" > "Installer"
 3. Click on the upload button and select in your computer the downloaded file
