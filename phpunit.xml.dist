@@ -25,6 +25,8 @@
         </testsuite>
     </testsuites>
     <php>
+        <!-- OPENCART VERSION -->
+        <env name="OC_VERSION" value="" />
         <!-- ROOT PATH TO THE OPENCART APPLICATION -->
         <env name="OC_ROOT" value="" />
         <!-- ROOT PATH TO THE TESTS FOLDER  -->
