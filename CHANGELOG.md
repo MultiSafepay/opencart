@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Unreleased
 
 + PLGOPNS-256: Use a link to documentation, instead a tooltip, in Second Chance field
++ PLGOPNS-283: [chore] Update modman file and remove comments from the lines related with test files
 
 ## 3.1.0
 Release date: September, 14th 2020

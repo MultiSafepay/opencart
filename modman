@@ -21,7 +21,6 @@ src/image/catalog/multisafepay/ image/catalog/multisafepay
 src/system/library/multisafepay/ system/library/multisafepay
 src/system/library/multisafepay.php system/library/multisafepay.php
 src/system/library/multisafepayevents.php system/library/multisafepayevents.php
-## Just for test
-#src/system/config/test-config.php system/config/test-config.php
-#src/system/library/session/test.php system/library/session/test.php
-#src/admin/controller/startup/test_startup.php admin/controller/startup/test_startup.php
+src/system/config/test-config.php system/config/test-config.php
+src/system/library/session/test.php system/library/session/test.php
+src/admin/controller/startup/test_startup.php admin/controller/startup/test_startup.php
