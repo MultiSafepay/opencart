@@ -172,7 +172,7 @@ class OpenCartMultiSafepayTest extends TestCase {
      *
      */
     public function generateOrderData() {
-        $orderFixture = new OrdersTest(1);
+        $orderFixture = new OrdersTest(0,0);
         $order_information  = $orderFixture->getOrderInformation();
         $customerFixture = new CustomersTest(0);
         $customer_information  = $customerFixture->getCustomer();
