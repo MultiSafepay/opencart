@@ -131,6 +131,7 @@ $_['entry_customer_group']                              = 'Klantengroep';
 $_['entry_multisafepay_google_analytics_account_id']    = 'Google Analytics-account-ID';
 $_['entry_multisafepay_second_chance']       			= 'Second Chance status';
 $_['entry_multisafepay_days_active']        			= 'Dagen actief';
+$_['entry_multisafepay_time_active']        			= 'Tijd actief';
 $_['entry_multisafepay_lifetime_payment_link']          = 'Levensduur van betaallink';
 $_['entry_multisafepay_api_key']        				= 'Live API-sleutel';
 $_['entry_multisafepay_sandbox_api_key']        		= 'Test API-sleutel';

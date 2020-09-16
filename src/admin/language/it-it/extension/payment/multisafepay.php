@@ -130,6 +130,7 @@ $_['entry_customer_group']                              = 'Gruppo consumatori';
 $_['entry_multisafepay_google_analytics_account_id']    = 'Account ID di Google Analytics';
 $_['entry_multisafepay_second_chance']       			= 'Status di Second Chance';
 $_['entry_multisafepay_days_active']        			= 'Giorni attivo';
+$_['entry_multisafepay_time_active']        			= 'Tempo attivo';
 $_['entry_multisafepay_lifetime_payment_link']          = 'Durata del collegamento di pagamento';
 $_['entry_multisafepay_api_key']        				= 'Chiave API per live';
 $_['entry_multisafepay_sandbox_api_key']        		= 'Chiave API per test';

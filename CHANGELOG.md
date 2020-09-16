@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 + PLGOPNS-283: [chore] Update modman file and remove comments from the lines related with test files
 + PLGOPNS-282: [test] Add second parameter to GenerateOrderData function
 + PLGOPNS-281: [test] Add OC_VERSION env variable to phpunit.xml.dist
++ PLGOPNS-284: [refactor] Fix placeholder for 'lifetime payment link' field
 
 ## 3.1.0
 Release date: September, 14th 2020
