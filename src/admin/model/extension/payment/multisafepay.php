@@ -311,4 +311,15 @@ class ModelExtensionPaymentMultiSafePay extends Model {
         );
     }
 
+    /**
+     * Returns events by code.
+     * This function does not exist built in OpenCart prior to 3.2.
+     *
+     */
+    public function getEventByCode($code) {
+        $query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "event` WHERE `code` = '" . $this->db->escape($code) . "' LIMIT 1");
+
+        return $query->row;
+    }
+
 }

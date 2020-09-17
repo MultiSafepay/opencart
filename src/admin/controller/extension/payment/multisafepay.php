@@ -223,9 +223,10 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
      */
     private function addMultiSafepayEvents() {
         $this->load->model('setting/event');
+        $this->load->model(self::ROUTE);
 
         // All payment methods in catalog checkout: msp_all_methods_at_front
-        $event_multisafepay_multiple_gateways = $this->model_setting_event->getEventByCode('msp_all_methods_at_front');
+        $event_multisafepay_multiple_gateways = $this->model_extension_payment_multisafepay->getEventByCode('msp_all_methods_at_front');
         if(!$event_multisafepay_multiple_gateways) {
             $this->model_setting_event->addEvent('msp_all_methods_at_front',
                 'catalog/controller/checkout/payment_method/after',
@@ -233,7 +234,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
         }
 
         // All payment methods in admin checkout: msp_all_methods_at_back
-        $event_api_multisafepay_multiple_gateways = $this->model_setting_event->getEventByCode('msp_all_methods_at_back');
+        $event_api_multisafepay_multiple_gateways = $this->model_extension_payment_multisafepay->getEventByCode('msp_all_methods_at_back');
         if(!$event_api_multisafepay_multiple_gateways) {
             $this->model_setting_event->addEvent('msp_all_methods_at_back',
                 'catalog/controller/api/payment/methods/after',
@@ -241,7 +242,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
         }
 
         // Set as invoiced the order in MSP: msp_set_invoiced_to_msp
-        $event_multisafepay_create_invoice = $this->model_setting_event->getEventByCode('msp_set_invoiced_to_msp');
+        $event_multisafepay_create_invoice = $this->model_extension_payment_multisafepay->getEventByCode('msp_set_invoiced_to_msp');
         if(!$event_multisafepay_create_invoice) {
             $this->model_setting_event->addEvent('msp_set_invoiced_to_msp',
                 'admin/model/sale/order/createInvoiceNo/after',
@@ -249,7 +250,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
         }
 
         // Set MSP tab in admin order view page: msp_set_order_tab
-        $event_multisafepay_order_tabs = $this->model_setting_event->getEventByCode('msp_set_order_tab');
+        $event_multisafepay_order_tabs = $this->model_extension_payment_multisafepay->getEventByCode('msp_set_order_tab');
         if(!$event_multisafepay_order_tabs) {
             $this->model_setting_event->addEvent('msp_set_order_tab',
                 'admin/view/sale/order_info/before',
@@ -257,7 +258,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
         }
 
         // Attach the payment link into the customers email and in the order history: msp_payment_links_at_email
-        $event_multisafepay_add_payment_link_order_email = $this->model_setting_event->getEventByCode('msp_payment_links_at_email');
+        $event_multisafepay_add_payment_link_order_email = $this->model_extension_payment_multisafepay->getEventByCode('msp_payment_links_at_email');
         if(!$event_multisafepay_add_payment_link_order_email) {
             $this->model_setting_event->addEvent('msp_payment_links_at_email',
                 'catalog/view/mail/order_add/before',
