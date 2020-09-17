@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
++ DAVAMS-320 : Rebrand 'Klarna' to 'Klarna - Pay later in 14 days' inclusive a new logo
 + PLGOPNS-256: Use a link to documentation, instead a tooltip, in Second Chance field
 + PLGOPNS-283: [chore] Update modman file and remove comments from the lines related with test files
 + PLGOPNS-282: [test] Add second parameter to GenerateOrderData function
