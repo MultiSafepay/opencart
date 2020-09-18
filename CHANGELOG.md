@@ -6,15 +6,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
-### Improvements 
-+ PLGOPNS-256: Use a link to documentation, instead a tooltip, in Second Chance field
-+ PLGOPNS-283: [chore] Update modman file and remove comments from the lines related with test files
-+ PLGOPNS-282: [test] Add second parameter to GenerateOrderData function
-+ PLGOPNS-281: [test] Add OC_VERSION env variable to phpunit.xml.dist
-+ PLGOPNS-284: [refactor] Fix placeholder for 'lifetime payment link' field
+
+## 3.2.0
+Release date: September, 17th 2020
+
++ DAVAMS-320 : Rebrand 'Klarna' to 'Klarna - Pay later in 14 days' inclusive a new logo
++ PLGOPNS-256: Add a link to documentation in Second Chance field
 
 ### Fixed
 + PLGOPNS-295: Add getEventByCode function, which does not exist prior to OC 3.0.2
++ PLGOPNS-284: Fix placeholder for 'lifetime payment link' field
 
 
 ## 3.1.0
