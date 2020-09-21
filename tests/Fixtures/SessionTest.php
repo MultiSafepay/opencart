@@ -23,7 +23,8 @@
 
 class SessionTest {
 
-    public function __construct() {
+    public function __construct($customer_id) {
+        $this->customer_id = $customer_id;
         $this->faker = Faker\Factory::create('es_ES');
         $this->first_name = $this->faker->firstName;
         $this->last_name = $this->faker->lastName;
@@ -48,7 +49,7 @@ class SessionTest {
         $session = array(
             'language' => 'en-gb',
             'currency' => 'EUR',
-            'customer_id' => 1,
+            'customer_id' => $this->customer_id,
             'shipping_address' => array(
                 'address_id' => 1,
                 'firstname' => $this->first_name,

@@ -29,9 +29,16 @@ class OpenCartMultiSafepayTest extends TestCase {
     private static $loaded = false;
     private static $has_orders = false;
     private static $created_orders = null;
+    private static $created_customer_id = null;
+    private static $created_geo_zone_id = null;
+    private static $created_tax_rate_id = null;
+    private static $created_tax_class_id = null;
+    private static $previous_products_tax_class_id = null;
+    private static $created_coupon_id = null;
+    private static $shipping_method_flat_rate_tax_class_id = null;
     private static $is_admin = null;
     public static $registry;
-
+    public static $helper;
 
     /**
      * Overrides setUp method in TestCase
@@ -54,10 +61,12 @@ class OpenCartMultiSafepayTest extends TestCase {
             self::$registry = $registry;
             self::$registry->set('controller', $route);
             self::$loaded = true;
-            self::$has_orders = $this->hasOrders();
+            self::$helper = new Helper(self::$registry);
+            self::$has_orders = self::$helper->hasOrders();
             if(!self::$has_orders) {
                 $this->generateOrdersInformation();
             }
+
         }
     }
 
@@ -66,18 +75,96 @@ class OpenCartMultiSafepayTest extends TestCase {
      *
      */
     public function tearDown() {
+
         if(self::$created_orders) {
-            $this->load->model('checkout/order');
-             foreach (self::$created_orders as $order_id) {
-                 $this->model_checkout_order->deleteOrder($order_id);
-             }
+            foreach (self::$created_orders as $order_id) {
+                self::$helper->deleteOrder($order_id);
+            }
         }
+
+        if(self::$created_customer_id) {
+            self::$helper->deleteCustomer(self::$created_customer_id);
+        }
+
+        if(self::$created_geo_zone_id) {
+            self::$helper->deleteGeoZone(self::$created_geo_zone_id);
+        }
+        if(self::$created_tax_rate_id) {
+            self::$helper->deleteTaxRate(self::$created_tax_rate_id);
+        }
+        if(self::$created_tax_class_id) {
+            self::$helper->deleteTaxClass(self::$created_tax_class_id);
+        }
+
+        if(self::$previous_products_tax_class_id) {
+            foreach (self::$previous_products_tax_class_id as $product_id => $tax_class_id) {
+                self::$helper->editProductTaxClassId($product_id, $tax_class_id);
+            }
+        }
+
+        if(self::$shipping_method_flat_rate_tax_class_id) {
+            self::$helper->editTaxClassFromFlatShippingMethod(self::$shipping_method_flat_rate_tax_class_id);
+        }
+
+        if(self::$created_coupon_id) {
+            self::$helper->deleteCoupon(self::$created_coupon_id);
+        }
+
         if($this->cart->getProducts()) {
             $this->cart->clear();
         }
+
         self::$is_admin = null;
         self::$loaded = false;
         self::$has_orders = false;
+        self::$created_orders = null;
+        self::$created_customer_id = null;
+        self::$created_geo_zone_id = null;
+        self::$created_tax_rate_id = null;
+        self::$created_tax_class_id = null;
+        self::$previous_products_tax_class_id = null;
+        self::$created_coupon_id = null;
+    }
+
+
+    /**
+     * Generate OpenCart geo zones and setup tax rates and tax classes
+     * needed to run some tests related with transactions.
+     *
+     */
+    public function generateGeoZoneAndTaxes() {
+        // Add GeoZone.
+        $fixture_geo_zones = new GeoZonesTest();
+        $data_geo_zone = $fixture_geo_zones->getGeoZones();
+        self::$created_geo_zone_id = self::$helper->addGeoZone($data_geo_zone);
+
+        // Add TaxRate.
+        $fixture_tax_rates = new TaxRatesTest();
+        $data_tax_rate = $fixture_tax_rates->getTaxRates(self::$created_geo_zone_id);
+        self::$created_tax_rate_id = self::$helper->addTaxRate($data_tax_rate);
+
+        // Add TaxClass.
+        $fixture_tax_classes = new TaxClassesTest();
+        $data_tax_class = $fixture_tax_classes->getTaxClasses(self::$created_tax_rate_id);
+        self::$created_tax_class_id = self::$helper->addTaxClass($data_tax_class);
+
+        // Assign Tax Class to products including in the tests.
+        $products_ids = array('30', '49', '28', '29', '41', '42', '40', '43');
+        self::$previous_products_tax_class_id = array();
+        foreach ($products_ids as $product_id) {
+            self::$previous_products_tax_class_id[$product_id] = self::$helper->getTaxClassIdByProduct($product_id);
+        }
+        foreach ($products_ids as $product_id) {
+            self::$helper->editProductTaxClassId($product_id, self::$created_tax_class_id);
+        }
+
+        $this->unSetTaxRateOfShippingMethod();
+
+    }
+
+    public function unSetTaxRateOfShippingMethod() {
+        self::$shipping_method_flat_rate_tax_class_id = self::$helper->getTaxClassFromFlatShippingMethod();
+        self::$helper->editTaxClassFromFlatShippingMethod(0);
     }
 
     /**
@@ -121,36 +208,25 @@ class OpenCartMultiSafepayTest extends TestCase {
      * Register Multisafepay library file as object
      *
      */
-    public function multisafepay() {
+    public function multisafepay(){
         return self::$registry->set('multisafepay', new Multisafepay($this->registry));
     }
 
     /**
-     * Get Random Order ID from database, and if no orders are registered in database
-     * creates a few ones.
+     * Register a customer to execute test with him
      *
      */
-    public function getRandomOrderId() {
-        $sql = "SELECT order_id FROM `" . DB_PREFIX . "order` ORDER BY RAND() LIMIT 1";
-        $query = $this->db->query($sql);
-        if($query->rows) {
-            return $query->row['order_id'];
+    public function generateCustomerInformation() {
+        $customerFixture = new CustomersTest(0, self::$created_customer_id);
+        $customer_data = $customerFixture->getCustomerAccountData();
+        if (self::isAdmin()) {
+            $this->load->model('customer/customer');
+            self::$created_customer_id = $this->model_customer_customer->addCustomer($customer_data);
+        } else {
+            $this->load->model('account/customer');
+            self::$created_customer_id = $this->model_account_customer->addCustomer($customer_data);
         }
-    }
-
-    /**
-     * Check if there are orders in database to make tests over them
-     *
-     */
-    public function hasOrders() {
-        $sql = "SELECT order_id FROM `" . DB_PREFIX . "order` ORDER BY RAND() LIMIT 1";
-        $query = $this->db->query($sql);
-        if(!$query->rows) {
-           return false;
-        }
-        if($query->rows) {
-            return true;
-        }
+        self::$helper->addReward(self::$created_customer_id, 'Reward PHPUnit', 100, 0);
     }
 
     /**
@@ -158,12 +234,11 @@ class OpenCartMultiSafepayTest extends TestCase {
      *
      */
     public function generateOrdersInformation() {
-        $number_of_orders = 2;
-        $this->load->model('checkout/order');
+        $number_of_orders = 1;
         self::$created_orders = array();
         for ($i = 1; $i <= $number_of_orders; $i++) {
             $data = $this->generateOrderData();
-            self::$created_orders[] = $this->model_checkout_order->addOrder($data);
+            self::$created_orders[] = self::$helper->addOrder($data);
         }
     }
 
@@ -174,7 +249,7 @@ class OpenCartMultiSafepayTest extends TestCase {
     public function generateOrderData() {
         $orderFixture = new OrdersTest(0,0);
         $order_information  = $orderFixture->getOrderInformation();
-        $customerFixture = new CustomersTest(0);
+        $customerFixture = new CustomersTest(0, 1);
         $customer_information  = $customerFixture->getCustomer();
         $order = array_merge($order_information, $customer_information);
         return $order;
@@ -258,7 +333,8 @@ class OpenCartMultiSafepayTest extends TestCase {
      *
      */
     public function getSessionData() {
-        $sessionFixture = new SessionTest();
+        $this->generateCustomerInformation();
+        $sessionFixture = new SessionTest(self::$created_customer_id);
         $session_information = $sessionFixture->getSessionInformation();
         $session_information['payment_methods'] = array();
         $gateways = $this->multisafepay->getGateways();
@@ -280,7 +356,7 @@ class OpenCartMultiSafepayTest extends TestCase {
     public function getMockMultiSafepayGetOrderRequestObject($order_id, $order_key, $customer_key) {
         $orderFixture = new OrdersTest($order_id, $order_key);
         $order_information = $orderFixture->getOrderInformation();
-        $customerFixture = new CustomersTest($customer_key);
+        $customerFixture = new CustomersTest($customer_key, 1);
         $customer_information  = $customerFixture->getCustomer();
         $order_information = array_merge($order_information, $customer_information);
 
@@ -289,10 +365,17 @@ class OpenCartMultiSafepayTest extends TestCase {
         $this->tax->setShippingAddress($customer_information['shipping_country_id'], $customer_information['shipping_zone_id']);
         $this->tax->setStoreAddress($this->config->get('config_country_id'), $this->config->get('config_zone_id'));
 
+        $api_key = getenv('API_KEY');
+        $sdk = self::$helper->getSdkObject(false, $api_key);
+
         $mock = $this->getMockBuilder(Multisafepay::class)
             ->setConstructorArgs(array(self::$registry))
-            ->setMethods(array('getOrderInfo', 'getOrderTotals', 'getOrderProducts'))
+            ->setMethods(array('getSdkObject', 'getOrderInfo', 'getOrderTotals', 'getOrderProducts', 'getRewardPointsDiscountByProduct'))
             ->getMock();
+
+        $mock->method('getSdkObject')
+            ->withAnyParameters()
+            ->willReturn($sdk);
 
         $mock->method('getOrderInfo')
             ->withAnyParameters()
@@ -305,6 +388,10 @@ class OpenCartMultiSafepayTest extends TestCase {
         $mock->method('getOrderProducts')
             ->withAnyParameters()
             ->willReturn($orderFixture->getProducts());
+
+        $mock->method('getRewardPointsDiscountByProduct')
+            ->withAnyParameters()
+            ->willReturn(array('40' => array('discount_per_product' => '33.666666666667', 'discount_per_products' => '67.333333333333')));
 
         return $mock;
     }
@@ -338,9 +425,33 @@ class OpenCartMultiSafepayTest extends TestCase {
      *
      */
     public function getCustomerPaymentInformation() {
-        $customerFixture = new CustomersTest(0);
+        $customerFixture = new CustomersTest(0, 1);
         $customer_payment_information  = $customerFixture->getCustomerPayment();
         return $customer_payment_information;
-
     }
+
+    /**
+     * Generates a coupon into the database
+     * Will be delete in tearDown
+     *
+     */
+    public function generateCoupons() {
+        $couponFixture = new CouponsTest();
+        $data_coupon = $couponFixture->getCoupon();
+        self::$created_coupon_id =  self::$helper->addCoupon($data_coupon);
+    }
+
+    /**
+     * Get Random Order ID from database, and if no orders are registered in database
+     * creates a few ones.
+     *
+     */
+    public function getRandomOrderId() {
+        $sql = "SELECT order_id FROM `" . DB_PREFIX . "order` ORDER BY RAND() LIMIT 1";
+        $query = $this->db->query($sql);
+        if($query->rows) {
+            return $query->row['order_id'];
+        }
+    }
+
 }

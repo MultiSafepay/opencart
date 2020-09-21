@@ -23,11 +23,14 @@
 
 class CustomersTest {
 
-    public function __construct($customer_key) {
+    public function __construct($customer_key, $customer_id) {
+        $location = ['nl_NL','es_ES'];
+        $this->faker = Faker\Factory::create($location[$customer_key]);
         $this->key = $customer_key;
+        $this->customer_id = $customer_id;
         $this->first_name = 'John';
         $this->last_name = 'Doe';
-        $this->email = 'integration@multisafepay.com';
+        $this->email = $this->faker->email;
 
         $this->telephone = ['0031345678933', '0034691246168'];
         $this->address = ['Kraanspoor', 'Urb. El Saladillo, Edf. Altair'];
@@ -46,7 +49,7 @@ class CustomersTest {
 
     public function getCustomerAccount() {
         $customer = array(
-            'customer_id' => '1',
+            'customer_id' => $this->customer_id,
             'customer_group_id' => '1',
             'firstname' => $this->first_name,
             'lastname' => $this->last_name,
@@ -66,7 +69,7 @@ class CustomersTest {
             'payment_address_2' => $this->address_2[$this->key],
             'payment_postcode' => $this->post_code[$this->key],
             'payment_city' => $this->city[$this->key],
-            'payment_zone_id' => $this->post_code[$this->key],
+            'payment_zone_id' => $this->zone_id[$this->key],
             'payment_zone' => $this->city[$this->key],
             'payment_zone_code' => $this->zone_code[$this->key],
             'payment_country_id' => $this->country_id[$this->key],
@@ -105,6 +108,54 @@ class CustomersTest {
         $customer = array_merge($customer, $this->getCustomerPayment());
         $customer = array_merge($customer, $this->getCustomerShipment());
         return $customer;
+    }
+
+    public function getCustomerAccountData() {
+        $customer = $this->getCustomerAccount();
+        $address = $this->getCustomerPayment();
+        $customer_account_data = array(
+            'customer_group_id' => $customer['customer_group_id'],
+            'firstname' => $customer['firstname'],
+            'lastname' => $customer['lastname'],
+            'email' => $customer['email'],
+            'telephone' => $customer['telephone'],
+            'custom_field' => array(),
+            'newsletter' => 1,
+            'password' => 'BG49cgqz1Hu',
+            'confirm' => 'BG49cgqz1Hu',
+            'status' => 1,
+            'safe' => 1,
+            'address' => array(
+                array(
+                'firstname' => $address['payment_firstname'],
+                'lastname' => $address['payment_lastname'],
+                'company' => $address['payment_company'],
+                'address_1' => $address['payment_address_1'],
+                'address_2' => $address['payment_address_2'],
+                'city' => $address['payment_city'],
+                'postcode' => $address['payment_postcode'],
+                'country_id' => $address['payment_country_id'],
+                'zone_id' => $address['payment_zone_id'],
+                'custom_field' => array(),
+                'default' => 1,
+                )
+            ),
+            'company' => '',
+            'website' => '',
+            'tracking' => '',
+            'commission' =>  '5',
+            'tax' => '',
+            'payment' => 'cheque',
+            'cheque' => '',
+            'paypal' => '',
+            'bank_name' => '',
+            'bank_branch_number' => '',
+            'bank_swift_code' => '',
+            'bank_account_name' => '',
+            'bank_account_number' => '',
+            'affiliate' => 0,
+        );
+        return $customer_account_data;
     }
 
 }

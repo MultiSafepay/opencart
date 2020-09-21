@@ -25,7 +25,10 @@ class ControllerExtensionPaymentMultiSafePayTest extends OpenCartMultiSafepayTes
 
     public function setUp() {
         parent::setUp();
-        $this->cart->add(28, 1);
+        $products_cart = $this->cart->getProducts();
+        if(empty($products_cart)) {
+            $this->cart->add(28, 1);
+        }
     }
 
     public function testFormPaymentMethodMultiSafepay() {

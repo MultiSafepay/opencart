@@ -182,5 +182,6 @@ class ControllerStartupTestStartup extends Controller
 
         // OpenBay Pro
         $this->registry->set('openbay', new Openbay($this->registry));
+
     }
 }

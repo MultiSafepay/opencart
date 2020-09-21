@@ -25,6 +25,8 @@
         </testsuite>
     </testsuites>
     <php>
+        <!-- MULTISAFEPAY API KEY -->
+        <env name="API_KEY" value="" />
         <!-- OPENCART VERSION -->
         <env name="OC_VERSION" value="" />
         <!-- ROOT PATH TO THE OPENCART APPLICATION -->

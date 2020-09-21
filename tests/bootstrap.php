@@ -42,25 +42,15 @@ if (file_exists(getenv('OC_ROOT') . 'system/library/multisafepay/vendor/autoload
 }
 
 // Load Fixtures
-if (file_exists(getenv('TEST_ROOT') . 'Fixtures/CustomersTest.php')) {
-    require_once(getenv('TEST_ROOT') . 'Fixtures/CustomersTest.php');
-} else {
-    echo "\033[0;31mIt seems dependencies are lost. Fixtures files are required\033[0;m" . PHP_EOL;
-    exit( 1 );
+$fixture_class = array('CustomersTest', 'OrdersTest', 'SessionTest', 'CouponsTest', 'GeoZonesTest', 'TaxClassesTest', 'TaxRatesTest', 'Helper');
+foreach ($fixture_class as $fixture) {
+    if (file_exists(getenv('TEST_ROOT') . 'Fixtures/'.$fixture.'.php')) {
+        require_once(getenv('TEST_ROOT') . 'Fixtures/'.$fixture.'.php');
+    } else {
+        echo "\033[0;31mIt seems dependencies are lost. Fixtures ".$fixture." files are required\033[0;m" . PHP_EOL;
+        exit( 1 );
+    }
 }
-if (file_exists(getenv('TEST_ROOT') . 'Fixtures/OrdersTest.php')) {
-    require_once(getenv('TEST_ROOT') . 'Fixtures/OrdersTest.php');
-} else {
-    echo "\033[0;31mIt seems dependencies are lost. Fixtures files are required\033[0;m" . PHP_EOL;
-    exit( 1 );
-}
-if (file_exists(getenv('TEST_ROOT') . 'Fixtures/SessionTest.php')) {
-    require_once(getenv('TEST_ROOT') . 'Fixtures/SessionTest.php');
-} else {
-    echo "\033[0;31mIt seems dependencies are lost. Fixtures files are required\033[0;m" . PHP_EOL;
-    exit( 1 );
-}
-
 
 
 // Load OpenCartMultiSafepayTest that extends from PHPUnit TestCase

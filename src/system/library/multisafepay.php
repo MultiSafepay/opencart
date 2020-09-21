@@ -1369,6 +1369,7 @@ class Multisafepay {
         $coupon_info = $this->getCouponInfo($order_id);
 
         if($reward_info) {
+
             $discount_by_product = $this->getRewardPointsDiscountByProduct($order_id);
             if(isset($discount_by_product[$product['product_id']]['discount_per_product'])) {
                 $product_price -= $discount_by_product[$product['product_id']]['discount_per_product'];
@@ -1572,7 +1573,8 @@ class Multisafepay {
      * @return array $discounts
      *
      */
-    private function getRewardPointsDiscountByProduct($order_id) {
+    public function getRewardPointsDiscountByProduct($order_id) {
+
         $order_products = $this->getOrderProducts($order_id);
         $points_total = 0;
 

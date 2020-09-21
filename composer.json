@@ -31,7 +31,6 @@
   },
   "scripts": {
     "phpcs": "src/system/library/multisafepay/vendor/bin/phpcs --standard=phpcs.xml src",
-    "opencart-tests": "src/system/library/multisafepay/vendor/bin/phpunit",
     "catalog-tests": "src/system/library/multisafepay/vendor/bin/phpunit --testsuite catalog-tests",
     "admin-tests": "src/system/library/multisafepay/vendor/bin/phpunit --testsuite admin-tests",
     "system-tests": "src/system/library/multisafepay/vendor/bin/phpunit --testsuite system-tests",

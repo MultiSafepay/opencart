@@ -5,6 +5,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
++ PLGOPNS-285: [test] PHPUnit: Developer should be able to run PHPUnit tests, after set a local environment without previous setup of the store
 
 
 ## 3.2.0
@@ -16,7 +17,6 @@ Release date: September, 17th 2020
 ### Fixed
 + PLGOPNS-295: Add getEventByCode function, which does not exist prior to OC 3.0.2
 + PLGOPNS-284: Fix placeholder for 'lifetime payment link' field
-
 
 ## 3.1.0
 Release date: September, 14th 2020
