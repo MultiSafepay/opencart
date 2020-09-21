@@ -63,7 +63,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
 
         $data['needs_upgrade'] = $this->model_extension_payment_multisafepay->checkForNewVersions();
         if($data['needs_upgrade']) {
-            $data['text_needs_upgrade_warning'] = sprintf($this->language->get('text_needs_upgrade_warning'), 'https://github.com/multisafepay/opencart');
+            $data['text_needs_upgrade_warning'] = sprintf($this->language->get('text_needs_upgrade_warning'), 'https://www.opencart.com/index.php?route=marketplace/extension/info&extension_id=39960');
         }
 
         if(isset($this->request->get['store_id'])) {

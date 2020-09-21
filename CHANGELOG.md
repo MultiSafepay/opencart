@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 + PLGOPNS-285: [test] PHPUnit: Developer should be able to run PHPUnit tests, after set a local environment without previous setup of the store
-
++ PLGOPNS-301: [refactor] Change the link of the message of the new version to marketplace
 
 ## 3.2.0
 Release date: September, 17th 2020
