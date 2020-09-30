@@ -10,6 +10,8 @@
     <exclude-pattern>*/src/system/library/session/*</exclude-pattern>
     <exclude-pattern>*/src/admin/controller/startup/*</exclude-pattern>
     <exclude-pattern>*/src/admin/view/javascript/multisafepay/dragula.js</exclude-pattern>
+    <exclude-pattern>*/src/catalog/controller/startup/test_startup.php</exclude-pattern>
+
     <config name="installed_paths" value="src/system/library/multisafepay/vendor/object-calisthenics/phpcs-calisthenics-rules/src/ObjectCalisthenics"/>
 
     <!-- Rule 1: Only X indentation level per function/method (with default values) -->
@@ -35,6 +37,7 @@
     <!-- Rule 4: Do not abbreviate (with default values) -->
     <rule ref="ObjectCalisthenics.NamingConventions.ElementNameMinimalLength">
         <exclude-pattern>*/src/*/language/*/extension/payment/multisafepay.php</exclude-pattern>
+        <exclude-pattern>*/src/*/language/*/payment/multisafepay.php</exclude-pattern>
         <properties>
             <property name="minLength" value="3"/>
             <property name="allowedShortNames" type="array" value="i,id,to,up"/>
@@ -65,7 +68,7 @@
         <exclude-pattern>*/src/system/library/multisafepay.php</exclude-pattern>
         <properties>
             <!-- goal is 10 -->
-            <property name="maxCount" value="60"/>
+            <property name="maxCount" value="65"/>
         </properties>
     </rule>
 
@@ -144,6 +147,7 @@
     <!-- Rule 22: Check that line endings are only \n -->
     <rule ref="Generic.WhiteSpace.DisallowSpaceIndent">
         <exclude-pattern>*.tpl</exclude-pattern>
+        <exclude-pattern>*.twig</exclude-pattern>
         <exclude-pattern>*.css</exclude-pattern>
         <exclude-pattern>*.html</exclude-pattern>
         <exclude-pattern>*.ini</exclude-pattern>

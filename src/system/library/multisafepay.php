@@ -25,11 +25,18 @@ class Multisafepay {
 
     const FIXED_TYPE = 'F';
     const PERCENTAGE_TYPE = 'P';
-    const ROUTE = 'extension/payment/multisafepay';
     const OC_VERSION = VERSION;
 
     public function __construct($registry) {
         $this->registry = $registry;
+        $this->registry->set('multisafepay_version_control', new Multisafepayversioncontrol($registry));
+        $this->route = $this->multisafepay_version_control->getExtensionRoute();
+        $this->oc_version = $this->multisafepay_version_control->getOcVersion();
+        $this->key_prefix = $this->multisafepay_version_control->getKeyPrefix();
+        $this->model_call = $this->multisafepay_version_control->getStandartModelCall();
+        $this->non_standart_model_call = $this->multisafepay_version_control->getNonStandartModelCall();
+        $this->total_extension_key_prefix = $this->multisafepay_version_control->getTotalExtensionPrefix();
+        $this->extension_directory_route = $this->multisafepay_version_control->getExtensionDirectoryRoute();
     }
 
     /**
@@ -71,21 +78,21 @@ class Multisafepay {
         // Order Products
         foreach ($order_products as $product) {
             $shopping_cart_item = $this->getCartItem($product, $order_id);
-            $shopping_cart_items[$this->config->get('total_sub_total_sort_order')][] = $shopping_cart_item;
+            $shopping_cart_items[$this->config->get($this->total_extension_key_prefix . 'sub_total_sort_order')][] = $shopping_cart_item;
         }
 
         // Shipping Cost
         $shipping_info = $this->getShippingInfo($order_id);
         if ($shipping_info) {
             $shipping_cart_item = $this->getShippingItem($order_id);
-            $shopping_cart_items[$this->config->get('total_shipping_sort_order')][] = $shipping_cart_item;
+            $shopping_cart_items[$this->config->get($this->total_extension_key_prefix . 'shipping_sort_order')][] = $shipping_cart_item;
         }
 
         // Coupons
         if ($coupon_info) {
             $coupon_cart_item = $this->getCouponItem($order_id);
             if ($coupon_cart_item) {
-                $shopping_cart_items[$this->config->get('total_coupon_sort_order')][] = $coupon_cart_item;
+                $shopping_cart_items[$this->config->get($this->total_extension_key_prefix . 'coupon_sort_order')][] = $coupon_cart_item;
             }
         }
 
@@ -93,35 +100,35 @@ class Multisafepay {
         $handling_fee_info = $this->getHandlingFeeInfo($order_id);
         if ($handling_fee_info) {
             $handling_fee_cart_item = $this->getHandlingFeeItem($order_id);
-            $shopping_cart_items[$this->config->get('total_handling_sort_order')][] = $handling_fee_cart_item;
+            $shopping_cart_items[$this->config->get($this->total_extension_key_prefix . 'handling_sort_order')][] = $handling_fee_cart_item;
         }
 
         // Low Order Fee
         $low_order_fee_info = $this->getLowOrderFeeInfo($order_id);
         if ($low_order_fee_info) {
             $low_order_fee_info_cart_item = $this->getLowOrderFeeItem($order_id);
-            $shopping_cart_items[$this->config->get('total_low_order_fee_sort_order')][] = $low_order_fee_info_cart_item;
+            $shopping_cart_items[$this->config->get($this->total_extension_key_prefix . 'low_order_fee_sort_order')][] = $low_order_fee_info_cart_item;
         }
 
         // Fixed Taxes
         $fixed_taxes_items = $this->getFixedTaxesItems($order_id);
         if (!empty($fixed_taxes_items)) {
             $fixed_taxes_items = $this->getFixedTaxesItems($order_id);
-            $shopping_cart_items[$this->config->get('total_tax_sort_order')] = $fixed_taxes_items;
+            $shopping_cart_items[$this->config->get($this->total_extension_key_prefix . 'tax_sort_order')] = $fixed_taxes_items;
         }
 
         // Customer Balance - Credit
         $customer_additional_data = $this->getAdditionalCustomerData();
         if ($customer_additional_data['customer_balance'] > 0) {
             $customer_balance_item = $this->getCustomerBalanceItem($order_id);
-            $shopping_cart_items[$this->config->get('total_credit_sort_order')][] = $customer_balance_item;
+            $shopping_cart_items[$this->config->get($this->total_extension_key_prefix . 'credit_sort_order')][] = $customer_balance_item;
         }
 
         // Vouchers Gift Cards
         $voucher_info = $this->getVoucherInfo($order_id);
         if ($voucher_info) {
             $voucher_info_cart_item = $this->getVoucherItem($order_id);
-            $shopping_cart_items[$this->config->get('total_voucher_sort_order')][] = $voucher_info_cart_item;
+            $shopping_cart_items[$this->config->get($this->total_extension_key_prefix . 'voucher_sort_order')][] = $voucher_info_cart_item;
         }
 
         // Sort Order Shopping Cart Items
@@ -159,7 +166,7 @@ class Multisafepay {
      *
      */
     private function isSortOrderLowerThanTaxes($module_sort_order) {
-        $tax_sort_order = $this->config->get('total_tax_sort_order');
+        $tax_sort_order = $this->config->get($this->total_extension_key_prefix . 'tax_sort_order');
         if ((int)$tax_sort_order > (int)$module_sort_order) {
             return true;
         }
@@ -175,18 +182,18 @@ class Multisafepay {
      */
     public function getSdkObject() {
 
-        $this->language->load(self::ROUTE);
+        $this->language->load($this->route);
 
         require_once(DIR_SYSTEM . 'library/multisafepay/vendor/autoload.php');
 
-        $enviroment = (empty($this->config->get('payment_multisafepay_environment')) ? true : false);
-        $api_key = (($enviroment) ? $this->config->get('payment_multisafepay_api_key') : $this->config->get('payment_multisafepay_sandbox_api_key'));
+        $enviroment = (empty($this->config->get($this->key_prefix . 'multisafepay_environment')) ? true : false);
+        $api_key = (($enviroment) ? $this->config->get($this->key_prefix . 'multisafepay_api_key') : $this->config->get($this->key_prefix . 'multisafepay_sandbox_api_key'));
 
         try {
             $msp = new \MultiSafepay\Sdk($api_key, $enviroment);
         }
         catch (\MultiSafepay\Exception\InvalidApiKeyException $invalidApiKeyException ) {
-            if ($this->config->get('payment_multisafepay_debug_mode')) {
+            if ($this->config->get($this->key_prefix . 'multisafepay_debug_mode')) {
                 $this->log->write($invalidApiKeyException->getMessage());
             }
             $this->session->data['error'] = $this->language->get('text_error');
@@ -207,7 +214,7 @@ class Multisafepay {
      */
     public function getOrderRequestObject($data) {
 
-        $this->language->load(self::ROUTE);
+        $this->language->load($this->route);
 
         $order_info = $this->getOrderInfo($data['order_id']);
 
@@ -245,12 +252,12 @@ class Multisafepay {
         $msp_order->addPaymentOptions($payment_options);
 
         // Order Request: Second Chance
-        $payment_multisafepay_second_chance = ($this->config->get('payment_multisafepay_second_chance')) ? true : false;
+        $payment_multisafepay_second_chance = ($this->config->get($this->key_prefix . 'multisafepay_second_chance')) ? true : false;
         $second_chance = $this->getSecondChanceObject($payment_multisafepay_second_chance);
         $msp_order->addSecondChance($second_chance);
 
         // Order Request: Google Analytics ID
-        $google_analytics_account_id = $this->getAnalyticsAccountIdObject($this->config->get('payment_multisafepay_google_analytics_account_id'));
+        $google_analytics_account_id = $this->getAnalyticsAccountIdObject($this->config->get($this->key_prefix . 'multisafepay_google_analytics_account_id'));
         if ($google_analytics_account_id) {
             $msp_order->addGoogleAnalytics($google_analytics_account_id);
         }
@@ -270,18 +277,18 @@ class Multisafepay {
         }
 
         // Order Request: Lifetime of payment link.
-        if ($this->config->get('payment_multisafepay_days_active') && $this->config->get('payment_multisafepay_unit_lifetime_payment_link')) {
-            $payment_multisafepay_unit_lifetime_payment_link = $this->config->get('payment_multisafepay_unit_lifetime_payment_link');
+        if ($this->config->get($this->key_prefix . 'multisafepay_days_active') && $this->config->get($this->key_prefix . 'multisafepay_unit_lifetime_payment_link')) {
+            $payment_multisafepay_unit_lifetime_payment_link = $this->config->get($this->key_prefix . 'multisafepay_unit_lifetime_payment_link');
             switch ($payment_multisafepay_unit_lifetime_payment_link) {
                 case 'days':
-                    $msp_order->addDaysActive((int)$this->config->get('payment_multisafepay_days_active'));
+                    $msp_order->addDaysActive((int)$this->config->get($this->key_prefix . 'multisafepay_days_active'));
                     break;
                 case 'hours':
-                    $hours = (int)$this->config->get('payment_multisafepay_days_active') * 60 * 60;
+                    $hours = (int)$this->config->get($this->key_prefix . 'multisafepay_days_active') * 60 * 60;
                     $msp_order->addSecondsActive((int)$hours);
                     break;
                 case 'seconds':
-                    $msp_order->addSecondsActive((int)$this->config->get('payment_multisafepay_days_active'));
+                    $msp_order->addSecondsActive((int)$this->config->get($this->key_prefix . 'multisafepay_days_active'));
                     break;
             }
 
@@ -303,7 +310,7 @@ class Multisafepay {
         if (!$msp_order) {
             return false;
         }
-        $this->language->load(self::ROUTE);
+        $this->language->load($this->route);
         $sdk = $this->getSdkObject();
         $transaction_manager = $sdk->getTransactionManager();
         try {
@@ -311,7 +318,7 @@ class Multisafepay {
             return $order_request;
         }
         catch (\MultiSafepay\Exception\ApiException $apiException ) {
-            if ($this->config->get('payment_multisafepay_debug_mode')) {
+            if ($this->config->get($this->key_prefix . 'multisafepay_debug_mode')) {
                 $this->log->write($apiException->getMessage());
             }
             $this->session->data['error'] = $this->language->get('text_error');
@@ -339,7 +346,7 @@ class Multisafepay {
             return $process_refund;
         }
         catch (\MultiSafepay\Exception\ApiException $apiException ) {
-            if ($this->config->get('payment_multisafepay_debug_mode')) {
+            if ($this->config->get($this->key_prefix . 'multisafepay_debug_mode')) {
                 $this->log->write($apiException->getMessage());
             }
             return false;
@@ -366,13 +373,11 @@ class Multisafepay {
             return $refund_request;
         }
         catch (\MultiSafepay\Exception\ApiException $apiException ) {
-            if ($this->config->get('payment_multisafepay_debug_mode')) {
+            if ($this->config->get($this->key_prefix . 'multisafepay_debug_mode')) {
                 $this->log->write($apiException->getMessage());
             }
             return false;
         }
-
-
     }
 
     /**
@@ -389,7 +394,7 @@ class Multisafepay {
             $issuers = $issuer_manager->getIssuersByGatewayCode($gateway_code);
         }
         catch (InvalidArgumentException $invalidArgumentException ) {
-            if ($this->config->get('payment_multisafepay_debug_mode')) {
+            if ($this->config->get($this->key_prefix . 'multisafepay_debug_mode')) {
                 $this->log->write($invalidArgumentException->getMessage());
             }
             return false;
@@ -413,14 +418,14 @@ class Multisafepay {
      *
      */
     public function getGatewayObjectByCode($gateway_code) {
-        $this->language->load(self::ROUTE);
+        $this->language->load($this->route);
         $sdk = $this->getSdkObject();
         try {
             $gateway_manager = $sdk->getGatewayManager();
             $gateway = $gateway_manager->getByCode($gateway_code);
         }
         catch (\MultiSafepay\Exception\ApiException $apiException ) {
-            if ($this->config->get('payment_multisafepay_debug_mode')) {
+            if ($this->config->get($this->key_prefix . 'multisafepay_debug_mode')) {
                 $this->log->write($apiException->getMessage());
             }
             $this->session->data['error'] = $this->language->get('text_error');
@@ -593,7 +598,7 @@ class Multisafepay {
     public function getPaymentOptionsObject() {
         $payment_options_details = new \MultiSafepay\Api\Transactions\OrderRequest\Arguments\PaymentOptions();
         $payment_options_details->addNotificationMethod('GET');
-        $payment_options_details->addNotificationUrl($this->url->link(self::ROUTE . '/callback', '', 'SSL'));
+        $payment_options_details->addNotificationUrl($this->url->link($this->route . '/callback', '', 'SSL'));
         $payment_options_details->addRedirectUrl($this->url->link('checkout/success', '', 'SSL'));
         $payment_options_details->addCancelUrl($this->url->link('checkout/checkout', '', 'SSL'));
         return $payment_options_details;
@@ -607,7 +612,7 @@ class Multisafepay {
      *
      */
     public function getOrderDescriptionObject($order_id) {
-        $this->load->language(self::ROUTE);
+        $this->load->language($this->route);
         $description = sprintf($this->language->get('text_order_description'), $order_id, $this->config->get('config_name'), date($this->language->get('datetime_format')) );
         $description_details = new \MultiSafepay\Api\Transactions\OrderRequest\Arguments\Description();
         $description_details->addDescription($description);
@@ -943,6 +948,10 @@ class Multisafepay {
             $locale = $language['code'] . '_' . strtoupper($language['code']);
         }
 
+        if($locale === 'en_EN') {
+            return 'en_US';
+        }
+
         return $locale;
     }
 
@@ -1018,11 +1027,11 @@ class Multisafepay {
      *
      */
     private function getProductOptionsData($order_id, $product) {
-        $this->load->model('checkout/order');
+        $this->load->model($this->route);
 
         $option_data = array();
 
-        $options = $this->model_checkout_order->getOrderOptions($order_id, $product['product_id']);
+        $options = $this->{$this->model_call}->getOrderOptions($order_id, $product['product_id']);
 
         foreach ($options as $option) {
             if ($option['type'] !== 'file') {
@@ -1104,8 +1113,8 @@ class Multisafepay {
      *
      */
     private function extractFixedTaxesFromHandlingLowOrderFee($order_totals, $fixed_taxes_items, $key, $type) {
-        $tax_class_id  = $this->config->get('total_' . $type . '_tax_class_id');
-        $is_order_lower_than_taxes = $this->isSortOrderLowerThanTaxes($this->config->get('total_' . $type . '_sort_order'));
+        $tax_class_id  = $this->config->get($this->total_extension_key_prefix . $type . '_tax_class_id');
+        $is_order_lower_than_taxes = $this->isSortOrderLowerThanTaxes($this->config->get($this->total_extension_key_prefix . $type . '_sort_order'));
         if ($tax_class_id && $is_order_lower_than_taxes) {
             $fixed_taxes_items = $this->addToArrayOfFixedTaxes($order_totals[$key]['value'], $tax_class_id, $fixed_taxes_items);
         }
@@ -1144,7 +1153,7 @@ class Multisafepay {
         if ($has_shipping) {
             $shipping_tax_class_id = $this->getShippingTaxClassId($order_info['shipping_code']);
             if ($shipping_tax_class_id) {
-                    $fixed_taxes_items = $this->addToArrayOfFixedTaxes($order_totals[$has_shipping]['value'], $shipping_tax_class_id, $fixed_taxes_items);
+                $fixed_taxes_items = $this->addToArrayOfFixedTaxes($order_totals[$has_shipping]['value'], $shipping_tax_class_id, $fixed_taxes_items);
             }
         }
 
@@ -1224,8 +1233,8 @@ class Multisafepay {
      *
      */
     public function getOrderTotals($order_id) {
-        $this->load->model('checkout/order');
-        $order_totals = $this->model_checkout_order->getOrderTotals($order_id);
+        $this->load->model($this->route);
+        $order_totals = $this->{$this->model_call}->getOrderTotals($order_id);
         return $order_totals;
     }
 
@@ -1263,8 +1272,8 @@ class Multisafepay {
      *
      */
     public function getOrderProducts($order_id) {
-        $this->load->model('checkout/order');
-        $order_products = $this->model_checkout_order->getOrderProducts($order_id);
+        $this->load->model($this->route);
+        $order_products = $this->{$this->model_call}->getOrderProducts($order_id);
         return $order_products;
     }
 
@@ -1275,15 +1284,15 @@ class Multisafepay {
      * @return mixed false|$coupon_info
      *
      */
-    private function getCouponInfo($order_id) {
+    public function getCouponInfo($order_id) {
         $order_totals = $this->getOrderTotals($order_id);
         $has_coupons = array_search('coupon', array_column($order_totals, 'code'));
         if (!$has_coupons) {
             return false;
         }
-        $this->load->model('extension/total/coupon');
-        $coupon_info = $this->model_extension_total_coupon->getCoupon($this->session->data['coupon']);
-        $coupon_info['is_order_lower_than_taxes'] = $this->isSortOrderLowerThanTaxes($this->config->get('total_coupon_sort_order'));
+        $this->load->model($this->extension_directory_route . 'total/coupon');
+        $coupon_info = $this->{$this->model_call}->getCoupon($this->session->data['coupon']);
+        $coupon_info['is_order_lower_than_taxes'] = $this->isSortOrderLowerThanTaxes($this->config->get($this->total_extension_key_prefix . 'coupon_sort_order'));
         return $coupon_info;
     }
 
@@ -1319,12 +1328,12 @@ class Multisafepay {
      *
      */
     private function getShippingItem($order_id) {
-        $this->load->language(self::ROUTE);
+        $this->load->language($this->route);
         $order_info = $this->getOrderInfo($order_id);
         $coupon_info = $this->getCouponInfo($order_id);
         $shipping_info = $this->getShippingInfo($order_id);
 
-        if (($coupon_info && $coupon_info['shipping'])) {
+        if (($coupon_info && isset($coupon_info['shipping']) && $coupon_info['shipping'])) {
             return $this->getCartItemObject(
                 0,
                 $order_info,
@@ -1334,7 +1343,7 @@ class Multisafepay {
                 0
             );
         }
-        
+
         if ((!$coupon_info) || ($coupon_info && !$coupon_info['shipping'])) {
             return $this->getCartItemObject(
                 $shipping_info['value'],
@@ -1356,7 +1365,7 @@ class Multisafepay {
      *
      */
     private function getCartItem($product, $order_id) {
-        $this->load->language(self::ROUTE);
+        $this->load->language($this->route);
         $order_info = $this->getOrderInfo($order_id);
         $product_info =  $this->getProductInfo($product['product_id']);
         $product_name = $this->getProductName($order_id, $product);
@@ -1369,7 +1378,6 @@ class Multisafepay {
         $coupon_info = $this->getCouponInfo($order_id);
 
         if($reward_info) {
-
             $discount_by_product = $this->getRewardPointsDiscountByProduct($order_id);
             if(isset($discount_by_product[$product['product_id']]['discount_per_product'])) {
                 $product_price -= $discount_by_product[$product['product_id']]['discount_per_product'];
@@ -1381,7 +1389,7 @@ class Multisafepay {
 
         // Coupons apply just to a few items in the order.
         if ($coupon_info
-            && $coupon_info['type'] == self::PERCENTAGE_TYPE
+            && isset($coupon_info['type']) && $coupon_info['type'] == self::PERCENTAGE_TYPE
             && $coupon_info['is_order_lower_than_taxes']
             && !empty($coupon_info['product'])
             && in_array($product['product_id'], $coupon_info['product'])) {
@@ -1398,7 +1406,7 @@ class Multisafepay {
         }
 
         // Coupons apply for all items in the order.
-        if ($coupon_info && $coupon_info['type'] == self::PERCENTAGE_TYPE && $coupon_info['is_order_lower_than_taxes'] && empty($coupon_info['product'])) {
+        if ($coupon_info && isset($coupon_info['type']) && $coupon_info['type'] == self::PERCENTAGE_TYPE && $coupon_info['is_order_lower_than_taxes'] && empty($coupon_info['product'])) {
             $product_price -= ($product['price'] * round(($coupon_info['discount']/100), 2));
             // If coupon is just for free shipping, the name and description is not modified
             if ($coupon_info['discount'] > 0) {
@@ -1436,7 +1444,7 @@ class Multisafepay {
         $coupon_info = $this->getCouponInfo($order_id);
         $order_info = $this->getOrderInfo($order_id);
 
-        if ((!$coupon_info) || ($coupon_info['type'] !== self::FIXED_TYPE) || ($coupon_info['type'] == self::FIXED_TYPE && $coupon_info['discount'] > 0) || ($coupon_info['is_order_lower_than_taxes']) ) {
+        if ((!$coupon_info) || (isset($coupon_info['type']) && $coupon_info['type'] !== self::FIXED_TYPE) || (isset($coupon_info['type']) && $coupon_info['type'] == self::FIXED_TYPE && $coupon_info['discount'] > 0) || ($coupon_info['is_order_lower_than_taxes']) ) {
             return false;
         }
 
@@ -1464,12 +1472,12 @@ class Multisafepay {
             return false;
         }
 
-        $handling_tax_class_id  = $this->config->get('total_handling_tax_class_id');
+        $handling_tax_class_id  = $this->config->get($this->total_extension_key_prefix . 'handling_tax_class_id');
         $tax_rate = $this->getItemTaxRate($order_totals[$has_handling_fee]['value'], $handling_tax_class_id);
         $handling_fee_info = array(
             'value' => $order_totals[$has_handling_fee]['value'],
             'title' => $order_totals[$has_handling_fee]['title'],
-            'is_order_lower_than_taxes' => $this->isSortOrderLowerThanTaxes($this->config->get('total_handling_sort_order')),
+            'is_order_lower_than_taxes' => $this->isSortOrderLowerThanTaxes($this->config->get($this->total_extension_key_prefix . 'handling_sort_order')),
             'tax_rate' => $tax_rate
         );
         return $handling_fee_info;
@@ -1513,12 +1521,12 @@ class Multisafepay {
             return false;
         }
 
-        $low_order_fee_tax_class_id  = $this->config->get('total_low_order_fee_tax_class_id');
+        $low_order_fee_tax_class_id  = $this->config->get($this->total_extension_key_prefix . 'low_order_fee_tax_class_id');
         $tax_rate = $this->getItemTaxRate($order_totals[$has_low_order_fee]['value'], $low_order_fee_tax_class_id);
         $low_order_fee_info = array(
             'value' => $order_totals[$has_low_order_fee]['value'],
             'title' => $order_totals[$has_low_order_fee]['title'],
-            'is_order_lower_than_taxes' => $this->isSortOrderLowerThanTaxes($this->config->get('total_low_order_fee_sort_order')),
+            'is_order_lower_than_taxes' => $this->isSortOrderLowerThanTaxes($this->config->get($this->total_extension_key_prefix . 'low_order_fee_sort_order')),
             'tax_rate' => $tax_rate
         );
         return $low_order_fee_info;
@@ -1574,7 +1582,6 @@ class Multisafepay {
      *
      */
     public function getRewardPointsDiscountByProduct($order_id) {
-
         $order_products = $this->getOrderProducts($order_id);
         $points_total = 0;
 
@@ -1606,7 +1613,7 @@ class Multisafepay {
      *
      */
     private function getCustomerBalanceItem($order_id) {
-        $this->load->language(self::ROUTE);
+        $this->load->language($this->route);
         $customer_additional_data = $this->getAdditionalCustomerData();
         $order_info = $this->getOrderInfo($order_id);
         return $this->getNegativeCartItemObject(
@@ -1687,7 +1694,7 @@ class Multisafepay {
      *
      */
     public function getGateways() {
-        $this->language->load(self::ROUTE);
+        $this->language->load($this->route);
         $this->load->model('setting/setting');
         $gateways = array(
             array(

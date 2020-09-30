@@ -7,6 +7,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Unreleased
 + PLGOPNS-285: [test] PHPUnit: Developer should be able to run PHPUnit tests, after set a local environment without previous setup of the store
 + PLGOPNS-301: [refactor] Change the link of the message of the new version to marketplace
++ PLGOPNS-272: Add MultiSafepayVersionControl Class to the library. 
++ PLGOPNS-280: [chore] Add a bash script to automate the process of create hardlinks
++ PLGOPNS-305: [chore] Add hardlinked files to .gitignore
++ PLGOPNS-304: [refactor] Adapt .twig files to .tpl to support OC 2.X
++ PLGOPNS-306: [refactor] Include in template files for OC 2.X latest changes
++ PLGOPNS-279: [refactor] Update modman to support OpenCart versions lower than 3.0.0.0 
++ PLGOPNS-273: [refactor] Implement MultiSafepayVersionControl in admin folder
++ PLGOPNS-275: [refactor] Implement MultiSafepayVersionControl in system folder
++ PLGOPNS-274: [refactor] Implement MultiSafepayVersionControl in catalog folder
++ PLGOPNS-277: [refactor] Update release scripts for each OpenCart versions
++ PLGOPNS-308: [refactor] Add to phpcs .tpl files and new language folders of OpenCart 2.X
++ PLGOPNS-309: [refactor] Fix undefined variables in admin for OC 2.X
++ PLGOPNS-310: [refactor] Add to modman multisafepayversioncontrol.php
++ PLGOPNS-311: [refactor] Turn into a public function getRewardPointsDiscountByProduct
++ PLGOPNS-312: [refactor] Fix getLanguageKeys in multisafepayversioncontrol.php
++ PLGOPNS-307: [refactor] Fix PHPUnit test to work in a multi version environment
++ PLGOPNS-314: [refactor] Fix missing language strings in OC 2.3 
++ PLGOPNS-313: [refactor] Extend PHPUnit tests to 2.2, 2.1, 2.0 OpenCart versions
++ PLGOPNS-318: [refactor] Add CSS to use the exact same layout and design in all the version 2.X
++ PLGOPNS-317: [refactor] Fix OCMOD for 2.0.X. Skip operation related with custom order tab
++ PLGOPNS-278: [chore] Upgrade .github action to release all versions on each push tag action
++ PLGOPNS-320: [refactor] Upload duplicated files from versions lower than 3.0.X
++ PLGOPNS.276: [chore] Update CHANGELOG.md and DEVELOPMENT.md with latest changes
+
 
 ## 3.2.0
 Release date: September, 17th 2020

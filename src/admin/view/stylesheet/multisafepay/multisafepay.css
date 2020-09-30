@@ -5,7 +5,6 @@
     height: 36px;
     vertical-align: middle;
 }
-
 /* MultiSafepay Maintenance Tab */
 #multisafepay-maintenance .table-wrapper-scroll {
     position: relative;
@@ -13,11 +12,11 @@
     overflow: auto;
     display: block;
 }
-
 /* MultiSafepay Payment Methods Tabs */
+.multisafepay-admin-page #tab-payment-methods .panel-group .panel-default {
+    border: 1px solid #dcdcdc;
+}
 .multisafepay-admin-page #tab-payment-methods .payment-methods-filter-panel {
-    /*background-color: #00acf1;*/
-    /*border-color: #00acf1;*/
     padding: 10px 19px;
 }
 .multisafepay-admin-page #tab-payment-methods .panel-group .panel .panel-body p img.payment-logo {
@@ -43,7 +42,6 @@
     border: 1px solid;
     font-size: 13px;
 }
-
 .multisafepay-admin-page #tab-payment-methods .panel-group .panel .panel-heading h4.panel-title div.icon:hover {
     cursor: move;
 }
@@ -81,28 +79,23 @@
     font-size: 15px;
     line-height: 40px;
 }
-
 /* MultiSafepay Support Tab */
 .multisafepay-admin-page #multisafepay-support td.version-table-row {
     padding: 5px 10px 5px 0;
 }
-
 .multisafepay-admin-page #multisafepay-support td.multisafepay-bold {
     font-weight: 700;
     padding-left: 15px;
 }
-
 .multisafepay-admin-page #multisafepay-support h2 {
     font-size: 19px;
     font-weight: bold;
     margin-top: 35px;
 }
-
 /* Refund Tab */
 #multisafepay-order-tab .pull-right button {
     margin-bottom: 25px;
 }
-
 /* Drag and Drop */
 .multisafepay-admin-page #tab-payment-methods .panel-group .panel .panel-heading .panel-title a.collapsed .drag-and-drop-control {
     background-color: #f6f6f6;

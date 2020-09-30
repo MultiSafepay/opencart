@@ -12,16 +12,16 @@
         stderr="true">
     <testsuites>
         <testsuite name="catalog-tests">
-            <directory suffix="Test.php">./tests/unit/catalog/</directory>
+            <directory suffix="_tests.php">./tests/unit/catalog/</directory>
         </testsuite>
         <testsuite name="admin-tests">
-            <directory suffix="AdminTest.php">./tests/unit/admin/</directory>
+            <directory suffix="_tests.php">./tests/unit/admin/</directory>
         </testsuite>
         <testsuite name="system-tests">
-            <directory suffix="SystemTest.php">./tests/unit/system/</directory>
+            <directory suffix="_tests.php">./tests/unit/system/</directory>
         </testsuite>
         <testsuite name="language-tests">
-            <directory suffix="LanguageTest.php">./tests/unit/language/</directory>
+            <directory suffix="_tests.php">./tests/unit/language/</directory>
         </testsuite>
     </testsuites>
     <php>
