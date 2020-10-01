@@ -1,35 +1,34 @@
 <?php if($test_mode) { ?>
     <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> <?php echo $text_testmode; ?></div>
 <?php } ?>
-    <form action="<?php echo $action; ?>" method="post" class="form-horizontal" id="multisafepay-form">
-        <input type="hidden" name="order_id" value="<?php echo $order_id; ?>" />
-        <input type="hidden" name="type" value="<?php echo $type; ?>" />
-        <?php if($gateway) { ?>
-            <input type="hidden" name="gateway" value="<?php echo $gateway; ?>" />
-        <?php } ?>
-        <?php if($gateway_info) { ?>
-            <input type="hidden" name="gateway_info" value="<?php echo $gateway_info; ?>" />
-        <?php } ?>
-        <?php if($issuers) { ?>
-            <input type="hidden" id="issuer-id" name="issuer_id" value="" />
-        <?php } ?>
-        <?php if($fields) { ?>
-            <fieldset>
-                <legend><?php echo $text_legend; ?></legend>
-                <?php if(isset($fields['gender'])) { ?>
-                    <div class="form-group required form-group-gender">
-                        <label class="col-sm-2 control-label" for="input-gender"><?php echo $entry_gender; ?> </label>
-                        <div class="col-sm-10">
-                            <select name="gender" id="input-gender" class="form-control">
-                                <option value=""><?php echo $text_select; ?></option>
-                                <option value="male"><?php echo $text_mr; ?></option>
-                                <option value="female"><?php echo $text_mrs; ?></option>
-                                <option value="female"><?php echo $text_miss; ?></option>
-                            </select>
-                        </div>
-                    </div>
-                <?php } ?>
-                <?php if(isset($fields['sex'])) { ?>
+<form action="<?php echo $action; ?>" method="post" class="form-horizontal" id="multisafepay-form">
+    <input type="hidden" name="order_id" value="<?php echo $order_id; ?>" />
+    <input type="hidden" name="type" value="<?php echo $type; ?>" />
+    <?php if($gateway) { ?>
+        <input type="hidden" name="gateway" value="<?php echo $gateway; ?>" />
+    <?php } ?>
+    <?php if($gateway_info) { ?>
+        <input type="hidden" name="gateway_info" value="<?php echo $gateway_info; ?>" />
+    <?php } ?>
+    <?php if($issuers) { ?>
+        <fieldset>
+            <legend><?php echo $text_legend; ?></legend>
+            <div class="form-group form-group-issuer-id">
+                <label class="col-sm-2 control-label" for="input-issuer-id"><?php echo $entry_issuer; ?> </label>
+                <div class="col-sm-10">
+                    <select name="issuer_id" id="input-issuer-id" class="form-control">
+                        <?php foreach ($issuers as $issuer) { ?>
+                            <li><a class="issuer" data-issuer_id="<?php echo $issuer['code']; ?>"><?php echo $issuer['description']; ?></a></li>
+                        <?php } ?>
+                    </select>
+                </div>
+            </div>
+        </fieldset>
+    <?php } ?>
+    <?php if($fields) { ?>
+        <fieldset>
+            <legend><?php echo $text_legend; ?></legend>
+            <?php if(isset($fields['gender'])) { ?>
                 <div class="form-group required form-group-gender">
                     <label class="col-sm-2 control-label" for="input-gender"><?php echo $entry_gender; ?> </label>
                     <div class="col-sm-10">
@@ -37,101 +36,71 @@
                             <option value=""><?php echo $text_select; ?></option>
                             <option value="male"><?php echo $text_mr; ?></option>
                             <option value="female"><?php echo $text_mrs; ?></option>
+                            <option value="female"><?php echo $text_miss; ?></option>
                         </select>
                     </div>
                 </div>
-                <?php } ?>
-                <?php if(isset($fields['birthday'])) { ?>
-                    <div class="form-group required form-group-birthday">
-                        <label class="col-sm-2 control-label" for="input-birthday"><?php echo $entry_date_of_birth; ?> </label>
-                        <div class="col-sm-10">
-                            <div class="input-group date">
-                                <input type="text" name="birthday" value="" placeholder="<?php echo $placeholder_date_of_birth; ?>" id="input-birthday" data-date-format="YYYY-MM-DD" class="form-control" />
-                                <span class="input-group-btn">
-                            <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-                        </span>
-                            </div>
-                        </div>
-                    </div>
-                <?php } ?>
-                <?php if(isset($fields['bankaccount'])) { ?>
-                    <div class="form-group required form-group-bankaccount">
-                        <label class="col-sm-2 control-label" for="input-bankaccount"><?php echo $entry_bank_account; ?> </label>
-                        <div class="col-sm-10">
-                            <input type="text" name="bankaccount" value="" placeholder="<?php echo $placeholder_bank_account; ?>" id="input-bankaccount" class="form-control" />
-                        </div>
-                    </div>
-                <?php } ?>
-                <?php if(isset($fields['account_holder_name'])) { ?>
-                    <div class="form-group required form-group-account-holder-name">
-                        <label class="col-sm-2 control-label" for="input-account-holder-name"><?php echo $entry_account_holder_name; ?> </label>
-                        <div class="col-sm-10">
-                            <input type="text" name="account_holder_name" value="" placeholder="<?php echo $entry_account_holder_name; ?>" id="input-account-holder-name" class="form-control" />
-                        </div>
-                    </div>
-                <?php } ?>
-                <?php if(isset($fields['account_holder_iban'])) { ?>
-                    <div class="form-group required form-group-account-holder-iban">
-                        <label class="col-sm-2 control-label" for="input-account-holder-iban"><?php echo $entry_account_holder_iban; ?> </label>
-                        <div class="col-sm-10">
-                            <input type="text" name="account_holder_iban" value="" placeholder="<?php echo $placeholder_account_holder_iban; ?>" id="input-account-holder-iban" class="form-control" />
-                        </div>
-                    </div>
-                <?php } ?>
-                <?php if(isset($fields['emandate'])) { ?>
-                    <input type="hidden" name="emandate" value="<?php echo $order_id; ?>" />
-                <?php } ?>
-            </fieldset>
-        <?php } ?>
-        <div class="buttons">
-            <?php if($issuers) { ?>
-                <div class="pull-right">
-                    <div class="btn-group dropup">
-                        <button type="submit" class="btn btn-primary" id="button-confirm"><?php echo $button_confirm; ?></button>
-                        <button type="submit" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="caret"></span>
-                            <span class="sr-only"><?php echo $button_confirm; ?></span>
-                        </button>
-                        <ul class="dropdown-menu">
-                            <?php foreach ($issuers as $issuer) { ?>
-                                <li><a class="issuer" data-issuer_id="<?php echo $issuer['code']; ?>"><?php echo $issuer['description']; ?></a></li>
-                            <?php } ?>
-                        </ul>
-                    </div>
+            <?php } ?>
+            <?php if(isset($fields['sex'])) { ?>
+            <div class="form-group required form-group-gender">
+                <label class="col-sm-2 control-label" for="input-gender"><?php echo $entry_gender; ?> </label>
+                <div class="col-sm-10">
+                    <select name="gender" id="input-gender" class="form-control">
+                        <option value=""><?php echo $text_select; ?></option>
+                        <option value="male"><?php echo $text_mr; ?></option>
+                        <option value="female"><?php echo $text_mrs; ?></option>
+                    </select>
                 </div>
-            <?php } else { ?>
-                <div class="pull-right">
-                    <input id="button-confirm" type="submit" value="<?php echo $button_confirm; ?>" class="btn btn-primary" />
+            </div>
+            <?php } ?>
+            <?php if(isset($fields['birthday'])) { ?>
+                <div class="form-group required form-group-birthday">
+                    <label class="col-sm-2 control-label" for="input-birthday"><?php echo $entry_date_of_birth; ?> </label>
+                    <div class="col-sm-10">
+                        <div class="input-group date">
+                            <input type="text" name="birthday" value="" placeholder="<?php echo $placeholder_date_of_birth; ?>" id="input-birthday" data-date-format="YYYY-MM-DD" class="form-control" />
+                            <span class="input-group-btn">
+                        <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                    </span>
+                        </div>
+                    </div>
                 </div>
             <?php } ?>
-        </div>
-    </form>
-<?php if($issuers) { ?>
-    <script type="text/javascript"><!--
-        $(document).on('click', '.issuer', function() {
-            $('#issuer-id').val($( this ).data('issuer_id'));
-            $('#button-confirm').html('').html('<?php echo $button_confirm_with_issuer; ?> ' + $( this ).text());
-        });
-        //--></script>
-    <script type="text/javascript"><!--
-        $( document ).ready(function() {
-            $('#multisafepay-form').on('click', '#button-confirm', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                $('#multisafepay-form .alert-danger').remove();
-                $('#multisafepay-form .text-danger').remove();
-                var issuer_id = $('#issuer-id').val();
-                if(issuer_id === '') {
-                    $('#multisafepay-form').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> <?php echo $text_error_issuer_not_selected; ?></div>');
-                    return false;
-                }
-                if(issuer_id != '') {
-                    $("#multisafepay-form").submit();
-                }
-            });
-        });
-        //--></script>
-<?php } ?>
+            <?php if(isset($fields['bankaccount'])) { ?>
+                <div class="form-group required form-group-bankaccount">
+                    <label class="col-sm-2 control-label" for="input-bankaccount"><?php echo $entry_bank_account; ?> </label>
+                    <div class="col-sm-10">
+                        <input type="text" name="bankaccount" value="" placeholder="<?php echo $placeholder_bank_account; ?>" id="input-bankaccount" class="form-control" />
+                    </div>
+                </div>
+            <?php } ?>
+            <?php if(isset($fields['account_holder_name'])) { ?>
+                <div class="form-group required form-group-account-holder-name">
+                    <label class="col-sm-2 control-label" for="input-account-holder-name"><?php echo $entry_account_holder_name; ?> </label>
+                    <div class="col-sm-10">
+                        <input type="text" name="account_holder_name" value="" placeholder="<?php echo $entry_account_holder_name; ?>" id="input-account-holder-name" class="form-control" />
+                    </div>
+                </div>
+            <?php } ?>
+            <?php if(isset($fields['account_holder_iban'])) { ?>
+                <div class="form-group required form-group-account-holder-iban">
+                    <label class="col-sm-2 control-label" for="input-account-holder-iban"><?php echo $entry_account_holder_iban; ?> </label>
+                    <div class="col-sm-10">
+                        <input type="text" name="account_holder_iban" value="" placeholder="<?php echo $placeholder_account_holder_iban; ?>" id="input-account-holder-iban" class="form-control" />
+                    </div>
+                </div>
+            <?php } ?>
+            <?php if(isset($fields['emandate'])) { ?>
+                <input type="hidden" name="emandate" value="<?php echo $order_id; ?>" />
+            <?php } ?>
+        </fieldset>
+    <?php } ?>
+    <div class="buttons">
+            <div class="pull-right">
+                <input id="button-confirm" type="submit" value="<?php echo $button_confirm; ?>" class="btn btn-primary" />
+            </div>
+    </div>
+</form>
 <?php if($gateway === 'APPLEPAY') { ?>
     <script type="text/javascript"><!--
         $( document ).ready(function() {

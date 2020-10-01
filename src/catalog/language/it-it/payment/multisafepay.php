@@ -38,6 +38,7 @@ $_['text_instructions']                     = 'Istruzioni di pagamento';
 $_['text_payment_link']                     = 'Clicca sul seguente link e completa il pagamento: <a href="%s">%s</a>';
 $_['text_payment_link_admin_order_history'] = 'Il seguente link di pagamento è stato generato <a target="_blank" href="%s">%s</a>';
 $_['button_confirm_with_issuer']            = 'Conferma l\'ordine e paga utilizzando iDEAL utilizzando ';
+$_['entry_issuer']                          = 'Emittente';
 $_['entry_gender']                          = 'Trattamento';
 $_['entry_date_of_birth']                   = 'Data di nascita';
 $_['entry_bank_account']                    = 'IBAN del conto bancario';
@@ -100,7 +101,7 @@ $_['text_comment_callback']                 = 'Notifica da MultiSafepay per l\'o
 $_['text_error']                            = 'Si è verificato un errore, non è stato possibile procesare il pagamento. '
                                             . 'Per favore, prova di nuovo, se il problema persiste, contatta il negozio online.';
 $_['text_error_on_submit']                  = 'Per favore, controlla attentamente il form per eventuali errori.';
-$_['text_error_issuer_not_selected']        = 'È necessario selezionare un emittente nel menu a discesa accanto al pulsante di conferma ordine';
+$_['text_error_issuer_not_selected']        = 'Il emittente è obbligatorio';
 $_['text_error_apple_pay']                  = 'Apple Pay non è disponibile su questo dispositivo. Per favore, torna indietro e seleziona un metodo di pagamenti diverso.';
 $_['text_error_empty_gender']               = 'Il genere è obbligatorio';
 $_['text_error_empty_date_of_birth']        = 'La data di nascita è obbligatoria';

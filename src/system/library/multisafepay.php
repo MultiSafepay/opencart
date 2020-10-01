@@ -223,6 +223,12 @@ class Multisafepay {
 
         $msp_order = new \MultiSafepay\Api\Transactions\OrderRequest();
         $msp_order->addOrderId($data['order_id']);
+
+        if($data['gateway'] === 'IDEAL' && empty($data['issuer_id'])) {
+            $data['type'] = 'redirect';
+            $data['gateway_info'] = '';
+        }
+
         $msp_order->addType($data['type']);
 
         // Order Request: Gateway

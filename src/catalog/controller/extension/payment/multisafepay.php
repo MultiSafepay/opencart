@@ -248,7 +248,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
     }
 
     /**
-     * Handles the confirm order form for iDEAL payment method
+     * Handles the confirm order form for E-Invoicing payment method
      *
      */
     public function eInvoice() {
