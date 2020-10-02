@@ -5,6 +5,8 @@
 /phpcs.xml export-ignore
 /grumphp.yml export-ignore
 /phpunit.xml.dist export-ignore
-/src/system/config  export-ignore
+/src/system/test-framework.php  export-ignore
+/src/system/config export-ignore
 /src/system/library/session  export-ignore
+/src/catalog/controller/startup export-ignore
 /src/admin/controller/startup export-ignore

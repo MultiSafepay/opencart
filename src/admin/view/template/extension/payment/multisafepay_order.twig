@@ -21,6 +21,8 @@
     </div>
     {% endif %}
 </div>
+{% if status == 'completed' or status == 'shipped' or status == 'initialized' or status == 'expired' %}
+    {% if status == 'completed' or status == 'shipped' %}
 <script type="text/javascript"><!--
     $('#button-refund').on('click', function(e) {
         e.preventDefault();
@@ -53,68 +55,74 @@
         }
     });
     //--></script>
-<script type="text/javascript"><!--
-    $('#button-cancel').on('click', function(e) {
-        e.preventDefault();
-        if (confirm('{{ text_cancelled_confirm }}')) {
-            $.ajax({
-                url: 'index.php?route=extension/payment/multisafepay/changeMultiSafepayOrderStatusTo&user_token={{ user_token }}&order_id={{ order_id }}&type=cancelled',
-                dataType: 'json',
-                async: false,
-                beforeSend: function() {
-                    $('#button-refund').button('loading');
-                },
-                complete: function() {
-                    $('#button-refund').button('reset');
-                },
-                success: function(json) {
-                    if (json['error']) {
-                        $('#tab-multisafepay-order').append('<div class="alert alert-danger alert-dismissible">' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-                    }
-                    if (json['success']) {
-                        $('#history').load('index.php?route=sale/order/history&user_token={{ user_token }}&order_id={{ order_id }}');
-                        $( '#tab-multisafepay-order' ).load( 'index.php?route=extension/payment/multisafepay/refreshOrderTab&user_token={{ user_token }}&order_id={{ order_id }}', function() {
-                            $( '#tab-multisafepay-order' ).prepend('<div class="alert alert-success alert-dismissible">' + json['success'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-                        });
-                    }
-                },
-                error: function(xhr, ajaxOptions, thrownError) {
-                    alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+    {% endif %}
+    {% if status == 'initialized' %}
+        <script type="text/javascript"><!--
+            $('#button-cancel').on('click', function(e) {
+                e.preventDefault();
+                if (confirm('{{ text_cancelled_confirm }}')) {
+                    $.ajax({
+                        url: 'index.php?route=extension/payment/multisafepay/changeMultiSafepayOrderStatusTo&user_token={{ user_token }}&order_id={{ order_id }}&type=cancelled',
+                        dataType: 'json',
+                        async: false,
+                        beforeSend: function() {
+                            $('#button-refund').button('loading');
+                        },
+                        complete: function() {
+                            $('#button-refund').button('reset');
+                        },
+                        success: function(json) {
+                            if (json['error']) {
+                                $('#tab-multisafepay-order').append('<div class="alert alert-danger alert-dismissible">' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                            }
+                            if (json['success']) {
+                                $('#history').load('index.php?route=sale/order/history&user_token={{ user_token }}&order_id={{ order_id }}');
+                                $( '#tab-multisafepay-order' ).load( 'index.php?route=extension/payment/multisafepay/refreshOrderTab&user_token={{ user_token }}&order_id={{ order_id }}', function() {
+                                    $( '#tab-multisafepay-order' ).prepend('<div class="alert alert-success alert-dismissible">' + json['success'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                                });
+                            }
+                        },
+                        error: function(xhr, ajaxOptions, thrownError) {
+                            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                        }
+                    });
                 }
             });
-        }
-    });
-    //--></script>
-<script type="text/javascript"><!--
-    $('#button-shipped').on('click', function(e) {
-        e.preventDefault();
-        if (confirm('{{ text_shipped_confirm }}')) {
-            $.ajax({
-                url: 'index.php?route=extension/payment/multisafepay/changeMultiSafepayOrderStatusTo&user_token={{ user_token }}&order_id={{ order_id }}&type=shipped',
-                dataType: 'json',
-                async: false,
-                beforeSend: function() {
-                    $('#button-refund').button('loading');
-                },
-                complete: function() {
-                    $('#button-refund').button('reset');
-                },
-                success: function(json) {
-                    if (json['error']) {
-                        $('#tab-multisafepay-order').append('<div class="alert alert-danger alert-dismissible">' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-                    }
-                    if (json['success']) {
-                        $('#history').load('index.php?route=sale/order/history&user_token={{ user_token }}&order_id={{ order_id }}');
+            //--></script>
+    {% endif %}
+    {% if status == 'completed' or status == 'initialized' %}
+        <script type="text/javascript"><!--
+            $('#button-shipped').on('click', function(e) {
+                e.preventDefault();
+                if (confirm('{{ text_shipped_confirm }}')) {
+                    $.ajax({
+                        url: 'index.php?route=extension/payment/multisafepay/changeMultiSafepayOrderStatusTo&user_token={{ user_token }}&order_id={{ order_id }}&type=shipped',
+                        dataType: 'json',
+                        async: false,
+                        beforeSend: function() {
+                            $('#button-refund').button('loading');
+                        },
+                        complete: function() {
+                            $('#button-refund').button('reset');
+                        },
+                        success: function(json) {
+                            if (json['error']) {
+                                $('#tab-multisafepay-order').append('<div class="alert alert-danger alert-dismissible">' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                            }
+                            if (json['success']) {
+                                $('#history').load('index.php?route=sale/order/history&user_token={{ user_token }}&order_id={{ order_id }}');
 
-                        $( '#tab-multisafepay-order' ).load( 'index.php?route=extension/payment/multisafepay/refreshOrderTab&user_token={{ user_token }}&order_id={{ order_id }}', function() {
-                            $( '#tab-multisafepay-order' ).prepend('<div class="alert alert-success alert-dismissible">' + json['success'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-                        });
-                    }
-                },
-                error: function(xhr, ajaxOptions, thrownError) {
-                    alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                                $( '#tab-multisafepay-order' ).load( 'index.php?route=extension/payment/multisafepay/refreshOrderTab&user_token={{ user_token }}&order_id={{ order_id }}', function() {
+                                    $( '#tab-multisafepay-order' ).prepend('<div class="alert alert-success alert-dismissible">' + json['success'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                                });
+                            }
+                        },
+                        error: function(xhr, ajaxOptions, thrownError) {
+                            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                        }
+                    });
                 }
             });
-        }
-    });
-    //--></script>
+            //--></script>
+    {% endif %}
+{% endif %}

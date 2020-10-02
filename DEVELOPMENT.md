@@ -4,6 +4,7 @@ This extension has been developed by MultiSafepay following the development guid
 ## About the local environment for development
 * Considering the MVC-L architecture of OpenCart, this extension has been developed using a local environment following a custom directory structure that will be explained in the following lines. 
 * It use [modman](https://github.com/colinmollenhour/modman); a script which allows you to mix all the extension files throughout the core code directories of the OpenCart application, and therefore separate the extension files from core files of the OpenCart application, which will allow keep the extension under version control.
+* It also uses a custom script located in "bin/hardlinks.sh" that allows you to create an internal structure of hard links and kept synchronize for some duplicate files (such as language directories, or controllers or models that need to be located in different directories of according to the version of OpenCart you are using). In this way is possible to work only in the latest version of OpenCart, kept the sync between them, and keep the extension under version control.
 * It also use [Composer](https://getcomposer.org/)
 
 ## Set a local environment for development
@@ -15,6 +16,7 @@ Following this procedure you will get a local environment in which be possible t
     * "FOLDER-WITH-YOUR-OPENCART-APPLICATION"
     * CREATE A FOLDER FOR "MULTISAFEPAY-OPENCART-EXTENSION"
  ```     
+
 * Change directory to "MULTISAFEPAY-OPENCART-EXTENSION", and clone our GitHub repository: 
 ```
 cd "MULTISAFEPAY-OPENCART-EXTENSION"
@@ -27,6 +29,11 @@ cd "MULTISAFEPAY-OPENCART-EXTENSION"
 composer install
 ```
 
+* Set hardlinks inside the local environment to avoid the necessity of edit duplicate files. 
+```
+cd "MULTISAFEPAY-OPENCART-EXTENSION" 
+bash 
+
 * [Install modman](https://github.com/colinmollenhour/modman#installation).
 
 * Change directory to the root of your application "FOLDER-WITH-YOUR-OPENCART-APPLICATION" and initialize modman and link to the repo:
@@ -36,8 +43,13 @@ modman init
 modman link ../MULTISAFEPAY-OPENCART-EXTENSION/
 ```
 
-* That`s it. Now you can make changes in the extension editing the files in "MULTISAFEPAY-OPENCART-EXTENSION" folder. This changes will immediately pass and take place inside the "FOLDER-WITH-YOUR-OPENCART-APPLICATION". 
+bin/hardlinks.sh
+```
 
+
+* That`s it. 
+  * Now you can make changes in the extension editing the files in "MULTISAFEPAY-OPENCART-EXTENSION" folder. This changes will immediately pass and take place inside the "FOLDER-WITH-YOUR-OPENCART-APPLICATION". 
+  * You only need to touch the files in the exte
 
 
 ## Execute PHPUnit test in a local environment for development

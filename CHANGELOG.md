@@ -5,8 +5,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
-+ PLGOPNS-285: [test] PHPUnit: Developer should be able to run PHPUnit tests, after set a local environment without previous setup of the store
-+ PLGOPNS-301: [refactor] Change the link of the message of the new version to marketplace
+
+## 3.3.0-RC1
++ PLGOPNS-247: [refactor] Extend compatibility of the extension for OpenCart v. 2.X
++ PLGOPNS-315: [refactor] Fix typo error of warning message in settings page
++ PLGOPNS-303: [refactor] Improve iDEAL issuer selection list
++ PLGOPNS-303: [refactor] Improve iDEAL issuer selection list
++ PLGOPNS-245: [refactor] Improve the alignment of payment methods logos in checkout page
 
 ## 3.2.0
 Release date: September, 17th 2020
