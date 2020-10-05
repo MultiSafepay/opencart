@@ -824,7 +824,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
         $data['total'] = $this->currency->format($total, $msp_order->getCurrency(), 1.00000000, true);
         $total = $msp_order->getMoney();
         $data['total'] = $this->currency->format($total->__toString(), $msp_order->getCurrency(), 1.00000000, true);
-        return $this->load->view($this->route . '_order', $data);
+        return $this->load->view($this->route . '_order' . $this->view_extension_file, $data);
 
     }
 
