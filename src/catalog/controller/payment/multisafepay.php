@@ -72,6 +72,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
         $data['action'] = $this->url->link($this->route . '/confirm', '', true);
         $data['back'] = $this->url->link('checkout/checkout', '', true);
         $data['type'] = 'redirect';
+        $data['route'] = $this->route;
         $data['test_mode'] = ($this->config->get($this->key_prefix . 'multisafepay_environment')) ? true : false;
         return $data;
     }

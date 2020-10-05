@@ -136,7 +136,7 @@
                 e.preventDefault();
                 e.stopPropagation();
                 $.ajax({
-                    'url': 'index.php?route=extension/payment/multisafepay/validateForm',
+                    'url': 'index.php?route=<?php echo $route; ?>/validateForm',
                     type: 'post',
                     data: $('#multisafepay-form :input, #multisafepay-form select'),
                     dataType: 'json',
