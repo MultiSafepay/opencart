@@ -205,7 +205,6 @@
         $this->load->language('payment/multisafepay');
         $this->load->model('checkout/order');
         $this->load->model('payment/multisafepay');
-        $this->load->model('localisation/order_status');
         $order_info = $this->model_checkout_order->getOrder($order_id);
 
         if ((strpos($order_info['payment_code'], 'multisafepay') !== false)) {
@@ -254,7 +253,6 @@
         $this->load->language('payment/multisafepay');
         $this->load->model('checkout/order');
         $this->load->model('payment/multisafepay');
-        $this->load->model('localisation/order_status');
         $order_info = $this->model_checkout_order->getOrder($order_id);
 
         if ((strpos($order_info['payment_code'], 'multisafepay') !== false)) {
