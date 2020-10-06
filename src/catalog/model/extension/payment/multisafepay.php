@@ -169,12 +169,12 @@ class ModelExtensionPaymentMultiSafePay extends Model {
         }
 
         if(!file_exists(DIR_IMAGE . 'catalog/multisafepay/' . $image . '-' . $locale_code . '.png')) {
-            $logo = '<img height=32 src="' . $shop_url . 'image/catalog/multisafepay/' . $image . '.png" alt="' . $title . '"/>';
+            $logo = '<img height=20 src="' . $shop_url . 'image/catalog/multisafepay/' . $image . '.png" alt="' . $title . '"/>';
             $title_with_logo = $logo . '  ' . $title;
         }
 
         if(file_exists(DIR_IMAGE . 'catalog/multisafepay/' . $image . '-' . $locale_code . '.png')) {
-            $logo = '<img height=32 src="' . $shop_url . 'image/catalog/multisafepay/' . $image . '-' . $locale_code . '.png" alt="' . $title . '"/>';
+            $logo = '<img height=20 src="' . $shop_url . 'image/catalog/multisafepay/' . $image . '-' . $locale_code . '.png" alt="' . $title . '"/>';
             $title_with_logo = $logo . '  ' . $title;
         }
 

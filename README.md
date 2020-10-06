@@ -15,7 +15,7 @@ The supported Payment Methods & Giftcards for this plugin can be found over here
 
 ## Requirements
 - To use the plugin you need a MultiSafepay account. You can create a test account on https://testmerchant.multisafepay.com/signup
-- OpenCart 3.x
+- OpenCart 2.X, 3.x
 - Tested on PHP 7.2, 7.3
 
 ## Installation and Upgrade
