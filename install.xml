@@ -435,8 +435,8 @@
     </file>
     <file path="admin/controller/sale/order.php">
         <operation error="skip" info="Add texts">
-            <search index="2"><![CDATA[$data['heading_title'] = $this->language->get('heading_title');]]></search>
-            <add position="before"><![CDATA[
+            <search><![CDATA[public function info() {]]></search>
+            <add position="after"><![CDATA[
 			$data = $this->getTexts();
             ]]>
             </add>
