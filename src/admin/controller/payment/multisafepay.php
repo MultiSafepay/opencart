@@ -715,7 +715,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
 
         if($process_refund) {
             $this->load->model($this->route);
-            $this->{$this->model_call}->addOrderHistory($this->request->get['order_id'], $this->config->get('payment_multisafepay_order_status_id_refunded'), $description);
+            $this->{$this->model_call}->addOrderHistory($this->request->get['order_id'], $this->config->get($this->key_prefix . 'multisafepay_order_status_id_refunded'), $description);
             $json['success'] = $this->language->get('text_refund_success');
         }
 
