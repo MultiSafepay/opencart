@@ -10,7 +10,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 + PLGOPNS-247: [refactor] Extend compatibility of the extension for OpenCart v. 2.X
 + PLGOPNS-315: [refactor] Fix typo error of warning message in settings page
 + PLGOPNS-303: [refactor] Improve iDEAL issuer selection list
-+ PLGOPNS-303: [refactor] Improve iDEAL issuer selection list
 + PLGOPNS-245: [refactor] Improve the alignment of payment methods logos in checkout page
 
 ## 3.2.0
