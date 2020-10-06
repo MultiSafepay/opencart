@@ -803,7 +803,6 @@ class Multisafepayevents {
         $this->load->language($this->route);
         $this->load->model('checkout/order');
         $this->load->model($this->route);
-        $this->load->model('localisation/order_status');
 
         // Check if the order has been paid with some MultiSafepay method
         $order_id = $args['order_id'];
