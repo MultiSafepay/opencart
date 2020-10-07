@@ -2227,6 +2227,27 @@ class Multisafepay {
 
     }
 
+
+    /**
+     * Return gateway by gateway payment code
+     *
+     * @param string $gateway_id
+     * @return mixed bool|array
+     *
+     */
+    public function getGatewayByPaymentCode($payment_code) {
+        $gateways = $this->getGateways();
+        $gateway_key = array_search($payment_code, array_column($gateways, 'route'));
+
+        if(!$gateway_key) {
+            return false;
+        }
+
+        return $gateways[$gateway_key];
+
+    }
+
+
     /**
      * Return ordered gateways
      *

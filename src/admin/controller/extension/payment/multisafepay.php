@@ -252,7 +252,6 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
         $this->load->model($this->route);
 
         // All payment methods in catalog checkout: msp_all_methods_at_front
-
         $event_multisafepay_multiple_gateways = $this->{$this->model_call}->getEventByCode('msp_all_methods_at_front');
         if(!$event_multisafepay_multiple_gateways) {
             $this->{$this->model_call}->addEvent('msp_all_methods_at_front',
@@ -292,7 +291,12 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
                     'catalog/view/mail/order_add/before',
                     $this->extension_directory_route . 'payment/multisafepay/catalogViewMailOrderAddBefore');
             }
-            if($this->oc_version == '2.3' || $this->oc_version == '2.2') {
+            if($this->oc_version == '2.3') {
+                $this->{$this->model_call}->addEvent('msp_payment_links_at_email',
+                    'catalog/model/checkout/order/addOrderHistory/before',
+                    $this->extension_directory_route . 'payment/multisafepay/catalogModelCheckoutOrderAddOrderHistoryBefore');
+            }
+            if($this->oc_version == '2.2') {
                 $this->{$this->model_call}->addEvent('msp_payment_links_at_email',
                     'catalog/view/mail/order/before',
                     $this->extension_directory_route . 'payment/multisafepay/catalogViewMailOrderAddBefore');

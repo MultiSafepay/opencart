@@ -861,4 +861,51 @@ class Multisafepayevents {
 
     }
 
+    /**
+     *
+     * Trigger that is called before catalog/model/checkout/order/addOrderHistory/before
+     * using OpenCart events system and overwrites it
+     *
+     * @param string $route
+     * @param array $args
+     * @return mixed bool|array
+     */
+    public function catalogModelCheckoutOrderAddOrderHistoryBefore(&$route, &$args) {
+        if (isset($args[0]) && isset($args[1])) {
+            $order_id = $args[0];
+            $order_status_id = $args[1];
+        }
+        $this->load->model('checkout/order');
+        $order_info = $this->model_checkout_order->getOrder($args[0]);
+        if ((strpos($order_info['payment_code'], 'multisafepay') !== false) && ($order_status_id === $this->config->get($this->key_prefix . 'multisafepay_order_status_id_initialize_payment_request'))) {
+            $this->registry->set('multisafepay', new Multisafepay($this->registry));
+            $order_payment_code = $order_info['payment_code'];
+            $gateway_info = $this->multisafepay->getGatewayByPaymentCode($order_info['payment_code']);
+            $gateway = (($gateway_info['id']) ? $gateway_info['id'] : '');
+            $order_request = array(
+                'order_id' => $order_id,
+                'action' => $this->url->link($this->route.'/confirm', '', true),
+                'back' => $this->url->link('checkout/checkout', '', true),
+                'test_mode' => (($this->config->get($this->key_prefix.'multisafepay_environment')) ? true : false),
+                'type' => 'paymentlink',
+                'gateway' => $gateway
+            );
+
+            $msp_order = $this->multisafepay->getOrderRequestObject($order_request);
+            $order_request = $this->multisafepay->processOrderRequestObject($msp_order);
+        }
+
+        if ($order_request->getPaymentLink()) {
+            $payment_link = $order_request->getPaymentLink();
+            if ($this->config->get($this->key_prefix . 'multisafepay_debug_mode')) {
+                $this->log->write('Start transaction in MSP for order ID ' . $order_id . ' on ' . date($this->language->get('datetime_format')));
+            }
+            $args[2] = sprintf($this->language->get('text_payment_link'), $payment_link, $payment_link);
+            $args[3] = true;
+            return $args;
+        }
+
+        return $args;
+    }
+
 }
