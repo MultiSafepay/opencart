@@ -611,10 +611,10 @@
                                 </p>
                                 <ul class="multisafepay-ul multisafepay-lh">
                                     <li>
-                                        <?php echo $text_telephone; ?>
+                                        <?php echo $text_sales_telephone; ?>
                                     </li>
                                     <li>
-                                        <?php echo $text_email; ?>
+                                        <?php echo $text_sales_email; ?>
                                     </li>
                                 </ul>
                                 <h2 id="multisafepay-title"><?php echo $text_title_contact; ?></h2>

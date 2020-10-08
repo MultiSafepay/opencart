@@ -647,14 +647,14 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
             $support_variables['support_create_test_account']
         );
 
-        $data['text_telephone'] = sprintf(
-            $this->language->get('text_telephone'),
+        $data['text_sales_telephone'] = sprintf(
+            $this->language->get('text_sales_telephone'),
             $support_variables['support_telephone'],
             $support_variables['support_readable_telephone']
         );
 
-        $data['text_email'] = sprintf(
-            $this->language->get('text_email'),
+        $data['text_sales_email'] = sprintf(
+            $this->language->get('text_sales_email'),
             $support_variables['support_email'],
             $support_variables['support_readable_email']
         );

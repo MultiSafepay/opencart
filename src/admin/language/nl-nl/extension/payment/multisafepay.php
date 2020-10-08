@@ -58,8 +58,8 @@ $_['text_need_account']									= 'Om deze plugin te gebruiken heeft u een Multi
 $_['text_create_test_account']							= 'Als u een duidelijk overzicht wilt hebben van wat MultiSafepay '
                                                         . 'te bieden heeft maak dan gerust een <a href="%s" target="_blank">testaccount </a> aan.';
 $_['text_create_live_account']							= 'Wilt u een live account aanmaken, neem dan contact op met de verkoopafdeling van MultiSafepay:';
-$_['text_telephone']									= 'Telefoon: <a href="%s">%s</a>';
-$_['text_email']										= 'E-mail: <a href="%s">%s</a>';
+$_['text_sales_telephone']							    = 'Telefoon: <a href="%s">%s</a>';
+$_['text_sales_email']								    = 'E-mail: <a href="%s">%s</a>';
 $_['text_contact_assistance_text']						= 'Heeft u hulp nodig? Neem dan gerust contact op met ons integratieteam:';
 $_['text_assistance_telephone']							= 'Telefoon: <a href="%s">%s</a>';
 $_['text_assistance_email']								= 'E-mail: <a href="%s">%s</a>';

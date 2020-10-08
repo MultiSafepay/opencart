@@ -57,8 +57,8 @@ $_['text_multisafepay_github_link']						= '<a target="_blank" href="%s" target=
 $_['text_need_account']									= 'Per poter utilizzare questo plugin, devi avere un account MultiSafepay.';
 $_['text_create_test_account']							= 'Se vuoi avere un panoramica dei prodotti MultiSafepay, puoi sempre creare un <a href="%s" target="_blank">test account</a>';
 $_['text_create_live_account']							= 'Per create un account live, per favore contatta il dipartimenti di vendite di MultiSafepay:';
-$_['text_telephone']									= 'Telefono: <a href="%s">%s</a>';
-$_['text_email']										= 'E-mail: <a href="%s">%s</a>';
+$_['text_sales_telephone']							    = 'Telefono: <a href="%s">%s</a>';
+$_['text_sales_email']								    = 'E-mail: <a href="%s">%s</a>';
 $_['text_contact_assistance_text']						= 'Hai bisogno di assistenza? Contatta il nostro team di integrazione:';
 $_['text_assistance_telephone']							= 'Telefono: <a href="%s">%s</a>';
 $_['text_assistance_email']								= 'E-mail: <a href="%s">%s</a>';

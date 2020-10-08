@@ -602,18 +602,15 @@ class Multisafepayevents {
      */
     public function adminModelSaleOrderCreateInvoiceNoBefore($route, $args) {
         if ($args) {
-
             if($this->oc_version === '2.2') {
                 $order_id = $args;
             }
             if($this->oc_version != '2.2') {
                 $order_id = $args[0];
             }
-
             $this->load->model('sale/order');
             $this->load->model($this->route);
             $order_info = $this->model_sale_order->getOrder($order_id);
-
             if(strpos($order_info['payment_code'], 'multisafepay') !== false) {
                 $invoice_no = $this->{$this->model_call}->getNextInvoiceId($order_id);
                 $invoice_id = $order_info['invoice_prefix'] . $invoice_no;
@@ -624,11 +621,9 @@ class Multisafepayevents {
                 $update_order->addData(array('invoice_id' => $invoice_id));
                 $transaction_manager->update($order_id, $update_order);
             }
-
             if( (strpos($order_info['payment_code'], 'multisafepay') !== false) && $this->config->get($this->key_prefix . 'multisafepay_debug_mode')) {
                 $this->log->write('OpenCart Event to send invoice ID: ' . $invoice_id . ' to MSP, for Order ID '.$order_id);
             }
-
         }
     }
 
@@ -858,7 +853,7 @@ class Multisafepayevents {
             $args['text_instruction'] = $this->language->get('text_instructions');
             $args['comment'] = sprintf($this->language->get('text_payment_link'), $payment_link, $payment_link);
             $order_history_comment = sprintf($this->language->get('text_payment_link_admin_order_history'), $payment_link, $payment_link);
-            $this->{$this->model_call}->addPaymentLinkToOrderHistory($order_id, $payment_request_order_status_id, $order_history_comment, false);
+            $this->{$this->model_call}->addPaymentLinkToOrderHistory($order_id, $payment_request_order_status_id, $order_history_comment, true);
 
             return $args;
 
