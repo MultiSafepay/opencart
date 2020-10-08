@@ -1296,7 +1296,7 @@ class Multisafepay {
         if (!$has_coupons) {
             return false;
         }
-        $this->load->model($this->extension_directory_route . 'total/coupon');
+        $this->load->model($this->route);
         $coupon_info = $this->{$this->model_call}->getCoupon($this->session->data['coupon']);
         $coupon_info['is_order_lower_than_taxes'] = $this->isSortOrderLowerThanTaxes($this->config->get($this->total_extension_key_prefix . 'coupon_sort_order'));
         return $coupon_info;
