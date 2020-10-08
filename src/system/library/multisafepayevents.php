@@ -602,13 +602,20 @@ class Multisafepayevents {
      */
     public function adminModelSaleOrderCreateInvoiceNoBefore($route, $args) {
         if ($args) {
+
+            if($this->oc_version === '2.2') {
+                $order_id = $args;
+            }
+            if($this->oc_version != '2.2') {
+                $order_id = $args[0];
+            }
+
             $this->load->model('sale/order');
             $this->load->model($this->route);
-            $order_info = $this->model_sale_order->getOrder($args);
+            $order_info = $this->model_sale_order->getOrder($order_id);
 
             if(strpos($order_info['payment_code'], 'multisafepay') !== false) {
-                $order_id = $order_info['order_id'];
-                $invoice_no = $this->{$this->model_call}->getNextInvoiceId($args);
+                $invoice_no = $this->{$this->model_call}->getNextInvoiceId($order_id);
                 $invoice_id = $order_info['invoice_prefix'] . $invoice_no;
                 $this->registry->set('multisafepay', new Multisafepay($this->registry));
                 $sdk = $this->multisafepay->getSdkObject();
