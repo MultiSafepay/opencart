@@ -486,4 +486,26 @@
             </add>
         </operation>
     </file>
+    <file path="catalog/model/checkout/order.php">
+        <operation info="Remove HTML from payment method">
+            <search><![CDATA[public function addOrder($data) {]]></search>
+            <add position="after"><![CDATA[
+		if (strpos($data['payment_code'], 'multisafepay') !== false) {
+            $data['payment_method'] = trim(strip_tags($data['payment_method']));
+		}
+                ]]>
+            </add>
+        </operation>
+    </file>
+    <file path="catalog/model/checkout/order.php">
+        <operation info="Remove HTML from payment method">
+            <search><![CDATA[public function editOrder($order_id, $data) {]]></search>
+            <add position="after"><![CDATA[
+		if (strpos($data['payment_code'], 'multisafepay') !== false) {
+            $data['payment_method'] = trim(strip_tags($data['payment_method']));
+		}
+                ]]>
+            </add>
+        </operation>
+    </file>
 </modification>

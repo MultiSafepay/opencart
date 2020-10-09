@@ -29,7 +29,6 @@ class ModelExtensionPaymentMultiSafePay extends Model {
         $this->oc_version = $this->multisafepay_version_control->getOcVersion();
         $this->route = $this->multisafepay_version_control->getExtensionRoute();
         $this->key_prefix = $this->multisafepay_version_control->getKeyPrefix();
-        $this->max_character_payment_method_title_length = 128;
     }
 
     /**
@@ -178,10 +177,6 @@ class ModelExtensionPaymentMultiSafePay extends Model {
             $title_with_logo = $logo . '  ' . $title;
         }
 
-        if (mb_strlen($title_with_logo) > $this->max_character_payment_method_title_length) {
-            return $title;
-        }
-
         return $title_with_logo;
     }
 
@@ -208,7 +203,8 @@ class ModelExtensionPaymentMultiSafePay extends Model {
      *
      */
     public function editOrderPaymentMethod($order_id, $data = array()) {
-        $payment_method_title = $this->getTitle($data['description'], $data['image']);
+        $payment_method = $this->getTitle($data['description'], $data['image']);
+        $payment_method_title = trim(strip_tags($payment_method));
         $this->db->query("UPDATE `" . DB_PREFIX . "order` SET payment_code = '" . $this->db->escape($data['route']) . "', payment_method = '" . $this->db->escape($payment_method_title) . "' WHERE order_id = '" . (int)$order_id . "'");
     }
 
@@ -367,6 +363,7 @@ class ModelExtensionPaymentMultiSafePay extends Model {
             );
         }
     }
+
 
 }
 

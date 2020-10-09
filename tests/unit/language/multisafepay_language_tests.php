@@ -32,7 +32,7 @@ class MultiSafePayAdminTests extends MultisafepayTestSuiteForOpenCart {
         $keys = array();
         foreach ($languages as $language) {
             $_ = array();
-            require_once(getenv('OC_ROOT') . 'admin/language/' . $language . '/'. $this->multisafepay_version_control->getExtensionRoute() . '.php');
+            require(getenv('OC_ROOT') . 'admin/language/' . $language . '/'. $this->multisafepay_version_control->getExtensionRoute() . '.php');
             $keys[$language] = count($_);
         }
         $this->assertEquals($keys['en-gb'], $keys['es']);
@@ -56,7 +56,7 @@ class MultiSafePayAdminTests extends MultisafepayTestSuiteForOpenCart {
         $keys = array();
         foreach ($languages as $language) {
             $_ = array();
-            require_once(getenv('OC_ROOT') . 'catalog/language/' . $language . '/'. $this->multisafepay_version_control->getExtensionRoute() . '.php');
+            require(getenv('OC_ROOT') . 'catalog/language/' . $language . '/'. $this->multisafepay_version_control->getExtensionRoute() . '.php');
             $keys[$language] = count($_);
         }
         $this->assertEquals($keys['en-gb'], $keys['es']);
@@ -80,7 +80,7 @@ class MultiSafePayAdminTests extends MultisafepayTestSuiteForOpenCart {
         $keys = array();
         foreach ($languages as $language) {
             $_ = array();
-            require_once(getenv('OC_ROOT') . 'admin/language/' . $language . '/'. $this->multisafepay_version_control->getExtensionRoute() . '.php');
+            require(getenv('OC_ROOT') . 'admin/language/' . $language . '/'. $this->multisafepay_version_control->getExtensionRoute() . '.php');
             $keys[$language] = array_keys($_);
         }
         $this->assertCount(0, array_diff($keys['en-gb'], $keys['es']));
@@ -104,7 +104,7 @@ class MultiSafePayAdminTests extends MultisafepayTestSuiteForOpenCart {
         $keys = array();
         foreach ($languages as $language) {
             $_ = array();
-            require_once(getenv('OC_ROOT') . 'catalog/language/' . $language . '/'. $this->multisafepay_version_control->getExtensionRoute() . '.php');
+            require(getenv('OC_ROOT') . 'catalog/language/' . $language . '/'. $this->multisafepay_version_control->getExtensionRoute() . '.php');
             $keys[$language] = array_keys($_);
         }
         $this->assertCount(0, array_diff($keys['en-gb'], $keys['es']));
@@ -130,7 +130,7 @@ class MultiSafePayAdminTests extends MultisafepayTestSuiteForOpenCart {
         $keys = array();
         foreach ($languages as $language) {
             $_ = array();
-            require_once(getenv('OC_ROOT') . 'admin/language/' . $language . '/'. $this->multisafepay_version_control->getExtensionRoute() . '.php');
+            require(getenv('OC_ROOT') . 'admin/language/' . $language . '/'. $this->multisafepay_version_control->getExtensionRoute() . '.php');
             $keys[$language] = count($_);
         }
         $this->assertEquals($keys['english'], $keys['spanish']);
@@ -154,7 +154,7 @@ class MultiSafePayAdminTests extends MultisafepayTestSuiteForOpenCart {
         $keys = array();
         foreach ($languages as $language) {
             $_ = array();
-            require_once(getenv('OC_ROOT') . 'catalog/language/' . $language . '/'. $this->multisafepay_version_control->getExtensionRoute() . '.php');
+            require(getenv('OC_ROOT') . 'catalog/language/' . $language . '/'. $this->multisafepay_version_control->getExtensionRoute() . '.php');
             $keys[$language] = count($_);
         }
         $this->assertEquals($keys['english'], $keys['spanish']);
@@ -178,7 +178,7 @@ class MultiSafePayAdminTests extends MultisafepayTestSuiteForOpenCart {
         $keys = array();
         foreach ($languages as $language) {
             $_ = array();
-            require_once(getenv('OC_ROOT') . 'admin/language/' . $language . '/'. $this->multisafepay_version_control->getExtensionRoute() . '.php');
+            require(getenv('OC_ROOT') . 'admin/language/' . $language . '/'. $this->multisafepay_version_control->getExtensionRoute() . '.php');
             $keys[$language] = array_keys($_);
         }
         $this->assertCount(0, array_diff($keys['english'], $keys['spanish']));
@@ -202,7 +202,7 @@ class MultiSafePayAdminTests extends MultisafepayTestSuiteForOpenCart {
         $keys = array();
         foreach ($languages as $language) {
             $_ = array();
-            require_once(getenv('OC_ROOT') . 'catalog/language/' . $language . '/'. $this->multisafepay_version_control->getExtensionRoute() . '.php');
+            require(getenv('OC_ROOT') . 'catalog/language/' . $language . '/'. $this->multisafepay_version_control->getExtensionRoute() . '.php');
             $keys[$language] = array_keys($_);
         }
         $this->assertCount(0, array_diff($keys['english'], $keys['spanish']));
@@ -215,6 +215,86 @@ class MultiSafePayAdminTests extends MultisafepayTestSuiteForOpenCart {
         $this->assertCount(0, array_diff($keys['italian'], $keys['dutch']));
         $this->assertCount(0, array_diff($keys['italian'], $keys['deutsch']));
         $this->assertCount(0, array_diff($keys['dutch'], $keys['deutsch']));
+    }
+
+
+    public function testCataloglenghtPaymentMethodsTitle() {
+        $oc_version = $this->multisafepay_version_control->getOcVersion();
+        if($oc_version == '2.1' || $oc_version == '2.0') {
+            $this->markTestSkipped('This test has been skipped.');
+        }
+        $languages = array('en-gb', 'es', 'it-it', 'nl-nl', 'de-de');
+        $keys = array();
+        foreach ($languages as $language) {
+            $_ = array();
+            require(getenv('OC_ROOT') . 'catalog/language/' . $language . '/'. $this->multisafepay_version_control->getExtensionRoute() . '.php');
+            foreach ($_ as $key => $value) {
+                if(strpos($key, 'text_title') !== false) {
+                    $length = mb_strlen($value, 'utf8');
+                    $this->assertLessThan(128, $length);
+                }
+            }
+        }
+    }
+
+
+    public function testAdminlenghtPaymentMethodsTitle() {
+        $oc_version = $this->multisafepay_version_control->getOcVersion();
+        if($oc_version == '2.1' || $oc_version == '2.0') {
+            $this->markTestSkipped('This test has been skipped.');
+        }
+        $languages = array('en-gb', 'es', 'it-it', 'nl-nl', 'de-de');
+        $keys = array();
+        foreach ($languages as $language) {
+            $_ = array();
+            require(getenv('OC_ROOT') . 'admin/language/' . $language . '/'. $this->multisafepay_version_control->getExtensionRoute() . '.php');
+            foreach ($_ as $key => $value) {
+                if(strpos($key, 'text_title') !== false) {
+                    $length = mb_strlen($value, 'utf8');
+                    $this->assertLessThan(128, $length);
+                }
+            }
+        }
+    }
+
+
+    public function testCataloglenghtPaymentMethodsTitleLower22() {
+        $oc_version = $this->multisafepay_version_control->getOcVersion();
+        if($oc_version == '2.2' || $oc_version == '2.3' || $oc_version == '3.0') {
+            $this->markTestSkipped('This test has been skipped.');
+        }
+        $languages = array('english', 'spanish', 'italian', 'dutch', 'deutsch');
+        $keys = array();
+        foreach ($languages as $language) {
+            $_ = array();
+            require(getenv('OC_ROOT') . 'catalog/language/' . $language . '/'. $this->multisafepay_version_control->getExtensionRoute() . '.php');
+            foreach ($_ as $key => $value) {
+                if(strpos($key, 'text_title') !== false) {
+                    $length = mb_strlen($value, 'utf8');
+                    $this->assertLessThan(128, $length);
+                }
+            }
+        }
+    }
+
+
+    public function testAdminlenghtPaymentMethodsTitleLower22() {
+        $oc_version = $this->multisafepay_version_control->getOcVersion();
+        if($oc_version == '2.2' || $oc_version == '2.3' || $oc_version == '3.0') {
+            $this->markTestSkipped('This test has been skipped.');
+        }
+        $languages = array('english', 'spanish', 'italian', 'dutch', 'deutsch');
+        $keys = array();
+        foreach ($languages as $language) {
+            $_ = array();
+            require(getenv('OC_ROOT') . 'admin/language/' . $language . '/'. $this->multisafepay_version_control->getExtensionRoute() . '.php');
+            foreach ($_ as $key => $value) {
+                if(strpos($key, 'text_title') !== false) {
+                    $length = mb_strlen($value, 'utf8');
+                    $this->assertLessThan(128, $length);
+                }
+            }
+        }
     }
 
 }

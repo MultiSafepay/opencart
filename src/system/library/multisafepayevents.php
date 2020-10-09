@@ -597,7 +597,6 @@ class Multisafepayevents {
      *
      * @param string $route
      * @param array $args
-     * @param string $output
      *
      */
     public function adminModelSaleOrderCreateInvoiceNoBefore($route, $args) {
@@ -907,6 +906,40 @@ class Multisafepayevents {
             return $args;
         }
 
+        return $args;
+    }
+
+    /**
+     *
+     * Trigger that is called before: catalog/model/checkout/order/addOrder
+     *
+     * using OpenCart events system and overwrites it
+     *
+     * @param string $route
+     * @param array $args
+     * @return mixed bool|array
+     */
+    public function catalogModelCheckoutOrderAddBefore(&$route, &$args) {
+        if(isset($args[0]['payment_method']) && strpos($args[0]['payment_method'], 'img') !== false) {
+            $args[0]['payment_method'] = trim(strip_tags($args[0]['payment_method']));
+        }
+        return $args;
+    }
+
+    /**
+     *
+     * Trigger that is called before: catalog/model/checkout/order/editOrder
+     *
+     * using OpenCart events system and overwrites it
+     *
+     * @param string $route
+     * @param array $args
+     * @return mixed bool|array
+     */
+    public function catalogModelCheckoutOrderEditBefore(&$route, &$args) {
+        if(isset($args[1]['payment_method']) && strpos($args[1]['payment_method'], 'img') !== false) {
+            $args[1]['payment_method'] = trim(strip_tags($args[1]['payment_method']));
+        }
         return $args;
     }
 

@@ -302,6 +302,21 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
                     $this->extension_directory_route . 'payment/multisafepay/catalogViewMailOrderAddBefore');
             }
         }
+
+        // Remove HTML and image tags from payment method in order details
+        $event_api_multisafepay_multiple_gateways = $this->{$this->model_call}->getEventByCode('msp_remove_html_add_order');
+        if(!$event_api_multisafepay_multiple_gateways) {
+            $this->{$this->model_call}->addEvent('msp_remove_html_add_order',
+                'catalog/model/checkout/order/addOrder/before',
+                $this->extension_directory_route . 'payment/multisafepay/catalogModelCheckoutOrderAddBefore');
+        }
+        $event_api_multisafepay_multiple_gateways = $this->{$this->model_call}->getEventByCode('msp_remove_html_edit_order');
+        if(!$event_api_multisafepay_multiple_gateways) {
+            $this->{$this->model_call}->addEvent('msp_remove_html_edit_order',
+                'catalog/model/checkout/order/editOrder/before',
+                $this->extension_directory_route . 'payment/multisafepay/catalogModelCheckoutOrderEditBefore');
+        }
+
     }
 
     /**
@@ -309,17 +324,17 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
      *
      */
     private function deleteMultiSafepayEvents() {
-
         if(!$this->oc_version || $this->oc_version == '2.1' || $this->oc_version == '2.0' ) {
             return false;
         }
-
         $this->load->model($this->route);
         $this->{$this->model_call}->deleteEventByCode('msp_all_methods_at_front');
         $this->{$this->model_call}->deleteEventByCode('msp_all_methods_at_back');
         $this->{$this->model_call}->deleteEventByCode('msp_set_invoiced_to_msp');
         $this->{$this->model_call}->deleteEventByCode('msp_set_order_tab');
         $this->{$this->model_call}->deleteEventByCode('msp_payment_links_at_email');
+        $this->{$this->model_call}->deleteEventByCode('msp_remove_html_add_order');
+        $this->{$this->model_call}->deleteEventByCode('msp_remove_html_edit_order');
     }
 
     /**
@@ -848,7 +863,6 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
      *
      * @param string $route
      * @param array $args
-     * @param string $output
      *
      */
     public function adminModelSaleOrderCreateInvoiceNoBefore($route, $args) {

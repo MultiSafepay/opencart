@@ -871,6 +871,34 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
         $this->multisafepayevents->catalogModelCheckoutOrderAddOrderHistoryBefore($route, $args);
     }
 
+    /**
+     * Trigger that is called before: catalog/model/checkout/order/addOrder
+     *
+     * using OpenCart events system and overwrites it
+     *
+     * @param string $route
+     * @param array $args
+     *
+     */
+    public function catalogModelCheckoutOrderAddBefore(&$route, &$args) {
+        $this->registry->set('multisafepayevents', new Multisafepayevents($this->registry));
+        $this->multisafepayevents->catalogModelCheckoutOrderAddBefore($route, $args);
+    }
+
+    /**
+     * Trigger that is called before: catalog/model/checkout/order/editOrder
+     *
+     * using OpenCart events system and overwrites it
+     *
+     * @param string $route
+     * @param array $args
+     *
+     */
+    public function catalogModelCheckoutOrderEditBefore(&$route, &$args) {
+        $this->registry->set('multisafepayevents', new Multisafepayevents($this->registry));
+        $this->multisafepayevents->catalogModelCheckoutOrderEditBefore($route, $args);
+    }
+
 }
 
 class ControllerPaymentMultiSafePay extends ControllerExtensionPaymentMultiSafePay { }
