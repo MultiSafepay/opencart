@@ -6,6 +6,35 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## 3.3.0
+Release date: October, 13th 2020
+
+### Added
++ PLGOPNS-247: Extend compatibility of the extension for OpenCart v. 2.X
+
+### Changed
++ PLGOPNS-329: Show payment logo in checkout and strip html tags before insert payment method in database
++ PLGOPNS-303: Improve iDEAL issuer selection list
++ PLGOPNS-245: Improve the alignment of payment methods logos in checkout page
+
+## 3.3.0-RC2
++ PLGOPNS-323: [refactor] Remove duplicated line in CHANGELOG.md
++ PLGOPNS-324: [refactor] Fix Klarna rebrand
++ PLGOPNS-325: [refactor] Fix undefined index 'gateway' error, in library multisafepay.php
++ PLGOPNS-326: [refactor] Issuer list in .tpl file in catalog form checkout is not properly defined
++ PLGOPNS-327: [refactor] Validate form AJAX in checkout page should point to directory payment for OC 2.0, 2.1, 2.2
++ PLGOPNS-328: [refactor] Remove calls to localisation/order_status in modification.xml OCMOD file for OC 2.0 and 2.1
++ PLGOPNS-330: [refactor] Include extension file in function order in admin controller
++ PLGOPNS-331: [refactor] Implement in 2.0 buttons to change the order as shipped / cancelled; or make refunds
++ PLGOPNS-332: [refactor] Fix function refundOrder in admin controller to work properly in OC 2.0
++ PLGOPNS-333: [refactor] Fix OCMOD, for OC 2.0 and 2.1. Skip both operations on error skip
++ PLGOPNS-334: [refactor] Remove call to localisation/order_status in multisafepay_events.php
++ PLGOPNS-335: [refactor] Fix double payment link on transaction generated in backoffice for OC 2.3 
++ PLGOPNS-336: [refactor] Fix adminModelSaleOrderCreateInvoiceNoBefore function in OC 2.3
++ PLGOPNS-337: [refactor] Fix layout break related with duplicated text keys in order info admin page
++ PLGOPNS-338: [refactor] Fix getCoupon on null loading model class in multisafepay library
++ PLGOPNS-329: Show payment logo on checkout and strip html tags before insert payment method in database
+
 ## 3.3.0-RC1
 + PLGOPNS-247: [refactor] Extend compatibility of the extension for OpenCart v. 2.X
 + PLGOPNS-315: [refactor] Fix typo error of warning message in settings page
