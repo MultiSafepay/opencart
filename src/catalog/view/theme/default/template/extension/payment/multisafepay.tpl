@@ -17,8 +17,9 @@
                 <label class="col-sm-2 control-label" for="input-issuer-id"><?php echo $entry_issuer; ?> </label>
                 <div class="col-sm-10">
                     <select name="issuer_id" id="input-issuer-id" class="form-control">
+                        <option value=""><?php echo $text_select; ?></option>
                         <?php foreach ($issuers as $issuer) { ?>
-                            <li><a class="issuer" data-issuer_id="<?php echo $issuer['code']; ?>"><?php echo $issuer['description']; ?></a></li>
+                            <option value="<?php echo $issuer['code']; ?>"><?php echo $issuer['description']; ?></option>
                         <?php } ?>
                     </select>
                 </div>
@@ -135,7 +136,7 @@
                 e.preventDefault();
                 e.stopPropagation();
                 $.ajax({
-                    'url': 'index.php?route=extension/payment/multisafepay/validateForm',
+                    'url': 'index.php?route=<?php echo $route; ?>/validateForm',
                     type: 'post',
                     data: $('#multisafepay-form :input, #multisafepay-form select'),
                     dataType: 'json',

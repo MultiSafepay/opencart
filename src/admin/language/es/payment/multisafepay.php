@@ -58,8 +58,8 @@ $_['text_need_account']									= 'Para usar esta extensión, necesita una cuent
 $_['text_create_test_account']							= 'Si desea tener una visión general clara de lo que MultiSafepay '
                                                         . 'tiene que ofrecer, siéntase libre de crear una <a href="%s" target="_blank">cuenta de prueba</a>.';
 $_['text_create_live_account']							= 'Si desea configurar una cuenta real, comuníquese con el departamento comercial de MultiSafepay:';
-$_['text_telephone']									= 'Teléfono: <a href="%s">%s</a>';
-$_['text_email']										= 'E-mail: <a href="%s">%s</a>';
+$_['text_sales_telephone']							    = 'Teléfono: <a href="%s">%s</a>';
+$_['text_sales_email']								    = 'E-mail: <a href="%s">%s</a>';
 $_['text_contact_assistance_text']						= '¿Necesita ayuda? No dude en contactar a nuestro Equipo de Integración:';
 $_['text_assistance_telephone']							= 'Teléfono: <a href="%s">%s</a>';
 $_['text_assistance_email']								= 'E-mail: <a href="%s">%s</a>';
@@ -183,7 +183,7 @@ $_['text_title_ideal']                                  = 'iDEAL';
 $_['text_title_ideal_qr']                               = 'iDEAL QR';
 $_['text_title_ing_home_pay']                           = 'ING Home\'Pay';
 $_['text_title_kbc']                                    = 'KBC';
-$_['text_title_klarna']                                 = 'Klarna - Pay later in 14 days';
+$_['text_title_klarna']                                 = 'Klarna - Compra ahora, paga después';
 $_['text_title_maestro']                                = 'Maestro';
 $_['text_title_mastercard']                             = 'Mastercard';
 $_['text_title_parfum_cadeaukaart']                     = 'Parfum Cadeaukaart';

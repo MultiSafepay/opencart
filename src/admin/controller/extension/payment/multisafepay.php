@@ -252,7 +252,6 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
         $this->load->model($this->route);
 
         // All payment methods in catalog checkout: msp_all_methods_at_front
-
         $event_multisafepay_multiple_gateways = $this->{$this->model_call}->getEventByCode('msp_all_methods_at_front');
         if(!$event_multisafepay_multiple_gateways) {
             $this->{$this->model_call}->addEvent('msp_all_methods_at_front',
@@ -292,12 +291,32 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
                     'catalog/view/mail/order_add/before',
                     $this->extension_directory_route . 'payment/multisafepay/catalogViewMailOrderAddBefore');
             }
-            if($this->oc_version == '2.3' || $this->oc_version == '2.2') {
+            if($this->oc_version == '2.3') {
+                $this->{$this->model_call}->addEvent('msp_payment_links_at_email',
+                    'catalog/model/checkout/order/addOrderHistory/before',
+                    $this->extension_directory_route . 'payment/multisafepay/catalogModelCheckoutOrderAddOrderHistoryBefore');
+            }
+            if($this->oc_version == '2.2') {
                 $this->{$this->model_call}->addEvent('msp_payment_links_at_email',
                     'catalog/view/mail/order/before',
                     $this->extension_directory_route . 'payment/multisafepay/catalogViewMailOrderAddBefore');
             }
         }
+
+        // Remove HTML and image tags from payment method in order details
+        $event_api_multisafepay_multiple_gateways = $this->{$this->model_call}->getEventByCode('msp_remove_html_add_order');
+        if(!$event_api_multisafepay_multiple_gateways) {
+            $this->{$this->model_call}->addEvent('msp_remove_html_add_order',
+                'catalog/model/checkout/order/addOrder/before',
+                $this->extension_directory_route . 'payment/multisafepay/catalogModelCheckoutOrderAddBefore');
+        }
+        $event_api_multisafepay_multiple_gateways = $this->{$this->model_call}->getEventByCode('msp_remove_html_edit_order');
+        if(!$event_api_multisafepay_multiple_gateways) {
+            $this->{$this->model_call}->addEvent('msp_remove_html_edit_order',
+                'catalog/model/checkout/order/editOrder/before',
+                $this->extension_directory_route . 'payment/multisafepay/catalogModelCheckoutOrderEditBefore');
+        }
+
     }
 
     /**
@@ -305,17 +324,17 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
      *
      */
     private function deleteMultiSafepayEvents() {
-
         if(!$this->oc_version || $this->oc_version == '2.1' || $this->oc_version == '2.0' ) {
             return false;
         }
-
         $this->load->model($this->route);
         $this->{$this->model_call}->deleteEventByCode('msp_all_methods_at_front');
         $this->{$this->model_call}->deleteEventByCode('msp_all_methods_at_back');
         $this->{$this->model_call}->deleteEventByCode('msp_set_invoiced_to_msp');
         $this->{$this->model_call}->deleteEventByCode('msp_set_order_tab');
         $this->{$this->model_call}->deleteEventByCode('msp_payment_links_at_email');
+        $this->{$this->model_call}->deleteEventByCode('msp_remove_html_add_order');
+        $this->{$this->model_call}->deleteEventByCode('msp_remove_html_edit_order');
     }
 
     /**
@@ -643,14 +662,14 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
             $support_variables['support_create_test_account']
         );
 
-        $data['text_telephone'] = sprintf(
-            $this->language->get('text_telephone'),
+        $data['text_sales_telephone'] = sprintf(
+            $this->language->get('text_sales_telephone'),
             $support_variables['support_telephone'],
             $support_variables['support_readable_telephone']
         );
 
-        $data['text_email'] = sprintf(
-            $this->language->get('text_email'),
+        $data['text_sales_email'] = sprintf(
+            $this->language->get('text_sales_email'),
             $support_variables['support_email'],
             $support_variables['support_readable_email']
         );
@@ -715,7 +734,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
 
         if($process_refund) {
             $this->load->model($this->route);
-            $this->model_extension_payment_multisafepay->addOrderHistory($this->request->get['order_id'], $this->config->get('payment_multisafepay_order_status_id_refunded'), $description);
+            $this->{$this->model_call}->addOrderHistory($this->request->get['order_id'], $this->config->get($this->key_prefix . 'multisafepay_order_status_id_refunded'), $description);
             $json['success'] = $this->language->get('text_refund_success');
         }
 
@@ -824,7 +843,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
         $data['total'] = $this->currency->format($total, $msp_order->getCurrency(), 1.00000000, true);
         $total = $msp_order->getMoney();
         $data['total'] = $this->currency->format($total->__toString(), $msp_order->getCurrency(), 1.00000000, true);
-        return $this->load->view($this->route . '_order', $data);
+        return $this->load->view($this->route . '_order' . $this->view_extension_file, $data);
 
     }
 
@@ -844,7 +863,6 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
      *
      * @param string $route
      * @param array $args
-     * @param string $output
      *
      */
     public function adminModelSaleOrderCreateInvoiceNoBefore($route, $args) {

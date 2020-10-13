@@ -205,7 +205,6 @@
         $this->load->language('payment/multisafepay');
         $this->load->model('checkout/order');
         $this->load->model('payment/multisafepay');
-        $this->load->model('localisation/order_status');
         $order_info = $this->model_checkout_order->getOrder($order_id);
 
         if ((strpos($order_info['payment_code'], 'multisafepay') !== false)) {
@@ -254,7 +253,6 @@
         $this->load->language('payment/multisafepay');
         $this->load->model('checkout/order');
         $this->load->model('payment/multisafepay');
-        $this->load->model('localisation/order_status');
         $order_info = $this->model_checkout_order->getOrder($order_id);
 
         if ((strpos($order_info['payment_code'], 'multisafepay') !== false)) {
@@ -311,6 +309,202 @@
 		}
 	}
             ]]>
+            </add>
+        </operation>
+    </file>
+    <file path="admin/view/template/sale/order_info.tpl">
+        <operation error="skip" info="Add buttons to set the order as shipped, cancelled, or refunds">
+            <search><![CDATA[<div class="pull-right"><a href="<?php echo $invoice; ?>" target="_blank" data-toggle="tooltip" title="<?php echo $button_invoice_print; ?>" class="btn btn-info"><i class="fa fa-print"></i></a> <a href="<?php echo $shipping; ?>" target="_blank" data-toggle="tooltip" title="<?php echo $button_shipping_print; ?>" class="btn btn-info"><i class="fa fa-truck"></i></a> <a href="<?php echo $edit; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a> <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a></div>]]></search>
+            <add position="replace"><![CDATA[
+            <div class="pull-right"><?php if($status == 'completed' || $status == 'shipped' || $status == 'initialized' || $status == 'expired') { ?><?php if($status == 'completed' || $status == 'shipped') { ?><a href="#" id="button-refund" data-toggle="tooltip" title="<?php echo $button_refund; ?>" class="btn btn-info"><i class="fa fa-step-backward"></i></a><?php } ?> <?php if($status == 'initialized') { ?><a href="#" id="button-cancel" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-info"><i class="fa fa-times"></i></a><?php } ?>  <?php if($status == 'completed' || $status == 'initialized') { ?><a href="#" id="button-shipped" data-toggle="tooltip" title="<?php echo $button_shipped; ?>" class="btn btn-info"><i class="fa fa-plane"></i></a><?php } ?><?php } ?>  <a href="<?php echo $invoice; ?>" target="_blank" data-toggle="tooltip" title="<?php echo $button_invoice_print; ?>" class="btn btn-info"><i class="fa fa-print"></i></a> <a href="<?php echo $shipping; ?>" target="_blank" data-toggle="tooltip" title="<?php echo $button_shipping_print; ?>" class="btn btn-info"><i class="fa fa-truck"></i></a> <a href="<?php echo $edit; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a> <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+            ]]>
+            </add>
+        </operation>
+        <operation error="skip" info="Add scripts">
+            <search><![CDATA[<?php echo $footer; ?> ]]></search>
+            <add position="before"><![CDATA[
+<?php if($status == 'completed' || $status == 'shipped' || $status == 'initialized' || $status == 'expired') { ?>
+    <?php if($status == 'completed' || $status == 'shipped') { ?>
+        <script type="text/javascript"><!--
+            $('#button-refund').on('click', function(e) {
+                e.preventDefault();
+                if (confirm('<?php echo $text_refund_confirm; ?>')) {
+                    $.ajax({
+                        url: 'index.php?route=payment/multisafepay/refundOrder&<?php echo $token_name; ?>=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>',
+                        dataType: 'json',
+                        async: false,
+                        beforeSend: function() {
+                            $('#button-refund').button('loading');
+                        },
+                        complete: function() {
+                            $('#button-refund').button('reset');
+                        },
+                        success: function(json) {
+                            if (json['error']) {
+                                $('#tab-multisafepay-order').append('<div class="alert alert-danger alert-dismissible">' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                            }
+                            if (json['success']) {
+                                $('#history').load('index.php?route=sale/order/history&<?php echo $token_name; ?>=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>');
+                                $('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible">' + json['success'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                                $('#button-cancel').remove();
+                                $('#button-refund').remove();
+                                $('#button-shipped').remove();
+                            }
+                        },
+                        error: function(xhr, ajaxOptions, thrownError) {
+                            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                        }
+                    });
+                }
+            });
+            //--></script>
+    <?php } ?>
+    <?php if($status == 'initialized') { ?>
+        <script type="text/javascript"><!--
+            $('#button-cancel').on('click', function(e) {
+                e.preventDefault();
+                if (confirm('<?php echo $text_cancelled_confirm; ?>')) {
+                    $.ajax({
+                        url: 'index.php?route=payment/multisafepay/changeMultiSafepayOrderStatusTo&<?php echo $token_name; ?>=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>&type=cancelled',
+                        dataType: 'json',
+                        async: false,
+                        beforeSend: function() {
+                            $('#button-cancel').button('loading');
+                        },
+                        complete: function() {
+                            $('#button-cancel').button('reset');
+                        },
+                        success: function(json) {
+                            if (json['error']) {
+                                $('#tab-multisafepay-order').append('<div class="alert alert-danger alert-dismissible">' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                            }
+                            if (json['success']) {
+                                $('#history').load('index.php?route=sale/order/history&<?php echo $token_name; ?>=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>');
+                                $('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible">' + json['success'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                                $('#button-cancel').remove();
+                                $('#button-refund').remove();
+                                $('#button-shipped').remove();
+                            }
+                        },
+                        error: function(xhr, ajaxOptions, thrownError) {
+                            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                        }
+                    });
+                }
+            });
+            //--></script>
+    <?php } ?>
+    <?php if($status == 'completed' || $status == 'initialized') { ?>
+        <script type="text/javascript"><!--
+            $('#button-shipped').on('click', function(e) {
+                e.preventDefault();
+                if (confirm('<?php echo $text_shipped_confirm; ?>')) {
+                    $.ajax({
+                        url: 'index.php?route=payment/multisafepay/changeMultiSafepayOrderStatusTo&<?php echo $token_name; ?>=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>&type=shipped',
+                        dataType: 'json',
+                        async: false,
+                        beforeSend: function() {
+                            $('#button-shipped').button('loading');
+                        },
+                        complete: function() {
+                            $('#button-shipped').button('reset');
+                        },
+                        success: function(json) {
+                            if (json['error']) {
+                                $('#tab-multisafepay-order').append('<div class="alert alert-danger alert-dismissible">' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                            }
+                            if (json['success']) {
+                                $('#history').load('index.php?route=sale/order/history&<?php echo $token_name; ?>=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>');
+                                $('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible">' + json['success'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                                $('#button-cancel').remove();
+                                $('#button-shipped').remove();
+                            }
+                        },
+                        error: function(xhr, ajaxOptions, thrownError) {
+                            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                        }
+                    });
+                }
+            });
+            //--></script>
+    <?php } ?>
+<?php } ?>
+            ]]>
+            </add>
+        </operation>
+    </file>
+    <file path="admin/controller/sale/order.php">
+        <operation error="skip" info="Add texts">
+            <search><![CDATA[public function info() {]]></search>
+            <add position="after"><![CDATA[
+			$data = $this->getTexts();
+            ]]>
+            </add>
+        </operation>
+        <operation error="skip" info="Add texts">
+            <search><![CDATA[public function info() {]]></search>
+            <add position="before"><![CDATA[
+
+    public function getAdditionalTextsKeys() {
+        $additional_keys = array(
+            'button_cancel',
+            'button_refund',
+            'button_shipped',
+            'text_refund_confirm',
+            'text_cancelled_confirm',
+            'text_shipped_confirm'
+        );
+        return $additional_keys;
+    }
+
+    public function getTexts() {
+        $this->registry->set('multisafepay', new Multisafepay($this->registry));
+        $data = $this->multisafepay_version_control->getLanguageKeys($this->route, $this->getAdditionalTextsKeys());
+        return $data;
+    }
+
+            ]]>
+            </add>
+        </operation>
+
+        <operation error="skip" info="Add buttons to set the order as shipped, cancelled, or refunds">
+            <search><![CDATA[$this->response->setOutput($this->load->view('sale/order_info.tpl', $data));]]></search>
+            <add position="before"><![CDATA[
+			$this->registry->set('multisafepay', new Multisafepay($this->registry));
+			$msp_order = $this->multisafepay->getOrderObject($this->request->get['order_id']);
+			if(!$msp_order || !$msp_order->getTransactionId()) {
+			    $data['status'] = false;
+			} else {
+    			$data['status'] = $msp_order->getStatus();
+			}
+			// if( (strpos($order_info['payment_code'], 'multisafepay') !== false)
+            $data['token_name'] = $this->token_name;
+            $data['token'] = $this->session->data['token'];
+            $data['order_id'] = $this->request->get['order_id'];
+
+            ]]>
+            </add>
+        </operation>
+    </file>
+    <file path="catalog/model/checkout/order.php">
+        <operation info="Remove HTML from payment method">
+            <search><![CDATA[public function addOrder($data) {]]></search>
+            <add position="after"><![CDATA[
+		if (strpos($data['payment_code'], 'multisafepay') !== false) {
+            $data['payment_method'] = trim(strip_tags($data['payment_method']));
+		}
+                ]]>
+            </add>
+        </operation>
+    </file>
+    <file path="catalog/model/checkout/order.php">
+        <operation info="Remove HTML from payment method">
+            <search><![CDATA[public function editOrder($order_id, $data) {]]></search>
+            <add position="after"><![CDATA[
+		if (strpos($data['payment_code'], 'multisafepay') !== false) {
+            $data['payment_method'] = trim(strip_tags($data['payment_method']));
+		}
+                ]]>
             </add>
         </operation>
     </file>

@@ -66,10 +66,10 @@
                         dataType: 'json',
                         async: false,
                         beforeSend: function() {
-                            $('#button-refund').button('loading');
+                            $('#button-cancel').button('loading');
                         },
                         complete: function() {
-                            $('#button-refund').button('reset');
+                            $('#button-cancel').button('reset');
                         },
                         success: function(json) {
                             if (json['error']) {
@@ -100,10 +100,10 @@
                         dataType: 'json',
                         async: false,
                         beforeSend: function() {
-                            $('#button-refund').button('loading');
+                            $('#button-shipped').button('loading');
                         },
                         complete: function() {
-                            $('#button-refund').button('reset');
+                            $('#button-shipped').button('reset');
                         },
                         success: function(json) {
                             if (json['error']) {

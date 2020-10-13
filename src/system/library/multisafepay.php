@@ -58,7 +58,7 @@ class Multisafepay {
      *
      */
     public function getPluginVersion() {
-        $plugin_version = '3.3.0-RC1';
+        $plugin_version = '3.3.0-RC2';
         return $plugin_version;
     }
 
@@ -224,7 +224,7 @@ class Multisafepay {
         $msp_order = new \MultiSafepay\Api\Transactions\OrderRequest();
         $msp_order->addOrderId($data['order_id']);
 
-        if($data['gateway'] === 'IDEAL' && empty($data['issuer_id'])) {
+        if(isset($data['gateway']) && $data['gateway'] === 'IDEAL' && empty($data['issuer_id'])) {
             $data['type'] = 'redirect';
             $data['gateway_info'] = '';
         }
@@ -1296,7 +1296,7 @@ class Multisafepay {
         if (!$has_coupons) {
             return false;
         }
-        $this->load->model($this->extension_directory_route . 'total/coupon');
+        $this->load->model($this->route);
         $coupon_info = $this->{$this->model_call}->getCoupon($this->session->data['coupon']);
         $coupon_info['is_order_lower_than_taxes'] = $this->isSortOrderLowerThanTaxes($this->config->get($this->total_extension_key_prefix . 'coupon_sort_order'));
         return $coupon_info;
@@ -2226,6 +2226,27 @@ class Multisafepay {
         return $gateways[$gateway_key];
 
     }
+
+
+    /**
+     * Return gateway by gateway payment code
+     *
+     * @param string $gateway_id
+     * @return mixed bool|array
+     *
+     */
+    public function getGatewayByPaymentCode($payment_code) {
+        $gateways = $this->getGateways();
+        $gateway_key = array_search($payment_code, array_column($gateways, 'route'));
+
+        if(!$gateway_key) {
+            return false;
+        }
+
+        return $gateways[$gateway_key];
+
+    }
+
 
     /**
      * Return ordered gateways

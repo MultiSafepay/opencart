@@ -72,6 +72,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
         $data['action'] = $this->url->link($this->route . '/confirm', '', true);
         $data['back'] = $this->url->link('checkout/checkout', '', true);
         $data['type'] = 'redirect';
+        $data['route'] = $this->route;
         $data['test_mode'] = ($this->config->get($this->key_prefix . 'multisafepay_environment')) ? true : false;
         return $data;
     }
@@ -855,6 +856,47 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
     public function catalogViewMailOrderAddBefore(&$route, &$args) {
         $this->registry->set('multisafepayevents', new Multisafepayevents($this->registry));
         $this->multisafepayevents->catalogViewMailOrderAddBefore($route, $args);
+    }
+
+    /**
+     * Trigger that is called before catalog/model/checkout/order/addOrderHistory/before
+     * using OpenCart events system and overwrites it
+     *
+     * @param string $route
+     * @param array $args
+     *
+     */
+    public function catalogModelCheckoutOrderAddOrderHistoryBefore(&$route, &$args) {
+        $this->registry->set('multisafepayevents', new Multisafepayevents($this->registry));
+        $this->multisafepayevents->catalogModelCheckoutOrderAddOrderHistoryBefore($route, $args);
+    }
+
+    /**
+     * Trigger that is called before: catalog/model/checkout/order/addOrder
+     *
+     * using OpenCart events system and overwrites it
+     *
+     * @param string $route
+     * @param array $args
+     *
+     */
+    public function catalogModelCheckoutOrderAddBefore(&$route, &$args) {
+        $this->registry->set('multisafepayevents', new Multisafepayevents($this->registry));
+        $this->multisafepayevents->catalogModelCheckoutOrderAddBefore($route, $args);
+    }
+
+    /**
+     * Trigger that is called before: catalog/model/checkout/order/editOrder
+     *
+     * using OpenCart events system and overwrites it
+     *
+     * @param string $route
+     * @param array $args
+     *
+     */
+    public function catalogModelCheckoutOrderEditBefore(&$route, &$args) {
+        $this->registry->set('multisafepayevents', new Multisafepayevents($this->registry));
+        $this->multisafepayevents->catalogModelCheckoutOrderEditBefore($route, $args);
     }
 
 }
