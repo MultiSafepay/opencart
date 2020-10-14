@@ -716,7 +716,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
 
         $payment_details = $msp_order->getPaymentDetails();
         $gateway_id = $payment_details->getType();
-        $gateways_with_shopping_cart = array('AFTERPAY', 'KLARNA', 'EINVOICE', 'PAYAFTER');
+        $gateways_with_shopping_cart = array('AFTERPAY', 'KLARNA', 'EINVOICE', 'PAYAFTER', 'IDEAL');
         if(in_array($gateway_id, $gateways_with_shopping_cart)) {
             $msp_shopping_cart = $msp_order->getShoppingCart();
             $msp_shopping_cart_data = $msp_shopping_cart->getData();
@@ -734,6 +734,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
 
         if($process_refund) {
             $this->load->model($this->route);
+            $this->{$this->model_call}->removeCouponsVouchersRewardsPointsAffiliateCommission($this->request->get['order_id']);
             $this->{$this->model_call}->addOrderHistory($this->request->get['order_id'], $this->config->get($this->key_prefix . 'multisafepay_order_status_id_refunded'), $description);
             $json['success'] = $this->language->get('text_refund_success');
         }
