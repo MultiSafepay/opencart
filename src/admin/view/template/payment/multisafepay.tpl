@@ -580,7 +580,7 @@
                                 <br />
                                 <h2 id="multisafepay-title"><?php echo $text_title_documentation; ?></h2>
                                 <p><?php echo $text_read_more_documentation; ?></p>
-                                <ul class="multisafepay-ul multisafepay-lh">
+                                <ul>
                                     <li>
                                         <?php echo $text_manual_link; ?>
                                     </li>
@@ -592,7 +592,7 @@
                                     </li>
                                 </ul>
                                 <p><?php echo $text_read_more_documentation_developers; ?></p>
-                                <ul class="multisafepay-ul multisafepay-lh">
+                                <ul>
                                     <li>
                                         <?php echo $text_api_documentation_link; ?>
                                     </li>
@@ -601,27 +601,61 @@
                                     </li>
                                 </ul>
                                 <h2 id="multisafepay-title"><?php echo $text_title_account; ?></h2>
-                                <p class="multisafepay-lh">
+                                <p style="font-weight: bold">
                                     <?php echo $text_need_account; ?>
-                                    <br />
-                                    <?php echo $text_create_test_account; ?>
                                 </p>
-                                <p class="multisafepay-lh" style="padding-top:20px;">
-                                    <?php echo $text_create_live_account; ?>
-                                </p>
-                                <ul class="multisafepay-ul multisafepay-lh">
-                                    <li>
-                                        <?php echo $text_sales_telephone; ?>
-                                    </li>
-                                    <li>
-                                        <?php echo $text_sales_email; ?>
+                                <ul>
+                                    <li><?php echo $text_create_test_account; ?></li>
+                                    <li><?php echo $text_create_live_account; ?>
+                                        <ul class="multisafepay-sales-contact-list">
+                                            <li><strong><?php echo $text_country_netherlands; ?></strong>
+                                                <ul>
+                                                    <li>
+                                                        <?php echo $text_sales_telephone_netherlands; ?>
+                                                    </li>
+                                                    <li>
+                                                        <?php echo $text_sales_email_netherlands; ?>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li><strong><?php echo $text_country_belgium; ?></strong>
+                                                <ul>
+                                                    <li>
+                                                        <?php echo $text_sales_telephone_belgium; ?>
+                                                    </li>
+                                                    <li>
+                                                        <?php echo $text_sales_email_belgium; ?>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li><strong><?php echo $text_country_spain; ?></strong>
+                                                <ul>
+                                                    <li>
+                                                        <?php echo $text_sales_telephone_spain; ?>
+                                                    </li>
+                                                    <li>
+                                                        <?php echo $text_sales_email_spain; ?>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li><strong><?php echo $text_country_italy; ?></strong>
+                                                <ul>
+                                                    <li>
+                                                        <?php echo $text_sales_telephone_italy; ?>
+                                                    </li>
+                                                    <li>
+                                                        <?php echo $text_sales_email_italy; ?>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
                                     </li>
                                 </ul>
                                 <h2 id="multisafepay-title"><?php echo $text_title_contact; ?></h2>
-                                <p class="multisafepay-lh">
+                                <p>
                                     <?php echo $text_contact_assistance_text; ?>
                                 </p>
-                                <ul class="multisafepay-ul multisafepay-lh">
+                                <ul>
                                     <li>
                                         <?php echo $text_assistance_telephone; ?>
                                     </li>

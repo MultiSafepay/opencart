@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 PLGOPNS-242: Remove coupons, vouchers, rewards and affiliate commissions in full refunds
+PLGOPNS-257: Include in support tab the contact details of international offices
 
 ## 3.3.0
 Release date: October, 13th 2020

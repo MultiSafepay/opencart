@@ -58,6 +58,10 @@ $_['text_need_account']									= 'To use this plugin you need a MultiSafepay ac
 $_['text_create_test_account']							= 'If you would like to have a clear overview of what MultiSafepay '
                                                         . 'has to offer, feel free to create a <a href="%s" target="_blank">test account</a>.';
 $_['text_create_live_account']							= 'If you would like to set up a live account, please contact the MultiSafepay sales department:';
+$_['text_country_netherlands']							= 'Netherlands:';
+$_['text_country_belgium']							    = 'Belgium:';
+$_['text_country_spain']							    = 'Spain:';
+$_['text_country_italy']							    = 'Italy:';
 $_['text_sales_telephone']							    = 'Telephone: <a href="%s">%s</a>';
 $_['text_sales_email']								    = 'E-mail: <a href="%s">%s</a>';
 $_['text_contact_assistance_text']						= 'Need assistance? Feel free to contact our Integration Team:';

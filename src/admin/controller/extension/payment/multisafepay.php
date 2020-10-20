@@ -612,10 +612,22 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
             'support_api_documentation_link' => 'https://docs.multisafepay.com/api/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms',
             'support_multisafepay_github_link' => 'https://github.com/MultiSafepay/OpenCart',
             'support_create_test_account' => 'https://testmerchant.multisafepay.com/signup',
-            'support_telephone' => 'tel:+31208500501',
-            'support_readable_telephone' => '+31 (0)20 - 8500501',
-            'support_email' => 'mailto:sales@multisafepay.com',
-            'support_readable_email' => 'sales@multisafepay.com',
+            'sales_telephone_netherlands' => 'tel:+31208500501',
+            'sales_readable_telephone_netherlands' => '+31 (0)20 - 8500501',
+            'sales_email_netherlands' => 'mailto:sales@multisafepay.com',
+            'sales_readable_email_netherlands' => 'sales@multisafepay.com',
+            'sales_telephone_belgium' => 'tel:+3238081241',
+            'sales_readable_telephone_belgium' => '+32 3 808 12 41',
+            'sales_email_belgium' => 'mailto:sales.belgium@multisafepay.com',
+            'sales_readable_email_belgium' => 'sales.belgium@multisafepay.com',
+            'sales_telephone_spain' => 'tel:+34911230486',
+            'sales_readable_telephone_spain' => '+34 911 230 486',
+            'sales_email_spain' => 'mailto:comercial@multisafepay.es',
+            'sales_readable_email_spain' => 'comercial@multisafepay.es',
+            'sales_telephone_italy' => 'tel:+390294750118',
+            'sales_readable_telephone_italy' => '+39 02 947 50 118',
+            'sales_email_italy' => 'mailto:sales@multisafepay.it',
+            'sales_readable_email_italy' => 'sales@multisafepay.it',
             'support_assistance_telephone' => 'tel:+31208500500',
             'support_assistance_readable_telephone' => '+31 (0)20 - 8500500',
             'support_assistance_readable_email' => 'integration@multisafepay.com',
@@ -662,16 +674,52 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
             $support_variables['support_create_test_account']
         );
 
-        $data['text_sales_telephone'] = sprintf(
+        $data['text_sales_telephone_netherlands'] = sprintf(
             $this->language->get('text_sales_telephone'),
-            $support_variables['support_telephone'],
-            $support_variables['support_readable_telephone']
+            $support_variables['sales_telephone_netherlands'],
+            $support_variables['sales_readable_telephone_netherlands']
         );
 
-        $data['text_sales_email'] = sprintf(
+        $data['text_sales_email_netherlands'] = sprintf(
             $this->language->get('text_sales_email'),
-            $support_variables['support_email'],
-            $support_variables['support_readable_email']
+            $support_variables['sales_email_netherlands'],
+            $support_variables['sales_readable_email_netherlands']
+        );
+
+        $data['text_sales_telephone_belgium'] = sprintf(
+            $this->language->get('text_sales_telephone'),
+            $support_variables['sales_telephone_belgium'],
+            $support_variables['sales_readable_telephone_belgium']
+        );
+
+        $data['text_sales_email_belgium'] = sprintf(
+            $this->language->get('text_sales_email'),
+            $support_variables['sales_email_belgium'],
+            $support_variables['sales_readable_email_belgium']
+        );
+
+        $data['text_sales_telephone_spain'] = sprintf(
+            $this->language->get('text_sales_telephone'),
+            $support_variables['sales_telephone_spain'],
+            $support_variables['sales_readable_telephone_spain']
+        );
+
+        $data['text_sales_email_spain'] = sprintf(
+            $this->language->get('text_sales_email'),
+            $support_variables['sales_email_spain'],
+            $support_variables['sales_readable_email_spain']
+        );
+
+        $data['text_sales_telephone_italy'] = sprintf(
+            $this->language->get('text_sales_telephone'),
+            $support_variables['sales_telephone_italy'],
+            $support_variables['sales_readable_telephone_italy']
+        );
+
+        $data['text_sales_email_italy'] = sprintf(
+            $this->language->get('text_sales_email'),
+            $support_variables['sales_email_italy'],
+            $support_variables['sales_readable_email_italy']
         );
 
         $data['text_assistance_telephone'] = sprintf(

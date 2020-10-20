@@ -94,6 +94,7 @@ $_['text_title_nationale_tuinbon']          = 'Nationale Tuinbon';
 $_['text_title_podium']                     = 'Podium';
 $_['text_title_sport_fit']                  = 'Sport & Fit';
 $_['text_title_wellness_giftcard']          = 'Wellness gift card';
+$_['text_title_wellness_giftcard']          = 'Wellness gift card';
 $_['text_title_wijncadeau']                 = 'Wijncadeau';
 $_['text_title_winkel_cheque']              = 'Winkelcheque';
 $_['text_title_yourgift']                   = 'YourGift';

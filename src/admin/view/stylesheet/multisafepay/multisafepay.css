@@ -92,6 +92,31 @@
     font-weight: bold;
     margin-top: 35px;
 }
+.multisafepay-admin-page #multisafepay-support .multisafepay-sales-contact-list {
+    padding-left: 10px;
+    padding-top: 10px;
+}
+.multisafepay-admin-page #multisafepay-support .multisafepay-sales-contact-list li strong {
+    display: block;
+    padding-bottom: 5px;
+}
+.multisafepay-admin-page #multisafepay-support .multisafepay-sales-contact-list li:first-child {
+    padding-top: 8px;
+}
+.multisafepay-admin-page #multisafepay-support .multisafepay-sales-contact-list li {
+    padding-top: 22px;
+    list-style-type: none;
+}
+.multisafepay-admin-page #multisafepay-support .multisafepay-sales-contact-list li ul {
+
+}
+.multisafepay-admin-page #multisafepay-support .multisafepay-sales-contact-list li ul li {
+    padding-top: 0px;
+    list-style-type: square;
+}
+.multisafepay-admin-page #multisafepay-support .multisafepay-sales-contact-list li ul li:first-child {
+    padding-top: 0px;
+}
 /* Refund Tab */
 #multisafepay-order-tab .pull-right button {
     margin-bottom: 25px;
