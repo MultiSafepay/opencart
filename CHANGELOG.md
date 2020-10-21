@@ -5,8 +5,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
-PLGOPNS-242: Remove coupons, vouchers, rewards and affiliate commissions in full refunds
-PLGOPNS-257: Include in support tab the contact details of international offices
++ PLGOPNS-242: Remove coupons, vouchers, rewards and affiliate commissions in full refunds
++ PLGOPNS-257: Include in support tab the contact details of international offices
++ PLGOPNS-344: Remove duplicate key in english language files. 
 
 ## 3.3.0
 Release date: October, 13th 2020
