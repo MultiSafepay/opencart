@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 + PLGOPNS-242: Remove coupons, vouchers, rewards and affiliate commissions in full refunds
 + PLGOPNS-257: Include in support tab the contact details of international offices
 + PLGOPNS-344: Remove duplicate key in english language files. 
++ SUPD-752: Add Good4fun Giftcard
 
 ## 3.3.0
 Release date: October, 13th 2020

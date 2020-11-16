@@ -315,6 +315,16 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
     }
 
     /**
+     * Handles the confirm order form for Good4fun Giftcard payment method
+     *
+     */
+    public function good4fun() {
+        $data = $this->paymentMethodBase();
+        $data['gateway'] = 'GOOD4FUN';
+        return $this->multisafepay_version_control->getViewAccordingWithOcVersion($this->route . $this->view_extension_file, $data);
+    }
+
+    /**
      * Handles the confirm order form for Good Card payment method
      *
      */

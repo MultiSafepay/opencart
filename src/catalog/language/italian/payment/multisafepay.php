@@ -65,6 +65,7 @@ $_['text_title_eps']                        = 'EPS';
 $_['text_title_e_invoicing']                = 'E-Invoicing';
 $_['text_title_gezondheidsbon']             = 'Gezondheidsbon';
 $_['text_title_giropay']                    = 'Giropay';
+$_['text_title_good4fun']                   = 'Good4fun Giftcard';
 $_['text_title_ideal']                      = 'iDEAL';
 $_['text_title_ideal_qr']                   = 'iDEAL QR';
 $_['text_title_ing_home_pay']               = 'ING Home\'Pay';
