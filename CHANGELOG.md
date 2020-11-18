@@ -5,9 +5,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
+
+
+## 3.4.0
+Release date: November, 19th 2020
+
 + PLGOPNS-242: Remove coupons, vouchers, rewards and affiliate commissions in full refunds
 + PLGOPNS-257: Include in support tab the contact details of international offices
-+ PLGOPNS-344: Remove duplicate key in english language files. 
 + SUPD-752:    Add Good4fun Giftcard
 + PLGOPNS-347: Add support in the upgrade script for plugin version 2.2.X 
 + PLGOPNS-350: Upgrade to 4.0.1 MultiSafepay PHP-SDK
