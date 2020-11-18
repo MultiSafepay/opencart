@@ -270,7 +270,8 @@ class ModelExtensionPaymentMultiSafePay extends Model {
             'image/multisafepay/visa.svg',
             'image/multisafepay/vvv.svg',
             'image/multisafepay/wallet.svg',
-            'image/multisafepay/webshopgiftcard.svg'
+            'image/multisafepay/webshopgiftcard.svg',
+            'vqmod/xml/multisafepay_fastcheckout.xml'
         );
     }
 

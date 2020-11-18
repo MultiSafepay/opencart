@@ -107,6 +107,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
 
         $data['token'] = $this->session->data[$this->token_name];
         $data['token_name'] = $this->token_name;
+        $data[$this->token_name] = $this->session->data[$this->token_name];
         $data['key_prefix'] = $this->key_prefix;
 
         $error_keys = $this->getErrorsKeysAndTypes();
