@@ -765,7 +765,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
 
         $payment_details = $msp_order->getPaymentDetails();
         $gateway_id = $payment_details->getType();
-        $gateways_with_shopping_cart = array('AFTERPAY', 'KLARNA', 'EINVOICE', 'PAYAFTER');
+        $gateways_with_shopping_cart = array('AFTERPAY', 'KLARNA', 'EINVOICE', 'PAYAFTER', 'IN3');
         if(in_array($gateway_id, $gateways_with_shopping_cart)) {
             $msp_shopping_cart = $msp_order->getShoppingCart();
             $msp_shopping_cart_data = $msp_shopping_cart->getData();
