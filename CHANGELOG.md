@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 + PLGOPNS-344: Remove duplicate key in english language files. 
 + SUPD-752:    Add Good4fun Giftcard
 + PLGOPNS-347: Add support in the upgrade script for plugin version 2.2.X 
++ PLGOPNS-350: Upgrade to 4.0.1 MultiSafepay PHP-SDK
 
 ## 3.3.0
 Release date: October, 13th 2020
