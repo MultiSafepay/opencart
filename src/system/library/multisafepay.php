@@ -58,7 +58,7 @@ class Multisafepay {
      *
      */
     public function getPluginVersion() {
-        $plugin_version = '3.3.0';
+        $plugin_version = '3.4.0';
         return $plugin_version;
     }
 
@@ -1942,6 +1942,16 @@ class Multisafepay {
                 'docs' => sprintf($this->language->get('text_gateway_docs_info'), 'https://docs.multisafepay.com/payment-methods/banks/giropay/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_giropay')),
                 'brief_description' => $this->language->get('text_brief_description_giropay'),
                 'image' => 'giropay'
+            ),
+            array(
+                'id' => 'GOOD4FUN',
+                'code' => 'good4fun',
+                'route' => 'multisafepay/good4fun',
+                'description' => $this->language->get('text_title_good4fun'),
+                'type' => 'giftcard',
+                'docs' => sprintf($this->language->get('text_gateway_docs_info'), ' https://docs.multisafepay.com/payment-methods/prepaid-cards/gift-cards/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_good4fun')),
+                'brief_description' => $this->language->get('text_brief_description_good4fun'),
+                'image' => 'good4fun'
             ),
             array(
                 'id' => 'GOODCARD',

@@ -270,7 +270,8 @@ class ModelExtensionPaymentMultiSafePay extends Model {
             'image/multisafepay/visa.svg',
             'image/multisafepay/vvv.svg',
             'image/multisafepay/wallet.svg',
-            'image/multisafepay/webshopgiftcard.svg'
+            'image/multisafepay/webshopgiftcard.svg',
+            'vqmod/xml/multisafepay_fastcheckout.xml'
         );
     }
 
@@ -393,14 +394,28 @@ class ModelExtensionPaymentMultiSafePay extends Model {
      */
     public function getSettingValue($key, $store_id = 0) {
         $query = $this->db->query("SELECT value FROM " . DB_PREFIX . "setting WHERE store_id = '" . (int)$store_id . "' AND `key` = '" . $this->db->escape($key) . "'");
-
         if ($query->num_rows) {
             return $query->row['value'];
         }
-
         return null;
+    }
+
+
+    /**
+     * Remove coupons, vouchers, reward points and affiliate commission in full refunds
+     *
+     * @param int $order_id
+     *
+     */
+    public function removeCouponsVouchersRewardsPointsAffiliateCommission($order_id) {
+
+        $this->db->query("DELETE FROM `" . DB_PREFIX . "coupon_history` WHERE order_id = '" . (int)$order_id . "'");
+        $this->db->query("DELETE FROM `" . DB_PREFIX . "voucher_history` WHERE order_id = '" . (int)$order_id . "'");
+        $this->db->query("DELETE FROM " . DB_PREFIX . "customer_reward WHERE order_id = '" . (int)$order_id . "'");
+        $this->db->query("DELETE FROM " . DB_PREFIX . "customer_transaction WHERE order_id = '" . (int)$order_id . "'");
 
     }
+
 
 }
 

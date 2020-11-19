@@ -58,6 +58,10 @@ $_['text_need_account']									= 'To use this plugin you need a MultiSafepay ac
 $_['text_create_test_account']							= 'If you would like to have a clear overview of what MultiSafepay '
                                                         . 'has to offer, feel free to create a <a href="%s" target="_blank">test account</a>.';
 $_['text_create_live_account']							= 'If you would like to set up a live account, please contact the MultiSafepay sales department:';
+$_['text_country_netherlands']							= 'Netherlands:';
+$_['text_country_belgium']							    = 'Belgium:';
+$_['text_country_spain']							    = 'Spain:';
+$_['text_country_italy']							    = 'Italy:';
 $_['text_sales_telephone']							    = 'Telephone: <a href="%s">%s</a>';
 $_['text_sales_email']								    = 'E-mail: <a href="%s">%s</a>';
 $_['text_contact_assistance_text']						= 'Need assistance? Feel free to contact our Integration Team:';
@@ -95,6 +99,7 @@ $_['text_brief_description_fietsenbon']                 = '';
 $_['text_brief_description_gezondheidsbon']             = '';
 $_['text_brief_description_givacard']                   = '';
 $_['text_brief_description_giropay']                    = 'The #1 payment method in Germany offering real-time bank transfers for a large base of German online consumers.';
+$_['text_brief_description_good4fun']                   = '';
 $_['text_brief_description_goodcard']                   = '';
 $_['text_brief_description_in3']                        = '';
 $_['text_brief_description_ideal']                      = 'The leading ecommerce payment method in the Netherlands connecting all major Dutch banks.';
@@ -179,6 +184,7 @@ $_['text_title_eps']                                    = 'EPS';
 $_['text_title_e_invoicing']                            = 'E-Invoicing';
 $_['text_title_gezondheidsbon']                         = 'Gezondheidsbon';
 $_['text_title_giropay']                                = 'Giropay';
+$_['text_title_good4fun']                               = 'Good4fun Giftcard';
 $_['text_title_ideal']                                  = 'iDEAL';
 $_['text_title_ideal_qr']                               = 'iDEAL QR';
 $_['text_title_ing_home_pay']                           = 'ING Home\'Pay';

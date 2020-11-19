@@ -58,6 +58,10 @@ $_['text_need_account']									= 'Para usar esta extensión, necesita una cuent
 $_['text_create_test_account']							= 'Si desea tener una visión general clara de lo que MultiSafepay '
                                                         . 'tiene que ofrecer, siéntase libre de crear una <a href="%s" target="_blank">cuenta de prueba</a>.';
 $_['text_create_live_account']							= 'Si desea configurar una cuenta real, comuníquese con el departamento comercial de MultiSafepay:';
+$_['text_country_netherlands']							= 'Países Bajos:';
+$_['text_country_belgium']							    = 'Bélgica:';
+$_['text_country_spain']							    = 'España:';
+$_['text_country_italy']							    = 'Italia:';
 $_['text_sales_telephone']							    = 'Teléfono: <a href="%s">%s</a>';
 $_['text_sales_email']								    = 'E-mail: <a href="%s">%s</a>';
 $_['text_contact_assistance_text']						= '¿Necesita ayuda? No dude en contactar a nuestro Equipo de Integración:';
@@ -95,6 +99,7 @@ $_['text_brief_description_fietsenbon']                 = '';
 $_['text_brief_description_gezondheidsbon']             = '';
 $_['text_brief_description_givacard']                   = '';
 $_['text_brief_description_giropay']                    = '';
+$_['text_brief_description_good4fun']                   = '';
 $_['text_brief_description_goodcard']                   = '';
 $_['text_brief_description_in3']                        = '';
 $_['text_brief_description_ideal']                      = '';
@@ -179,6 +184,7 @@ $_['text_title_eps']                                    = 'EPS';
 $_['text_title_e_invoicing']                            = 'E-Invoicing';
 $_['text_title_gezondheidsbon']                         = 'Gezondheidsbon';
 $_['text_title_giropay']                                = 'Giropay';
+$_['text_title_good4fun']                               = 'Good4fun Giftcard';
 $_['text_title_ideal']                                  = 'iDEAL';
 $_['text_title_ideal_qr']                               = 'iDEAL QR';
 $_['text_title_ing_home_pay']                           = 'ING Home\'Pay';
