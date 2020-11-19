@@ -10,11 +10,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## 3.4.0
 Release date: November, 19th 2020
 
-+ PLGOPNS-242: Remove coupons, vouchers, rewards and affiliate commissions in full refunds
-+ PLGOPNS-257: Include in support tab the contact details of international offices
+### Added
 + SUPD-752:    Add Good4fun Giftcard
 + PLGOPNS-347: Add support in the upgrade script for plugin version 2.2.X 
 + PLGOPNS-350: Upgrade to 4.0.1 MultiSafepay PHP-SDK
++ PLGOPNS-242: Remove coupons, vouchers, rewards and affiliate commissions used, after full refunds
+
+### Changed
++ PLGOPNS-257: Include in support tab the contact details of international offices
 
 ## 3.3.0
 Release date: October, 13th 2020
