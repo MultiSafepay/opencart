@@ -809,7 +809,7 @@ class Multisafepay {
      */
     public function getMoneyObjectOrderAmount($amount, $currency_code, $currency_value) {
         $amount = $this->formatByCurrency($amount, $currency_code, $currency_value);
-        $amount =  round(($amount * 100));
+        $amount = $amount * 100;
         $amount = new  \MultiSafepay\ValueObject\Money($amount, $currency_code);
         return $amount;
     }

@@ -323,8 +323,8 @@ class MultiSafePaySystemTest extends MultisafepayTestSuiteForOpenCart {
     public function testGetMoneyObjectOrderAmountAsFloatFromMoneyObject() {
         $response = $this->multisafepay->getMoneyObjectOrderAmount('127.2100', 'EUR', '0.78460002');
         $this->assertEquals('EUR', $response->getCurrency());
-        $this->assertEquals('9981', $response->getAmount());
-        $this->assertEquals(998100, $response->getAmountInCents());
+        $this->assertEquals('9980.89685442', $response->getAmount());
+        $this->assertEquals(998089.6854419999, $response->getAmountInCents());
         $this->assertIsFloat($response->getAmount());
         $this->assertIsFloat($response->getAmountInCents());
     }
