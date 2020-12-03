@@ -1769,7 +1769,7 @@ class Multisafepay {
                 'route' => 'multisafepay/babyCad',
                 'description' => $this->language->get('text_title_baby_cad'),
                 'type' => 'giftcard',
-                'docs' => sprintf($this->language->get('text_gateway_docs_info'), ' https://docs.multisafepay.com/payment-methods/prepaid-cards/gift-cards/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_baby_cad')),
+                'docs' => sprintf($this->language->get('text_gateway_docs_info'), 'https://docs.multisafepay.com/payment-methods/prepaid-cards/gift-cards/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_baby_cad')),
                 'brief_description' => $this->language->get('text_brief_description_babycad'),
                 'image' => 'babycad'
             ),
@@ -1789,7 +1789,7 @@ class Multisafepay {
                 'route' => 'multisafepay/beautyWellness',
                 'description' => $this->language->get('text_title_beauty_wellness'),
                 'type' => 'giftcard',
-                'docs' => sprintf($this->language->get('text_gateway_docs_info'), ' https://docs.multisafepay.com/payment-methods/prepaid-cards/gift-cards/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_beauty_wellness')),
+                'docs' => sprintf($this->language->get('text_gateway_docs_info'), 'https://docs.multisafepay.com/payment-methods/prepaid-cards/gift-cards/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_beauty_wellness')),
                 'brief_description' => $this->language->get('text_brief_description_beautywellness'),
                 'image' => 'beautywellness'
             ),
@@ -1809,7 +1809,7 @@ class Multisafepay {
                 'route' => 'multisafepay/boekenbon',
                 'description' => $this->language->get('text_title_boekenbon'),
                 'type' => 'giftcard',
-                'docs' => sprintf($this->language->get('text_gateway_docs_info'), ' https://docs.multisafepay.com/payment-methods/prepaid-cards/gift-cards/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_boekenbon')),
+                'docs' => sprintf($this->language->get('text_gateway_docs_info'), 'https://docs.multisafepay.com/payment-methods/prepaid-cards/gift-cards/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_boekenbon')),
                 'brief_description' => $this->language->get('text_brief_description_boekenbon'),
                 'image' => 'boekenbon'
             ),
@@ -1889,7 +1889,7 @@ class Multisafepay {
                 'route' => 'multisafepay/fashionCheque',
                 'description' => $this->language->get('text_title_fashion_cheque'),
                 'type' => 'giftcard',
-                'docs' => sprintf($this->language->get('text_gateway_docs_info'), ' https://docs.multisafepay.com/payment-methods/prepaid-cards/gift-cards/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_fashion_cheque')),
+                'docs' => sprintf($this->language->get('text_gateway_docs_info'), 'https://docs.multisafepay.com/payment-methods/prepaid-cards/gift-cards/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_fashion_cheque')),
                 'brief_description' => $this->language->get('text_brief_description_fashioncheque'),
                 'image' => 'fashioncheque'
             ),
@@ -1899,7 +1899,7 @@ class Multisafepay {
                 'route' => 'multisafepay/fashionGiftCard',
                 'description' => $this->language->get('text_title_fashion_gift_card'),
                 'type' => 'giftcard',
-                'docs' => sprintf($this->language->get('text_gateway_docs_info'), ' https://docs.multisafepay.com/payment-methods/prepaid-cards/gift-cards/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_fashion_gift_card')),
+                'docs' => sprintf($this->language->get('text_gateway_docs_info'), 'https://docs.multisafepay.com/payment-methods/prepaid-cards/gift-cards/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_fashion_gift_card')),
                 'brief_description' => $this->language->get('text_brief_description_fashiongiftcard'),
                 'image' => 'fashiongiftcard'
             ),
@@ -1909,7 +1909,7 @@ class Multisafepay {
                 'route' => 'multisafepay/fietsenbon',
                 'description' => $this->language->get('text_title_fietsenbon'),
                 'type' => 'giftcard',
-                'docs' => sprintf($this->language->get('text_gateway_docs_info'), ' https://docs.multisafepay.com/payment-methods/prepaid-cards/gift-cards/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_fietsenbon')),
+                'docs' => sprintf($this->language->get('text_gateway_docs_info'), 'https://docs.multisafepay.com/payment-methods/prepaid-cards/gift-cards/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_fietsenbon')),
                 'brief_description' => $this->language->get('text_brief_description_fietsenbon'),
                 'image' => 'fietsenbon'
             ),
@@ -1919,7 +1919,7 @@ class Multisafepay {
                 'route' => 'multisafepay/gezondheidsbon',
                 'description' => $this->language->get('text_title_gezondheidsbon'),
                 'type' => 'giftcard',
-                'docs' => sprintf($this->language->get('text_gateway_docs_info'), ' https://docs.multisafepay.com/payment-methods/prepaid-cards/gift-cards/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_gezondheidsbon')),
+                'docs' => sprintf($this->language->get('text_gateway_docs_info'), 'https://docs.multisafepay.com/payment-methods/prepaid-cards/gift-cards/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_gezondheidsbon')),
                 'brief_description' => $this->language->get('text_brief_description_gezondheidsbon'),
                 'image' => 'gezondheidsbon'
             ),
@@ -1929,7 +1929,7 @@ class Multisafepay {
                 'route' => 'multisafepay/givaCard',
                 'description' => $this->language->get('text_title_giva_card'),
                 'type' => 'giftcard',
-                'docs' => sprintf($this->language->get('text_gateway_docs_info'), ' https://docs.multisafepay.com/payment-methods/prepaid-cards/gift-cards/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_giva_card')),
+                'docs' => sprintf($this->language->get('text_gateway_docs_info'), 'https://docs.multisafepay.com/payment-methods/prepaid-cards/gift-cards/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_giva_card')),
                 'brief_description' => $this->language->get('text_brief_description_givacard'),
                 'image' => 'givacard'
             ),
@@ -1949,7 +1949,7 @@ class Multisafepay {
                 'route' => 'multisafepay/good4fun',
                 'description' => $this->language->get('text_title_good4fun'),
                 'type' => 'giftcard',
-                'docs' => sprintf($this->language->get('text_gateway_docs_info'), ' https://docs.multisafepay.com/payment-methods/prepaid-cards/gift-cards/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_good4fun')),
+                'docs' => sprintf($this->language->get('text_gateway_docs_info'), 'https://docs.multisafepay.com/payment-methods/prepaid-cards/gift-cards/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_good4fun')),
                 'brief_description' => $this->language->get('text_brief_description_good4fun'),
                 'image' => 'good4fun'
             ),
@@ -1959,7 +1959,7 @@ class Multisafepay {
                 'route' => 'multisafepay/goodCard',
                 'description' => $this->language->get('text_title_good_card'),
                 'type' => 'giftcard',
-                'docs' => sprintf($this->language->get('text_gateway_docs_info'), ' https://docs.multisafepay.com/payment-methods/prepaid-cards/gift-cards/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_good_card')),
+                'docs' => sprintf($this->language->get('text_gateway_docs_info'), 'https://docs.multisafepay.com/payment-methods/prepaid-cards/gift-cards/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_good_card')),
                 'brief_description' => $this->language->get('text_brief_description_goodcard'),
                 'image' => 'goodcard'
             ),
@@ -1969,7 +1969,7 @@ class Multisafepay {
                 'route' => 'multisafepay/in3',
                 'description' => $this->language->get('text_title_in3'),
                 'type' => 'gateway',
-                'docs' => '',
+                'docs' => sprintf($this->language->get('text_gateway_docs_info'), 'https://docs.multisafepay.com/payment-methods/billing-suite/in3/', $this->language->get('text_title_in3')),
                 'brief_description' => $this->language->get('text_brief_description_in3'),
                 'image' => 'in3',
             ),
@@ -2049,7 +2049,7 @@ class Multisafepay {
                 'route' => 'multisafepay/nationaleTuinbon',
                 'description' => $this->language->get('text_title_nationale_tuinbon'),
                 'type' => 'giftcard',
-                'docs' => sprintf($this->language->get('text_gateway_docs_info'), ' https://docs.multisafepay.com/payment-methods/prepaid-cards/gift-cards/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_nationale_tuinbon')),
+                'docs' => sprintf($this->language->get('text_gateway_docs_info'), 'https://docs.multisafepay.com/payment-methods/prepaid-cards/gift-cards/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_nationale_tuinbon')),
                 'brief_description' => $this->language->get('text_brief_description_nationaletuinbon'),
                 'image' => 'nationaletuinbon'
             ),
@@ -2059,7 +2059,7 @@ class Multisafepay {
                 'route' => 'multisafepay/parfumCadeaukaart',
                 'description' => $this->language->get('text_title_parfum_cadeaukaart'),
                 'type' => 'giftcard',
-                'docs' => sprintf($this->language->get('text_gateway_docs_info'), ' https://docs.multisafepay.com/payment-methods/prepaid-cards/gift-cards/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_parfum_cadeaukaart')),
+                'docs' => sprintf($this->language->get('text_gateway_docs_info'), 'https://docs.multisafepay.com/payment-methods/prepaid-cards/gift-cards/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_parfum_cadeaukaart')),
                 'brief_description' => $this->language->get('text_brief_description_parfumcadeaukaart'),
                 'image' => 'parfumcadeaukaart'
             ),
@@ -2089,7 +2089,7 @@ class Multisafepay {
                 'route' => 'multisafepay/podium',
                 'description' => $this->language->get('text_title_podium'),
                 'type' => 'giftcard',
-                'docs' => sprintf($this->language->get('text_gateway_docs_info'), ' https://docs.multisafepay.com/payment-methods/prepaid-cards/gift-cards/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_podium')),
+                'docs' => sprintf($this->language->get('text_gateway_docs_info'), 'https://docs.multisafepay.com/payment-methods/prepaid-cards/gift-cards/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_podium')),
                 'brief_description' => $this->language->get('text_brief_description_podium'),
                 'image' => 'podium'
             ),
@@ -2129,7 +2129,7 @@ class Multisafepay {
                 'route' => 'multisafepay/sportFit',
                 'description' => $this->language->get('text_title_sport_fit'),
                 'type' => 'giftcard',
-                'docs' => sprintf($this->language->get('text_gateway_docs_info'), ' https://docs.multisafepay.com/payment-methods/prepaid-cards/gift-cards/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_sport_fit')),
+                'docs' => sprintf($this->language->get('text_gateway_docs_info'), 'https://docs.multisafepay.com/payment-methods/prepaid-cards/gift-cards/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_sport_fit')),
                 'brief_description' => $this->language->get('text_brief_description_sportfit'),
                 'image' => 'sportenfit'
             ),
@@ -2159,7 +2159,7 @@ class Multisafepay {
                 'route' => 'multisafepay/vvvGiftCard',
                 'description' => $this->language->get('text_title_vvv_cadeaukaart'),
                 'type' => 'giftcard',
-                'docs' => sprintf($this->language->get('text_gateway_docs_info'), ' https://docs.multisafepay.com/payment-methods/prepaid-cards/gift-cards/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_vvv_cadeaukaart')),
+                'docs' => sprintf($this->language->get('text_gateway_docs_info'), 'https://docs.multisafepay.com/payment-methods/prepaid-cards/gift-cards/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_vvv_cadeaukaart')),
                 'brief_description' => $this->language->get('text_brief_description_vvv'),
                 'image' => 'vvv'
             ),
@@ -2169,7 +2169,7 @@ class Multisafepay {
                 'route' => 'multisafepay/webshopGiftCard',
                 'description' => $this->language->get('text_title_webshop_giftcard'),
                 'type' => 'giftcard',
-                'docs' => sprintf($this->language->get('text_gateway_docs_info'), ' https://docs.multisafepay.com/payment-methods/prepaid-cards/gift-cards/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_webshop_giftcard')),
+                'docs' => sprintf($this->language->get('text_gateway_docs_info'), 'https://docs.multisafepay.com/payment-methods/prepaid-cards/gift-cards/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_webshop_giftcard')),
                 'brief_description' => $this->language->get('text_brief_description_webshopgiftcard'),
                 'image' => 'webshopgiftcard'
             ),
@@ -2179,7 +2179,7 @@ class Multisafepay {
                 'route' => 'multisafepay/wellnessGiftCard',
                 'description' => $this->language->get('text_title_wellness_giftcard'),
                 'type' => 'giftcard',
-                'docs' => sprintf($this->language->get('text_gateway_docs_info'), ' https://docs.multisafepay.com/payment-methods/prepaid-cards/gift-cards/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_wellness_giftcard')),
+                'docs' => sprintf($this->language->get('text_gateway_docs_info'), 'https://docs.multisafepay.com/payment-methods/prepaid-cards/gift-cards/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_wellness_giftcard')),
                 'brief_description' => $this->language->get('text_brief_description_wellnessgiftcard'),
                 'image' => 'wellnessgiftcard'
             ),
@@ -2189,7 +2189,7 @@ class Multisafepay {
                 'route' => 'multisafepay/wijnCadeau',
                 'description' => $this->language->get('text_title_wijncadeau'),
                 'type' => 'giftcard',
-                'docs' => sprintf($this->language->get('text_gateway_docs_info'), ' https://docs.multisafepay.com/payment-methods/prepaid-cards/gift-cards/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_wijncadeau')),
+                'docs' => sprintf($this->language->get('text_gateway_docs_info'), 'https://docs.multisafepay.com/payment-methods/prepaid-cards/gift-cards/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_wijncadeau')),
                 'brief_description' => $this->language->get('text_brief_description_wijncadeau'),
                 'image' => 'wijncadeau'
             ),
@@ -2199,7 +2199,7 @@ class Multisafepay {
                 'route' => 'multisafepay/winkelCheque',
                 'description' => $this->language->get('text_title_winkel_cheque'),
                 'type' => 'giftcard',
-                'docs' => sprintf($this->language->get('text_gateway_docs_info'), ' https://docs.multisafepay.com/payment-methods/prepaid-cards/gift-cards/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_winkel_cheque')),
+                'docs' => sprintf($this->language->get('text_gateway_docs_info'), 'https://docs.multisafepay.com/payment-methods/prepaid-cards/gift-cards/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_winkel_cheque')),
                 'brief_description' => $this->language->get('text_brief_description_winkelcheque'),
                 'image' => 'winkelcheque'
             ),
@@ -2209,7 +2209,7 @@ class Multisafepay {
                 'route' => 'multisafepay/yourGift',
                 'description' => $this->language->get('text_title_yourgift'),
                 'type' => 'giftcard',
-                'docs' => sprintf($this->language->get('text_gateway_docs_info'), ' https://docs.multisafepay.com/payment-methods/prepaid-cards/gift-cards/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_yourgift')),
+                'docs' => sprintf($this->language->get('text_gateway_docs_info'), 'https://docs.multisafepay.com/payment-methods/prepaid-cards/gift-cards/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_yourgift')),
                 'brief_description' => $this->language->get('text_brief_description_yourgift'),
                 'image' => 'yourgift'
             )
