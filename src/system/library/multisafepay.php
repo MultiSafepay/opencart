@@ -1664,7 +1664,7 @@ class Multisafepay {
         $voucher_info = $this->getVoucherInfo($order_id);
         $order_info = $this->getOrderInfo($order_id);
         if ($voucher_info) {
-            return $this->getNegativeCartItemObject(
+            return $this->getCartItemObject(
                 $voucher_info['value'],
                 $order_info,
                 $voucher_info['title'],
