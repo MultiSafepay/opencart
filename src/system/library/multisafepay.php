@@ -2311,7 +2311,7 @@ class Multisafepay {
         }
 
         try {
-            $gateways = $gateway_manager->getGateways();
+            $gateways = $gateway_manager->getGateways( true );
         }
         catch (\MultiSafepay\Exception\ApiException $apiException ) {
             return false;
