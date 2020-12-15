@@ -1008,18 +1008,19 @@ class Multisafepay {
      */
     private function getProductName($order_id, $product) {
         $option_data = $this->getProductOptionsData($order_id, $product);
+        $product_name = $this->htmlEntityDecode($product['name']);
 
         if (empty($option_data)) {
-            return $product['quantity'] . ' x ' . $product['name'];
+            return $product['quantity'] . ' x ' . $product_name;
         }
 
         $option_output = '';
 
         foreach($option_data as $option) {
-            $option_output .= $option['name'] . ': ' . $option['value'] . ', ';
+            $option_output .= $this->htmlEntityDecode($option['name']) . ': ' . $option['value'] . ', ';
         }
         $option_output = ' (' . substr($option_output, 0, -2) . ')';
-        $product_name = $product['quantity'] . ' x ' . $product['name'] . $option_output;
+        $product_name = $product['quantity'] . ' x ' . $product_name . $option_output;
 
         return $product_name;
     }
@@ -1298,6 +1299,7 @@ class Multisafepay {
         }
         $this->load->model($this->route);
         $coupon_info = $this->{$this->model_call}->getCoupon($this->session->data['coupon']);
+        $coupon_info['name'] = $this->htmlEntityDecode($coupon_info['name']);
         $coupon_info['is_order_lower_than_taxes'] = $this->isSortOrderLowerThanTaxes($this->config->get($this->total_extension_key_prefix . 'coupon_sort_order'));
         return $coupon_info;
     }
@@ -1320,7 +1322,7 @@ class Multisafepay {
         $tax_rate = $this->getItemTaxRate($order_totals[$has_shipping]['value'], $shipping_tax_class_id);
         $shipping_info = array(
             'value' => $order_totals[$has_shipping]['value'],
-            'title' => $order_totals[$has_shipping]['title'],
+            'title' => $this->htmlEntityDecode($order_totals[$has_shipping]['title']),
             'tax_rate' => $tax_rate
         );
         return $shipping_info;
@@ -1482,7 +1484,7 @@ class Multisafepay {
         $tax_rate = $this->getItemTaxRate($order_totals[$has_handling_fee]['value'], $handling_tax_class_id);
         $handling_fee_info = array(
             'value' => $order_totals[$has_handling_fee]['value'],
-            'title' => $order_totals[$has_handling_fee]['title'],
+            'title' => $this->htmlEntityDecode($order_totals[$has_handling_fee]['title']),
             'is_order_lower_than_taxes' => $this->isSortOrderLowerThanTaxes($this->config->get($this->total_extension_key_prefix . 'handling_sort_order')),
             'tax_rate' => $tax_rate
         );
@@ -1531,7 +1533,7 @@ class Multisafepay {
         $tax_rate = $this->getItemTaxRate($order_totals[$has_low_order_fee]['value'], $low_order_fee_tax_class_id);
         $low_order_fee_info = array(
             'value' => $order_totals[$has_low_order_fee]['value'],
-            'title' => $order_totals[$has_low_order_fee]['title'],
+            'title' => $this->htmlEntityDecode($order_totals[$has_low_order_fee]['title']),
             'is_order_lower_than_taxes' => $this->isSortOrderLowerThanTaxes($this->config->get($this->total_extension_key_prefix . 'low_order_fee_sort_order')),
             'tax_rate' => $tax_rate
         );
@@ -1575,7 +1577,7 @@ class Multisafepay {
 
         $reward_info = array(
             'value' => $order_totals[$has_reward]['value'],
-            'title' => $order_totals[$has_reward]['title']
+            'title' => $this->htmlEntityDecode($order_totals[$has_reward]['title']),
         );
         return $reward_info;
     }
@@ -1648,7 +1650,7 @@ class Multisafepay {
 
         $voucher_info = array(
             'value' => $order_totals[$has_voucher]['value'],
-            'title' => $order_totals[$has_voucher]['title']
+            'title' => $this->htmlEntityDecode($order_totals[$has_voucher]['title']),
         );
         return $voucher_info;
     }
@@ -1673,6 +1675,16 @@ class Multisafepay {
                 0
             );
         }
+    }
+
+    /**
+     * Return the string decoded, when contains html entities.
+     *
+     * @param $string
+     * @return string
+     */
+    private function htmlEntityDecode($string) {
+        return html_entity_decode($string, ENT_COMPAT, 'UTF-8');
     }
 
     /**
