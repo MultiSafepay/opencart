@@ -108,9 +108,10 @@ class ModelExtensionPaymentMultiSafePay extends Model {
                 continue;
             }
 
-            // if customer is logged and customer group is not
+            // if customer belongs to customer group set for this payment method
             $allowed_customer_groups_id = $this->config->get($this->key_prefix . 'multisafepay_'.$gateway['code'].'_customer_group_id');
-            $customer_group_id = $this->customer->getGroupId();
+            $customer_group_id = ($this->customer->getGroupId()) ? $this->customer->getGroupId() : $this->config->get('config_customer_group_id');
+
             if ($this->config->get($this->key_prefix . 'multisafepay_'.$gateway['code'].'_customer_group_id') && !in_array($customer_group_id, $allowed_customer_groups_id)) {
                 continue;
             }
