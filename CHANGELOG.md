@@ -4,7 +4,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## Unreleased
+## 3.5.0
+Release date: December, 18th 2020
+
+### Added
+PLGOPNS-361: Add link to documentation for in3 payment method
+PLGOPNS-358: Add giftcards logos missing: GivaCard, Wellness, Winkelcheque
+PLGOPNS-367: Include giftcards in validation before enable a gateway 
+
+### Changed
+PLGOPNS-372: Upgrade PHP-SDK to 4.0.3
+DAVAMS-345:  Update logo of Trustly
+PLGOPNS-359: Remove the round function from getMoneyObjectOrderAmount
+PLGOPNS-365: Encode html entities in product name to avoid encoding typo errors.
+
+### Fixed
+PLGOPNS-366: Fix bug, gift voucher items should pass to the transaction as negative amounts
+PLGOPNS-371: Fix filter per customer group; when customer is not logged
 
 
 ## 3.4.0
