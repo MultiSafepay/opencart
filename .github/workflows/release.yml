@@ -3,7 +3,8 @@ on:
     tags:
       - '*' # It will create for all tags a draft release
 name: Upload Release Asset
-
+with:
+  php-version: '7.1'
 jobs:
   build:
     name: Upload Release Asset OC 3.0
