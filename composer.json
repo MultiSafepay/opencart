@@ -4,7 +4,7 @@
   "type": "opencart-plugin",
   "license": "MIT",
   "require": {
-    "php": "^7.1",
+    "php": "^7.2",
     "ext-json": "*",
     "php-http/guzzle6-adapter": "^2.0",
     "guzzlehttp/psr7": "^1.6",
