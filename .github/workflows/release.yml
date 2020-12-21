@@ -3,12 +3,15 @@ on:
     tags:
       - '*' # It will create for all tags a draft release
 name: Upload Release Asset
-
 jobs:
   build:
     name: Upload Release Asset OC 3.0
     runs-on: ubuntu-latest
     steps:
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.1'
       - name: Get the version
         id: get_version
         run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
