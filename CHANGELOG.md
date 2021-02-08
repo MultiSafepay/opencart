@@ -12,6 +12,7 @@ PLGOPNS-379: Add support for OpenCart 3.0.3.7
 PLGOPNS-373: Add company_name to CustomerDetails object in order request
 
 ### Changed
+PLGOPNS-380: Upgrade PHP-SDK to 4.1.0
 PLGOPNS-377: Replace getPaymentLink() with getPaymentUrl() to prepare future deprecation of the method in the PHP-SDK
 PLGOPNS-376: Improvements in callback notification function
 
