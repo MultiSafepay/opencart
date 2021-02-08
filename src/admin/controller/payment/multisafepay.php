@@ -606,7 +606,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
 
         $support_variables =  array(
             'support_row_value_multisafepay_version' => $plugin_version,
-            'support_row_value_multisafepay_version_oc_supported' => '2.0.0.0, 2.0.1.0, 2.0.1.1, 2.0.2.0, 2.0.3.1, 2.1.0.1, 2.1.0.2, 2.2.0.0, 2.3.0.0, 2.3.0.1, 2.3.0.2, 3.0.0.0, 3.0.0.1, 3.0.0.2, 3.0.1.0, 3.0.1.1, 3.0.1.2, 3.0.2.0, 3.0.3.0, 3.0.3.1, 3.0.3.2, 3.0.3.3, 3.0.3.4, 3.0.3.5, 3.0.3.6',
+            'support_row_value_multisafepay_version_oc_supported' => '2.0.0.0, 2.0.1.0, 2.0.1.1, 2.0.2.0, 2.0.3.1, 2.1.0.1, 2.1.0.2, 2.2.0.0, 2.3.0.0, 2.3.0.1, 2.3.0.2, 3.0.0.0, 3.0.0.1, 3.0.0.2, 3.0.1.0, 3.0.1.1, 3.0.1.2, 3.0.2.0, 3.0.3.0, 3.0.3.1, 3.0.3.2, 3.0.3.3, 3.0.3.4, 3.0.3.5, 3.0.3.6, 3.0.3.7',
             'support_manual_link' => 'https://docs.multisafepay.com/integrations/plugins/opencart/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms',
             'support_changelog_link' => 'https://github.com/MultiSafepay/OpenCart/blob/master/CHANGELOG.md',
             'support_faq_link' => 'https://docs.multisafepay.com/integrations/plugins/opencart/faq/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms',
@@ -868,29 +868,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
         $data['order_id'] = $this->request->get['order_id'];
         $data['extension_route'] = $this->route;
         $data[$this->token_name] = $this->session->data[$this->token_name];
-        $msp_shopping_cart = $msp_order->getShoppingCart();
-        $msp_shopping_cart_data = $msp_shopping_cart->getData();
-        $data['items'] = array();
-        $subtotal = 0;
 
-        foreach ($msp_shopping_cart_data['items'] as $msp_cart_item) {
-            $subtotal = $subtotal + ($msp_cart_item['unit_price'] * $msp_cart_item['quantity']);
-            $data['items'][] = array(
-                'product_id' => $msp_cart_item['merchant_item_id'],
-                'product_name' => $msp_cart_item['name'],
-                'product_description' => $msp_cart_item['description'],
-                'product_quantity' => $msp_cart_item['quantity'],
-                'product_price' => $this->currency->format($msp_cart_item['unit_price'], $msp_order->getCurrency(), 1.00000000, true),
-                'product_total' => $this->currency->format(($msp_cart_item['unit_price'] * $msp_cart_item['quantity']), $msp_order->getCurrency(), 1.00000000, true),
-            );
-        }
-
-        $data['subtotal'] = $this->currency->format($subtotal, $msp_order->getCurrency(), 1.00000000, true);
-        $order_adjustment = $msp_order->getOrderAdjustment();
-        $total_taxes = $order_adjustment->getTotalTax();
-        $data['taxes'] = $this->currency->format($order_adjustment->getTotalTax(), $msp_order->getCurrency(), 1.00000000, true);
-        $total = $subtotal + (($total_taxes) ? $total_taxes : 0);
-        $data['total'] = $this->currency->format($total, $msp_order->getCurrency(), 1.00000000, true);
         $total = $msp_order->getMoney();
         $data['total'] = $this->currency->format($total->__toString(), $msp_order->getCurrency(), 1.00000000, true);
         return $this->load->view($this->route . '_order' . $this->view_extension_file, $data);

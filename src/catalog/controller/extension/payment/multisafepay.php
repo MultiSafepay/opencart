@@ -705,13 +705,13 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
         $msp_order = $this->multisafepay->getOrderRequestObject($this->request->post);
         $order_request = $this->multisafepay->processOrderRequestObject($msp_order);
 
-        if ($order_request->getPaymentLink()) {
+        if ($order_request->getPaymentUrl()) {
 
             if ($this->config->get($this->key_prefix . 'multisafepay_debug_mode')) {
                 $this->log->write('Start transaction in MSP for order ID ' . $order_id . ' on ' . date($this->language->get('datetime_format')));
-                $this->log->write('Payment Link: '. $order_request->getPaymentLink());
+                $this->log->write('Payment Link: '. $order_request->getPaymentUrl());
             }
-            $this->response->redirect($order_request->getPaymentLink());
+            $this->response->redirect($order_request->getPaymentUrl());
         }
     }
 
@@ -791,10 +791,14 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
                 break;
         }
 
-        if($gateway_details['route'] != $order_info['payment_code']) {
+        if($gateway_details && $gateway_details['route'] != $order_info['payment_code']) {
             $this->log->write('Callback received with a different payment method for ' . $order_id . ' on ' . $timestamp . ' with status: ' . $status . ', and PSP ID: ' . $psp_id . '. and payment method pass from ' . $order_info['payment_method'] . ' to '. $gateway_details['description'] .'.');
             $this->{$this->model_call}->editOrderPaymentMethod($order_id, $gateway_details);
         }
+
+	    if(!$gateway_details) {
+		    $this->log->write('Callback received with a non registered payment method for ' . $order_id . ' on ' . $timestamp . ' with status: ' . $status . ', and PSP ID: ' . $psp_id );
+	    }
 
         if ($order_status_id && $order_status_id != $current_order_status) {
             if ($this->config->get($this->key_prefix . 'multisafepay_debug_mode')) {

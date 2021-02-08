@@ -58,7 +58,7 @@ class Multisafepay {
      *
      */
     public function getPluginVersion() {
-        $plugin_version = '3.5.0';
+        $plugin_version = '3.6.0';
         return $plugin_version;
     }
 
@@ -77,7 +77,7 @@ class Multisafepay {
 
         // Order Products
         foreach ($order_products as $product) {
-            $shopping_cart_item = $this->getCartItem($product, $order_id);
+            $shopping_cart_item = $this->getCartItem($product, $order_id, $order_products);
             $shopping_cart_items[$this->config->get($this->total_extension_key_prefix . 'sub_total_sort_order')][] = $shopping_cart_item;
         }
 
@@ -88,7 +88,7 @@ class Multisafepay {
             $shopping_cart_items[$this->config->get($this->total_extension_key_prefix . 'shipping_sort_order')][] = $shipping_cart_item;
         }
 
-        // Coupons
+        // Fixed Coupons applied after taxes
         if ($coupon_info) {
             $coupon_cart_item = $this->getCouponItem($order_id);
             if ($coupon_cart_item) {
@@ -451,14 +451,17 @@ class Multisafepay {
      *
      */
     public function getCustomerObject($order_id, $type = 'payment') {
-        $order_info = $this->getOrderInfo($order_id);
-        $customer_ip = new \MultiSafepay\ValueObject\IpAddress($order_info['ip']);
-        $telephone = $this->getTelephoneObject($order_info['telephone']);
-        $customer_obj =  new \MultiSafepay\Api\Transactions\OrderRequest\Arguments\CustomerDetails();
-        $customer_obj->addIpAddress($customer_ip);
-        if ($order_info['forwarded_ip']) {
-            $forwarded_ip = new \MultiSafepay\ValueObject\IpAddress($order_info['forwarded_ip']);
-            $customer_obj->addForwardedIp($forwarded_ip);
+	    $order_info   = $this->getOrderInfo( $order_id );
+	    $customer_ip  = new \MultiSafepay\ValueObject\IpAddress( $order_info['ip'] );
+	    $telephone    = $this->getTelephoneObject( $order_info['telephone'] );
+	    $customer_obj = new \MultiSafepay\Api\Transactions\OrderRequest\Arguments\CustomerDetails();
+	    $customer_obj->addIpAddress( $customer_ip );
+	    if ( $order_info['forwarded_ip'] ) {
+		    $forwarded_ip = new \MultiSafepay\ValueObject\IpAddress( $order_info['forwarded_ip'] );
+		    $customer_obj->addForwardedIp( $forwarded_ip );
+	    }
+        if(isset($order_info[ $type . '_company']) && !empty($order_info[ $type . '_company'])) {
+	        $customer_obj->addCompanyName($order_info[ $type . '_company']);
         }
         $customer_obj->addUserAgent($order_info['user_agent']);
         $customer_obj->addPhoneNumber($telephone);
@@ -1308,7 +1311,7 @@ class Multisafepay {
      * Returns shipping method info if exist, or false.
      *
      * @param int $order_id
-     * @return mixed false|$coupon_info
+     * @return mixed false|$shipping_info
      *
      */
     private function getShippingInfo($order_id) {
@@ -1369,10 +1372,12 @@ class Multisafepay {
      *
      * @param array $product
      * @param int $order_id
+     * @param array $order_products
      * @return CartItem object
      *
      */
-    private function getCartItem($product, $order_id) {
+	// phpcs:ignore ObjectCalisthenics.Metrics.MaxNestingLevel
+    private function getCartItem($product, $order_id, $order_products) {
         $this->load->language($this->route);
         $order_info = $this->getOrderInfo($order_id);
         $product_info =  $this->getProductInfo($product['product_id']);
@@ -1395,7 +1400,53 @@ class Multisafepay {
             }
         }
 
-        // Coupons apply just to a few items in the order.
+		// Coupons is fixed type and apply just to a few items in the order before taxes
+	    if (
+		    $coupon_info &&
+		    isset($coupon_info['type']) &&
+		    $coupon_info['type'] == self::FIXED_TYPE &&
+		    $coupon_info['is_order_lower_than_taxes'] &&
+		    !empty($coupon_info['product']) &&
+		    $coupon_info['discount'] > 0 &&
+		    in_array($product['product_id'], $coupon_info['product'])
+	    ) {
+	    	$count = 0;
+	    	foreach ($order_products as $order_product) {
+	    		if(in_array($order_product['product_id'], $coupon_info['product'])) {
+	    			$count++;
+			    }
+		    }
+		    $discount_by_product =  ($coupon_info['discount'] / $count / $product['quantity']);
+		    $product_price -= $discount_by_product;
+		    $product_name .= ' - '.sprintf($this->language->get('text_coupon_applied'), $coupon_info['name']);
+		    $product_description .= sprintf(
+			    $this->language->get('text_price_before_coupon'),
+			    $this->currency->format($product['price'], $order_info['currency_code'], $order_info['currency_value'], true),
+			    $coupon_info['name']
+		    );
+	    }
+
+	    // Coupons is fixed type and apply to all items in the order before taxes
+	    if (
+	    	$coupon_info &&
+		    isset($coupon_info['type']) &&
+		    $coupon_info['type'] == self::FIXED_TYPE &&
+		    $coupon_info['is_order_lower_than_taxes'] &&
+		    empty($coupon_info['product']) &&
+		    $coupon_info['discount'] > 0
+	    ) {
+		    // Coupon discount is distributed in the same way for each product in the cart
+	    	$discount_by_product =  ($coupon_info['discount'] / count($order_products) / $product['quantity']);
+		    $product_price -= $discount_by_product;
+		    $product_name .= ' - '.sprintf($this->language->get('text_coupon_applied'), $coupon_info['name']);
+		    $product_description .= sprintf(
+			    $this->language->get('text_price_before_coupon'),
+			    $this->currency->format($product['price'], $order_info['currency_code'], $order_info['currency_value'], true),
+			    $coupon_info['name']
+		    );
+	    }
+
+        // Coupons is percentage type and apply just to a few items in the order.
         if ($coupon_info
             && isset($coupon_info['type']) && $coupon_info['type'] == self::PERCENTAGE_TYPE
             && $coupon_info['is_order_lower_than_taxes']
@@ -1413,7 +1464,7 @@ class Multisafepay {
             }
         }
 
-        // Coupons apply for all items in the order.
+        // Coupons is percentage type and apply for all items in the order.
         if ($coupon_info && isset($coupon_info['type']) && $coupon_info['type'] == self::PERCENTAGE_TYPE && $coupon_info['is_order_lower_than_taxes'] && empty($coupon_info['product'])) {
             $product_price -= ($product['price'] * round(($coupon_info['discount']/100), 2));
             // If coupon is just for free shipping, the name and description is not modified
@@ -1452,18 +1503,25 @@ class Multisafepay {
         $coupon_info = $this->getCouponInfo($order_id);
         $order_info = $this->getOrderInfo($order_id);
 
-        if ((!$coupon_info) || (isset($coupon_info['type']) && $coupon_info['type'] !== self::FIXED_TYPE) || (isset($coupon_info['type']) && $coupon_info['type'] == self::FIXED_TYPE && $coupon_info['discount'] > 0) || ($coupon_info['is_order_lower_than_taxes']) ) {
-            return false;
-        }
+	    if (
+		    (!$coupon_info) ||
+		    (isset($coupon_info['type']) && $coupon_info['type'] !== self::FIXED_TYPE) ||
+		    (isset($coupon_info['type']) && $coupon_info['type'] == self::FIXED_TYPE && $coupon_info['discount'] == 0) ||
+	        ($coupon_info['is_order_lower_than_taxes'])
+        ) {
+		    return false;
+	    }
 
-        return $this->getCartItemObject(
-            $coupon_info['value'],
+
+        return $this->getNegativeCartItemObject(
+            $coupon_info['discount'],
             $order_info,
             $coupon_info['name'],
             1,
             'COUPON',
             0
         );
+
     }
 
     /**

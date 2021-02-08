@@ -29,7 +29,7 @@ class Multisafepayversioncontrol {
         $this->extension_type = 'payment';
         $this->extension_key  = 'multisafepay';
         $this->lowest_version_supported = '2.0.0.0';
-        $this->higher_version_supported = '3.0.3.6';
+        $this->higher_version_supported = '3.0.3.7';
     }
 
     /**
@@ -52,7 +52,7 @@ class Multisafepayversioncontrol {
      *
      */
     public function getOcVersion() {
-        if((version_compare($this->oc_version, '3.0.0.0', '>=') && version_compare($this->oc_version, '3.0.3.6', '<='))) {
+        if((version_compare($this->oc_version, '3.0.0.0', '>=') && version_compare($this->oc_version, $this->higher_version_supported, '<='))) {
             return '3.0';
         }
         if((version_compare($this->oc_version, '2.3.0.0', '>=') && version_compare($this->oc_version, '2.3.0.2', '<='))) {
@@ -67,7 +67,7 @@ class Multisafepayversioncontrol {
         if((version_compare($this->oc_version, '2.0.0.0', '>=') && version_compare($this->oc_version, '2.0.3.1', '<='))) {
             return '2.0';
         }
-        if((version_compare($this->oc_version, '2.0.0.0', '<') && version_compare($this->oc_version, '3.0.3.6', '>'))) {
+        if((version_compare($this->oc_version, '2.0.0.0', '<') && version_compare($this->oc_version, $this->higher_version_supported, '>'))) {
             return false;
         }
     }
