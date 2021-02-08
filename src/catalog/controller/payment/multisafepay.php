@@ -791,10 +791,14 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
                 break;
         }
 
-        if($gateway_details['route'] != $order_info['payment_code']) {
+        if($gateway_details && $gateway_details['route'] != $order_info['payment_code']) {
             $this->log->write('Callback received with a different payment method for ' . $order_id . ' on ' . $timestamp . ' with status: ' . $status . ', and PSP ID: ' . $psp_id . '. and payment method pass from ' . $order_info['payment_method'] . ' to '. $gateway_details['description'] .'.');
             $this->{$this->model_call}->editOrderPaymentMethod($order_id, $gateway_details);
         }
+
+	    if(!$gateway_details) {
+		    $this->log->write('Callback received with a non registered payment method for ' . $order_id . ' on ' . $timestamp . ' with status: ' . $status . ', and PSP ID: ' . $psp_id );
+	    }
 
         if ($order_status_id && $order_status_id != $current_order_status) {
             if ($this->config->get($this->key_prefix . 'multisafepay_debug_mode')) {
