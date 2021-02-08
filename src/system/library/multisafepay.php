@@ -451,14 +451,17 @@ class Multisafepay {
      *
      */
     public function getCustomerObject($order_id, $type = 'payment') {
-        $order_info = $this->getOrderInfo($order_id);
-        $customer_ip = new \MultiSafepay\ValueObject\IpAddress($order_info['ip']);
-        $telephone = $this->getTelephoneObject($order_info['telephone']);
-        $customer_obj =  new \MultiSafepay\Api\Transactions\OrderRequest\Arguments\CustomerDetails();
-        $customer_obj->addIpAddress($customer_ip);
-        if ($order_info['forwarded_ip']) {
-            $forwarded_ip = new \MultiSafepay\ValueObject\IpAddress($order_info['forwarded_ip']);
-            $customer_obj->addForwardedIp($forwarded_ip);
+	    $order_info   = $this->getOrderInfo( $order_id );
+	    $customer_ip  = new \MultiSafepay\ValueObject\IpAddress( $order_info['ip'] );
+	    $telephone    = $this->getTelephoneObject( $order_info['telephone'] );
+	    $customer_obj = new \MultiSafepay\Api\Transactions\OrderRequest\Arguments\CustomerDetails();
+	    $customer_obj->addIpAddress( $customer_ip );
+	    if ( $order_info['forwarded_ip'] ) {
+		    $forwarded_ip = new \MultiSafepay\ValueObject\IpAddress( $order_info['forwarded_ip'] );
+		    $customer_obj->addForwardedIp( $forwarded_ip );
+	    }
+        if(isset($order_info[ $type . '_company']) && !empty($order_info[ $type . '_company'])) {
+	        $customer_obj->addCompanyName($order_info[ $type . '_company']);
         }
         $customer_obj->addUserAgent($order_info['user_agent']);
         $customer_obj->addPhoneNumber($telephone);
