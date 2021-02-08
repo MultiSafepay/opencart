@@ -58,7 +58,7 @@ class Multisafepay {
      *
      */
     public function getPluginVersion() {
-        $plugin_version = '3.6.0';
+        $plugin_version = '3.7.0';
         return $plugin_version;
     }
 
@@ -1426,6 +1426,8 @@ class Multisafepay {
 		    );
 	    }
 
+
+
 	    // Coupons is fixed type and apply to all items in the order before taxes
 	    if (
 	    	$coupon_info &&
@@ -1452,7 +1454,8 @@ class Multisafepay {
             && $coupon_info['is_order_lower_than_taxes']
             && !empty($coupon_info['product'])
             && in_array($product['product_id'], $coupon_info['product'])) {
-            $product_price -= ($product['price'] * ($coupon_info['discount'] / 100));
+        	$discount_by_product = ($product['price'] * ($coupon_info['discount'] / 100));
+            $product_price -= $discount_by_product;
             // If coupon is just for free shipping, the name and description is not modified
             if ($coupon_info['discount'] > 0) {
                 $product_name .= ' - '.sprintf($this->language->get('text_coupon_applied'), $coupon_info['name']);
@@ -1466,7 +1469,8 @@ class Multisafepay {
 
         // Coupons is percentage type and apply for all items in the order.
         if ($coupon_info && isset($coupon_info['type']) && $coupon_info['type'] == self::PERCENTAGE_TYPE && $coupon_info['is_order_lower_than_taxes'] && empty($coupon_info['product'])) {
-            $product_price -= ($product['price'] * round(($coupon_info['discount']/100), 2));
+	        $discount_by_product = ($product['price'] * ($coupon_info['discount']/100));
+        	$product_price -= $discount_by_product;
             // If coupon is just for free shipping, the name and description is not modified
             if ($coupon_info['discount'] > 0) {
                 $product_name .= ' - ' . sprintf($this->language->get('text_coupon_applied'),
