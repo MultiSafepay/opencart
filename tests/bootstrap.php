@@ -105,7 +105,7 @@ foreach ($fixture_class as $fixture) {
 
 // Load Specific TestCase
 $oc_version = getenv('OC_VERSION');
-if((version_compare($oc_version, '3.0.0.0', '>=') && version_compare($oc_version, '3.0.3.6', '<='))) {
+if((version_compare($oc_version, '3.0.0.0', '>=') && version_compare($oc_version, '3.0.3.7', '<='))) {
     if (file_exists(getenv('TEST_ROOT') . 'multisafepay-test-suite/multisafepay-test-suite-for-opencart-3.0.php')) {
         require_once(getenv('TEST_ROOT') . 'multisafepay-test-suite/multisafepay-test-suite-for-opencart-3.0.php');
     } else {
