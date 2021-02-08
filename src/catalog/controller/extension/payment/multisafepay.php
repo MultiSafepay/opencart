@@ -705,13 +705,13 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
         $msp_order = $this->multisafepay->getOrderRequestObject($this->request->post);
         $order_request = $this->multisafepay->processOrderRequestObject($msp_order);
 
-        if ($order_request->getPaymentLink()) {
+        if ($order_request->getPaymentUrl()) {
 
             if ($this->config->get($this->key_prefix . 'multisafepay_debug_mode')) {
                 $this->log->write('Start transaction in MSP for order ID ' . $order_id . ' on ' . date($this->language->get('datetime_format')));
-                $this->log->write('Payment Link: '. $order_request->getPaymentLink());
+                $this->log->write('Payment Link: '. $order_request->getPaymentUrl());
             }
-            $this->response->redirect($order_request->getPaymentLink());
+            $this->response->redirect($order_request->getPaymentUrl());
         }
     }
 

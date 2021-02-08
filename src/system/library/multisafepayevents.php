@@ -841,9 +841,9 @@ class Multisafepayevents {
         $msp_order = $this->multisafepay->getOrderRequestObject($order_request);
         $order_request = $this->multisafepay->processOrderRequestObject($msp_order);
 
-        if ($order_request->getPaymentLink()) {
+        if ($order_request->getPaymentUrl()) {
 
-            $payment_link = $order_request->getPaymentLink();
+            $payment_link = $order_request->getPaymentUrl();
 
             if ($this->config->get($this->key_prefix . 'multisafepay_debug_mode')) {
                 $this->log->write('Start transaction in MSP for order ID ' . $order_id . ' on ' . date($this->language->get('datetime_format')));
@@ -896,8 +896,8 @@ class Multisafepayevents {
             $order_request = $this->multisafepay->processOrderRequestObject($msp_order);
         }
 
-        if ($order_request->getPaymentLink()) {
-            $payment_link = $order_request->getPaymentLink();
+        if ($order_request->getPaymentUrl()) {
+            $payment_link = $order_request->getPaymentUrl();
             if ($this->config->get($this->key_prefix . 'multisafepay_debug_mode')) {
                 $this->log->write('Start transaction in MSP for order ID ' . $order_id . ' on ' . date($this->language->get('datetime_format')));
             }
