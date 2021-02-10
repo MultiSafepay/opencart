@@ -197,7 +197,7 @@ class Multisafepay {
             $msp = new \MultiSafepay\Sdk($api_key, $environment);
         }
         catch (\MultiSafepay\Exception\InvalidApiKeyException $invalidApiKeyException ) {
-            if ($this->config->get($this->key_prefix . 'multisafepay_debug_mode')) {
+            if ($this->{$this->model_call}->getSettingValue($this->key_prefix . 'multisafepay_debug_mode', $store_id)) {
                 $this->log->write($invalidApiKeyException->getMessage());
             }
             $this->session->data['error'] = $this->language->get('text_error');
@@ -330,7 +330,7 @@ class Multisafepay {
             return $order_request;
         }
         catch (\MultiSafepay\Exception\ApiException $apiException ) {
-            if ($this->config->get($this->key_prefix . 'multisafepay_debug_mode')) {
+            if ($this->{$this->model_call}->getSettingValue($this->key_prefix . 'multisafepay_debug_mode', $order_info['store_id'])) {
                 $this->log->write($apiException->getMessage());
             }
             $this->session->data['error'] = $this->language->get('text_error');
@@ -361,7 +361,7 @@ class Multisafepay {
             return $process_refund;
         }
         catch (\MultiSafepay\Exception\ApiException $apiException ) {
-            if ($this->config->get($this->key_prefix . 'multisafepay_debug_mode')) {
+            if ($this->{$this->model_call}->getSettingValue($this->key_prefix . 'multisafepay_debug_mode', $order_info['store_id'])) {
                 $this->log->write($apiException->getMessage());
             }
             return false;
@@ -390,7 +390,7 @@ class Multisafepay {
             return $refund_request;
         }
         catch (\MultiSafepay\Exception\ApiException $apiException ) {
-            if ($this->config->get($this->key_prefix . 'multisafepay_debug_mode')) {
+            if ($this->{$this->model_call}->getSettingValue($this->key_prefix . 'multisafepay_debug_mode', $order_info['store_id'])) {
                 $this->log->write($apiException->getMessage());
             }
             return false;
