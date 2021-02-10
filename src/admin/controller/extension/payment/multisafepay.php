@@ -756,7 +756,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
 
         $this->registry->set('multisafepay', new Multisafepay($this->registry));
 
-        $msp_order = $this->multisafepay->getOrderObject($this->request->get['order_id']);
+        $msp_order = $this->multisafepay->getAdminOrderObject($this->request->get['order_id']);
         $data['status'] = $msp_order->getStatus();
         $refund_request = $this->multisafepay->createRefundRequestObject($msp_order);
         $refund_request->addMoney($msp_order->getMoney());
@@ -856,7 +856,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
         }
 
         $this->registry->set('multisafepay', new Multisafepay($this->registry));
-        $msp_order = $this->multisafepay->getOrderObject($this->request->get['order_id']);
+        $msp_order = $this->multisafepay->getAdminOrderObject($this->request->get['order_id']);
 
         if(!$msp_order || !$msp_order->getTransactionId()) {
             return false;

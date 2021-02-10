@@ -176,21 +176,25 @@ class Multisafepay {
     /**
      * Returns a Sdk object
      *
+     * @param int $store_id
+     *
      * @return Sdk object
      * @throws InvalidApiKeyException
      *
      */
-    public function getSdkObject() {
+    public function getSdkObject($store_id = 0) {
 
         $this->language->load($this->route);
+	    $this->load->model($this->route);
 
         require_once(DIR_SYSTEM . 'library/multisafepay/vendor/autoload.php');
 
-        $enviroment = (empty($this->config->get($this->key_prefix . 'multisafepay_environment')) ? true : false);
-        $api_key = (($enviroment) ? $this->config->get($this->key_prefix . 'multisafepay_api_key') : $this->config->get($this->key_prefix . 'multisafepay_sandbox_api_key'));
+        $environment = $this->{$this->model_call}->getSettingValue($this->key_prefix . 'multisafepay_environment', $store_id);
+        $environment = (empty($environment) ? true : false);
+        $api_key = (($environment) ? $this->{$this->model_call}->getSettingValue($this->key_prefix . 'multisafepay_api_key', $store_id) : $this->{$this->model_call}->getSettingValue($this->key_prefix . 'multisafepay_sandbox_api_key', $store_id));
 
         try {
-            $msp = new \MultiSafepay\Sdk($api_key, $enviroment);
+            $msp = new \MultiSafepay\Sdk($api_key, $environment);
         }
         catch (\MultiSafepay\Exception\InvalidApiKeyException $invalidApiKeyException ) {
             if ($this->config->get($this->key_prefix . 'multisafepay_debug_mode')) {
@@ -219,7 +223,7 @@ class Multisafepay {
         $order_info = $this->getOrderInfo($data['order_id']);
 
         // Order Request
-        $sdk = $this->getSdkObject();
+        $sdk = $this->getSdkObject($order_info['store_id']);
 
         $msp_order = new \MultiSafepay\Api\Transactions\OrderRequest();
         $msp_order->addOrderId($data['order_id']);
@@ -317,7 +321,9 @@ class Multisafepay {
             return false;
         }
         $this->language->load($this->route);
-        $sdk = $this->getSdkObject();
+	    $order_id = $msp_order->getOrderId();
+	    $order_info = $this->getOrderInfo($order_id);
+        $sdk = $this->getSdkObject($order_info['store_id']);
         $transaction_manager = $sdk->getTransactionManager();
         try {
             $order_request = $transaction_manager->create($msp_order);
@@ -345,7 +351,10 @@ class Multisafepay {
         if (!$msp_order || !$refund_request) {
             return false;
         }
-        $sdk = $this->getSdkObject();
+
+	    $order_id = $msp_order->getOrderId();
+	    $order_info = $this->getAdminOrderInfo($order_id);
+        $sdk = $this->getSdkObject($order_info['store_id']);
         $transaction_manager = $sdk->getTransactionManager();
         try {
             $process_refund = $transaction_manager->refund($msp_order, $refund_request);
@@ -371,7 +380,9 @@ class Multisafepay {
         if (!$msp_order) {
             return false;
         }
-        $sdk = $this->getSdkObject();
+	    $order_id = $msp_order->getOrderId();
+        $order_info = $this->getAdminOrderInfo($order_id);
+        $sdk = $this->getSdkObject($order_info['store_id']);
         $transaction_manager = $sdk->getTransactionManager();
 
         try {
@@ -394,7 +405,7 @@ class Multisafepay {
      *
      */
     public function getIssuersByGatewayCode($gateway_code) {
-        $sdk = $this->getSdkObject();
+        $sdk = $this->getSdkObject($this->config->get('config_store_id'));
         try {
             $issuer_manager = $sdk->getIssuerManager();
             $issuers = $issuer_manager->getIssuersByGatewayCode($gateway_code);
@@ -425,7 +436,7 @@ class Multisafepay {
      */
     public function getGatewayObjectByCode($gateway_code) {
         $this->language->load($this->route);
-        $sdk = $this->getSdkObject();
+        $sdk = $this->getSdkObject($this->config->get('config_store_id'));
         try {
             $gateway_manager = $sdk->getGatewayManager();
             $gateway = $gateway_manager->getByCode($gateway_code);
@@ -845,6 +856,26 @@ class Multisafepay {
         return $country;
     }
 
+	/**
+	 * Returns an Order object called from the admin side
+	 *
+	 * @param int $order_id
+	 * @return Order object
+	 *
+	 */
+	public function getAdminOrderObject($order_id) {
+		$order_info = $this->getAdminOrderInfo($order_id);
+		$sdk = $this->multisafepay->getSdkObject($order_info['store_id']);
+		$transaction_manager = $sdk->getTransactionManager();
+		try {
+			$order = $transaction_manager->get($order_id);
+		}
+		catch (\MultiSafepay\Exception\ApiException $apiException ) {
+			return false;
+		}
+		return $order;
+	}
+
     /**
      * Returns an Order object
      *
@@ -853,7 +884,7 @@ class Multisafepay {
      *
      */
     public function getOrderObject($order_id) {
-        $sdk = $this->multisafepay->getSdkObject();
+        $sdk = $this->multisafepay->getSdkObject($this->config->get('config_store_id'));
         $transaction_manager = $sdk->getTransactionManager();
         try {
             $order = $transaction_manager->get($order_id);
@@ -890,7 +921,8 @@ class Multisafepay {
      *
      */
     public function changeMultiSafepayOrderStatusTo($order_id, $status) {
-        $sdk = $this->getSdkObject();
+    	$order_info = $this->getAdminOrderInfo($order_id);
+        $sdk = $this->getSdkObject($order_info['store_id']);
         $transaction_manager = $sdk->getTransactionManager();
         $update_order = new MultiSafepay\Api\Transactions\UpdateRequest();
         $update_order->addId($order_id);
@@ -1247,6 +1279,19 @@ class Multisafepay {
         $order_totals = $this->{$this->model_call}->getOrderTotals($order_id);
         return $order_totals;
     }
+
+	/**
+	 * Returns order using model from admin.
+	 *
+	 * @param int $order_id
+	 * @return array $order_info
+	 *
+	 */
+	public function getAdminOrderInfo($order_id) {
+		$this->load->model('sale/order');
+		$order_info = $this->model_sale_order->getOrder($order_id);
+		return $order_info;
+	}
 
     /**
      * Returns order information.

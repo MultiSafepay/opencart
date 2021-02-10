@@ -252,6 +252,20 @@ class ModelExtensionPaymentMultiSafePay extends Model {
         return $query->rows;
     }
 
+	/**
+	 * Return the id of the next invoice number
+	 *
+	 * @param int $order_id
+	 *
+	 */
+	public function getSettingValue($key, $store_id = 0) {
+		$query = $this->db->query("SELECT value FROM " . DB_PREFIX . "setting WHERE store_id = '" . (int)$store_id . "' AND `key` = '" . $this->db->escape($key) . "'");
+		if ($query->num_rows) {
+			return $query->row['value'];
+		}
+		return null;
+	}
+
     /**
      * Return all order status
      * This function doesn`t exist in Catalog OpenCart 2 and that`s why this is a duplicated
