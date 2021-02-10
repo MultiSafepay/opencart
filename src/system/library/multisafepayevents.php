@@ -620,7 +620,7 @@ class Multisafepayevents {
                 $update_order->addData(array('invoice_id' => $invoice_id));
                 $transaction_manager->update($order_id, $update_order);
             }
-            if( (strpos($order_info['payment_code'], 'multisafepay') !== false) && $this->config->get($this->key_prefix . 'multisafepay_debug_mode')) {
+            if( (strpos($order_info['payment_code'], 'multisafepay') !== false) && $this->{$this->model_call}->getSettingValue($this->key_prefix . 'multisafepay_debug_mode', $order_info['store_id'])) {
                 $this->log->write('OpenCart Event to send invoice ID: ' . $invoice_id . ' to MSP, for Order ID '.$order_id);
             }
         }
