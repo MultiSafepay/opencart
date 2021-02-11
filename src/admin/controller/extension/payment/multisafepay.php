@@ -756,7 +756,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
 
         $this->registry->set('multisafepay', new Multisafepay($this->registry));
 
-        $msp_order = $this->multisafepay->getOrderObject($this->request->get['order_id']);
+        $msp_order = $this->multisafepay->getAdminOrderObject($this->request->get['order_id']);
         $data['status'] = $msp_order->getStatus();
         $refund_request = $this->multisafepay->createRefundRequestObject($msp_order);
         $refund_request->addMoney($msp_order->getMoney());
@@ -784,7 +784,9 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
         if($process_refund) {
             $this->load->model($this->route);
             $this->{$this->model_call}->removeCouponsVouchersRewardsPointsAffiliateCommission($this->request->get['order_id']);
-            $this->{$this->model_call}->addOrderHistory($this->request->get['order_id'], $this->config->get($this->key_prefix . 'multisafepay_order_status_id_refunded'), $description);
+	        $order_info = $this->multisafepay->getAdminOrderInfo($this->request->get['order_id']);
+            $status_id_refunded = $this->{$this->model_call}->getSettingValue($this->key_prefix . 'multisafepay_order_status_id_refunded', $order_info['store_id']);
+            $this->{$this->model_call}->addOrderHistory($this->request->get['order_id'], $status_id_refunded, $description);
             $json['success'] = $this->language->get('text_refund_success');
         }
 
@@ -812,15 +814,16 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
 
         // Set Order Status
         $this->registry->set('multisafepay', new Multisafepay($this->registry));
+	    $order_info = $this->multisafepay->getAdminOrderInfo($this->request->get['order_id']);
         $this->multisafepay->changeMultiSafepayOrderStatusTo($order_id, $type);
         if($type === 'cancelled') {
-            $order_status_id = $this->config->get($this->key_prefix . 'multisafepay_order_status_id_cancelled');
+	        $order_status_id = $this->{$this->model_call}->getSettingValue($this->key_prefix . 'multisafepay_order_status_id_cancelled', $order_info['store_id']);
         }
         if($type === 'shipped') {
-            $order_status_id = $this->config->get($this->key_prefix . 'multisafepay_order_status_id_shipped');
+	        $order_status_id = $this->{$this->model_call}->getSettingValue($this->key_prefix . 'multisafepay_order_status_id_shipped', $order_info['store_id']);
         }
 
-        if ($this->config->get($this->key_prefix . 'multisafepay_debug_mode')) {
+        if ($this->{$this->model_call}->getSettingValue($this->key_prefix . 'multisafepay_debug_mode', $order_info['store_id'])) {
             $this->log->write('OpenCart set the transaction to ' . $type . ' in MultiSafepay, for order ID ' . $order_id . ' and status ID ' . $order_status_id);
         }
 
@@ -856,7 +859,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
         }
 
         $this->registry->set('multisafepay', new Multisafepay($this->registry));
-        $msp_order = $this->multisafepay->getOrderObject($this->request->get['order_id']);
+        $msp_order = $this->multisafepay->getAdminOrderObject($this->request->get['order_id']);
 
         if(!$msp_order || !$msp_order->getTransactionId()) {
             return false;

@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+
+## 3.8.0
+Release date: February, 11th 2021
+
+### Fixed
++ PLGOPNS-382: Fix bug to get the proper settings in a multi store OpenCart site
+
+
 ## 3.7.0
 Release date: February, 9th 2021
 
