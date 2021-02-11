@@ -733,14 +733,15 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
         $this->load->model('checkout/order');
         $this->load->model($this->route);
 
-        // Start transaction in MSP.
-        $this->registry->set('multisafepay', new Multisafepay($this->registry));
-        $sdk = $this->multisafepay->getSdkObject();
 
+        // Start transaction in MSP.
         $order_id = $this->request->get['transactionid'];
         $timestamp = date($this->language->get('datetime_format'));
         $order_info = $this->model_checkout_order->getOrder($order_id);
         $current_order_status = $order_info['order_status_id'];
+
+        $this->registry->set('multisafepay', new Multisafepay($this->registry));
+	    $sdk = $this->multisafepay->getSdkObject($order_info['store_id']);
         $transaction_manager = $sdk->getTransactionManager();
         $transaction = $transaction_manager->get($order_id);
         $psp_id = $transaction->getTransactionId();
