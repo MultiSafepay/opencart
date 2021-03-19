@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+***
+
+## 3.9.0
+Release date: March, 19th 2021
+
+### Added
++ PLGOPNS-374: Add generic gateway
+
+### Changed
++ PLGOPNS-384: Upgrade PHP-SDK to 5.1.0
+
+***
 
 ## 3.8.0
 Release date: February, 11th 2021
@@ -11,6 +23,7 @@ Release date: February, 11th 2021
 ### Fixed
 + PLGOPNS-382: Fix bug to get the proper settings in a multi store OpenCart site
 
+***
 
 ## 3.7.0
 Release date: February, 9th 2021
@@ -18,6 +31,7 @@ Release date: February, 9th 2021
 ### Fixed
 + PLGOPNS-381: Fix percentage coupon applied before taxes
 
+***
 
 ## 3.6.0
 Release date: February, 8th 2021
@@ -35,6 +49,7 @@ Release date: February, 8th 2021
 + PLGOPNS-375: Remove unneded code related with the shopping cart of the transaction    
 + PLGOPNS-378: Fix bug for fixed coupons applied before taxes
 
+***
 
 ## 3.5.0
 Release date: December, 18th 2020
@@ -54,6 +69,7 @@ Release date: December, 18th 2020
 + PLGOPNS-366: Fix bug, gift voucher items should pass to the transaction as negative amounts
 + PLGOPNS-371: Fix filter per customer group; when customer is not logged
 
+***
 
 ## 3.4.0
 Release date: November, 19th 2020
@@ -67,6 +83,8 @@ Release date: November, 19th 2020
 ### Changed
 + PLGOPNS-257: Include in support tab the contact details of international offices
 
+***
+
 ## 3.3.0
 Release date: October, 13th 2020
 
@@ -78,6 +96,8 @@ Release date: October, 13th 2020
 + PLGOPNS-303: Improve iDEAL issuer selection list
 + PLGOPNS-245: Improve the alignment of payment methods logos in checkout page
 
+***
+
 ## 3.2.0
 Release date: September, 17th 2020
 
@@ -88,6 +108,8 @@ Release date: September, 17th 2020
 + PLGOPNS-295: Add getEventByCode function, which does not exist prior to OC 3.0.2
 + PLGOPNS-284: Fix placeholder for 'lifetime payment link' field
 
+***
+
 ## 3.1.0
 Release date: September, 14th 2020
 
@@ -96,6 +118,8 @@ Release date: September, 14th 2020
 + PLGOPNS-243: Improve fields related with lifetime of the payment link in the settings
 + PLGOPNS-253: Validate the field lifetime of payment link to avoid negative number
 + PLGOPNS-252: Improve description for each payment method on backoffice
+
+***
 
 ## 3.0.0
 Release date: September, 7th 2020
@@ -118,7 +142,6 @@ Release date: September, 7th 2020
 + Add support to update order status as cancelled or expired from the admin
 + Add support for payment method in3, CBC
 
-
 ### Fixed
 + PLGOPNS-226: Tax issue
 + PLGOPNS-212: Fix PHP DocBlock declaration and correct @author property
@@ -134,7 +157,6 @@ Release date: September, 7th 2020
 + Fix support for taxes
 + Fix support for coupons
 
-
 ### Removed
 + PLGOPNS-228: Remove payment methods BABYGIFTCARD, EROTIEKBON.
 + PLGOPNS-225: Reorder the directories to put MultiSafepay.combined.php in the OpenCart library folder
@@ -142,6 +164,7 @@ Release date: September, 7th 2020
 + PLGOPNS-174: Remove unsupported giftcards
 + Remove VqMod dependency
 
+***
 
 ## 2.3.0
 Release date: April 2nd, 2020
@@ -201,6 +224,8 @@ Release date: June 15th, 2018
 ### Fixed
 + PLGOPNS-74: MultiStore is now correctly supported
 + PLGOPNS-75: Configuration form is now applied for geozone and min/max amount
+
+***
 
 ## 2.1.0
 Release date: November 13th, 2017

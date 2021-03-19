@@ -641,6 +641,16 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
         return $this->multisafepay_version_control->getViewAccordingWithOcVersion($this->route . $this->view_extension_file, $data);
     }
 
+	/**
+	 * Handles the confirm order form the generic payment method
+	 *
+	 */
+	public function generic() {
+		$data = $this->paymentMethodBase();
+		$data['gateway'] = $this->config->get($this->key_prefix . 'multisafepay_generic_code');
+		return $this->multisafepay_version_control->getViewAccordingWithOcVersion($this->route . $this->view_extension_file, $data);
+	}
+
     /**
      * Handles the form validation before submit and return errors if exist.
      *

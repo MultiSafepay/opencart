@@ -333,6 +333,7 @@
                                                 <option value="*">{{ text_show_all_payment_methods }}</option>
                                                 <option value="gateway">{{ text_show_gateways }}</option>
                                                 <option value="giftcard">{{ text_show_gift_cards }}</option>
+                                                <option value="generic">{{ text_show_generic }}</option>
                                             </select>
                                         </div>
                                     </div>
@@ -381,6 +382,36 @@
                                                             </select>
                                                         </div>
                                                     </div>
+                                                    {% if gateway.type == 'generic' %}
+                                                        <div class="form-group">
+                                                            <label class="col-sm-2 control-label" for="payment-multisafepay-{{ gateway.code }}-name">{{ entry_name }}</label>
+                                                            <div class="col-sm-10">
+                                                                <input type="text" name="payment_multisafepay_{{ gateway.code }}_name" value="{{ payment_generic_fields_values[gateway.code]['name'] }}" id="payment-multisafepay-{{ gateway.code }}-name" placeholder="{{ entry_name }}" class="form-control" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-sm-2 control-label" for="payment-multisafepay-{{ gateway.code }}-code">{{ entry_code }}</label>
+                                                            <div class="col-sm-10">
+                                                                <input type="text" name="payment_multisafepay_{{ gateway.code }}_code" value="{{ payment_generic_fields_values[gateway.code]['code'] }}" id="payment-multisafepay-{{ gateway.code }}-code" placeholder="{{ entry_code }}" class="form-control" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-sm-2 control-label" for="payment-multisafepay-{{ gateway.code }}-image"><span data-toggle="tooltip" title="" data-original-title="{{ text_help_image_generic }}">{{ entry_image }}</span></label>
+                                                            <div class="col-sm-10">
+                                                                <a href="" id="thumb-payment-multisafepay-{{ gateway.code }}-image" data-toggle="image" class="img-thumbnail"><img src="{{ payment_generic_fields_values[gateway.code]['thumb'] }}" alt="" title="" data-placeholder=""/></a>
+                                                                <input type="hidden" name="payment_multisafepay_{{ gateway.code }}_image" value="{{ payment_generic_fields_values[gateway.code]['image'] }}" id="input-image-payment-multisafepay-{{ gateway.code }}-image"/>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-sm-2 control-label" for="payment-multisafepay-{{ gateway.code }}-require-shopping-cart"><span data-toggle="tooltip" title="" data-original-title="{{ text_help_require_shopping_cart }}">{{ entry_require_shopping_cart }}</span></label>
+                                                            <div class="col-sm-10">
+                                                                <select name="payment_multisafepay_{{ gateway.code }}_require_shopping_cart" id="payment-multisafepay-{{ gateway.code }}-require-shopping-cart" class="form-control">
+                                                                    <option value="0" {% if payment_generic_fields_values[gateway.code]['require_shopping_cart'] == 0 %} selected {% endif %}>{{ text_disabled }}</option>
+                                                                    <option value="1" {% if payment_generic_fields_values[gateway.code]['require_shopping_cart'] == 1 %} selected {% endif %}>{{ text_enabled }}</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    {% endif %}
                                                     {# -- Min amount -- #}
                                                     <div class="form-group">
                                                         <label class="col-sm-2 control-label" for="payment-multisafepay-{{ gateway.code }}-min-amount"><span data-toggle="tooltip" title="" data-original-title="{{ text_help_min_amount }}">{{ entry_min_amount }}</span></label>
@@ -631,18 +662,27 @@
 <script type="text/javascript"><!--
     $('#input-filter-payment-method').on('change', function(e) {
         var selected = $(this).val();
-        if(selected != 'gateway' || selected != 'giftcard') {
+        if(selected != 'gateway' || selected != 'giftcard' || selected != 'generic') {
             $('.payment-type-giftcard').show();
             $('.payment-type-gateway').show();
+            $('.payment-type-generic').show();
             $('.drag-and-drop-control').show();
         }
         if(selected === 'gateway') {
             $('.payment-type-gateway').show();
             $('.payment-type-giftcard').hide();
+            $('.payment-type-generic').hide();
             $('.drag-and-drop-control').hide();
         }
         if(selected === 'giftcard') {
             $('.payment-type-giftcard').show();
+            $('.payment-type-gateway').hide();
+            $('.payment-type-generic').hide();
+            $('.drag-and-drop-control').hide();
+        }
+        if(selected === 'generic') {
+            $('.payment-type-generic').show();
+            $('.payment-type-giftcard').hide();
             $('.payment-type-gateway').hide();
             $('.drag-and-drop-control').hide();
         }
