@@ -2331,7 +2331,17 @@ class Multisafepay {
                 'docs' => sprintf($this->language->get('text_gateway_docs_info'), 'https://docs.multisafepay.com/payment-methods/prepaid-cards/gift-cards/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_yourgift')),
                 'brief_description' => $this->language->get('text_brief_description_yourgift'),
                 'image' => 'yourgift'
-            )
+            ),
+	        array(
+		        'id' => 'GENERIC',
+		        'code' => 'generic',
+		        'route' => 'multisafepay/generic',
+		        'description' => $this->language->get('text_title_generic'),
+		        'type' => 'generic',
+		        'docs' => '',
+		        'brief_description' => $this->language->get('text_brief_description_generic'),
+		        'image' => ''
+	        )
         );
 
         return $gateways;
@@ -2375,6 +2385,24 @@ class Multisafepay {
         return $gateways[$gateway_key];
 
     }
+
+	/**
+	 * Return gateway by gateway type
+	 *
+	 * @param string $type
+	 * @return mixed array
+	 *
+	 */
+	public function getGatewayByType( $type ) {
+		$gateways = $this->getGateways();
+		$gateways_requested = array();
+		foreach ($gateways as $key => $gateway) {
+			if($gateway['type'] === $type) {
+				$gateways_requested[] = $gateways[$key];
+			}
+		}
+		return $gateways_requested;
+	}
 
 
     /**

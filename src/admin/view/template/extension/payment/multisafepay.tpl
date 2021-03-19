@@ -387,6 +387,7 @@
                                                 <option value="*"><?php echo $text_show_all_payment_methods; ?></option>
                                                 <option value="gateway"><?php echo $text_show_gateways; ?></option>
                                                 <option value="giftcard"><?php echo $text_show_gift_cards; ?></option>
+                                                <option value="generic"><?php echo $text_show_generic; ?></option>
                                             </select>
                                         </div>
                                     </div>
@@ -435,6 +436,37 @@
                                                             </select>
                                                         </div>
                                                     </div>
+	                                                <?php // Generic ?>
+                                                    <?php if ($gateway['type'] === 'generic') { ?>
+                                                        <div class="form-group">
+                                                            <label class="col-sm-2 control-label" for="payment-multisafepay-<?php echo $gateway['code']; ?>-name"><?php echo $entry_name; ?></label>
+                                                            <div class="col-sm-10">
+                                                                <input type="text" name="multisafepay_<?php echo $gateway['code']; ?>_name" value="<?php echo $payment_generic_fields_values[$gateway['code']]['name'] ?>" id="payment-multisafepay-<?php echo $gateway['code']; ?>-name" placeholder="<?php echo $entry_name ?>" class="form-control" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-sm-2 control-label" for="payment-multisafepay-<?php echo $gateway['code']; ?>-code"><?php echo $entry_code ?></label>
+                                                            <div class="col-sm-10">
+                                                                <input type="text" name="multisafepay_<?php echo $gateway['code']; ?>_code" value="<?php echo $payment_generic_fields_values[$gateway['code']]['code'] ?>" id="payment-multisafepay-<?php echo $gateway['code']; ?>-code" placeholder="<?php echo $entry_code ?>" class="form-control" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-sm-2 control-label" for="payment-multisafepay-<?php echo $gateway['code']; ?>-image"><span data-toggle="tooltip" title="" data-original-title="<?php echo $text_help_image_generic; ?>"><?php echo $entry_image ?></span></label>
+                                                            <div class="col-sm-10">
+                                                                <a href="" id="thumb-payment-multisafepay-<?php echo $gateway['code']; ?>-image" data-toggle="image" class="img-thumbnail"><img src="<?php echo $payment_generic_fields_values[$gateway['code']]['thumb'] ?>" alt="" title="" data-placeholder=""/></a>
+                                                                <input type="hidden" name="multisafepay_<?php echo $gateway['code']; ?>_image" value="<?php echo $payment_generic_fields_values[$gateway['code']]['image'] ?>" id="input-image-payment-multisafepay-<?php echo $gateway['code']; ?>-image"/>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-sm-2 control-label" for="payment-multisafepay-<?php echo $gateway['code']; ?>-require-shopping-cart"><span data-toggle="tooltip" title="" data-original-title="<?php echo $text_help_require_shopping_cart; ?>"><?php echo $entry_require_shopping_cart; ?></span></label>
+                                                            <div class="col-sm-10">
+                                                                <select name="multisafepay_<?php echo $gateway['code']; ?>_require_shopping_cart" id="payment-multisafepay-<?php echo $gateway['code']; ?>-require-shopping-cart" class="form-control">
+                                                                    <option value="0" <?php if($payment_generic_fields_values[$gateway['code']]['require_shopping_cart'] == 0) { ?> selected <?php } ?>><?php echo $text_disabled; ?></option>
+                                                                    <option value="1" <?php if($payment_generic_fields_values[$gateway['code']]['require_shopping_cart'] == 1) { ?> selected <?php } ?>><?php echo $text_enabled; ?></option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    <?php } ?>
                                                     <?php // Min amount ?>
                                                     <div class="form-group">
                                                         <label class="col-sm-2 control-label" for="payment-multisafepay-<?php echo $gateway['code']; ?>-min-amount"><span data-toggle="tooltip" title="" data-original-title="<?php echo $text_help_min_amount; ?>"><?php echo $entry_min_amount; ?></span></label>
@@ -685,18 +717,27 @@
 <script type="text/javascript"><!--
     $('#input-filter-payment-method').on('change', function(e) {
         var selected = $(this).val();
-        if(selected != 'gateway' || selected != 'giftcard') {
+        if(selected != 'gateway' || selected != 'giftcard' || selected != 'generic') {
             $('.payment-type-giftcard').show();
             $('.payment-type-gateway').show();
+            $('.payment-type-generic').show();
             $('.drag-and-drop-control').show();
         }
         if(selected === 'gateway') {
             $('.payment-type-gateway').show();
             $('.payment-type-giftcard').hide();
+            $('.payment-type-generic').hide();
             $('.drag-and-drop-control').hide();
         }
         if(selected === 'giftcard') {
             $('.payment-type-giftcard').show();
+            $('.payment-type-gateway').hide();
+            $('.payment-type-generic').hide();
+            $('.drag-and-drop-control').hide();
+        }
+        if(selected === 'generic') {
+            $('.payment-type-generic').show();
+            $('.payment-type-giftcard').hide();
             $('.payment-type-gateway').hide();
             $('.drag-and-drop-control').hide();
         }

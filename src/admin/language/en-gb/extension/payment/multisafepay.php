@@ -270,3 +270,14 @@ $_['error_gateways_not_available']	                    = 'Warning: It seems that
 $_['error_gateway_not_available']	                    = 'Gateway: %s is not available for your MultiSafepay account';
 $_['error_php_version']	                                = 'It seems your PHP library is outdated. This extension requires PHP 7.1 or higher';
 $_['error_days_active']	                                = 'The value for the timelife of a payment link should be as minimum 1';
+
+//  Generic Gateways
+$_['entry_name']                                        = 'Gateway Name';
+$_['entry_code']                                        = 'Gateway Code';
+$_['entry_image']                                       = 'Gateway Icon';
+$_['entry_require_shopping_cart']                       = 'Require shopping cart';
+$_['text_help_require_shopping_cart']                   = 'Enable this option if you are using a Billing Suite payment method.';
+$_['text_help_image_generic']                           = 'Recommended size: 420px * 180px';
+$_['text_brief_description_generic']                    = 'This generic payment method can be used with any MultiSafepay gateway or giftcard code.';
+$_['text_title_generic']                                = 'Generic Gateway';
+$_['text_show_generic']                                 = 'Show only generic payment gateways';

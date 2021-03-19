@@ -128,12 +128,23 @@ class ModelExtensionPaymentMultiSafePay extends Model {
                 continue;
             }
 
+	        if ($gateway['type'] === 'generic') {
+	        	$description = $this->config->get($this->key_prefix . 'multisafepay_'.$gateway['code'].'_name');
+	        	$image = $this->config->get($this->key_prefix . 'multisafepay_'.$gateway['code'].'_image');
+		        $title = $this->getTitle($description, $image, true);
+	        }
+
+	        if ($gateway['type'] !== 'generic') {
+	        	$title = $this->getTitle($gateway['description'], $gateway['image']);
+	        }
+
             $methods_data[] = array(
                 'code' => $gateway['route'],
-                'title' => $this->getTitle($gateway['description'], $gateway['image']),
+                'title' => $title,
                 'terms' => '',
                 'sort_order' => $this->config->get($this->key_prefix . 'multisafepay_'.$gateway['code'].'_sort_order')
             );
+
         }
 
         $sort_order = array();
@@ -149,12 +160,13 @@ class ModelExtensionPaymentMultiSafePay extends Model {
      * Retrieves MultiSafepay payment methods titles and images,
      * if this one has been setup in the settings
      *
-     * @param string $title
-     * @param string $image
+     * @param string  $title
+     * @param string  $image
+     * @param boolean $is_generic
      * @return string $title
      *
      */
-    private function getTitle($title = 'MultiSafepay', $image = 'wallet') {
+    private function getTitle($title = 'MultiSafepay', $image = 'wallet', $is_generic = false) {
 
         $this->registry->set('multisafepay', new Multisafepay($this->registry));
         $shop_url = $this->multisafepay->getShopUrl();
@@ -164,18 +176,23 @@ class ModelExtensionPaymentMultiSafePay extends Model {
             return $title;
         }
 
-        if(!file_exists(DIR_IMAGE . 'catalog/multisafepay/' . $image . '.png') && !file_exists(DIR_IMAGE . 'catalog/multisafepay/' . $image . '-' . $locale_code . 'png')) {
+        if(!$is_generic && !file_exists(DIR_IMAGE . 'catalog/multisafepay/' . $image . '.png') && !file_exists(DIR_IMAGE . 'catalog/multisafepay/' . $image . '-' . $locale_code . 'png')) {
             return $title;
         }
 
-        if(!file_exists(DIR_IMAGE . 'catalog/multisafepay/' . $image . '-' . $locale_code . '.png')) {
+        if(!$is_generic && !file_exists(DIR_IMAGE . 'catalog/multisafepay/' . $image . '-' . $locale_code . '.png')) {
             $logo = '<img height=20 src="' . $shop_url . 'image/catalog/multisafepay/' . $image . '.png" alt="' . $title . '"/>';
             $title_with_logo = $logo . '  ' . $title;
         }
 
-        if(file_exists(DIR_IMAGE . 'catalog/multisafepay/' . $image . '-' . $locale_code . '.png')) {
+        if(!$is_generic && file_exists(DIR_IMAGE . 'catalog/multisafepay/' . $image . '-' . $locale_code . '.png')) {
             $logo = '<img height=20 src="' . $shop_url . 'image/catalog/multisafepay/' . $image . '-' . $locale_code . '.png" alt="' . $title . '"/>';
             $title_with_logo = $logo . '  ' . $title;
+        }
+
+        if($is_generic) {
+	        $logo = '<img height=20 src="' . $shop_url . 'image/' . $image . '" alt="' . $title . '"/>';
+	        $title_with_logo = $logo . '  ' . $title;
         }
 
         return $title_with_logo;

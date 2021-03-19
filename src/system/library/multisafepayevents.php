@@ -824,11 +824,16 @@ class Multisafepayevents {
 
         // Generate Payment Link. Order from admin. Include payment link in the order email.
         $this->registry->set('multisafepay', new Multisafepay($this->registry));
-        $gateways = $this->multisafepay->getGateways();
-        $order_payment_method = $args['payment_method'];
-        $gateway_key = array_search($order_payment_method, array_column($gateways, 'description'));
+        $gateway_info = $this->multisafepay->getGatewayByPaymentCode($order_info['payment_code']);
 
-        $gateway = (($gateway_key) ? $gateways[$gateway_key]['id'] : '');
+        if($gateway_info['type'] === 'generic') {
+	        $gateway = $this->config->get($this->key_prefix . 'multisafepay_'.$gateway_info['code'].'_code');
+        }
+
+	    if($gateway_info['type'] !== 'generic') {
+		    $gateway = (($gateway_info['id']) ? $gateway_info['id'] : '');
+	    }
+
         $order_request = array(
             'order_id' => $order_id,
             'action'   => $this->url->link($this->route . '/confirm', '', true),
@@ -871,6 +876,7 @@ class Multisafepayevents {
      * @param array $args
      * @return mixed bool|array
      */
+	// phpcs:ignore ObjectCalisthenics.Metrics.MaxNestingLevel
     public function catalogModelCheckoutOrderAddOrderHistoryBefore(&$route, &$args) {
         if (isset($args[0]) && isset($args[1])) {
             $order_id = $args[0];

@@ -175,7 +175,6 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
 
         $fields = $this->getFields();
         $data['payment_methods_fields_values'] = $this->getPaymentMethodsFieldsValues($data['store_id']);
-
         foreach ($fields as $field) {
             if (isset($this->request->post[$field])) {
                 $data[$field] = $this->request->post[$field];
@@ -187,12 +186,91 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
             }
         }
 
+		// Generic
+        $data['payment_generic_fields_values'] = $this->getPaymentGenericFieldsValues($data['store_id']);
+
         $data['header']     = $this->load->controller('common/header');
         $data['column_left']= $this->load->controller('common/column_left');
         $data['footer']     = $this->load->controller('common/footer');
 
         $this->response->setOutput($this->load->view($this->route . $this->view_extension_file, $data));
     }
+
+
+	/**
+	 * Define the common fields for each payment method
+	 *
+	 * @return array
+	 *
+	 */
+	private function getPaymentGenericFields() {
+		return array(
+			'name',
+			'code',
+			'image',
+			'require_shopping_cart'
+		);
+	}
+
+	/**
+	 * Return the values of fields for each generic methods keys
+	 *
+	 * @param int $store_id
+	 * @return array
+	 *
+	 */
+	private function getPaymentGenericFieldsValues($store_id = 0) {
+		$this->registry->set('multisafepay', new Multisafepay($this->registry));
+		$generic_gateways = $this->multisafepay->getGatewayByType('generic');
+		$fields = array();
+		foreach($generic_gateways as $gateway) {
+			$fields = $this->extractGenericFieldsByGateway($gateway, $fields, $store_id);
+		}
+		return $fields;
+	}
+
+	/**
+	 * Extract the values of fields for each generic methods keys for each gateway
+	 *
+	 * @param string $gateway
+	 * @param array $fields
+	 * @param int $store_id
+	 * @return array
+	 *
+	 */
+	// phpcs:ignore ObjectCalisthenics.Metrics.MaxNestingLevel
+	private function extractGenericFieldsByGateway($gateway, $fields, $store_id) {
+		$this->load->model('tool/image');
+		$payment_fields = $this->getPaymentGenericFields();
+		foreach ($payment_fields as $payment_field) {
+			if ($payment_field !== 'image' && isset($this->request->post[$this->key_prefix . 'multisafepay_'.$gateway['code'].'_'.$payment_field])) {
+				$fields[$gateway['code']][$payment_field] = $this->request->post[$this->key_prefix . 'multisafepay_'.$gateway['code'].'_'.$payment_field];
+				continue;
+			}
+			if ($payment_field !== 'image' && !isset($this->request->post[$this->key_prefix . 'multisafepay_'.$gateway['code'].'_'.$payment_field])) {
+				$fields[$gateway['code']][$payment_field] = $this->{$this->model_call}->getSettingValue($this->key_prefix . 'multisafepay_'.$gateway['code'].'_'.$payment_field, $store_id);
+				continue;
+			}
+			if ($payment_field === 'image' && isset($this->request->post[$this->key_prefix . 'multisafepay_'.$gateway['code'].'_'.$payment_field])) {
+				$fields[$gateway['code']][$payment_field] = $this->request->post[$this->key_prefix . 'multisafepay_'.$gateway['code'].'_'.$payment_field];
+				$fields[$gateway['code']]['thumb'] = $this->model_tool_image->resize($this->request->post[$this->key_prefix . 'multisafepay_'.$gateway['code'].'_'.$payment_field], 100, 100);
+				continue;
+			}
+			if ($payment_field === 'image' && !isset($this->request->post[$this->key_prefix . 'multisafepay_'.$gateway['code'].'_'.$payment_field])) {
+				$fields[$gateway['code']][$payment_field] = $this->{$this->model_call}->getSettingValue($this->key_prefix . 'multisafepay_'.$gateway['code'].'_'.$payment_field, $store_id);
+				$image = $this->{$this->model_call}->getSettingValue($this->key_prefix . 'multisafepay_'.$gateway['code'].'_'.$payment_field, $store_id);
+				if($image) {
+					$fields[$gateway['code']]['thumb'] = $this->model_tool_image->resize($image, 100, 100);
+				}
+				if(!$image) {
+					$fields[$gateway['code']]['thumb'] = $this->model_tool_image->resize('no_image.png', 100, 100);
+				}
+				continue;
+			}
+		}
+		return $fields;
+	}
+
 
     /**
      * Return error message is PHP Version is not supported by the extension
@@ -530,29 +608,6 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
             $this->error['api_key'] = $this->language->get('error_empty_api_key');
         }
 
-        $this->registry->set('multisafepay', new Multisafepay($this->registry));
-        $gateways = $this->multisafepay->getGateways();
-        $enviroment = (empty($this->request->post[$this->key_prefix . 'multisafepay_environment'])) ? true : false;
-        $enviroment_key = (empty($this->request->post[$this->key_prefix . 'multisafepay_environment'])) ? '' : 'sandbox_';
-        $api_key = $this->request->post[$this->key_prefix . 'multisafepay_' . $enviroment_key . 'api_key'];
-        $available_gateways = $this->multisafepay->getAvailableGateways($enviroment, $api_key);
-
-        if(!$available_gateways) {
-            $this->error[$enviroment_key . 'api_key'] = $this->language->get('error_invalid_api_key');
-            $this->error['warning'] = $this->language->get('error_check_form');
-            return !$this->error;
-        }
-
-        foreach($gateways as $gateway) {
-            if ($this->request->post[$this->key_prefix . 'multisafepay_'.$gateway['code'].'_status'] && $this->isGatewayAvailable($gateway, $available_gateways) !== null) {
-                $this->error['gateway'][$gateway['code']] = $this->isGatewayAvailable($gateway, $available_gateways);
-            }
-        }
-
-        if(!empty($this->error['gateway'])) {
-            $this->error['warning'] = $this->language->get('error_gateways_not_available');
-        }
-
         if (!isset($this->request->post[$this->key_prefix . 'multisafepay_days_active']) || $this->request->post[$this->key_prefix . 'multisafepay_days_active'] < 1) {
             $this->error['days_active'] = $this->language->get('error_days_active');
         }
@@ -757,16 +812,14 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
         $this->registry->set('multisafepay', new Multisafepay($this->registry));
 
         $msp_order = $this->multisafepay->getAdminOrderObject($this->request->get['order_id']);
+        $order_info = $this->multisafepay->getAdminOrderInfo($this->request->get['order_id']);
         $data['status'] = $msp_order->getStatus();
         $refund_request = $this->multisafepay->createRefundRequestObject($msp_order);
         $refund_request->addMoney($msp_order->getMoney());
         $description = sprintf($this->language->get('text_description_refunded'), $this->request->get['order_id'], date($this->language->get('datetime_format')));
         $refund_request->addDescriptionText($description);
 
-        $payment_details = $msp_order->getPaymentDetails();
-        $gateway_id = $payment_details->getType();
-        $gateways_with_shopping_cart = array('AFTERPAY', 'KLARNA', 'EINVOICE', 'PAYAFTER', 'IN3');
-        if(in_array($gateway_id, $gateways_with_shopping_cart)) {
+        if($this->refundWithShoppingCart($order_info, $msp_order)) {
             $msp_shopping_cart = $msp_order->getShoppingCart();
             $msp_shopping_cart_data = $msp_shopping_cart->getData();
             foreach ($msp_shopping_cart_data['items'] as $msp_cart_item) {
@@ -792,6 +845,26 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
 
         $this->response->addHeader('Content-Type: application/json');
         $this->response->setOutput(json_encode($json));
+
+    }
+
+	/**
+	 * Check if ShoppingCart is required to process a refund
+	 *
+	 * @param array $order_info
+	 * @param \MultiSafepay\Api\Transactions\TransactionResponse $msp_order
+	 */
+    private function refundWithShoppingCart($order_info, $msp_order) {
+
+	    if($order_info['payment_code'] === 'multisafepay/generic' && $this->{$this->model_call}->getSettingValue($this->key_prefix . 'multisafepay_generic_require_shopping_cart', $order_info['store_id'])) {
+	    	return true;
+	    }
+
+	    if($msp_order->requiresShoppingCart()) {
+			return true;
+	    }
+
+	    return false;
 
     }
 

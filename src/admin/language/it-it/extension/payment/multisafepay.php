@@ -268,3 +268,14 @@ $_['error_gateways_not_available']	                    = 'Avviso: sembra che alc
 $_['error_gateway_not_available']	                    = 'Gateway: %s non sono disponibili nel tuo account MultiSafepay';
 $_['error_php_version']	                                = 'Sembra che la tua libreria PHP non sia aggiornata. Questa estensione richiede PHP 7.1 o superiore';
 $_['error_days_active']	                                = 'La durata di un collegamento di pagamento dovrebbe essere almeno 1';
+
+//  Generic Gateways
+$_['entry_name']                                        = 'Nome del metodo di pagamento';
+$_['entry_code']                                        = 'Codice del metodo di pagamento';
+$_['entry_image']                                       = 'Icona del metodo di pagamento';
+$_['entry_require_shopping_cart']                       = 'Carrello obbligatorio';
+$_['text_help_require_shopping_cart']                   = 'Abilita questa opzione se stai utilizzando un metodo di pagamento Billing Suite.';
+$_['text_help_image_generic']                           = 'Dimensione raccomandata: 420px * 180px';
+$_['text_brief_description_generic']                    = 'Questo metodo di pagamento generico può essere usato con qualsiasi metodo di pagamento o giftcard di MultiSafepay.';
+$_['text_title_generic']                                = 'Metodo di pagamento generico';
+$_['text_show_generic']                                 = 'Mostra solo i metodi di pagamento generici';
