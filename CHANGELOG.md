@@ -13,7 +13,7 @@ Release date: March, 19th 2021
 + PLGOPNS-374: Add generic gateway
 
 ### Changed
-+ PLGOPNS-384: Upgrade PHP-SDK to 5.1.0
++ PLGOPNS-384: Upgrade PHP-SDK to 5.0.1
 
 ***
 
