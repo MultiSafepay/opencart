@@ -229,6 +229,7 @@ $_['text_shipped_success']                              = 'The transaction has b
 $_['text_shipped_error']                                = 'Unable to change the status of this order. Please try again, if the error persist, contact MultiSafepay';
 $_['text_description_shipped_or_cancelled']             = 'The transaction has been set as %s in MultiSafepay ';
 $_['text_description_refunded']                         = 'Refunded order ID %s on %s';
+$_['text_do_nothing']                                   = '-- Do not change the order status --';
 $_['column_status']                                     = 'Status';
 $_['column_total']                                      = 'Total';
 $_['column_product']                                    = 'Product';

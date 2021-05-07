@@ -228,6 +228,7 @@ $_['text_shipped_success']                              = 'Die Transaktion wurde
 $_['text_shipped_error']                                = 'Der Status dieses Auftrags kann nicht geändert werden. Bitte erneut versuchen; falls der Fehler fortbesteht, an MultiSafepay wenden';
 $_['text_description_shipped_or_cancelled']             = 'Die Transaktion wurde in MultiSafepay auf %s gesetzt';
 $_['text_description_refunded']                         = 'ID Erstattungsauftrag %s auf %s';
+$_['text_do_nothing']                                   = '-- Ändern Sie nicht den Bestellstatus --';
 $_['column_status']                                     = 'Status';
 $_['column_total']                                      = 'Gesamt';
 $_['column_product']                                    = 'Produkt';

@@ -46,7 +46,6 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
 
     /**
      * Handles the settings form page for MultiSafepay payment extension
-     *
      */
     public function index() {
 
@@ -154,6 +153,8 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
 
         $this->load->model('localisation/order_status');
         $data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
+        // We include in the order status array an option for do nothing and ignore the notifications
+        array_push($data['order_statuses'], array( 'order_status_id' => 0, 'name' => $this->language->get('text_do_nothing')));
 
         $gateways = $this->multisafepay->getOrderedGateways($data['store_id']);
 
@@ -167,8 +168,6 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
 
         $this->load->model($this->customer_group_model_route);
         $data['customer_groups'] = $this->{$this->customer_group_model_call}->getCustomerGroups(array('sort' => 'cg.sort_order'));
-
-
 
         $this->load->model('localisation/currency');
         $data['currencies'] = $this->model_localisation_currency->getCurrencies();
@@ -201,7 +200,6 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
 	 * Define the common fields for each payment method
 	 *
 	 * @return array
-	 *
 	 */
 	private function getPaymentGenericFields() {
 		return array(
@@ -217,7 +215,6 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
 	 *
 	 * @param int $store_id
 	 * @return array
-	 *
 	 */
 	private function getPaymentGenericFieldsValues($store_id = 0) {
 		$this->registry->set('multisafepay', new Multisafepay($this->registry));
@@ -236,9 +233,8 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
 	 * @param array $fields
 	 * @param int $store_id
 	 * @return array
-	 *
+	 * phpcs:disable ObjectCalisthenics.Metrics.MaxNestingLevel
 	 */
-	// phpcs:ignore ObjectCalisthenics.Metrics.MaxNestingLevel
 	private function extractGenericFieldsByGateway($gateway, $fields, $store_id) {
 		$this->load->model('tool/image');
 		$payment_fields = $this->getPaymentGenericFields();
@@ -287,7 +283,6 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
 
     /**
      * Remove old files from the old extension if the user is upgrading
-     *
      */
     public function removeOldFiles() {
 
@@ -312,7 +307,6 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
 
     /**
      * Uninstall default action for this admin extension controller
-     *
      */
     public function uninstall() {
         $this->deleteMultiSafepayEvents();
@@ -320,7 +314,6 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
 
     /**
      * Add the events to OpenCart; when the extension is enable
-     *
      */
     private function addMultiSafepayEvents() {
 
@@ -395,12 +388,10 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
                 'catalog/model/checkout/order/editOrder/before',
                 $this->extension_directory_route . 'payment/multisafepay/catalogModelCheckoutOrderEditBefore');
         }
-
     }
 
     /**
      * Delete the events from OpenCart; when the extension is disable or uninstalled
-     *
      */
     private function deleteMultiSafepayEvents() {
         if(!$this->oc_version || $this->oc_version == '2.1' || $this->oc_version == '2.0' ) {
@@ -420,7 +411,6 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
      * Define the common fields for each payment method
      *
      * @return array
-     *
      */
     private function getPaymentMethodsFields() {
         return array(
@@ -440,7 +430,6 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
      *
      * @param int $store_id
      * @return array
-     *
      */
     private function getPaymentMethodsFieldsValues($store_id = 0) {
         $this->registry->set('multisafepay', new Multisafepay($this->registry));
@@ -459,7 +448,6 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
      * @param array $fields
      * @param int $store_id
      * @return array
-     *
      */
     private function extractFieldsByGateway($gateway, $fields, $store_id) {
         $payment_fields = $this->getPaymentMethodsFields();
@@ -480,7 +468,6 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
      * Return an array of stores to provide multi store support
      *
      * @return array
-     *
      */
     public function getStores() {
 
@@ -511,7 +498,6 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
      * Return an array of fields to process the form quickly on submit
      *
      * @return array
-     *
      */
     private function getFields() {
         return array(
@@ -547,7 +533,6 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
      * Return an array of error keys to be used in validation functions
      *
      * @return array
-     *
      */
     private function getErrorsKeysAndTypes() {
         return array(
@@ -566,7 +551,6 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
      * @param string $gateway
      * @param array $available_gateways
      * @return mixed null|string
-     *
      */
     private function isGatewayAvailable($gateway, $available_gateways) {
 
@@ -584,7 +568,6 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
      * Handles the form validation in setting page.
      *
      * @return mixed bool|array
-     *
      */
     protected function validate() {
 
@@ -623,7 +606,6 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
      * Return additional language strings keys
      *
      * @return array $data
-     *
      */
     private function getAdditionalTextsKeys() {
         $additional_keys = array(
@@ -639,8 +621,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
 
     /**
      * Load all language strings values and keys into $this->data
-     *
-     * */
+     */
     public function getTexts() {
         $data = $this->multisafepay_version_control->getLanguageKeys($this->route, $this->getAdditionalTextsKeys());
         $support_variables = $this->getSupportTabData();
@@ -652,10 +633,8 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
      * Return array of texts used in support tab.
      *
      * @return array
-     *
      */
     private function getSupportTabData() {
-
         $this->registry->set('multisafepay', new Multisafepay($this->registry));
         $plugin_version = $this->multisafepay->getPluginVersion();
 
@@ -797,10 +776,8 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
      * Return array of result of the refund request transaction in JSON format
      *
      * @return mixed bool|json
-     *
      */
     public function refundOrder() {
-
         if (!isset($this->request->get['order_id'])) {
             return false;
         }
@@ -845,7 +822,6 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
 
         $this->response->addHeader('Content-Type: application/json');
         $this->response->setOutput(json_encode($json));
-
     }
 
 	/**
@@ -855,7 +831,6 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
 	 * @param \MultiSafepay\Api\Transactions\TransactionResponse $msp_order
 	 */
     private function refundWithShoppingCart($order_info, $msp_order) {
-
 	    if($order_info['payment_code'] === 'multisafepay/generic' && $this->{$this->model_call}->getSettingValue($this->key_prefix . 'multisafepay_generic_require_shopping_cart', $order_info['store_id'])) {
 	    	return true;
 	    }
@@ -863,16 +838,13 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
 	    if($msp_order->requiresShoppingCart()) {
 			return true;
 	    }
-
 	    return false;
-
     }
 
     /**
      * Return array of result of the cancel or shipped order update transaction in JSON format
      *
      * @return mixed bool|json
-     *
      */
     public function changeMultiSafepayOrderStatusTo() {
 
@@ -915,7 +887,6 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
      * Returns Order Tab view to be called in custom payment order tabs.
      *
      * @return string
-     *
      */
     public function order() {
 
@@ -955,7 +926,6 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
      * Returns Order Tab Output from order function
      *
      * @return string
-     *
      */
     public function refreshOrderTab() {
         $this->response->setOutput($this->order());
@@ -967,7 +937,6 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
      *
      * @param string $route
      * @param array $args
-     *
      */
     public function adminModelSaleOrderCreateInvoiceNoBefore($route, $args) {
         $this->registry->set('multisafepayevents', new Multisafepayevents($this->registry));
@@ -980,7 +949,6 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
      *
      * @param string $route
      * @param array $args
-     *
      */
     public function adminViewSaleOrderInfoBefore(&$route, &$args) {
         $this->registry->set('multisafepayevents', new Multisafepayevents($this->registry));

@@ -229,6 +229,7 @@ $_['text_shipped_success']                              = 'La transacción ha pa
 $_['text_shipped_error']                                = 'No se puede establecer este pedido como "Enviado". Intente nuevamente, si el error persiste, comuníquese con MultiSafepay';
 $_['text_description_shipped_or_cancelled']             = 'La transacción se ha establecido como %s en MultiSafepay ';
 $_['text_description_refunded']                         = 'ID de pedido reembolsado %s en %s';
+$_['text_do_nothing']                                   = '-- No cambie el estado del pedido --';
 $_['column_status']                                     = 'Estado';
 $_['column_total']                                      = 'Total';
 $_['column_product']                                    = 'Producto';

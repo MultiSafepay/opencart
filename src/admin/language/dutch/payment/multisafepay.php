@@ -231,6 +231,7 @@ $_['text_shipped_success']                              = 'De transactie is inge
 $_['text_shipped_error']                                = 'U kunt de status van deze bestelling niet wijzigen. Probeer het opnieuw als de fout blijft bestaan neem dan contact op met MultiSafepay.';
 $_['text_description_shipped_or_cancelled']             = 'De transactie is vastgesteld als %s in MultiSafepay.';
 $_['text_description_refunded']                         = 'Terugbetaalde order ID %s op %s';
+$_['text_do_nothing']                                   = '-- Wijzig de bestelstatus niet --';
 $_['column_status']                                     = 'Status';
 $_['column_total']                                      = 'Totaal';
 $_['column_product']                                    = 'Product';

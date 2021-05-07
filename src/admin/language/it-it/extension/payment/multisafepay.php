@@ -228,6 +228,7 @@ $_['text_shipped_success']                              = 'Lo status della trans
 $_['text_shipped_error']                                = 'Si è verificato un errore, non è possibile cambiare lo status della transazione. Per favore, prova di nuovo, se il problema persiste, contatta MultiSafepay.';
 $_['text_description_shipped_or_cancelled']             = 'Lo status della transazion è stato cambiato a %s nel tuo account MultiSafepay ';
 $_['text_description_refunded']                         = 'Rimborsato l\'ordine con ID %s nel %s';
+$_['text_do_nothing']                                   = '-- Non modificare lo stato dell\'ordine --';
 $_['column_status']                                     = 'Status';
 $_['column_total']                                      = 'Totale';
 $_['column_product']                                    = 'Prodotto';
