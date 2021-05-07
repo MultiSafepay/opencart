@@ -347,7 +347,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
                 $this->extension_directory_route . 'payment/multisafepay/adminModelSaleOrderCreateInvoiceNoBefore');
         }
 
-        // Set MSP tab in admin order view page: msp_set_order_tab
+        // Set MultiSafepay tab in admin order view page: msp_set_order_tab
         $event_multisafepay_order_tabs = $this->{$this->model_call}->getEventByCode('msp_set_order_tab');
         if(!$event_multisafepay_order_tabs) {
             $this->{$this->model_call}->addEvent('msp_set_order_tab',
@@ -790,24 +790,24 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
 
         $this->registry->set('multisafepay', new Multisafepay($this->registry));
 
-        $msp_order = $this->multisafepay->getAdminOrderObject($this->request->get['order_id']);
+        $multisafepay_order = $this->multisafepay->getAdminOrderObject($this->request->get['order_id']);
         $order_info = $this->multisafepay->getAdminOrderInfo($this->request->get['order_id']);
-        $data['status'] = $msp_order->getStatus();
-        $refund_request = $this->multisafepay->createRefundRequestObject($msp_order);
-        $refund_request->addMoney($msp_order->getMoney());
+        $data['status'] = $multisafepay_order->getStatus();
+        $refund_request = $this->multisafepay->createRefundRequestObject($multisafepay_order);
+        $refund_request->addMoney($multisafepay_order->getMoney());
         $description = sprintf($this->language->get('text_description_refunded'), $this->request->get['order_id'], date($this->language->get('datetime_format')));
         $refund_request->addDescriptionText($description);
 
-        if($this->refundWithShoppingCart($order_info, $msp_order)) {
-            $msp_shopping_cart = $msp_order->getShoppingCart();
-            $msp_shopping_cart_data = $msp_shopping_cart->getData();
-            foreach ($msp_shopping_cart_data['items'] as $msp_cart_item) {
+        if($this->refundWithShoppingCart($order_info, $multisafepay_order)) {
+            $multisafepay_shopping_cart = $multisafepay_order->getShoppingCart();
+            $multisafepay_shopping_cart_data = $multisafepay_shopping_cart->getData();
+            foreach ($multisafepay_shopping_cart_data['items'] as $multisafepay_cart_item) {
                 $checkout_data = $refund_request->getCheckoutData();
-                $checkout_data->refundByMerchantItemId($msp_cart_item['merchant_item_id'], $msp_cart_item['quantity']);
+                $checkout_data->refundByMerchantItemId($multisafepay_cart_item['merchant_item_id'], $multisafepay_cart_item['quantity']);
             }
         }
 
-        $process_refund = $this->multisafepay->processRefundRequestObject($msp_order, $refund_request);
+        $process_refund = $this->multisafepay->processRefundRequestObject($multisafepay_order, $refund_request);
 
         if(!$process_refund) {
             $json['error'] = $this->language->get('text_refund_error');
@@ -830,14 +830,14 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
 	 * Check if ShoppingCart is required to process a refund
 	 *
 	 * @param array $order_info
-	 * @param \MultiSafepay\Api\Transactions\TransactionResponse $msp_order
+	 * @param \MultiSafepay\Api\Transactions\TransactionResponse $multisafepay_order
 	 */
-    private function refundWithShoppingCart($order_info, $msp_order) {
+    private function refundWithShoppingCart($order_info, $multisafepay_order) {
 	    if($order_info['payment_code'] === 'multisafepay/generic' && $this->{$this->model_call}->getSettingValue($this->key_prefix . 'multisafepay_generic_require_shopping_cart', $order_info['store_id'])) {
 	    	return true;
 	    }
 
-	    if($msp_order->requiresShoppingCart()) {
+	    if($multisafepay_order->requiresShoppingCart()) {
 			return true;
 	    }
 	    return false;
@@ -905,21 +905,21 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
         }
 
         $this->registry->set('multisafepay', new Multisafepay($this->registry));
-        $msp_order = $this->multisafepay->getAdminOrderObject($this->request->get['order_id']);
+        $multisafepay_order = $this->multisafepay->getAdminOrderObject($this->request->get['order_id']);
 
-        if(!$msp_order || !$msp_order->getTransactionId()) {
+        if(!$multisafepay_order || !$multisafepay_order->getTransactionId()) {
             return false;
         }
 
         $data['token_name'] = $this->token_name;
         $data['token'] = $this->session->data[$this->token_name];
-        $data['status'] = $msp_order->getStatus();
+        $data['status'] = $multisafepay_order->getStatus();
         $data['order_id'] = $this->request->get['order_id'];
         $data['extension_route'] = $this->route;
         $data[$this->token_name] = $this->session->data[$this->token_name];
 
-        $total = $msp_order->getMoney();
-        $data['total'] = $this->currency->format($total->__toString(), $msp_order->getCurrency(), 1.00000000, true);
+        $total = $multisafepay_order->getMoney();
+        $data['total'] = $this->currency->format($total->__toString(), $multisafepay_order->getCurrency(), 1.00000000, true);
         return $this->load->view($this->route . '_order' . $this->view_extension_file, $data);
 
     }

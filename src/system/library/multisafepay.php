@@ -194,7 +194,7 @@ class Multisafepay {
         $api_key = (($environment) ? $this->{$this->model_call}->getSettingValue($this->key_prefix . 'multisafepay_api_key', $store_id) : $this->{$this->model_call}->getSettingValue($this->key_prefix . 'multisafepay_sandbox_api_key', $store_id));
 
         try {
-            $msp = new \MultiSafepay\Sdk($api_key, $environment);
+            $sdk = new \MultiSafepay\Sdk($api_key, $environment);
         }
         catch (\MultiSafepay\Exception\InvalidApiKeyException $invalidApiKeyException ) {
             if ($this->{$this->model_call}->getSettingValue($this->key_prefix . 'multisafepay_debug_mode', $store_id)) {
@@ -204,7 +204,7 @@ class Multisafepay {
             $this->response->redirect($this->url->link('checkout/checkout', '', 'SSL'));
         }
 
-        return $msp;
+        return $sdk;
 
     }
 
@@ -225,65 +225,65 @@ class Multisafepay {
         // Order Request
         $sdk = $this->getSdkObject($order_info['store_id']);
 
-        $msp_order = new \MultiSafepay\Api\Transactions\OrderRequest();
-        $msp_order->addOrderId($data['order_id']);
+        $multisafepay_order = new \MultiSafepay\Api\Transactions\OrderRequest();
+        $multisafepay_order->addOrderId($data['order_id']);
 
         if(isset($data['gateway']) && $data['gateway'] === 'IDEAL' && empty($data['issuer_id'])) {
             $data['type'] = 'redirect';
             $data['gateway_info'] = '';
         }
 
-        $msp_order->addType($data['type']);
+        $multisafepay_order->addType($data['type']);
 
         // Order Request: Gateway
         if (!empty($data['gateway'])) {
-            $msp_order->addGatewayCode($data['gateway']);
+            $multisafepay_order->addGatewayCode($data['gateway']);
         }
 
         if (isset($data['gateway_info']) && $data['gateway_info'] != '') {
             $gateway_info = $this->getGatewayInfoInterfaceObject($data);
-            $msp_order->addGatewayInfo($gateway_info);
+            $multisafepay_order->addGatewayInfo($gateway_info);
         }
 
         // Order Request: Plugin details
         $plugin_details = $this->getPluginDetailsObject();
-        $msp_order->addPluginDetails($plugin_details);
+        $multisafepay_order->addPluginDetails($plugin_details);
 
         // Order Request: Money
         $order_total = $this->getMoneyObjectOrderAmount($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false);
-        $msp_order->addMoney($order_total);
+        $multisafepay_order->addMoney($order_total);
 
         // Order Request: Description
         $description = $this->getOrderDescriptionObject($data['order_id']);
-        $msp_order->addDescription($description);
+        $multisafepay_order->addDescription($description);
 
         // Order Request: Payment Options
         $payment_options = $this->getPaymentOptionsObject();
-        $msp_order->addPaymentOptions($payment_options);
+        $multisafepay_order->addPaymentOptions($payment_options);
 
         // Order Request: Second Chance
         $payment_multisafepay_second_chance = ($this->config->get($this->key_prefix . 'multisafepay_second_chance')) ? true : false;
         $second_chance = $this->getSecondChanceObject($payment_multisafepay_second_chance);
-        $msp_order->addSecondChance($second_chance);
+        $multisafepay_order->addSecondChance($second_chance);
 
         // Order Request: Google Analytics ID
         $google_analytics_account_id = $this->getAnalyticsAccountIdObject($this->config->get($this->key_prefix . 'multisafepay_google_analytics_account_id'));
         if ($google_analytics_account_id) {
-            $msp_order->addGoogleAnalytics($google_analytics_account_id);
+            $multisafepay_order->addGoogleAnalytics($google_analytics_account_id);
         }
 
         // Order Request: Shopping Cart Items - Products
         $shopping_cart = $this->getShoppingCartItems($data['order_id']);
-        $msp_order->addShoppingCart($shopping_cart);
+        $multisafepay_order->addShoppingCart($shopping_cart);
 
         // Order Request: Customer
         $customer_payment = $this->getCustomerObject($data['order_id'], 'payment');
-        $msp_order->addCustomer($customer_payment);
+        $multisafepay_order->addCustomer($customer_payment);
 
         // Order Request: Customer Delivery. Only if the order requires delivery.
         if ($order_info['shipping_method'] != '') {
             $customer_shipping = $this->getCustomerObject($data['order_id'], 'shipping');
-            $msp_order->addDelivery($customer_shipping);
+            $multisafepay_order->addDelivery($customer_shipping);
         }
 
         // Order Request: Lifetime of payment link.
@@ -291,42 +291,42 @@ class Multisafepay {
             $payment_multisafepay_unit_lifetime_payment_link = $this->config->get($this->key_prefix . 'multisafepay_unit_lifetime_payment_link');
             switch ($payment_multisafepay_unit_lifetime_payment_link) {
                 case 'days':
-                    $msp_order->addDaysActive((int)$this->config->get($this->key_prefix . 'multisafepay_days_active'));
+                    $multisafepay_order->addDaysActive((int)$this->config->get($this->key_prefix . 'multisafepay_days_active'));
                     break;
                 case 'hours':
                     $hours = (int)$this->config->get($this->key_prefix . 'multisafepay_days_active') * 60 * 60;
-                    $msp_order->addSecondsActive((int)$hours);
+                    $multisafepay_order->addSecondsActive((int)$hours);
                     break;
                 case 'seconds':
-                    $msp_order->addSecondsActive((int)$this->config->get($this->key_prefix . 'multisafepay_days_active'));
+                    $multisafepay_order->addSecondsActive((int)$this->config->get($this->key_prefix . 'multisafepay_days_active'));
                     break;
             }
 
         }
 
-        return $msp_order;
+        return $multisafepay_order;
 
     }
 
     /**
      * Process an Order Request
      *
-     * @param OrderRequest $msp_order
+     * @param OrderRequest $multisafepay_order
      * @return OrderRequest object
      * @throws ApiException
      *
      */
-    public function processOrderRequestObject($msp_order) {
-        if (!$msp_order) {
+    public function processOrderRequestObject($multisafepay_order) {
+        if (!$multisafepay_order) {
             return false;
         }
         $this->language->load($this->route);
-	    $order_id = $msp_order->getOrderId();
+	    $order_id = $multisafepay_order->getOrderId();
 	    $order_info = $this->getOrderInfo($order_id);
         $sdk = $this->getSdkObject($order_info['store_id']);
         $transaction_manager = $sdk->getTransactionManager();
         try {
-            $order_request = $transaction_manager->create($msp_order);
+            $order_request = $transaction_manager->create($multisafepay_order);
             return $order_request;
         }
         catch (\MultiSafepay\Exception\ApiException $apiException ) {
@@ -342,22 +342,22 @@ class Multisafepay {
     /**
      * Process a Refund Request
      *
-     * @param RefundRequest $msp_order
+     * @param RefundRequest $multisafepay_order
      * @return RefundRequest object
      * @throws ApiException
      *
      */
-    public function processRefundRequestObject($msp_order, $refund_request) {
-        if (!$msp_order || !$refund_request) {
+    public function processRefundRequestObject($multisafepay_order, $refund_request) {
+        if (!$multisafepay_order || !$refund_request) {
             return false;
         }
 
-	    $order_id = $msp_order->getOrderId();
+	    $order_id = $multisafepay_order->getOrderId();
 	    $order_info = $this->getAdminOrderInfo($order_id);
         $sdk = $this->getSdkObject($order_info['store_id']);
         $transaction_manager = $sdk->getTransactionManager();
         try {
-            $process_refund = $transaction_manager->refund($msp_order, $refund_request);
+            $process_refund = $transaction_manager->refund($multisafepay_order, $refund_request);
             return $process_refund;
         }
         catch (\MultiSafepay\Exception\ApiException $apiException ) {
@@ -371,22 +371,22 @@ class Multisafepay {
     /**
      * Create an Refund Request
      *
-     * @param RefundRequest $msp_order
+     * @param RefundRequest $multisafepay_order
      * @return RefundRequest object
      * @throws ApiException
      *
      */
-    public function createRefundRequestObject($msp_order) {
-        if (!$msp_order) {
+    public function createRefundRequestObject($multisafepay_order) {
+        if (!$multisafepay_order) {
             return false;
         }
-	    $order_id = $msp_order->getOrderId();
+	    $order_id = $multisafepay_order->getOrderId();
         $order_info = $this->getAdminOrderInfo($order_id);
         $sdk = $this->getSdkObject($order_info['store_id']);
         $transaction_manager = $sdk->getTransactionManager();
 
         try {
-            $refund_request = $transaction_manager->createRefundRequest($msp_order);
+            $refund_request = $transaction_manager->createRefundRequest($multisafepay_order);
             return $refund_request;
         }
         catch (\MultiSafepay\Exception\ApiException $apiException ) {

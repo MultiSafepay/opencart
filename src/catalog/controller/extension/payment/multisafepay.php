@@ -672,13 +672,13 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
 
         $this->registry->set('multisafepay', new Multisafepay($this->registry));
         $order_id = $this->request->post['order_id'];
-        $msp_order = $this->multisafepay->getOrderRequestObject($this->request->post);
-        $order_request = $this->multisafepay->processOrderRequestObject($msp_order);
+        $multisafepay_order = $this->multisafepay->getOrderRequestObject($this->request->post);
+        $order_request = $this->multisafepay->processOrderRequestObject($multisafepay_order);
 
         if ($order_request->getPaymentUrl()) {
 
             if ($this->config->get($this->key_prefix . 'multisafepay_debug_mode')) {
-                $this->log->write('Start transaction in MSP for order ID ' . $order_id . ' on ' . date($this->language->get('datetime_format')));
+                $this->log->write('Start transaction in MultiSafepay for order ID ' . $order_id . ' on ' . date($this->language->get('datetime_format')));
                 $this->log->write('Payment Link: '. $order_request->getPaymentUrl());
             }
             $this->response->redirect($order_request->getPaymentUrl());
@@ -703,7 +703,8 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
         $this->load->model('checkout/order');
         $this->load->model($this->route);
 
-        // Start transaction in MSP.
+
+        // Start transaction in MultiSafepay.
         $order_id = $this->request->get['transactionid'];
         $timestamp = date($this->language->get('datetime_format'));
         $order_info = $this->model_checkout_order->getOrder($order_id);
