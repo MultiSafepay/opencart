@@ -632,8 +632,15 @@ class Multisafepay {
      *
      */
     public function getOrderDescriptionObject($order_id) {
-        $this->load->language($this->route);
-        $description = sprintf($this->language->get('text_order_description'), $order_id, $this->config->get('config_name'), date($this->language->get('datetime_format')) );
+
+    	$this->load->language($this->route);
+	    $description = sprintf($this->language->get('text_order_description'), $order_id, $this->config->get('config_name'), date($this->language->get('datetime_format')) );
+
+	    if($this->config->get($this->key_prefix . 'multisafepay_order_description')) {
+			$description = $this->config->get($this->key_prefix . 'multisafepay_order_description');
+			$description = str_replace('{order_id}', $order_id, $description);
+		}
+
         $description_details = new \MultiSafepay\Api\Transactions\OrderRequest\Arguments\Description();
         $description_details->addDescription($description);
         return $description_details;

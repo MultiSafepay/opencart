@@ -132,6 +132,7 @@ $_['entry_min_amount']                      			= 'Min. Summe';
 $_['entry_max_amount']                      			= 'Max. Summe';
 $_['entry_currency']                      			    = 'Währung';
 $_['entry_customer_group']                              = 'Kundengruppe';
+$_['entry_multisafepay_order_description']              = 'Bestellbeschreibung';
 $_['entry_multisafepay_google_analytics_account_id']    = 'Konto-ID Google Analytics ';
 $_['entry_multisafepay_second_chance']       			= 'Status Second Chance';
 $_['entry_multisafepay_days_active']        			= 'Aktive Tage';
@@ -247,6 +248,7 @@ $_['text_help_debug']			    	                = 'Fügt dem System-Log zusätzlich
 $_['text_help_total']					                = 'The order needs to reach a certain amount before this extension and payment methods is shown in the checkout.';
 $_['text_help_min_amount']				                = 'Der Auftrag muss einen bestimmten Betrag erreichen, bevor diese Zahlungsweise bei der Abmeldung angezeigt wird.';
 $_['text_help_max_amount']				                = 'Diese Zahlungsweise wird bei der Abmeldung angezeigt, wenn die Auftragssumme einen bestimmten Betrag erreicht. Für ohne Einschränkungen frei lassen.';
+$_['text_help_order_description']                       = 'Ein Text, der in der Reihenfolge in MultiSafepay Control angezeigt wird. Wenn die Bank des Kunden dies unterstützt, wird diese Beschreibung auch auf dem Kontoauszug des Kunden angezeigt. Sie können die Bestellnummer mit {order_id} angeben';
 $_['text_help_google_analytics_account_id']             = 'Google Analytics Universal Account ID. Format: UA-XXXXXXXXX';
 $_['text_help_second_chance']       			        = 'Wenn ein Kunde eine Zahlung initiiert, jedoch aus beliebigem Grund nicht abschließt, '
                                                         . 'sendet MultiSafepay zur Erinnerung zwei Second-Chance-E-Mails. '

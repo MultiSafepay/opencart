@@ -133,6 +133,7 @@ $_['entry_min_amount']                      			= 'Min. Total';
 $_['entry_max_amount']                      			= 'Max. Total';
 $_['entry_currency']                      			    = 'Currency';
 $_['entry_customer_group']                              = 'Customer Group';
+$_['entry_multisafepay_order_description']              = 'Order description';
 $_['entry_multisafepay_google_analytics_account_id']    = 'Google Analytics account ID';
 $_['entry_multisafepay_second_chance']       			= 'Second Chance status';
 $_['entry_multisafepay_days_active']        			= 'Days active';
@@ -248,6 +249,7 @@ $_['text_help_debug']			    	                = 'Logs additional information to t
 $_['text_help_total']					                = 'The order needs to reach a certain amount before this extension and payment methods is shown in the checkout.';
 $_['text_help_min_amount']				                = 'This payment method is shown in the checkout once the order total reaches a certain amount. Leave blank for no restrictions';
 $_['text_help_max_amount']				                = 'This payment method is not shown in the checkout if the order total exceeds a certain amount. Leave black for now restrictions.';
+$_['text_help_order_description']                       = 'A text which will be shown with the order in MultiSafepay Control. If the customer’s bank supports it this description will also be shown on the customer’s bank statement. You can include the order number using {order_id}';
 $_['text_help_google_analytics_account_id']             = 'Google Analytics Universal Account ID. Format: UA-XXXXXXXXX';
 $_['text_help_second_chance']       			        = 'When a customer initiates but does not complete a payment, whatever the reason may be, '
                                                         . 'MultiSafepay will send two Second Chance reminder emails. In the emails, '

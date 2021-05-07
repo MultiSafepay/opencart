@@ -508,6 +508,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
             $this->key_prefix . 'multisafepay_account_type',
             $this->key_prefix . 'multisafepay_sandbox_api_key',
             $this->key_prefix . 'multisafepay_api_key',
+            $this->key_prefix . 'multisafepay_order_description',
             $this->key_prefix . 'multisafepay_google_analytics_account_id',
             $this->key_prefix . 'multisafepay_days_active',
             $this->key_prefix . 'multisafepay_unit_lifetime_payment_link',

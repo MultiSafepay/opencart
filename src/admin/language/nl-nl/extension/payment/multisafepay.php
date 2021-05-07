@@ -134,6 +134,7 @@ $_['entry_min_amount']                      			= 'Min. Totaal';
 $_['entry_max_amount']                      			= 'Max. Totaal';
 $_['entry_currency']                      			    = 'Valuta';
 $_['entry_customer_group']                              = 'Klantengroep';
+$_['entry_multisafepay_order_description']              = 'Bestelomschrijving';
 $_['entry_multisafepay_google_analytics_account_id']    = 'Google Analytics-account-ID';
 $_['entry_multisafepay_second_chance']       			= 'Second Chance status';
 $_['entry_multisafepay_days_active']        			= 'Dagen actief';
@@ -250,6 +251,7 @@ $_['text_help_debug']			    	                = 'Logt extra informatie in het sys
 $_['text_help_total']					                = 'De bestelling moet een bepaald bedrag bereiken voordat deze betaalmethode in de kassa wordt getoond.';
 $_['text_help_min_amount']				                = 'Deze betaalmethode wordt getoond in de kassa zodra het totaalbedrag van de bestelling een bepaald bedrag bereikt. Laat leeg voor geen enkele restrictie.';
 $_['text_help_max_amount']				                = 'Deze betaalmethode wordt niet weergegeven in de kassa als het totaalbedrag van de bestelling een bepaald bedrag overschrijdt. Laat voorlopig de beperkingen op zwart staan.';
+$_['text_help_order_description']                       = 'Een tekst die getoond wordt bij de bestelling in MultiSafepay Control. Als de bank van de klant dit ondersteunt, wordt deze beschrijving ook weergegeven op het bankafschrift van de klant. U kunt het bestelnummer toevoegen met {order_id}';
 $_['text_help_google_analytics_account_id']             = 'Google Analytics Universal Account ID. Format: UA-XXXXXXX';
 $_['text_help_second_chance']       			        = 'Wanneer een klant een betaling initieert maar niet afrondt, om welke reden dan ook, zal MultiSafepay '
                                                         . 'twee Second Chance herinneringsmails sturen. In de e-mails zal MultiSafepay '

@@ -132,6 +132,7 @@ $_['entry_min_amount']                      			= 'Totale Min.';
 $_['entry_max_amount']                      			= 'Totale Max.';
 $_['entry_currency']                      			    = 'Valuta';
 $_['entry_customer_group']                              = 'Gruppo consumatori';
+$_['entry_multisafepay_order_description']              = 'Descrizione dell\'ordine';
 $_['entry_multisafepay_google_analytics_account_id']    = 'Account ID di Google Analytics';
 $_['entry_multisafepay_second_chance']       			= 'Status di Second Chance';
 $_['entry_multisafepay_days_active']        			= 'Giorni attivo';
@@ -247,6 +248,7 @@ $_['text_help_debug']			    	                = 'Informazioni aggiuntive per il s
 $_['text_help_total']					                = 'L\'ammontare dell\'ordine deve raggiungere una determinata cifra prima che il metodo di pagamento sia mostrato nel checkout.';
 $_['text_help_min_amount']				                = 'Questo metodo di pagamento viene mostrato nel checkout quando l\'ammontare totale dell\'ordine raggiunge una certa cifra. Lasciare vuoto per non avere questa restrizione.';
 $_['text_help_max_amount']				                = 'Questo metodo di pagamento non viene mostrato nel checkout quanto l\'ammontare totale dell\'ordine supera una certa cifra. Lasciare vuoto per non avere questa restrizione.';
+$_['text_help_order_description']                       = 'Un testo che verrà mostrato con l\'ordine in MultiSafepay Control. Se la banca del cliente lo supporta, questa descrizione verrà mostrata anche sull\'estratto conto bancario del cliente. Puoi includere il numero dell\'ordine utilizzando {order_id}';
 $_['text_help_google_analytics_account_id']             = 'Google Analytics Universal Account ID. Format UA-XXXXXXXXX';
 $_['text_help_second_chance']       			        = 'Quando un consumatore inizializza ma non completa una transazione, qualsiasi sia il motivo, '
                                                         . 'MultiSafepay invierà due Second Chance email come sollecito. Nelle email sarà presente un link di '
