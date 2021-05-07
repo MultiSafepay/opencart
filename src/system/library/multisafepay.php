@@ -463,22 +463,18 @@ class Multisafepay {
      */
     public function getCustomerObject($order_id, $type = 'payment') {
 	    $order_info   = $this->getOrderInfo( $order_id );
-	    $customer_ip  = new \MultiSafepay\ValueObject\IpAddress( $order_info['ip'] );
-	    $telephone    = $this->getTelephoneObject( $order_info['telephone'] );
 	    $customer_obj = new \MultiSafepay\Api\Transactions\OrderRequest\Arguments\CustomerDetails();
-	    $customer_obj->addIpAddress( $customer_ip );
+	    $customer_obj->addIpAddressAsString( $order_info['ip'] );
 	    if ( $order_info['forwarded_ip'] ) {
-		    $forwarded_ip = new \MultiSafepay\ValueObject\IpAddress( $order_info['forwarded_ip'] );
-		    $customer_obj->addForwardedIp( $forwarded_ip );
+		    $customer_obj->addForwardedIpAsString( $order_info['forwarded_ip'] );
 	    }
         if(isset($order_info[ $type . '_company']) && !empty($order_info[ $type . '_company'])) {
 	        $customer_obj->addCompanyName($order_info[ $type . '_company']);
         }
         $customer_obj->addUserAgent($order_info['user_agent']);
-        $customer_obj->addPhoneNumber($telephone);
+        $customer_obj->addPhoneNumberAsString($order_info['telephone']);
         $customer_obj->addLocale($this->getLocale());
-        $customer_email_address_details =  $this->getEmailAddressObject($order_info['email']);
-        $customer_obj->addEmailAddress($customer_email_address_details);
+        $customer_obj->addEmailAddressAsString($order_info['email']);
         $customer_obj->addFirstName($order_info[$type . '_firstname']);
         $customer_obj->addLastName($order_info[$type . '_lastname']);
 
@@ -488,82 +484,13 @@ class Multisafepay {
         $customer_address_obj = new \MultiSafepay\ValueObject\Customer\Address();
         $customer_address_obj->addStreetName($parsed_address[0]);
         $customer_address_obj->addHouseNumber($parsed_address[1]);
-
         $customer_address_obj->addZipCode($order_info[$type . '_postcode']);
         $customer_address_obj->addCity($order_info[$type . '_city']);
         $customer_address_obj->addState($order_info[$type . '_zone']);
-        $customer_address_country_obj = $this->getCountryObject($order_info[$type . '_iso_code_2']);
-        $customer_address_obj->addCountry($customer_address_country_obj);
+        $customer_address_obj->addCountryCode($order_info[$type . '_iso_code_2']);
         $customer_obj->addAddress($customer_address_obj);
+
         return $customer_obj;
-    }
-
-    /**
-     * Returns BankAccount object to be used in OrderRequest transaction
-     *
-     * @return BankAccount object
-     *
-     */
-    private function getBankAccountObject($bank_account) {
-        $bank_account = new \MultiSafepay\ValueObject\BankAccount($bank_account);
-        return $bank_account;
-    }
-
-    /**
-     * Returns EmailAddress object to be used in OrderRequest transaction
-     *
-     * @return EmailAddress object
-     *
-     */
-    private function getEmailAddressObject($email) {
-        $email_address = new \MultiSafepay\ValueObject\Customer\EmailAddress($email);
-        return $email_address;
-    }
-
-    /**
-     * Returns Iban object to be used in OrderRequest transaction
-     *
-     * @return Iban object
-     *
-     */
-    private function getIbanObject($iban) {
-        $iban = new \MultiSafepay\ValueObject\IbanNumber($iban);
-        return $iban;
-    }
-
-    /**
-     * Returns PhoneNumber object to be used in OrderRequest transaction
-     *
-     * @return PhoneNumber object
-     *
-     */
-    private function getTelephoneObject($telephone) {
-        $phone_number = new \MultiSafepay\ValueObject\Customer\PhoneNumber($telephone);
-        return $phone_number;
-    }
-
-    /**
-     * Returns Gender object to be used in OrderRequest transaction
-     *
-     * @param string $gender
-     * @return Gender object
-     *
-     */
-    private function getGenderObject($gender) {
-        $gender = new \MultiSafepay\ValueObject\Gender($gender);
-        return $gender;
-    }
-
-    /**
-     * Returns Date object to be used in OrderRequest transaction
-     *
-     * @param string $date
-     * @return Date object
-     *
-     */
-    private function getDateObject($date) {
-        $date = new \MultiSafepay\ValueObject\Date($date);
-        return $date;
     }
 
     /**
@@ -674,30 +601,24 @@ class Multisafepay {
                 break;
             case "Account":
                 $gateway_info = new \MultiSafepay\Api\Transactions\OrderRequest\Arguments\GatewayInfo\Account();
-                $iban =  $this->getIbanObject($data['account_holder_iban']);
                 $gateway_info->addAccountHolderName($data['account_holder_name']);
-                $gateway_info->addAccountId($iban);
-                $gateway_info->addAccountHolderIban($iban);
+	            $gateway_info->addAccountIdAsString($data['account_holder_iban']);
+	            $gateway_info->addAccountHolderIbanAsString($data['account_holder_iban']);
                 $gateway_info->addEmanDate($data['emandate']);
                 break;
             case "Meta":
                 $order_info = $this->getOrderInfo($data['order_id']);
-                $telephone = $this->getTelephoneObject($order_info['telephone']);
-                $email_address =  $this->getEmailAddressObject($order_info['email']);
                 $gateway_info = new \MultiSafepay\Api\Transactions\OrderRequest\Arguments\GatewayInfo\Meta();
-                $gateway_info->addPhone($telephone);
-                $gateway_info->addEmailAddress($email_address);
+	            $gateway_info->addPhoneAsString($order_info['telephone']);
+                $gateway_info->addEmailAddressAsString($order_info['email']);
                 if(isset($data['gender']) && !empty($data['gender'])) {
-                    $gender =  $this->getGenderObject($data['gender']);
-                    $gateway_info->addGender($gender);
+                    $gateway_info->addGenderAsString($data['gender']);
                 }
                 if(isset($data['birthday']) && !empty($data['birthday'])) {
-                    $birthday =  $this->getDateObject($data['birthday']);
-                    $gateway_info->addBirthday($birthday);
+                    $gateway_info->addBirthdayAsString($data['birthday']);
                 }
                 if(isset($data['bankaccount']) && !empty($data['bankaccount'])) {
-                    $bank_account =  $this->getBankAccountObject($data['bankaccount']);
-                    $gateway_info->addBankAccount($bank_account);
+                    $gateway_info->addBankAccountAsString($data['bankaccount']);
                 }
                 break;
         }
@@ -849,18 +770,6 @@ class Multisafepay {
         $amount = $this->formatByCurrency($amount, $currency_code, $currency_value);
         $amount = new  \MultiSafepay\ValueObject\Money($amount, $currency_code);
         return $amount;
-    }
-
-    /**
-     * Returns a Country object
-     *
-     * @param string $country_code
-     * @return Country object
-     *
-     */
-    private function getCountryObject($country_code) {
-        $country = new \MultiSafepay\ValueObject\Customer\Country($country_code);
-        return $country;
     }
 
 	/**
