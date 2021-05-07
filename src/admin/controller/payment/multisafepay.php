@@ -421,6 +421,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
             'geo_zone_id',
             'customer_group_id',
             'order_status_id_initialized',
+	        'redirect',
             'sort_order'
         );
     }

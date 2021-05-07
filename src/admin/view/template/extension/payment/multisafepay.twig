@@ -499,6 +499,18 @@
                                                             </select>
                                                         </div>
                                                     </div>
+                                                    {# -- Switch to redirect -- #}
+                                                    {% if gateway.redirect_switch %}
+                                                        <div class="form-group">
+                                                            <label class="col-sm-2 control-label" for="payment-multisafepay-{{ gateway.code }}-redirect">{{ entry_redirect_switch }}</label>
+                                                            <div class="col-sm-10">
+                                                                <select name="payment_multisafepay_{{ gateway.code }}_redirect" id="payment-multisafepay-{{ gateway.code }}-redirect" class="form-control">
+                                                                    <option value="0" {% if payment_methods_fields_values[gateway.code]['redirect'] == 0 %} selected {% endif %}>{{ text_disabled }}</option>
+                                                                    <option value="1" {% if payment_methods_fields_values[gateway.code]['redirect'] == 1 %} selected {% endif %}>{{ text_enabled }}</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    {% endif %}
                                                     {# -- Sort Order -- #}
                                                     <div class="form-group">
                                                         <label class="col-sm-2 control-label" for="payment-multisafepay-{{ gateway.code }}-sort-order">{{ entry_sort_order }}</label>

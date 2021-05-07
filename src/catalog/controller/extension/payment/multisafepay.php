@@ -90,12 +90,14 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
     public function afterPay() {
         $data = $this->paymentMethodBase();
         $data['gateway'] = 'AFTERPAY';
-        $data['type'] = 'direct';
-        $data['gateway_info'] = 'Meta';
-        $data['fields'] = array(
-            'gender' => true,
-            'birthday' => true
-        );
+	    $data['type'] = $this->config->get($this->key_prefix . 'multisafepay_afterpay_redirect') ? 'redirect' : 'direct';
+	    if($data['type'] === 'direct') {
+		    $data['gateway_info'] = 'Meta';
+		    $data['fields'] = array(
+			    'gender' => true,
+			    'birthday' => true
+		    );
+	    }
         return $this->multisafepay_version_control->getViewAccordingWithOcVersion($this->route . $this->view_extension_file, $data);
     }
 
@@ -152,7 +154,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
     public function bankTransfer() {
         $data = $this->paymentMethodBase();
         $data['gateway'] = 'BANKTRANS';
-        $data['type'] = 'direct';
+        $data['type'] = $this->config->get($this->key_prefix . 'multisafepay_banktrans_redirect') ? 'redirect' : 'direct';
         return $this->multisafepay_version_control->getViewAccordingWithOcVersion($this->route . $this->view_extension_file, $data);
     }
 
@@ -235,13 +237,15 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
      */
     public function eInvoice() {
         $data = $this->paymentMethodBase();
-        $data['fields'] = array(
-            'birthday' => true,
-            'bankaccount' => true
-        );
-        $data['type'] = 'direct';
-        $data['gateway'] = 'EINVOICE';
-        $data['gateway_info'] = 'Meta';
+	    $data['gateway'] = 'EINVOICE';
+	    $data['type'] = $this->config->get($this->key_prefix . 'multisafepay_einvoice_redirect') ? 'redirect' : 'direct';
+	    if($data['type'] === 'direct') {
+		    $data['fields'] = array(
+			    'birthday' => true,
+			    'bankaccount' => true
+		    );
+		    $data['gateway_info'] = 'Meta';
+	    }
         return $this->multisafepay_version_control->getViewAccordingWithOcVersion($this->route . $this->view_extension_file, $data);
     }
 
@@ -305,12 +309,14 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
     public function in3() {
         $data = $this->paymentMethodBase();
         $data['gateway'] = 'IN3';
-        $data['type'] = 'direct';
-        $data['gateway_info'] = 'Meta';
-        $data['fields'] = array(
-            'gender' => true,
-            'birthday' => true
-        );
+	    $data['type'] = $this->config->get($this->key_prefix . 'multisafepay_in3_redirect') ? 'redirect' : 'direct';
+	    if($data['type'] === 'direct') {
+		    $data['gateway_info'] = 'Meta';
+		    $data['fields'] = array(
+			    'gender' => true,
+			    'birthday' => true
+		    );
+	    }
         return $this->multisafepay_version_control->getViewAccordingWithOcVersion($this->route . $this->view_extension_file, $data);
     }
 
@@ -347,13 +353,16 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
     public function ideal() {
         $data = $this->paymentMethodBase();
         $data['gateway'] = 'IDEAL';
-        $this->registry->set('multisafepay', new Multisafepay($this->registry));
-        $issuers = $this->multisafepay->getIssuersByGatewayCode($data['gateway']);
-        if($issuers) {
-            $data['issuers'] = $issuers;
-            $data['type'] = 'direct';
-            $data['gateway_info'] = 'Ideal';
-        }
+	    $data['type'] = $this->config->get($this->key_prefix . 'multisafepay_ideal_redirect') ? 'redirect' : 'direct';
+	    if($data['type'] === 'direct') {
+		    $this->registry->set('multisafepay', new Multisafepay($this->registry));
+		    $issuers = $this->multisafepay->getIssuersByGatewayCode($data['gateway']);
+		    if($issuers) {
+			    $data['issuers'] = $issuers;
+			    $data['type'] = 'direct';
+			    $data['gateway_info'] = 'Ideal';
+		    }
+	    }
         return $this->multisafepay_version_control->getViewAccordingWithOcVersion($this->route . $this->view_extension_file, $data);
     }
 
@@ -438,12 +447,14 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
     public function payAfterDelivery() {
         $data = $this->paymentMethodBase();
         $data['gateway'] = 'PAYAFTER';
-        $data['type'] = 'direct';
-        $data['gateway_info'] = 'Meta';
-        $data['fields'] = array(
-            'birthday' => true,
-            'bankaccount' => true
-        );
+	    $data['type'] = $this->config->get($this->key_prefix . 'multisafepay_payafter_redirect') ? 'redirect' : 'direct';
+	    if($data['type'] === 'direct') {
+		    $data['gateway_info'] = 'Meta';
+		    $data['fields'] = array(
+			    'birthday' => true,
+			    'bankaccount' => true
+		    );
+	    }
         return $this->multisafepay_version_control->getViewAccordingWithOcVersion($this->route . $this->view_extension_file, $data);
     }
 
@@ -481,13 +492,15 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
     public function betaalplan() {
         $data = $this->paymentMethodBase();
         $data['gateway'] = 'SANTANDER';
-        $data['type'] = 'direct';
-        $data['gateway_info'] = 'Meta';
-        $data['fields'] = array(
-            'sex' => true,
-            'birthday' => true,
-            'bankaccount' => true
-        );
+	    $data['type'] = $this->config->get($this->key_prefix . 'multisafepay_santander_redirect') ? 'redirect' : 'direct';
+	    if($data['type'] === 'direct') {
+		    $data['gateway_info'] = 'Meta';
+		    $data['fields'] = array(
+			    'sex' => true,
+			    'birthday' => true,
+			    'bankaccount' => true
+		    );
+	    }
         return $this->multisafepay_version_control->getViewAccordingWithOcVersion($this->route . $this->view_extension_file, $data);
     }
 
@@ -497,13 +510,15 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
     public function dirDeb() {
         $data = $this->paymentMethodBase();
         $data['gateway'] = 'DIRDEB';
-        $data['type'] = 'direct';
-        $data['gateway_info'] = 'Account';
-        $data['fields'] = array(
-            'account_holder_name' => true,
-            'account_holder_iban' => true,
-            'emandate'            => true,
-        );
+	    $data['type'] = $this->config->get($this->key_prefix . 'multisafepay_dirdeb_redirect') ? 'redirect' : 'direct';
+	    if($data['type'] === 'direct') {
+		    $data['gateway_info'] = 'Account';
+		    $data['fields'] = array(
+			    'account_holder_name' => true,
+			    'account_holder_iban' => true,
+			    'emandate'            => true,
+		    );
+	    }
         return $this->multisafepay_version_control->getViewAccordingWithOcVersion($this->route . $this->view_extension_file, $data);
     }
 

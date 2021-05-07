@@ -146,6 +146,7 @@ $_['entry_multisafepay_use_payment_logo']   			= 'Gebruik logo\'s tijdens het af
 $_['entry_geo_zone']				 					= 'Geo-zone';
 $_['entry_sort_order']                      			= 'Sorteeropdracht';
 $_['entry_status']                          			= 'Status';
+$_['entry_redirect_switch']                             = 'Omleiding inschakelen';
 $_['entry_order_status_id_initialized']                 = 'Status Geïnitialiseerd';
 $_['entry_order_status_id_completed']                   = 'Status Voltooid';
 $_['entry_order_status_id_uncleared']                   = 'Status Niet vrijgegeven';

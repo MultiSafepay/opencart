@@ -144,6 +144,7 @@ $_['entry_multisafepay_use_payment_logo']   			= 'Bei der Abmeldung Logos verwen
 $_['entry_geo_zone']				 					= 'Geo-Zone';
 $_['entry_sort_order']                      			= 'Reihenfolge sortieren';
 $_['entry_status']                          			= 'Status';
+$_['entry_redirect_switch']                             = 'Umleitung aktivieren';
 $_['entry_order_status_id_initialized']                 = 'Status initialisiert';
 $_['entry_order_status_id_completed']                   = 'Status abgeschlossen';
 $_['entry_order_status_id_uncleared']                   = 'Status ungeklärt';

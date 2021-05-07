@@ -144,6 +144,7 @@ $_['entry_multisafepay_use_payment_logo']   			= 'Utilizza loghi durante il chec
 $_['entry_geo_zone']				 					= 'Zona geografica';
 $_['entry_sort_order']                      			= 'Filtra gli ordini';
 $_['entry_status']                          			= 'Status';
+$_['entry_redirect_switch']                             = 'Abilita il reindirizzamento';
 $_['entry_order_status_id_initialized']                 = 'Status Initialized';
 $_['entry_order_status_id_completed']                   = 'Status Completed';
 $_['entry_order_status_id_uncleared']                   = 'Status Uncleared';

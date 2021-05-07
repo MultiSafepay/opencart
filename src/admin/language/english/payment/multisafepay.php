@@ -145,6 +145,7 @@ $_['entry_multisafepay_use_payment_logo']   			= 'Use logo\'s during checkout';
 $_['entry_geo_zone']				 					= 'Geo Zone';
 $_['entry_sort_order']                      			= 'Sort Order';
 $_['entry_status']                          			= 'Status';
+$_['entry_redirect_switch']                             = 'Enable redirect';
 $_['entry_order_status_id_initialized']                 = 'Status Initialized';
 $_['entry_order_status_id_completed']                   = 'Status Completed';
 $_['entry_order_status_id_uncleared']                   = 'Status Uncleared';

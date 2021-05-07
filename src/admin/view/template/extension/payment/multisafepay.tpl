@@ -554,6 +554,18 @@
                                                             </select>
                                                         </div>
                                                     </div>
+                                                    <?php // Switch to redirect -- ?>
+                                                    <?php if ($gateway['redirect_switch']) { ?>
+                                                    <div class="form-group">
+                                                        <label class="col-sm-2 control-label" for="payment-multisafepay-<?php echo $gateway['code']; ?>-redirect"><?php echo $entry_redirect_switch; ?></label>
+                                                        <div class="col-sm-10">
+                                                            <select name="multisafepay_<?php echo $gateway['code']; ?>_redirect" id="payment-multisafepay-<?php echo $gateway['code']; ?>-redirect" class="form-control">
+                                                                <option value="0" <?php if($payment_methods_fields_values[$gateway['code']]['redirect'] == 0) { ?> selected <?php } ?>><?php echo $text_disabled; ?></option>
+                                                                <option value="1" <?php if($payment_methods_fields_values[$gateway['code']]['redirect'] == 1) { ?> selected <?php } ?>><?php echo $text_enabled; ?></option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+	                                                <?php } ?>
                                                     <?php // Sort Order ?>
                                                     <div class="form-group">
                                                         <label class="col-sm-2 control-label" for="payment-multisafepay-<?php echo $gateway['code']; ?>-sort-order"><?php echo $entry_sort_order; ?></label>

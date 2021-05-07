@@ -145,6 +145,7 @@ $_['entry_multisafepay_use_payment_logo']   			= 'Mostrar logos en página de pa
 $_['entry_geo_zone']				 					= 'Geo Zona';
 $_['entry_sort_order']                      			= 'Orden / Prioridad';
 $_['entry_status']                          			= 'Estado';
+$_['entry_redirect_switch']                             = 'Habilitar redireccionamiento';
 $_['entry_order_status_id_initialized']                 = 'Estado Initialized';
 $_['entry_order_status_id_completed']                   = 'Estado Completed';
 $_['entry_order_status_id_uncleared']                   = 'Estado Uncleared';
