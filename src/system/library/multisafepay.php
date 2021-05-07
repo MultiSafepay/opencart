@@ -2415,14 +2415,14 @@ class Multisafepay {
     public function getOrderedGateways($store_id = 0) {
         $gateways = $this->getGateways();
         $this->load->model('setting/setting');
-        $settings = $this->model_setting_setting->getSetting('payment_multisafepay', $store_id);
+        $settings = $this->model_setting_setting->getSetting($this->key_prefix . 'multisafepay', $store_id);
         $sort_order = array();
         foreach($gateways as $key => $gateway) {
-            if(!isset($settings['payment_multisafepay_' . $gateway['code'] . '_sort_order'])) {
+            if(!isset($settings[$this->key_prefix . 'multisafepay_' . $gateway['code'] . '_sort_order'])) {
                 $sort_order[$key] = 0;
             }
-            if(isset($settings['payment_multisafepay_' . $gateway['code'] . '_sort_order'])) {
-                $sort_order[$key] = $settings['payment_multisafepay_'. $gateway['code']. '_sort_order'];
+            if(isset($settings[$this->key_prefix . 'multisafepay_' . $gateway['code'] . '_sort_order'])) {
+                $sort_order[$key] = $settings[$this->key_prefix . 'multisafepay_'. $gateway['code']. '_sort_order'];
             }
         }
         array_multisort($sort_order, SORT_ASC, $gateways);
