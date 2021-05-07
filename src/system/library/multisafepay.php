@@ -58,7 +58,7 @@ class Multisafepay {
      *
      */
     public function getPluginVersion() {
-        $plugin_version = '3.9.0';
+        $plugin_version = '3.10.0';
         return $plugin_version;
     }
 
@@ -194,7 +194,7 @@ class Multisafepay {
         $api_key = (($environment) ? $this->{$this->model_call}->getSettingValue($this->key_prefix . 'multisafepay_api_key', $store_id) : $this->{$this->model_call}->getSettingValue($this->key_prefix . 'multisafepay_sandbox_api_key', $store_id));
 
         try {
-            $msp = new \MultiSafepay\Sdk($api_key, $environment);
+            $sdk = new \MultiSafepay\Sdk($api_key, $environment);
         }
         catch (\MultiSafepay\Exception\InvalidApiKeyException $invalidApiKeyException ) {
             if ($this->{$this->model_call}->getSettingValue($this->key_prefix . 'multisafepay_debug_mode', $store_id)) {
@@ -204,7 +204,7 @@ class Multisafepay {
             $this->response->redirect($this->url->link('checkout/checkout', '', 'SSL'));
         }
 
-        return $msp;
+        return $sdk;
 
     }
 
@@ -225,65 +225,65 @@ class Multisafepay {
         // Order Request
         $sdk = $this->getSdkObject($order_info['store_id']);
 
-        $msp_order = new \MultiSafepay\Api\Transactions\OrderRequest();
-        $msp_order->addOrderId($data['order_id']);
+        $multisafepay_order = new \MultiSafepay\Api\Transactions\OrderRequest();
+        $multisafepay_order->addOrderId($data['order_id']);
 
         if(isset($data['gateway']) && $data['gateway'] === 'IDEAL' && empty($data['issuer_id'])) {
             $data['type'] = 'redirect';
             $data['gateway_info'] = '';
         }
 
-        $msp_order->addType($data['type']);
+        $multisafepay_order->addType($data['type']);
 
         // Order Request: Gateway
         if (!empty($data['gateway'])) {
-            $msp_order->addGatewayCode($data['gateway']);
+            $multisafepay_order->addGatewayCode($data['gateway']);
         }
 
         if (isset($data['gateway_info']) && $data['gateway_info'] != '') {
             $gateway_info = $this->getGatewayInfoInterfaceObject($data);
-            $msp_order->addGatewayInfo($gateway_info);
+            $multisafepay_order->addGatewayInfo($gateway_info);
         }
 
         // Order Request: Plugin details
         $plugin_details = $this->getPluginDetailsObject();
-        $msp_order->addPluginDetails($plugin_details);
+        $multisafepay_order->addPluginDetails($plugin_details);
 
         // Order Request: Money
         $order_total = $this->getMoneyObjectOrderAmount($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false);
-        $msp_order->addMoney($order_total);
+        $multisafepay_order->addMoney($order_total);
 
         // Order Request: Description
         $description = $this->getOrderDescriptionObject($data['order_id']);
-        $msp_order->addDescription($description);
+        $multisafepay_order->addDescription($description);
 
         // Order Request: Payment Options
         $payment_options = $this->getPaymentOptionsObject();
-        $msp_order->addPaymentOptions($payment_options);
+        $multisafepay_order->addPaymentOptions($payment_options);
 
         // Order Request: Second Chance
         $payment_multisafepay_second_chance = ($this->config->get($this->key_prefix . 'multisafepay_second_chance')) ? true : false;
         $second_chance = $this->getSecondChanceObject($payment_multisafepay_second_chance);
-        $msp_order->addSecondChance($second_chance);
+        $multisafepay_order->addSecondChance($second_chance);
 
         // Order Request: Google Analytics ID
         $google_analytics_account_id = $this->getAnalyticsAccountIdObject($this->config->get($this->key_prefix . 'multisafepay_google_analytics_account_id'));
         if ($google_analytics_account_id) {
-            $msp_order->addGoogleAnalytics($google_analytics_account_id);
+            $multisafepay_order->addGoogleAnalytics($google_analytics_account_id);
         }
 
         // Order Request: Shopping Cart Items - Products
         $shopping_cart = $this->getShoppingCartItems($data['order_id']);
-        $msp_order->addShoppingCart($shopping_cart);
+        $multisafepay_order->addShoppingCart($shopping_cart);
 
         // Order Request: Customer
         $customer_payment = $this->getCustomerObject($data['order_id'], 'payment');
-        $msp_order->addCustomer($customer_payment);
+        $multisafepay_order->addCustomer($customer_payment);
 
         // Order Request: Customer Delivery. Only if the order requires delivery.
         if ($order_info['shipping_method'] != '') {
             $customer_shipping = $this->getCustomerObject($data['order_id'], 'shipping');
-            $msp_order->addDelivery($customer_shipping);
+            $multisafepay_order->addDelivery($customer_shipping);
         }
 
         // Order Request: Lifetime of payment link.
@@ -291,42 +291,42 @@ class Multisafepay {
             $payment_multisafepay_unit_lifetime_payment_link = $this->config->get($this->key_prefix . 'multisafepay_unit_lifetime_payment_link');
             switch ($payment_multisafepay_unit_lifetime_payment_link) {
                 case 'days':
-                    $msp_order->addDaysActive((int)$this->config->get($this->key_prefix . 'multisafepay_days_active'));
+                    $multisafepay_order->addDaysActive((int)$this->config->get($this->key_prefix . 'multisafepay_days_active'));
                     break;
                 case 'hours':
                     $hours = (int)$this->config->get($this->key_prefix . 'multisafepay_days_active') * 60 * 60;
-                    $msp_order->addSecondsActive((int)$hours);
+                    $multisafepay_order->addSecondsActive((int)$hours);
                     break;
                 case 'seconds':
-                    $msp_order->addSecondsActive((int)$this->config->get($this->key_prefix . 'multisafepay_days_active'));
+                    $multisafepay_order->addSecondsActive((int)$this->config->get($this->key_prefix . 'multisafepay_days_active'));
                     break;
             }
 
         }
 
-        return $msp_order;
+        return $multisafepay_order;
 
     }
 
     /**
      * Process an Order Request
      *
-     * @param OrderRequest $msp_order
+     * @param OrderRequest $multisafepay_order
      * @return OrderRequest object
      * @throws ApiException
      *
      */
-    public function processOrderRequestObject($msp_order) {
-        if (!$msp_order) {
+    public function processOrderRequestObject($multisafepay_order) {
+        if (!$multisafepay_order) {
             return false;
         }
         $this->language->load($this->route);
-	    $order_id = $msp_order->getOrderId();
+	    $order_id = $multisafepay_order->getOrderId();
 	    $order_info = $this->getOrderInfo($order_id);
         $sdk = $this->getSdkObject($order_info['store_id']);
         $transaction_manager = $sdk->getTransactionManager();
         try {
-            $order_request = $transaction_manager->create($msp_order);
+            $order_request = $transaction_manager->create($multisafepay_order);
             return $order_request;
         }
         catch (\MultiSafepay\Exception\ApiException $apiException ) {
@@ -342,22 +342,22 @@ class Multisafepay {
     /**
      * Process a Refund Request
      *
-     * @param RefundRequest $msp_order
+     * @param RefundRequest $multisafepay_order
      * @return RefundRequest object
      * @throws ApiException
      *
      */
-    public function processRefundRequestObject($msp_order, $refund_request) {
-        if (!$msp_order || !$refund_request) {
+    public function processRefundRequestObject($multisafepay_order, $refund_request) {
+        if (!$multisafepay_order || !$refund_request) {
             return false;
         }
 
-	    $order_id = $msp_order->getOrderId();
+	    $order_id = $multisafepay_order->getOrderId();
 	    $order_info = $this->getAdminOrderInfo($order_id);
         $sdk = $this->getSdkObject($order_info['store_id']);
         $transaction_manager = $sdk->getTransactionManager();
         try {
-            $process_refund = $transaction_manager->refund($msp_order, $refund_request);
+            $process_refund = $transaction_manager->refund($multisafepay_order, $refund_request);
             return $process_refund;
         }
         catch (\MultiSafepay\Exception\ApiException $apiException ) {
@@ -371,22 +371,22 @@ class Multisafepay {
     /**
      * Create an Refund Request
      *
-     * @param RefundRequest $msp_order
+     * @param RefundRequest $multisafepay_order
      * @return RefundRequest object
      * @throws ApiException
      *
      */
-    public function createRefundRequestObject($msp_order) {
-        if (!$msp_order) {
+    public function createRefundRequestObject($multisafepay_order) {
+        if (!$multisafepay_order) {
             return false;
         }
-	    $order_id = $msp_order->getOrderId();
+	    $order_id = $multisafepay_order->getOrderId();
         $order_info = $this->getAdminOrderInfo($order_id);
         $sdk = $this->getSdkObject($order_info['store_id']);
         $transaction_manager = $sdk->getTransactionManager();
 
         try {
-            $refund_request = $transaction_manager->createRefundRequest($msp_order);
+            $refund_request = $transaction_manager->createRefundRequest($multisafepay_order);
             return $refund_request;
         }
         catch (\MultiSafepay\Exception\ApiException $apiException ) {
@@ -463,22 +463,18 @@ class Multisafepay {
      */
     public function getCustomerObject($order_id, $type = 'payment') {
 	    $order_info   = $this->getOrderInfo( $order_id );
-	    $customer_ip  = new \MultiSafepay\ValueObject\IpAddress( $order_info['ip'] );
-	    $telephone    = $this->getTelephoneObject( $order_info['telephone'] );
 	    $customer_obj = new \MultiSafepay\Api\Transactions\OrderRequest\Arguments\CustomerDetails();
-	    $customer_obj->addIpAddress( $customer_ip );
+	    $customer_obj->addIpAddressAsString( $order_info['ip'] );
 	    if ( $order_info['forwarded_ip'] ) {
-		    $forwarded_ip = new \MultiSafepay\ValueObject\IpAddress( $order_info['forwarded_ip'] );
-		    $customer_obj->addForwardedIp( $forwarded_ip );
+		    $customer_obj->addForwardedIpAsString( $order_info['forwarded_ip'] );
 	    }
         if(isset($order_info[ $type . '_company']) && !empty($order_info[ $type . '_company'])) {
 	        $customer_obj->addCompanyName($order_info[ $type . '_company']);
         }
         $customer_obj->addUserAgent($order_info['user_agent']);
-        $customer_obj->addPhoneNumber($telephone);
+        $customer_obj->addPhoneNumberAsString($order_info['telephone']);
         $customer_obj->addLocale($this->getLocale());
-        $customer_email_address_details =  $this->getEmailAddressObject($order_info['email']);
-        $customer_obj->addEmailAddress($customer_email_address_details);
+        $customer_obj->addEmailAddressAsString($order_info['email']);
         $customer_obj->addFirstName($order_info[$type . '_firstname']);
         $customer_obj->addLastName($order_info[$type . '_lastname']);
 
@@ -488,82 +484,13 @@ class Multisafepay {
         $customer_address_obj = new \MultiSafepay\ValueObject\Customer\Address();
         $customer_address_obj->addStreetName($parsed_address[0]);
         $customer_address_obj->addHouseNumber($parsed_address[1]);
-
         $customer_address_obj->addZipCode($order_info[$type . '_postcode']);
         $customer_address_obj->addCity($order_info[$type . '_city']);
         $customer_address_obj->addState($order_info[$type . '_zone']);
-        $customer_address_country_obj = $this->getCountryObject($order_info[$type . '_iso_code_2']);
-        $customer_address_obj->addCountry($customer_address_country_obj);
+        $customer_address_obj->addCountryCode($order_info[$type . '_iso_code_2']);
         $customer_obj->addAddress($customer_address_obj);
+
         return $customer_obj;
-    }
-
-    /**
-     * Returns BankAccount object to be used in OrderRequest transaction
-     *
-     * @return BankAccount object
-     *
-     */
-    private function getBankAccountObject($bank_account) {
-        $bank_account = new \MultiSafepay\ValueObject\BankAccount($bank_account);
-        return $bank_account;
-    }
-
-    /**
-     * Returns EmailAddress object to be used in OrderRequest transaction
-     *
-     * @return EmailAddress object
-     *
-     */
-    private function getEmailAddressObject($email) {
-        $email_address = new \MultiSafepay\ValueObject\Customer\EmailAddress($email);
-        return $email_address;
-    }
-
-    /**
-     * Returns Iban object to be used in OrderRequest transaction
-     *
-     * @return Iban object
-     *
-     */
-    private function getIbanObject($iban) {
-        $iban = new \MultiSafepay\ValueObject\IbanNumber($iban);
-        return $iban;
-    }
-
-    /**
-     * Returns PhoneNumber object to be used in OrderRequest transaction
-     *
-     * @return PhoneNumber object
-     *
-     */
-    private function getTelephoneObject($telephone) {
-        $phone_number = new \MultiSafepay\ValueObject\Customer\PhoneNumber($telephone);
-        return $phone_number;
-    }
-
-    /**
-     * Returns Gender object to be used in OrderRequest transaction
-     *
-     * @param string $gender
-     * @return Gender object
-     *
-     */
-    private function getGenderObject($gender) {
-        $gender = new \MultiSafepay\ValueObject\Gender($gender);
-        return $gender;
-    }
-
-    /**
-     * Returns Date object to be used in OrderRequest transaction
-     *
-     * @param string $date
-     * @return Date object
-     *
-     */
-    private function getDateObject($date) {
-        $date = new \MultiSafepay\ValueObject\Date($date);
-        return $date;
     }
 
     /**
@@ -632,8 +559,15 @@ class Multisafepay {
      *
      */
     public function getOrderDescriptionObject($order_id) {
-        $this->load->language($this->route);
-        $description = sprintf($this->language->get('text_order_description'), $order_id, $this->config->get('config_name'), date($this->language->get('datetime_format')) );
+
+    	$this->load->language($this->route);
+	    $description = sprintf($this->language->get('text_order_description'), $order_id, $this->config->get('config_name'), date($this->language->get('datetime_format')) );
+
+	    if($this->config->get($this->key_prefix . 'multisafepay_order_description')) {
+			$description = $this->config->get($this->key_prefix . 'multisafepay_order_description');
+			$description = str_replace('{order_id}', $order_id, $description);
+		}
+
         $description_details = new \MultiSafepay\Api\Transactions\OrderRequest\Arguments\Description();
         $description_details->addDescription($description);
         return $description_details;
@@ -667,30 +601,24 @@ class Multisafepay {
                 break;
             case "Account":
                 $gateway_info = new \MultiSafepay\Api\Transactions\OrderRequest\Arguments\GatewayInfo\Account();
-                $iban =  $this->getIbanObject($data['account_holder_iban']);
                 $gateway_info->addAccountHolderName($data['account_holder_name']);
-                $gateway_info->addAccountId($iban);
-                $gateway_info->addAccountHolderIban($iban);
+	            $gateway_info->addAccountIdAsString($data['account_holder_iban']);
+	            $gateway_info->addAccountHolderIbanAsString($data['account_holder_iban']);
                 $gateway_info->addEmanDate($data['emandate']);
                 break;
             case "Meta":
                 $order_info = $this->getOrderInfo($data['order_id']);
-                $telephone = $this->getTelephoneObject($order_info['telephone']);
-                $email_address =  $this->getEmailAddressObject($order_info['email']);
                 $gateway_info = new \MultiSafepay\Api\Transactions\OrderRequest\Arguments\GatewayInfo\Meta();
-                $gateway_info->addPhone($telephone);
-                $gateway_info->addEmailAddress($email_address);
+	            $gateway_info->addPhoneAsString($order_info['telephone']);
+                $gateway_info->addEmailAddressAsString($order_info['email']);
                 if(isset($data['gender']) && !empty($data['gender'])) {
-                    $gender =  $this->getGenderObject($data['gender']);
-                    $gateway_info->addGender($gender);
+                    $gateway_info->addGenderAsString($data['gender']);
                 }
                 if(isset($data['birthday']) && !empty($data['birthday'])) {
-                    $birthday =  $this->getDateObject($data['birthday']);
-                    $gateway_info->addBirthday($birthday);
+                    $gateway_info->addBirthdayAsString($data['birthday']);
                 }
                 if(isset($data['bankaccount']) && !empty($data['bankaccount'])) {
-                    $bank_account =  $this->getBankAccountObject($data['bankaccount']);
-                    $gateway_info->addBankAccount($bank_account);
+                    $gateway_info->addBankAccountAsString($data['bankaccount']);
                 }
                 break;
         }
@@ -842,18 +770,6 @@ class Multisafepay {
         $amount = $this->formatByCurrency($amount, $currency_code, $currency_value);
         $amount = new  \MultiSafepay\ValueObject\Money($amount, $currency_code);
         return $amount;
-    }
-
-    /**
-     * Returns a Country object
-     *
-     * @param string $country_code
-     * @return Country object
-     *
-     */
-    private function getCountryObject($country_code) {
-        $country = new \MultiSafepay\ValueObject\Customer\Country($country_code);
-        return $country;
     }
 
 	/**
@@ -1816,7 +1732,7 @@ class Multisafepay {
      * Return all gateways
      *
      * @return array $gateways
-     *
+     * phpcs:disable ObjectCalisthenics.Files.FunctionLength
      */
     public function getGateways() {
         $this->language->load($this->route);
@@ -1828,6 +1744,7 @@ class Multisafepay {
                 'route' => 'multisafepay',
                 'description' => $this->language->get('text_title_multisafepay'),
                 'type' => 'gateway',
+                'redirect_switch' => false,
                 'docs' => sprintf($this->language->get('text_gateway_docs_info'), 'https://docs.multisafepay.com/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_multisafepay')),
                 'brief_description' => $this->language->get('text_brief_description_multisafepay'),
                 'image' => 'multisafepay'
@@ -1838,6 +1755,7 @@ class Multisafepay {
                 'route' => 'multisafepay/afterPay',
                 'description' => $this->language->get('text_title_afterpay'),
                 'type' => 'gateway',
+                'redirect_switch' => true,
                 'docs' => sprintf($this->language->get('text_gateway_docs_info'), 'https://docs.multisafepay.com/payment-methods/billing-suite/afterpay/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_afterpay')),
                 'brief_description' => $this->language->get('text_brief_description_afterpay'),
                 'image' => 'afterpay'
@@ -1848,6 +1766,7 @@ class Multisafepay {
                 'route' => 'multisafepay/alipay',
                 'description' => $this->language->get('text_title_alipay'),
                 'type' => 'gateway',
+                'redirect_switch' => false,
                 'docs' => sprintf($this->language->get('text_gateway_docs_info'), 'https://docs.multisafepay.com/payment-methods/wallet/alipay/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_alipay')),
                 'brief_description' => $this->language->get('text_brief_description_alipay'),
                 'image' => 'alipay'
@@ -1858,6 +1777,7 @@ class Multisafepay {
                 'route' => 'multisafepay/amex',
                 'description' => $this->language->get('text_title_american_express'),
                 'type' => 'gateway',
+                'redirect_switch' => false,
                 'docs' => sprintf($this->language->get('text_gateway_docs_info'), 'https://docs.multisafepay.com/payment-methods/credit-and-debit-cards/american-express/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_american_express')),
                 'brief_description' => $this->language->get('text_brief_description_amex'),
                 'image' => 'amex'
@@ -1868,6 +1788,7 @@ class Multisafepay {
                 'route' => 'multisafepay/applePay',
                 'description' => $this->language->get('text_title_apple_pay'),
                 'type' => 'gateway',
+                'redirect_switch' => false,
                 'docs' => sprintf($this->language->get('text_gateway_docs_info'), 'https://docs.multisafepay.com/payment-methods/wallet/applepay/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_apple_pay')),
                 'brief_description' => $this->language->get('text_brief_description_applepay'),
                 'image' => 'applepay'
@@ -1878,6 +1799,7 @@ class Multisafepay {
                 'route' => 'multisafepay/bancontact',
                 'description' => $this->language->get('text_title_bancontact'),
                 'type' => 'gateway',
+                'redirect_switch' => false,
                 'docs' => sprintf($this->language->get('text_gateway_docs_info'), 'https://docs.multisafepay.com/payment-methods/banks/bancontact/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_bancontact')),
                 'brief_description' => $this->language->get('text_brief_description_mistercash'),
                 'image' => 'bancontact'
@@ -1888,6 +1810,7 @@ class Multisafepay {
                 'route' => 'multisafepay/babyCad',
                 'description' => $this->language->get('text_title_baby_cad'),
                 'type' => 'giftcard',
+                'redirect_switch' => false,
                 'docs' => sprintf($this->language->get('text_gateway_docs_info'), 'https://docs.multisafepay.com/payment-methods/prepaid-cards/gift-cards/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_baby_cad')),
                 'brief_description' => $this->language->get('text_brief_description_babycad'),
                 'image' => 'babycad'
@@ -1898,6 +1821,7 @@ class Multisafepay {
                 'route' => 'multisafepay/bankTransfer',
                 'description' => $this->language->get('text_title_bank_transfer'),
                 'type' => 'gateway',
+                'redirect_switch' => true,
                 'docs' => sprintf($this->language->get('text_gateway_docs_info'), 'https://docs.multisafepay.com/payment-methods/banks/bank-transfer/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_bank_transfer')),
                 'brief_description' => $this->language->get('text_brief_description_banktrans'),
                 'image' => 'banktrans'
@@ -1908,6 +1832,7 @@ class Multisafepay {
                 'route' => 'multisafepay/beautyWellness',
                 'description' => $this->language->get('text_title_beauty_wellness'),
                 'type' => 'giftcard',
+                'redirect_switch' => false,
                 'docs' => sprintf($this->language->get('text_gateway_docs_info'), 'https://docs.multisafepay.com/payment-methods/prepaid-cards/gift-cards/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_beauty_wellness')),
                 'brief_description' => $this->language->get('text_brief_description_beautywellness'),
                 'image' => 'beautywellness'
@@ -1918,6 +1843,7 @@ class Multisafepay {
                 'route' => 'multisafepay/belfius',
                 'description' => $this->language->get('text_title_belfius'),
                 'type' => 'gateway',
+                'redirect_switch' => false,
                 'docs' => sprintf($this->language->get('text_gateway_docs_info'), 'https://docs.multisafepay.com/payment-methods/banks/belfius/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_belfius')),
                 'brief_description' => $this->language->get('text_brief_description_belfius'),
                 'image' => 'belfius'
@@ -1928,6 +1854,7 @@ class Multisafepay {
                 'route' => 'multisafepay/boekenbon',
                 'description' => $this->language->get('text_title_boekenbon'),
                 'type' => 'giftcard',
+                'redirect_switch' => false,
                 'docs' => sprintf($this->language->get('text_gateway_docs_info'), 'https://docs.multisafepay.com/payment-methods/prepaid-cards/gift-cards/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_boekenbon')),
                 'brief_description' => $this->language->get('text_brief_description_boekenbon'),
                 'image' => 'boekenbon'
@@ -1938,6 +1865,7 @@ class Multisafepay {
                 'route' => 'multisafepay/cbc',
                 'description' => $this->language->get('text_title_cbc'),
                 'type' => 'gateway',
+                'redirect_switch' => false,
                 'docs' => sprintf($this->language->get('text_gateway_docs_info'), 'https://docs.multisafepay.com/payment-methods/banks/cbc/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_cbc')),
                 'brief_description' => $this->language->get('text_brief_description_cbc'),
                 'image' => 'cbc'
@@ -1948,6 +1876,7 @@ class Multisafepay {
                 'route' => 'multisafepay/creditCard',
                 'description' => $this->language->get('text_title_credit_card'),
                 'type' => 'gateway',
+                'redirect_switch' => false,
                 'docs' => sprintf($this->language->get('text_gateway_docs_info'), 'https://docs.multisafepay.com/payment-methods/credit-and-debit-cards/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_credit_card')),
                 'brief_description' => $this->language->get('text_brief_description_creditcard'),
                 'image' => 'creditcard'
@@ -1958,6 +1887,7 @@ class Multisafepay {
                 'route' => 'multisafepay/dbrtp',
                 'description' => $this->language->get('text_title_dbrtp'),
                 'type' => 'gateway',
+                'redirect_switch' => false,
                 'docs' => sprintf($this->language->get('text_gateway_docs_info'), 'https://docs.multisafepay.com/payment-methods/banks/direct-bank-transfer/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_dbrtp')),
                 'brief_description' => $this->language->get('text_brief_description_dbrtp'),
                 'image' => 'dbrtp'
@@ -1968,6 +1898,7 @@ class Multisafepay {
                 'route' => 'multisafepay/directBank',
                 'description' => $this->language->get('text_title_direct_bank'),
                 'type' => 'gateway',
+                'redirect_switch' => false,
                 'docs' => sprintf($this->language->get('text_gateway_docs_info'), 'https://docs.multisafepay.com/payment-methods/banks/sofort-banking/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_direct_bank')),
                 'brief_description' => $this->language->get('text_brief_description_directbank'),
                 'image' => 'directbank'
@@ -1978,6 +1909,7 @@ class Multisafepay {
                 'route' => 'multisafepay/dotpay',
                 'description' => $this->language->get('text_title_dotpay'),
                 'type' => 'gateway',
+                'redirect_switch' => false,
                 'docs' => sprintf($this->language->get('text_gateway_docs_info'), 'https://docs.multisafepay.com/payment-methods/banks/dotpay/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_dotpay')),
                 'brief_description' => $this->language->get('text_brief_description_dotpay'),
                 'image' => 'Dotpay'
@@ -1988,6 +1920,7 @@ class Multisafepay {
                 'route' => 'multisafepay/eps',
                 'description' => $this->language->get('text_title_eps'),
                 'type' => 'gateway',
+                'redirect_switch' => false,
                 'docs' => sprintf($this->language->get('text_gateway_docs_info'), 'https://docs.multisafepay.com/payment-methods/banks/eps/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_eps')),
                 'brief_description' => $this->language->get('text_brief_description_eps'),
                 'image' => 'eps'
@@ -1998,6 +1931,7 @@ class Multisafepay {
                 'route' => 'multisafepay/eInvoice',
                 'description' => $this->language->get('text_title_e_invoicing'),
                 'type' => 'gateway',
+                'redirect_switch' => true,
                 'docs' => sprintf($this->language->get('text_gateway_docs_info'), 'https://docs.multisafepay.com/payment-methods/billing-suite/e-invoicing/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_e_invoicing')),
                 'brief_description' => $this->language->get('text_brief_description_einvoice'),
                 'image' => 'einvoice'
@@ -2008,6 +1942,7 @@ class Multisafepay {
                 'route' => 'multisafepay/fashionCheque',
                 'description' => $this->language->get('text_title_fashion_cheque'),
                 'type' => 'giftcard',
+                'redirect_switch' => false,
                 'docs' => sprintf($this->language->get('text_gateway_docs_info'), 'https://docs.multisafepay.com/payment-methods/prepaid-cards/gift-cards/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_fashion_cheque')),
                 'brief_description' => $this->language->get('text_brief_description_fashioncheque'),
                 'image' => 'fashioncheque'
@@ -2018,6 +1953,7 @@ class Multisafepay {
                 'route' => 'multisafepay/fashionGiftCard',
                 'description' => $this->language->get('text_title_fashion_gift_card'),
                 'type' => 'giftcard',
+                'redirect_switch' => false,
                 'docs' => sprintf($this->language->get('text_gateway_docs_info'), 'https://docs.multisafepay.com/payment-methods/prepaid-cards/gift-cards/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_fashion_gift_card')),
                 'brief_description' => $this->language->get('text_brief_description_fashiongiftcard'),
                 'image' => 'fashiongiftcard'
@@ -2028,6 +1964,7 @@ class Multisafepay {
                 'route' => 'multisafepay/fietsenbon',
                 'description' => $this->language->get('text_title_fietsenbon'),
                 'type' => 'giftcard',
+                'redirect_switch' => false,
                 'docs' => sprintf($this->language->get('text_gateway_docs_info'), 'https://docs.multisafepay.com/payment-methods/prepaid-cards/gift-cards/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_fietsenbon')),
                 'brief_description' => $this->language->get('text_brief_description_fietsenbon'),
                 'image' => 'fietsenbon'
@@ -2038,6 +1975,7 @@ class Multisafepay {
                 'route' => 'multisafepay/gezondheidsbon',
                 'description' => $this->language->get('text_title_gezondheidsbon'),
                 'type' => 'giftcard',
+                'redirect_switch' => false,
                 'docs' => sprintf($this->language->get('text_gateway_docs_info'), 'https://docs.multisafepay.com/payment-methods/prepaid-cards/gift-cards/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_gezondheidsbon')),
                 'brief_description' => $this->language->get('text_brief_description_gezondheidsbon'),
                 'image' => 'gezondheidsbon'
@@ -2048,6 +1986,7 @@ class Multisafepay {
                 'route' => 'multisafepay/givaCard',
                 'description' => $this->language->get('text_title_giva_card'),
                 'type' => 'giftcard',
+                'redirect_switch' => false,
                 'docs' => sprintf($this->language->get('text_gateway_docs_info'), 'https://docs.multisafepay.com/payment-methods/prepaid-cards/gift-cards/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_giva_card')),
                 'brief_description' => $this->language->get('text_brief_description_givacard'),
                 'image' => 'givacard'
@@ -2058,6 +1997,7 @@ class Multisafepay {
                 'route' => 'multisafepay/giroPay',
                 'description' => $this->language->get('text_title_giropay'),
                 'type' => 'gateway',
+                'redirect_switch' => false,
                 'docs' => sprintf($this->language->get('text_gateway_docs_info'), 'https://docs.multisafepay.com/payment-methods/banks/giropay/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_giropay')),
                 'brief_description' => $this->language->get('text_brief_description_giropay'),
                 'image' => 'giropay'
@@ -2068,6 +2008,7 @@ class Multisafepay {
                 'route' => 'multisafepay/good4fun',
                 'description' => $this->language->get('text_title_good4fun'),
                 'type' => 'giftcard',
+                'redirect_switch' => false,
                 'docs' => sprintf($this->language->get('text_gateway_docs_info'), 'https://docs.multisafepay.com/payment-methods/prepaid-cards/gift-cards/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_good4fun')),
                 'brief_description' => $this->language->get('text_brief_description_good4fun'),
                 'image' => 'good4fun'
@@ -2078,6 +2019,7 @@ class Multisafepay {
                 'route' => 'multisafepay/goodCard',
                 'description' => $this->language->get('text_title_good_card'),
                 'type' => 'giftcard',
+                'redirect_switch' => false,
                 'docs' => sprintf($this->language->get('text_gateway_docs_info'), 'https://docs.multisafepay.com/payment-methods/prepaid-cards/gift-cards/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_good_card')),
                 'brief_description' => $this->language->get('text_brief_description_goodcard'),
                 'image' => 'goodcard'
@@ -2088,6 +2030,7 @@ class Multisafepay {
                 'route' => 'multisafepay/in3',
                 'description' => $this->language->get('text_title_in3'),
                 'type' => 'gateway',
+                'redirect_switch' => true,
                 'docs' => sprintf($this->language->get('text_gateway_docs_info'), 'https://docs.multisafepay.com/payment-methods/billing-suite/in3/', $this->language->get('text_title_in3')),
                 'brief_description' => $this->language->get('text_brief_description_in3'),
                 'image' => 'in3',
@@ -2098,6 +2041,7 @@ class Multisafepay {
                 'route' => 'multisafepay/ideal',
                 'description' => $this->language->get('text_title_ideal'),
                 'type' => 'gateway',
+                'redirect_switch' => true,
                 'docs' => sprintf($this->language->get('text_gateway_docs_info'), 'https://docs.multisafepay.com/payment-methods/banks/ideal/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_ideal')),
                 'brief_description' => $this->language->get('text_brief_description_ideal'),
                 'image' => 'ideal'
@@ -2108,6 +2052,7 @@ class Multisafepay {
                 'route' => 'multisafepay/idealQr',
                 'description' => $this->language->get('text_title_ideal_qr'),
                 'type' => 'gateway',
+                'redirect_switch' => false,
                 'docs' => sprintf($this->language->get('text_gateway_docs_info'), 'https://docs.multisafepay.com/payment-methods/banks/idealqr/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_ideal_qr')),
                 'brief_description' => $this->language->get('text_brief_description_idealqr'),
                 'image' => 'ideal-qr'
@@ -2118,6 +2063,7 @@ class Multisafepay {
                 'route' => 'multisafepay/ing',
                 'description' => $this->language->get('text_title_ing_home_pay'),
                 'type' => 'gateway',
+                'redirect_switch' => false,
                 'docs' => sprintf($this->language->get('text_gateway_docs_info'), 'https://docs.multisafepay.com/payment-methods/banks/ing-home-pay/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_ing_home_pay')),
                 'brief_description' => $this->language->get('text_brief_description_ing'),
                 'image' => 'ing'
@@ -2128,6 +2074,7 @@ class Multisafepay {
                 'route' => 'multisafepay/kbc',
                 'description' => $this->language->get('text_title_kbc'),
                 'type' => 'gateway',
+                'redirect_switch' => false,
                 'docs' => sprintf($this->language->get('text_gateway_docs_info'), 'https://docs.multisafepay.com/payment-methods/banks/kbc/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_kbc')),
                 'brief_description' => $this->language->get('text_brief_description_kbc'),
                 'image' => 'kbc'
@@ -2138,7 +2085,8 @@ class Multisafepay {
                 'route' => 'multisafepay/klarna',
                 'description' => $this->language->get('text_title_klarna'),
                 'type' => 'gateway',
-                'docs' => sprintf($this->language->get('text_gateway_docs_info'), 'https://docs.multisafepay.com/payment-methods/billing-suite/klarna/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_klarna')),
+                'redirect_switch' => false,
+				'docs' => sprintf($this->language->get('text_gateway_docs_info'), 'https://docs.multisafepay.com/payment-methods/billing-suite/klarna/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_klarna')),
                 'brief_description' => $this->language->get('text_brief_description_klarna'),
                 'image' => 'klarna'
             ),
@@ -2148,6 +2096,7 @@ class Multisafepay {
                 'route' => 'multisafepay/maestro',
                 'description' => $this->language->get('text_title_maestro'),
                 'type' => 'gateway',
+                'redirect_switch' => false,
                 'docs' => sprintf($this->language->get('text_gateway_docs_info'), 'https://docs.multisafepay.com/payment-methods/credit-and-debit-cards/maestro/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_maestro')),
                 'brief_description' => $this->language->get('text_brief_description_maestro'),
                 'image' => 'maestro'
@@ -2158,6 +2107,7 @@ class Multisafepay {
                 'route' => 'multisafepay/mastercard',
                 'description' => $this->language->get('text_title_mastercard'),
                 'type' => 'gateway',
+                'redirect_switch' => false,
                 'docs' => sprintf($this->language->get('text_gateway_docs_info'), 'https://docs.multisafepay.com/payment-methods/credit-and-debit-cards/mastercard/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_mastercard')),
                 'brief_description' => $this->language->get('text_brief_description_mastercard'),
                 'image' => 'mastercard'
@@ -2168,6 +2118,7 @@ class Multisafepay {
                 'route' => 'multisafepay/nationaleTuinbon',
                 'description' => $this->language->get('text_title_nationale_tuinbon'),
                 'type' => 'giftcard',
+                'redirect_switch' => false,
                 'docs' => sprintf($this->language->get('text_gateway_docs_info'), 'https://docs.multisafepay.com/payment-methods/prepaid-cards/gift-cards/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_nationale_tuinbon')),
                 'brief_description' => $this->language->get('text_brief_description_nationaletuinbon'),
                 'image' => 'nationaletuinbon'
@@ -2178,6 +2129,7 @@ class Multisafepay {
                 'route' => 'multisafepay/parfumCadeaukaart',
                 'description' => $this->language->get('text_title_parfum_cadeaukaart'),
                 'type' => 'giftcard',
+                'redirect_switch' => false,
                 'docs' => sprintf($this->language->get('text_gateway_docs_info'), 'https://docs.multisafepay.com/payment-methods/prepaid-cards/gift-cards/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_parfum_cadeaukaart')),
                 'brief_description' => $this->language->get('text_brief_description_parfumcadeaukaart'),
                 'image' => 'parfumcadeaukaart'
@@ -2188,6 +2140,7 @@ class Multisafepay {
                 'route' => 'multisafepay/payAfterDelivery',
                 'description' => $this->language->get('text_title_pay_after_delivery'),
                 'type' => 'gateway',
+                'redirect_switch' => true,
                 'docs' => sprintf($this->language->get('text_gateway_docs_info'), 'https://docs.multisafepay.com/payment-methods/billing-suite/pay-after-delivery/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_pay_after_delivery')),
                 'brief_description' => $this->language->get('text_brief_description_payafter'),
                 'image' => 'payafter'
@@ -2198,6 +2151,7 @@ class Multisafepay {
                 'route' => 'multisafepay/payPal',
                 'description' => $this->language->get('text_title_paypal'),
                 'type' => 'gateway',
+                'redirect_switch' => false,
                 'docs' => sprintf($this->language->get('text_gateway_docs_info'), 'https://docs.multisafepay.com/payment-methods/wallet/paypal/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_paypal')),
                 'brief_description' => $this->language->get('text_brief_description_paypal'),
                 'image' => 'paypal'
@@ -2208,6 +2162,7 @@ class Multisafepay {
                 'route' => 'multisafepay/podium',
                 'description' => $this->language->get('text_title_podium'),
                 'type' => 'giftcard',
+                'redirect_switch' => false,
                 'docs' => sprintf($this->language->get('text_gateway_docs_info'), 'https://docs.multisafepay.com/payment-methods/prepaid-cards/gift-cards/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_podium')),
                 'brief_description' => $this->language->get('text_brief_description_podium'),
                 'image' => 'podium'
@@ -2218,6 +2173,7 @@ class Multisafepay {
                 'route' => 'multisafepay/paysafecard',
                 'description' => $this->language->get('text_title_paysafecard'),
                 'type' => 'gateway',
+                'redirect_switch' => false,
                 'docs' => sprintf($this->language->get('text_gateway_docs_info'), 'https://docs.multisafepay.com/payment-methods/prepaid-cards/paysafecard/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_paysafecard')),
                 'brief_description' => $this->language->get('text_brief_description_paysafecard'),
                 'image' => 'paysafecard'
@@ -2228,6 +2184,7 @@ class Multisafepay {
                 'route' => 'multisafepay/betaalplan',
                 'description' => $this->language->get('text_title_santander_betaalplan'),
                 'type' => 'gateway',
+                'redirect_switch' => true,
                 'docs' => sprintf($this->language->get('text_gateway_docs_info'), 'https://docs.multisafepay.com/payment-methods/billing-suite/betaalplan/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_santander_betaalplan')),
                 'brief_description' => $this->language->get('text_brief_description_santander'),
                 'image' => 'betaalplan'
@@ -2238,6 +2195,7 @@ class Multisafepay {
                 'route' => 'multisafepay/dirDeb',
                 'description' => $this->language->get('text_title_sepa_direct_debit'),
                 'type' => 'gateway',
+                'redirect_switch' => true,
                 'docs' => sprintf($this->language->get('text_gateway_docs_info'), 'https://docs.multisafepay.com/payment-methods/banks/sepa-direct-debit/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_sepa_direct_debit')),
                 'brief_description' => $this->language->get('text_brief_description_dirdeb'),
                 'image' => 'dirdeb'
@@ -2248,6 +2206,7 @@ class Multisafepay {
                 'route' => 'multisafepay/sportFit',
                 'description' => $this->language->get('text_title_sport_fit'),
                 'type' => 'giftcard',
+                'redirect_switch' => false,
                 'docs' => sprintf($this->language->get('text_gateway_docs_info'), 'https://docs.multisafepay.com/payment-methods/prepaid-cards/gift-cards/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_sport_fit')),
                 'brief_description' => $this->language->get('text_brief_description_sportfit'),
                 'image' => 'sportenfit'
@@ -2258,6 +2217,7 @@ class Multisafepay {
                 'route' => 'multisafepay/trustly',
                 'description' => $this->language->get('text_title_trustly'),
                 'type' => 'gateway',
+                'redirect_switch' => false,
                 'docs' => sprintf($this->language->get('text_gateway_docs_info'), 'https://docs.multisafepay.com/payment-methods/banks/trustly/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_trustly')),
                 'brief_description' => $this->language->get('text_brief_description_trustly'),
                 'image' => 'trustly'
@@ -2268,6 +2228,7 @@ class Multisafepay {
                 'route' => 'multisafepay/visa',
                 'description' => $this->language->get('text_title_visa'),
                 'type' => 'gateway',
+                'redirect_switch' => false,
                 'docs' => sprintf($this->language->get('text_gateway_docs_info'), 'https://docs.multisafepay.com/payment-methods/credit-and-debit-cards/visa/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_visa')),
                 'brief_description' => $this->language->get('text_brief_description_visa'),
                 'image' => 'visa'
@@ -2278,6 +2239,7 @@ class Multisafepay {
                 'route' => 'multisafepay/vvvGiftCard',
                 'description' => $this->language->get('text_title_vvv_cadeaukaart'),
                 'type' => 'giftcard',
+                'redirect_switch' => false,
                 'docs' => sprintf($this->language->get('text_gateway_docs_info'), 'https://docs.multisafepay.com/payment-methods/prepaid-cards/gift-cards/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_vvv_cadeaukaart')),
                 'brief_description' => $this->language->get('text_brief_description_vvv'),
                 'image' => 'vvv'
@@ -2288,6 +2250,7 @@ class Multisafepay {
                 'route' => 'multisafepay/webshopGiftCard',
                 'description' => $this->language->get('text_title_webshop_giftcard'),
                 'type' => 'giftcard',
+                'redirect_switch' => false,
                 'docs' => sprintf($this->language->get('text_gateway_docs_info'), 'https://docs.multisafepay.com/payment-methods/prepaid-cards/gift-cards/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_webshop_giftcard')),
                 'brief_description' => $this->language->get('text_brief_description_webshopgiftcard'),
                 'image' => 'webshopgiftcard'
@@ -2298,6 +2261,7 @@ class Multisafepay {
                 'route' => 'multisafepay/wellnessGiftCard',
                 'description' => $this->language->get('text_title_wellness_giftcard'),
                 'type' => 'giftcard',
+                'redirect_switch' => false,
                 'docs' => sprintf($this->language->get('text_gateway_docs_info'), 'https://docs.multisafepay.com/payment-methods/prepaid-cards/gift-cards/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_wellness_giftcard')),
                 'brief_description' => $this->language->get('text_brief_description_wellnessgiftcard'),
                 'image' => 'wellnessgiftcard'
@@ -2308,6 +2272,7 @@ class Multisafepay {
                 'route' => 'multisafepay/wijnCadeau',
                 'description' => $this->language->get('text_title_wijncadeau'),
                 'type' => 'giftcard',
+                'redirect_switch' => false,
                 'docs' => sprintf($this->language->get('text_gateway_docs_info'), 'https://docs.multisafepay.com/payment-methods/prepaid-cards/gift-cards/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_wijncadeau')),
                 'brief_description' => $this->language->get('text_brief_description_wijncadeau'),
                 'image' => 'wijncadeau'
@@ -2318,6 +2283,7 @@ class Multisafepay {
                 'route' => 'multisafepay/winkelCheque',
                 'description' => $this->language->get('text_title_winkel_cheque'),
                 'type' => 'giftcard',
+                'redirect_switch' => false,
                 'docs' => sprintf($this->language->get('text_gateway_docs_info'), 'https://docs.multisafepay.com/payment-methods/prepaid-cards/gift-cards/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_winkel_cheque')),
                 'brief_description' => $this->language->get('text_brief_description_winkelcheque'),
                 'image' => 'winkelcheque'
@@ -2328,6 +2294,7 @@ class Multisafepay {
                 'route' => 'multisafepay/yourGift',
                 'description' => $this->language->get('text_title_yourgift'),
                 'type' => 'giftcard',
+                'redirect_switch' => false,
                 'docs' => sprintf($this->language->get('text_gateway_docs_info'), 'https://docs.multisafepay.com/payment-methods/prepaid-cards/gift-cards/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_yourgift')),
                 'brief_description' => $this->language->get('text_brief_description_yourgift'),
                 'image' => 'yourgift'
@@ -2338,6 +2305,7 @@ class Multisafepay {
 		        'route' => 'multisafepay/generic',
 		        'description' => $this->language->get('text_title_generic'),
 		        'type' => 'generic',
+		        'redirect_switch' => false,
 		        'docs' => '',
 		        'brief_description' => $this->language->get('text_brief_description_generic'),
 		        'image' => ''
@@ -2415,14 +2383,14 @@ class Multisafepay {
     public function getOrderedGateways($store_id = 0) {
         $gateways = $this->getGateways();
         $this->load->model('setting/setting');
-        $settings = $this->model_setting_setting->getSetting('payment_multisafepay', $store_id);
+        $settings = $this->model_setting_setting->getSetting($this->key_prefix . 'multisafepay', $store_id);
         $sort_order = array();
         foreach($gateways as $key => $gateway) {
-            if(!isset($settings['payment_multisafepay_' . $gateway['code'] . '_sort_order'])) {
+            if(!isset($settings[$this->key_prefix . 'multisafepay_' . $gateway['code'] . '_sort_order'])) {
                 $sort_order[$key] = 0;
             }
-            if(isset($settings['payment_multisafepay_' . $gateway['code'] . '_sort_order'])) {
-                $sort_order[$key] = $settings['payment_multisafepay_'. $gateway['code']. '_sort_order'];
+            if(isset($settings[$this->key_prefix . 'multisafepay_' . $gateway['code'] . '_sort_order'])) {
+                $sort_order[$key] = $settings[$this->key_prefix . 'multisafepay_'. $gateway['code']. '_sort_order'];
             }
         }
         array_multisort($sort_order, SORT_ASC, $gateways);

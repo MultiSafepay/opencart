@@ -438,7 +438,7 @@ class Helper {
         require_once(DIR_SYSTEM . 'library/multisafepay/vendor/autoload.php');
 
         try {
-            $msp = new \MultiSafepay\Sdk($api_key, $enviroment);
+            $sdk = new \MultiSafepay\Sdk($api_key, $enviroment);
         }
         catch (\MultiSafepay\Exception\InvalidApiKeyException $invalidApiKeyException ) {
             if ($this->config->get('payment_multisafepay_debug_mode')) {
@@ -448,7 +448,7 @@ class Helper {
             $this->response->redirect($this->url->link('checkout/checkout', '', 'SSL'));
         }
 
-        return $msp;
+        return $sdk;
 
     }
 

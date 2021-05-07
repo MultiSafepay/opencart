@@ -6,6 +6,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ***
 
+## 3.10.0
+Release date: May, 7th 2021
+
+### Added
+PLGOPNS-388: Introduce a new option in order statuses settings, which allows to ignore the notification according with the selected status
+PLGOPNS-395: Add support for custom order description
+PLGOPNS-393: Add setting field, to turn direct payment gateways in redirect
+
+### Changed 
+PLGOPNS-389: Refactor to use simplified methods from the PHP-SDK
+PLGOPNS-390: Refactor to replace all msp strings, variables names and methods names, and use multisafepay instead, across all the files within the plugin
+
+### Fixed
+PLGOPNS-394: Return an array in case value is serialized affecting OpenCart 2.X versions
+
+***
+
 ## 3.9.0
 Release date: March, 19th 2021
 

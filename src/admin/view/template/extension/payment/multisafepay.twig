@@ -131,6 +131,13 @@
                         </div>
                         {# -- Tab Options -- #}
                         <div class="tab-pane" id="tab-options">
+                            {# -- Order Description  -- #}
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" for="payment-multisafepay-order-description"><span data-toggle="tooltip" title="{{ text_help_order_description }}">{{ entry_multisafepay_order_description }}</span></label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="payment_multisafepay_order_description" value="{{ payment_multisafepay_order_description }}" id="payment-multisafepay-order-description" placeholder="{{ entry_multisafepay_order_description }}" class="form-control" />
+                                </div>
+                            </div>
                             {# -- Google Analytics Account ID  -- #}
                             <div class="form-group">
                                 <label class="col-sm-2 control-label" for="payment-multisafepay-google-analytics-account-id"><span data-toggle="tooltip" title="{{ text_help_google_analytics_account_id }}">{{ entry_multisafepay_google_analytics_account_id }}</span></label>
@@ -492,6 +499,18 @@
                                                             </select>
                                                         </div>
                                                     </div>
+                                                    {# -- Switch to redirect -- #}
+                                                    {% if gateway.redirect_switch %}
+                                                        <div class="form-group">
+                                                            <label class="col-sm-2 control-label" for="payment-multisafepay-{{ gateway.code }}-redirect">{{ entry_redirect_switch }}</label>
+                                                            <div class="col-sm-10">
+                                                                <select name="payment_multisafepay_{{ gateway.code }}_redirect" id="payment-multisafepay-{{ gateway.code }}-redirect" class="form-control">
+                                                                    <option value="0" {% if payment_methods_fields_values[gateway.code]['redirect'] == 0 %} selected {% endif %}>{{ text_disabled }}</option>
+                                                                    <option value="1" {% if payment_methods_fields_values[gateway.code]['redirect'] == 1 %} selected {% endif %}>{{ text_enabled }}</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    {% endif %}
                                                     {# -- Sort Order -- #}
                                                     <div class="form-group">
                                                         <label class="col-sm-2 control-label" for="payment-multisafepay-{{ gateway.code }}-sort-order">{{ entry_sort_order }}</label>

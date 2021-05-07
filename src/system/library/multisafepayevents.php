@@ -297,8 +297,8 @@ class Multisafepayevents {
         if ($method && $extension['code'] === 'multisafepay' && !$recurring) {
             $methods = $this->{$this->non_standart_model_call . '_payment_'.$extension['code']}->getMethods($this->session->data['payment_address'],
                 $total);
-            foreach ($methods as $msp_method) {
-                $method_data[$msp_method['code']] = $msp_method;
+            foreach ($methods as $multisafepay_method) {
+                $method_data[$multisafepay_method['code']] = $multisafepay_method;
             }
         }
         if ($method && $extension['code'] !== 'multisafepay' && $recurring) {
@@ -326,8 +326,8 @@ class Multisafepayevents {
         $this->load->model($this->extension_directory_route . 'payment/' . $extension['code']);
         $methods = $this->{$this->non_standart_model_call . '_payment_' . $extension['code']}->getMethods($address, $total);
         if ($methods) {
-            foreach ($methods as $msp_method) {
-                $payment_methods[$msp_method['code']] = $msp_method;
+            foreach ($methods as $multisafepay_method) {
+                $payment_methods[$multisafepay_method['code']] = $multisafepay_method;
             }
         }
         return $payment_methods;
@@ -621,7 +621,7 @@ class Multisafepayevents {
                 $transaction_manager->update($order_id, $update_order);
             }
             if( (strpos($order_info['payment_code'], 'multisafepay') !== false) && $this->{$this->model_call}->getSettingValue($this->key_prefix . 'multisafepay_debug_mode', $order_info['store_id'])) {
-                $this->log->write('OpenCart Event to send invoice ID: ' . $invoice_id . ' to MSP, for Order ID '.$order_id);
+                $this->log->write('OpenCart Event to send invoice ID: ' . $invoice_id . ' to MultiSafepay, for Order ID '.$order_id);
             }
         }
     }
@@ -663,9 +663,9 @@ class Multisafepayevents {
         $order_info = $this->model_sale_order->getOrder($args['order_id']);
 
         $this->registry->set('multisafepay', new Multisafepay($this->registry));
-        $msp_order = $this->multisafepay->getAdminOrderObject($args['order_id']);
+        $multisafepay_order = $this->multisafepay->getAdminOrderObject($args['order_id']);
 
-        if($msp_order && $msp_order->getTransactionId()) {
+        if($multisafepay_order && $multisafepay_order->getTransactionId()) {
 
             if( (strpos($order_info['payment_code'], 'multisafepay') !== false) && $this->user->hasPermission('access', $this->route) ) {
 
@@ -733,9 +733,9 @@ class Multisafepayevents {
         $order_info = $this->model_sale_order->getOrder($args['order_id']);
 
         $this->registry->set('multisafepay', new Multisafepay($this->registry));
-        $msp_order = $this->multisafepay->getAdminOrderObject($args['order_id']);
+        $multisafepay_order = $this->multisafepay->getAdminOrderObject($args['order_id']);
 
-        if($msp_order && $msp_order->getTransactionId()) {
+        if($multisafepay_order && $multisafepay_order->getTransactionId()) {
 
             if( (strpos($order_info['payment_code'], 'multisafepay') !== false) && $this->user->hasPermission('access', $this->route) ) {
 
@@ -843,15 +843,15 @@ class Multisafepayevents {
             'gateway'  => $gateway
         );
 
-        $msp_order = $this->multisafepay->getOrderRequestObject($order_request);
-        $order_request = $this->multisafepay->processOrderRequestObject($msp_order);
+        $multisafepay_order = $this->multisafepay->getOrderRequestObject($order_request);
+        $order_request = $this->multisafepay->processOrderRequestObject($multisafepay_order);
 
         if ($order_request->getPaymentUrl()) {
 
             $payment_link = $order_request->getPaymentUrl();
 
             if ($this->config->get($this->key_prefix . 'multisafepay_debug_mode')) {
-                $this->log->write('Start transaction in MSP for order ID ' . $order_id . ' on ' . date($this->language->get('datetime_format')));
+                $this->log->write('Start transaction in MultiSafepay for order ID ' . $order_id . ' on ' . date($this->language->get('datetime_format')));
             }
 
             $args['text_instruction'] = $this->language->get('text_instructions');
@@ -899,14 +899,14 @@ class Multisafepayevents {
                 'gateway' => $gateway
             );
 
-            $msp_order = $this->multisafepay->getOrderRequestObject($order_request);
-            $order_request = $this->multisafepay->processOrderRequestObject($msp_order);
+            $multisafepay_order = $this->multisafepay->getOrderRequestObject($order_request);
+            $order_request = $this->multisafepay->processOrderRequestObject($multisafepay_order);
         }
 
         if ($order_request && $order_request->getPaymentUrl()) {
             $payment_link = $order_request->getPaymentUrl();
             if ($this->config->get($this->key_prefix . 'multisafepay_debug_mode')) {
-                $this->log->write('Start transaction in MSP for order ID ' . $order_id . ' on ' . date($this->language->get('datetime_format')));
+                $this->log->write('Start transaction in MultiSafepay for order ID ' . $order_id . ' on ' . date($this->language->get('datetime_format')));
             }
             $args[2] = sprintf($this->language->get('text_payment_link'), $payment_link, $payment_link);
             $args[3] = true;

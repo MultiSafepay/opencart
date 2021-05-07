@@ -131,6 +131,13 @@
                             </div>
                         </div>
                         <div class="tab-pane" id="tab-options">
+	                        <?php // Order Description ?>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" for="payment-multisafepay-order-description"><span data-toggle="tooltip" title="<?php echo $text_help_order_description; ?>"><?php echo $entry_multisafepay_order_description; ?></span></label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="multisafepay_order_description" value="<?php echo $multisafepay_order_description; ?>" id="payment-multisafepay-order-description" placeholder="<?php echo $entry_multisafepay_order_description; ?>" class="form-control" />
+                                </div>
+                            </div>
                             <?php // Google Analytics Account ID ?>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label" for="payment-multisafepay-google-analytics-account-id"><span data-toggle="tooltip" title="<?php echo $text_help_google_analytics_account_id; ?>"><?php echo $entry_multisafepay_google_analytics_account_id; ?></span></label>
@@ -547,6 +554,18 @@
                                                             </select>
                                                         </div>
                                                     </div>
+                                                    <?php // Switch to redirect -- ?>
+                                                    <?php if ($gateway['redirect_switch']) { ?>
+                                                    <div class="form-group">
+                                                        <label class="col-sm-2 control-label" for="payment-multisafepay-<?php echo $gateway['code']; ?>-redirect"><?php echo $entry_redirect_switch; ?></label>
+                                                        <div class="col-sm-10">
+                                                            <select name="multisafepay_<?php echo $gateway['code']; ?>_redirect" id="payment-multisafepay-<?php echo $gateway['code']; ?>-redirect" class="form-control">
+                                                                <option value="0" <?php if($payment_methods_fields_values[$gateway['code']]['redirect'] == 0) { ?> selected <?php } ?>><?php echo $text_disabled; ?></option>
+                                                                <option value="1" <?php if($payment_methods_fields_values[$gateway['code']]['redirect'] == 1) { ?> selected <?php } ?>><?php echo $text_enabled; ?></option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+	                                                <?php } ?>
                                                     <?php // Sort Order ?>
                                                     <div class="form-group">
                                                         <label class="col-sm-2 control-label" for="payment-multisafepay-<?php echo $gateway['code']; ?>-sort-order"><?php echo $entry_sort_order; ?></label>
