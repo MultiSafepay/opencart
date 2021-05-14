@@ -803,14 +803,15 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
     public function getOrderStatusInitialized($gateway_details = false) {
 
         if(!$gateway_details) {
-            return $this->config->get('payment_multisafepay_order_status_id_initialized');
+            return $this->config->get($this->key_prefix . 'multisafepay_order_status_id_initialized');
         }
 
-        $order_status_id_initialized_key = 'payment_multisafepay_' . $gateway_details['code'] . '_order_status_id_initialized';
+
+        $order_status_id_initialized_key = $this->key_prefix . 'multisafepay_' . $gateway_details['code'] . '_order_status_id_initialized';
         $custom_order_status_id_initialized = $this->config->get($order_status_id_initialized_key);
 
         if(!$custom_order_status_id_initialized) {
-            return $this->config->get('payment_multisafepay_order_status_id_initialized');
+            return $this->config->get($this->key_prefix . 'multisafepay_order_status_id_initialized');
         }
 
         return $custom_order_status_id_initialized;
