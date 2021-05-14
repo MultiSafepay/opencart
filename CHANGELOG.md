@@ -6,6 +6,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ***
 
+## 3.10.1
+Release date: May, 14th 2021
+
+### Fixed
++ PLGOPNS-403: Fix bug when retrieve the initial order status for OC 2.X versions during notification
+
+***
+
 ## 3.10.0
 Release date: May, 7th 2021
 
