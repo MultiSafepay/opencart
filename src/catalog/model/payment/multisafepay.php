@@ -270,6 +270,18 @@ class ModelExtensionPaymentMultiSafePay extends Model {
     }
 
 	/**
+	 * Return all gift vouchers lines for a giver order_id
+	 *
+	 * @param int $order_id
+	 * @return array
+	 *
+	 */
+	public function getOrderVouchers($order_id) {
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_voucher WHERE order_id = '" . (int)$order_id . "'");
+		return $query->rows;
+	}
+
+	/**
 	 * Return the id of the next invoice number
 	 *
 	 * @param int $order_id
