@@ -885,7 +885,7 @@ class Multisafepayevents {
 	    $order_request = false;
         $this->load->model('checkout/order');
         $order_info = $this->model_checkout_order->getOrder($args[0]);
-        if ((strpos($order_info['payment_code'], 'multisafepay') !== false) && ($order_status_id === $this->config->get($this->key_prefix . 'multisafepay_order_status_id_initialize_payment_request'))) {
+        if ((strpos($order_info['payment_code'], 'multisafepay') !== false) && ($order_status_id === $this->config->get($this->key_prefix . 'multisafepay_order_status_id_initialize_payment_request')) && 0 === (int)$order_info['order_status_id']) {
             $this->registry->set('multisafepay', new Multisafepay($this->registry));
             $order_payment_code = $order_info['payment_code'];
             $gateway_info = $this->multisafepay->getGatewayByPaymentCode($order_info['payment_code']);
