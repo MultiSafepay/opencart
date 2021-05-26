@@ -6,6 +6,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ***
 
+## 3.10.3
+Release date: May, 26th 2021
+
+### Fixed
++ PLGOPNS-407: Fix bug change order status  when the order status selected is the one used to generate payment links in OC 2.3 versions
+
+***
+
 ## 3.10.2
 Release date: May, 19th 2021
 
