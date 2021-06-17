@@ -784,7 +784,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
 
         if (!$order_status_id && $order_status_id != $current_order_status && $this->config->get($this->key_prefix . 'multisafepay_debug_mode')) {
 	        $comment = sprintf($this->language->get('text_comment_callback'), $order_id, $timestamp, $status, $psp_id);
-	        $this->model_checkout_order->addOrderHistory($order_id, $current_order_status, $comment, true);
+	        $this->model_checkout_order->addOrderHistory($order_id, $current_order_status, $comment, false);
             $this->log->write('Callback received for Order ID ' . $order_id . ', has not been process.');
         }
 
