@@ -1116,18 +1116,18 @@ class Multisafepay {
             }
         }
 
-        if ($has_shipping) {
+        if ($has_shipping !== false) {
             $shipping_tax_class_id = $this->getShippingTaxClassId($order_info['shipping_code']);
             if ($shipping_tax_class_id) {
                 $fixed_taxes_items = $this->addToArrayOfFixedTaxes($order_totals[$has_shipping]['value'], $shipping_tax_class_id, $fixed_taxes_items);
             }
         }
 
-        if ($has_handling) {
+        if ($has_handling !== false) {
             $fixed_taxes_items = $this->extractFixedTaxesFromHandlingLowOrderFee($order_totals, $fixed_taxes_items, $has_handling, 'handling');
         }
 
-        if ($has_low_order_fee) {
+        if ($has_low_order_fee !== false) {
             $fixed_taxes_items = $this->extractFixedTaxesFromHandlingLowOrderFee($product, $fixed_taxes_items, $has_low_order_fee, 'low_order_fee');
         }
 
@@ -1240,7 +1240,7 @@ class Multisafepay {
     public function getOrderVouchers($order_id) {
 	    $order_totals = $this->getOrderTotals($order_id);
 	    $has_vouchers = array_search('voucher', array_column($order_totals, 'code'));
-	    if (!$has_vouchers) {
+	    if ($has_vouchers === false) {
 		    return false;
 	    }
 	    $vouchers_info = array();
@@ -1287,7 +1287,7 @@ class Multisafepay {
     public function getCouponInfo($order_id) {
         $order_totals = $this->getOrderTotals($order_id);
         $has_coupons = array_search('coupon', array_column($order_totals, 'code'));
-        if (!$has_coupons) {
+        if ($has_coupons === false) {
             return false;
         }
         $this->load->model($this->route);
@@ -1307,7 +1307,7 @@ class Multisafepay {
     private function getShippingInfo($order_id) {
         $order_totals = $this->getOrderTotals($order_id);
         $has_shipping = array_search('shipping', array_column($order_totals, 'code'));
-        if (!$has_shipping) {
+        if ($has_shipping === false) {
             return false;
         }
         $order_info = $this->getOrderInfo($order_id);
@@ -1528,7 +1528,7 @@ class Multisafepay {
     private function getHandlingFeeInfo($order_id) {
         $order_totals = $this->getOrderTotals($order_id);
         $has_handling_fee = array_search('handling', array_column($order_totals, 'code'));
-        if (!$has_handling_fee) {
+        if ($has_handling_fee === false) {
             return false;
         }
 
@@ -1577,7 +1577,7 @@ class Multisafepay {
     private function getLowOrderFeeInfo($order_id) {
         $order_totals = $this->getOrderTotals($order_id);
         $has_low_order_fee = array_search('low_order_fee', array_column($order_totals, 'code'));
-        if (!$has_low_order_fee) {
+        if ($has_low_order_fee === false) {
             return false;
         }
 
@@ -1623,7 +1623,7 @@ class Multisafepay {
     private function getRewardInfo($order_id) {
         $order_totals = $this->getOrderTotals($order_id);
         $has_reward = array_search('reward', array_column($order_totals, 'code'));
-        if (!$has_reward) {
+        if ($has_reward === false) {
             return false;
         }
 
@@ -2391,7 +2391,7 @@ class Multisafepay {
         $gateways = $this->getGateways();
         $gateway_key = array_search($gateway_id, array_column($gateways, 'id'));
 
-        if(!$gateway_key) {
+        if($gateway_key === false) {
             return false;
         }
 
@@ -2411,7 +2411,7 @@ class Multisafepay {
         $gateways = $this->getGateways();
         $gateway_key = array_search($payment_code, array_column($gateways, 'route'));
 
-        if(!$gateway_key) {
+        if($gateway_key === false) {
             return false;
         }
 
