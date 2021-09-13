@@ -6,6 +6,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ***
 
+## 3.10.5
+Release date: Sep, 13th 2021
+
+### Fixed
++ PLGOPNS-416: Fix ShoppingCart using stricter comparison statements, where some items were not being included in the cart in case their position in the checkout was defined as 0
++ PLGOPNS-417: Fix Gift Vouchers support to include them in the cart correctly when these were a product, or when they are a discount.
+
+### Changed
++ PLGOPNS-384: Upgrade PHP-SDK to 5.2.1
+
+***
+
 ## 3.10.4
 Release date: Jun, 17th 2021
 
