@@ -81,6 +81,14 @@ class Multisafepay {
             $shopping_cart_items[$this->config->get($this->total_extension_key_prefix . 'sub_total_sort_order')][] = $shopping_cart_item;
         }
 
+        // Gift Cards - Vouchers
+	    $vouchers_in_cart = $this->getOrderVouchersItemsInCart($order_id);
+	    if ($vouchers_in_cart) {
+		    foreach ($vouchers_in_cart as $voucher_in_cart) {
+			    $shopping_cart_items[$this->config->get($this->total_extension_key_prefix . 'sub_total_sort_order')][] = $this->getOrderVouchersItem($order_id, $voucher_in_cart);
+		    }
+	    }
+
         // Shipping Cost
         $shipping_info = $this->getShippingInfo($order_id);
         if ($shipping_info) {
@@ -1223,16 +1231,24 @@ class Multisafepay {
     }
 
 	/**
-	 * Returns vouchers information.
+	 * Returns vouchers information to be included as discount.
 	 *
 	 * @param int $order_id
 	 * @return array $order_vouchers
 	 *
 	 */
     public function getOrderVouchers($order_id) {
-	    $this->load->model($this->route);
-	    $order_vouchers = $this->{$this->model_call}->getOrderVouchers($order_id);
-	    return $order_vouchers;
+	    $order_totals = $this->getOrderTotals($order_id);
+	    $has_vouchers = array_search('voucher', array_column($order_totals, 'code'));
+	    if (!$has_vouchers) {
+		    return false;
+	    }
+	    $vouchers_info = array();
+	    $vouchers_info[] = array(
+		    'amount'           => $order_totals[$has_vouchers]['value'],
+		    'description'      => $this->htmlEntityDecode($order_totals[$has_vouchers]['title'])
+	    );
+	    return $vouchers_info;
     }
 
     /**
@@ -1670,6 +1686,27 @@ class Multisafepay {
         );
     }
 
+	/**
+	 * Returns vouchers information to be included as product.
+	 *
+	 * @param int $order_id
+	 * @return array $order_vouchers
+	 *
+	 */
+	public function getOrderVouchersItemsInCart($order_id) {
+		$this->load->model( $this->route );
+		$order_vouchers = $this->{$this->model_call}->getOrderVouchers( $order_id );
+		$voucher_info = array();
+		foreach ($order_vouchers as $order_voucher) {
+			$voucher_info[] = array(
+				'order_voucher_id' => $order_voucher['order_voucher_id'],
+				'value'            => $order_voucher['amount'],
+				'title'            => $this->htmlEntityDecode($order_voucher['description']),
+			);
+		}
+		return $voucher_info;
+	}
+
     /**
      * Returns voucher information if exist, or false.
      *
@@ -1685,7 +1722,6 @@ class Multisafepay {
 	    $voucher_info = array();
         foreach ($order_vouchers as $order_voucher) {
 	        $voucher_info[] = array(
-		        'order_voucher_id' => $order_voucher['order_voucher_id'],
 	        	'value'            => $order_voucher['amount'],
 		        'title'            => $this->htmlEntityDecode($order_voucher['description']),
 	        );
@@ -1715,6 +1751,18 @@ class Multisafepay {
 	        );
         }
         return $cart_items;
+    }
+
+    private function getOrderVouchersItem($order_id, $voucher_info) {
+	    $order_info = $this->getOrderInfo($order_id);
+	    return $this->getCartItemObject(
+		    $voucher_info['value'],
+		    $order_info,
+		    $voucher_info['title'],
+		    1,
+		    $voucher_info['order_voucher_id'],
+		    0
+	    );
     }
 
     /**
