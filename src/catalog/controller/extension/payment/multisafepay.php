@@ -708,8 +708,15 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
         $order_id = $this->request->get['transactionid'];
         $timestamp = date($this->language->get('datetime_format'));
         $order_info = $this->model_checkout_order->getOrder($order_id);
-        $current_order_status = $order_info['order_status_id'];
 
+	    if ( strpos( $order_info['payment_code'], 'multisafepay' ) === false ) {
+		    $this->log->write('Callback received for an order which currently do not have a MultiSafepay payment method assigned.');
+		    $this->response->addHeader('Content-type: text/plain');
+		    $this->response->setOutput('OK');
+		    return;
+	    }
+
+        $current_order_status = $order_info['order_status_id'];
         $this->registry->set('multisafepay', new Multisafepay($this->registry));
 	    $sdk = $this->multisafepay->getSdkObject($order_info['store_id']);
         $transaction_manager = $sdk->getTransactionManager();
