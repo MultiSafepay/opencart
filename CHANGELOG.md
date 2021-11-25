@@ -6,6 +6,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ***
 
+## 3.11.0
+Release date: Nov, 25th 2021
+
+### Added
++ DAVAMS-415: Add support for POST Notifications
+
+### Fixed
++ PLGOPNS-421: Fix error in OpenCart 3.0.3.8, which was not declared as supported version
++ PLGOPNS-414: Avoid changing the order status, when an order initially created using a MultiSafepay payment method has been edited in admin changing to a non MultiSafepay payment method
+
+***
+
 ## 3.10.5
 Release date: Sep, 13th 2021
 
