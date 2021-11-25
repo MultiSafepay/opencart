@@ -664,120 +664,232 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
         }
     }
 
-    /**
-     *  Handles the callback from MultiSafepay
-     *
-     * @return bool|void
-     */
-    public function callback() {
+	/**
+	 * Process POST and GET notifications.
+	 *
+	 * @param array $order_info
+	 * @param MultiSafepay\Api\Transactions\TransactionResponse $transaction
+	 */
+    private function processCallBack($order_id, $transaction) {
 
-        if (!isset($this->request->get['transactionid']) || empty($this->request->get['transactionid'])) {
-            return false;
-        }
+	    $timestamp = date($this->language->get('datetime_format'));
+	    $this->load->model('checkout/order');
+	    $this->load->model($this->route);
+	    $order_info = $this->model_checkout_order->getOrder($order_id);
 
-        if ($this->config->get($this->key_prefix . 'multisafepay_debug_mode')) {
-            $this->log->write('Callback received for Order ID ' . $this->request->get['transactionid']);
-        }
+	    $this->registry->set('multisafepay', new Multisafepay($this->registry));
+	    $current_order_status = $order_info['order_status_id'];
+	    $psp_id = $transaction->getTransactionId();
+	    $payment_details = $transaction->getPaymentDetails();
+	    $gateway_id = $payment_details->getType();
+	    $gateway_details = $this->multisafepay->getGatewayById($gateway_id);
+	    $status = $transaction->getStatus();
 
-        $this->load->model('checkout/order');
-        $this->load->model($this->route);
-
-
-        // Start transaction in MultiSafepay.
-        $order_id = $this->request->get['transactionid'];
-        $timestamp = date($this->language->get('datetime_format'));
-        $order_info = $this->model_checkout_order->getOrder($order_id);
-
-	    if ( strpos( $order_info['payment_code'], 'multisafepay' ) === false ) {
-		    $this->log->write('Callback received for an order which currently do not have a MultiSafepay payment method assigned.');
-		    $this->response->addHeader('Content-type: text/plain');
-		    $this->response->setOutput('OK');
-		    return;
+	    switch ($status) {
+		    case 'completed':
+			    $order_status_id = $this->config->get($this->key_prefix . 'multisafepay_order_status_id_completed');
+			    break;
+		    case 'uncleared':
+			    $order_status_id = $this->config->get($this->key_prefix . 'multisafepay_order_status_id_uncleared');
+			    break;
+		    case 'reserved':
+			    $order_status_id = $this->config->get($this->key_prefix . 'multisafepay_order_status_id_reserved');
+			    break;
+		    case 'void':
+			    $order_status_id = $this->config->get($this->key_prefix . 'multisafepay_order_status_id_void');
+			    break;
+		    case 'cancelled':
+			    $order_status_id = $this->config->get($this->key_prefix . 'multisafepay_order_status_id_cancelled');
+			    break;
+		    case 'declined':
+			    $order_status_id = $this->config->get($this->key_prefix . 'multisafepay_order_status_id_declined');
+			    break;
+		    case 'reversed':
+			    $order_status_id = $this->config->get($this->key_prefix . 'multisafepay_order_status_id_reversed');
+			    break;
+		    case 'refunded':
+			    $order_status_id = $this->config->get($this->key_prefix . 'multisafepay_order_status_id_refunded');
+			    break;
+		    case 'partial_refunded':
+			    $order_status_id = $this->config->get($this->key_prefix . 'multisafepay_order_status_id_partial_refunded');
+			    break;
+		    case 'expired':
+			    $order_status_id = $this->config->get($this->key_prefix . 'multisafepay_order_status_id_expired');
+			    break;
+		    case 'shipped':
+			    $order_status_id = $this->config->get($this->key_prefix . 'multisafepay_order_status_id_shipped');
+			    break;
+		    case 'initialized':
+			    $order_status_id = $this->getOrderStatusInitialized($gateway_details);
+			    break;
+		    default:
+			    $order_status_id = $this->config->get($this->key_prefix . 'multisafepay_order_status_id_initialized');
+			    break;
 	    }
 
-        $current_order_status = $order_info['order_status_id'];
-        $this->registry->set('multisafepay', new Multisafepay($this->registry));
-	    $sdk = $this->multisafepay->getSdkObject($order_info['store_id']);
-        $transaction_manager = $sdk->getTransactionManager();
-        $transaction = $transaction_manager->get($order_id);
-        $psp_id = $transaction->getTransactionId();
-        $payment_details = $transaction->getPaymentDetails();
-        $gateway_id = $payment_details->getType();
-        $gateway_details = $this->multisafepay->getGatewayById($gateway_id);
-        $status = $transaction->getStatus();
-
-        switch ($status) {
-            case 'completed':
-                $order_status_id = $this->config->get($this->key_prefix . 'multisafepay_order_status_id_completed');
-                break;
-            case 'uncleared':
-                $order_status_id = $this->config->get($this->key_prefix . 'multisafepay_order_status_id_uncleared');
-                break;
-            case 'reserved':
-                $order_status_id = $this->config->get($this->key_prefix . 'multisafepay_order_status_id_reserved');
-                break;
-            case 'void':
-                $order_status_id = $this->config->get($this->key_prefix . 'multisafepay_order_status_id_void');
-                break;
-            case 'cancelled':
-                $order_status_id = $this->config->get($this->key_prefix . 'multisafepay_order_status_id_cancelled');
-                break;
-            case 'declined':
-                $order_status_id = $this->config->get($this->key_prefix . 'multisafepay_order_status_id_declined');
-                break;
-            case 'reversed':
-                $order_status_id = $this->config->get($this->key_prefix . 'multisafepay_order_status_id_reversed');
-                break;
-            case 'refunded':
-                $order_status_id = $this->config->get($this->key_prefix . 'multisafepay_order_status_id_refunded');
-                break;
-            case 'partial_refunded':
-                $order_status_id = $this->config->get($this->key_prefix . 'multisafepay_order_status_id_partial_refunded');
-                break;
-            case 'expired':
-                $order_status_id = $this->config->get($this->key_prefix . 'multisafepay_order_status_id_expired');
-                break;
-            case 'shipped':
-                $order_status_id = $this->config->get($this->key_prefix . 'multisafepay_order_status_id_shipped');
-                break;
-            case 'initialized':
-                $order_status_id = $this->getOrderStatusInitialized($gateway_details);
-                break;
-            default:
-                $order_status_id = $this->config->get($this->key_prefix . 'multisafepay_order_status_id_initialized');
-                break;
-        }
-
-        if($gateway_details && $gateway_details['route'] != $order_info['payment_code']) {
-            $this->log->write('Callback received with a different payment method for ' . $order_id . ' on ' . $timestamp . ' with status: ' . $status . ', and PSP ID: ' . $psp_id . '. and payment method pass from ' . $order_info['payment_method'] . ' to '. $gateway_details['description'] .'.');
-            $this->{$this->model_call}->editOrderPaymentMethod($order_id, $gateway_details);
-        }
+	    if($gateway_details && $gateway_details['route'] != $order_info['payment_code']) {
+		    $this->log->write('Callback received with a different payment method for ' . $order_id . ' on ' . $timestamp . ' with status: ' . $status . ', and PSP ID: ' . $psp_id . '. and payment method pass from ' . $order_info['payment_method'] . ' to '. $gateway_details['description'] .'.');
+		    $this->{$this->model_call}->editOrderPaymentMethod($order_id, $gateway_details);
+	    }
 
 	    if(!$gateway_details) {
 		    $this->log->write('Callback received with a non registered payment method for ' . $order_id . ' on ' . $timestamp . ' with status: ' . $status . ', and PSP ID: ' . $psp_id );
 	    }
 
-        if ($order_status_id && $order_status_id != $current_order_status) {
-            if ($this->config->get($this->key_prefix . 'multisafepay_debug_mode')) {
-                $this->log->write('Callback received for Order ID ' . $order_id . ' on ' . $timestamp . ' with status: ' . $status . ', and PSP ID: ' . $psp_id . '.');
-            }
-            $comment = '';
-            if($current_order_status != 0) {
-                $comment .= sprintf($this->language->get('text_comment_callback'), $order_id, $timestamp, $status, $psp_id);
-            }
-	        $this->model_checkout_order->addOrderHistory($order_id, $order_status_id, $comment, true);
-        }
+	    if ($order_status_id && $order_status_id != $current_order_status) {
+		    if ($this->config->get($this->key_prefix . 'multisafepay_debug_mode')) {
+			    $this->log->write('Callback received for Order ID ' . $order_id . ' on ' . $timestamp . ' with status: ' . $status . ', and PSP ID: ' . $psp_id . '.');
+		    }
+		    $comment = '';
+		    if($current_order_status != 0) {
+			    $comment .= sprintf($this->language->get('text_comment_callback'), $order_id, $timestamp, $status, $psp_id);
+		    }
+		    $this->model_checkout_order->addOrderHistory($order_id, $order_status_id, $comment, true);
+	    }
 
-        if (!$order_status_id && $order_status_id != $current_order_status && $this->config->get($this->key_prefix . 'multisafepay_debug_mode')) {
-	        $comment = sprintf($this->language->get('text_comment_callback'), $order_id, $timestamp, $status, $psp_id);
-	        $this->model_checkout_order->addOrderHistory($order_id, $current_order_status, $comment, false);
-            $this->log->write('Callback received for Order ID ' . $order_id . ', has not been process.');
-        }
+	    if (!$order_status_id && $order_status_id != $current_order_status && $this->config->get($this->key_prefix . 'multisafepay_debug_mode')) {
+		    $comment = sprintf($this->language->get('text_comment_callback'), $order_id, $timestamp, $status, $psp_id);
+		    $this->model_checkout_order->addOrderHistory($order_id, $current_order_status, $comment, false);
+		    $this->log->write('Callback received for Order ID ' . $order_id . ', has not been process.');
+	    }
 
-        $this->response->addHeader('Content-type: text/plain');
+	    $this->response->addHeader('Content-type: text/plain');
 	    $this->response->setOutput('OK');
 
     }
+
+	/**
+	 * Handles the callback from MultiSafepay using POST method
+	 *
+	 * @return bool|void
+	 */
+	public function postCallback() {
+		// Check for required query arguments
+		if(!$this->checkRequiredArgumentsInNotification()) {
+			return;
+		}
+
+		// Check if the order exist in the shop and belongs to MultiSafepay.
+		if(!$this->checkIfOrderExistAndBelongsToMultiSafepay()) {
+			return;
+		}
+
+		// Check if POST notification is empty
+		if(!$this->checkIfPostBodyNotEmpty()) {
+			return;
+		}
+
+		$body = file_get_contents('php://input');
+
+		// Check if signature is valid
+		if(!$this->checkIfSignatureIsValid($body)) {
+			return;
+		}
+
+		$this->registry->set('multisafepay', new Multisafepay($this->registry));
+		$transaction = $this->multisafepay->getTransactionFromPostNotification($body);
+
+		$this->processCallBack($this->request->get['transactionid'], $transaction);
+
+	}
+
+    /**
+     * Handles the callback from MultiSafepay
+     *
+     * @return bool|void
+     */
+    public function callback() {
+    	// Check for required query arguments
+	    if(!$this->checkRequiredArgumentsInNotification()) {
+	    	return;
+	    }
+
+	    // Check if the order exist in the shop and belongs to MultiSafepay.
+	    if(!$this->checkIfOrderExistAndBelongsToMultiSafepay()) {
+		    return;
+	    }
+
+		// Get the transaction information from MultiSafepay via API request
+	    $this->registry->set('multisafepay', new Multisafepay($this->registry));
+	    $sdk = $this->multisafepay->getSdkObject($this->config->get('config_store_id'));
+	    $transaction_manager = $sdk->getTransactionManager();
+	    $transaction = $transaction_manager->get($this->request->get['transactionid']);
+
+	    // Process the notification
+	    $this->processCallBack($this->request->get['transactionid'], $transaction);
+    }
+
+	/**
+	 * Check required query arguments are present in the notification
+	 *
+	 * @return bool
+	 */
+    private function checkRequiredArgumentsInNotification() {
+	    $required_arguments = array('transactionid', 'timestamp');
+	    foreach ($required_arguments as $required_argument) {
+		    if (empty($this->request->get[$required_argument])) {
+			    $this->log->write("It seems the notification URL has been triggered but does't contain the required query arguments");
+			    $this->response->addHeader('Content-type: text/plain');
+			    $this->response->setOutput('OK');
+			    return false;
+		    }
+	    }
+	    return true;
+    }
+
+	/**
+	 * Check if the order exist in the shop and belongs to MultiSafepay.
+	 *
+	 * @return bool
+	 */
+	private function checkIfOrderExistAndBelongsToMultiSafepay() {
+		$this->load->model('checkout/order');
+		$order_info = $this->model_checkout_order->getOrder($this->request->get['transactionid']);
+		if ( strpos( $order_info['payment_code'], 'multisafepay' ) === false ) {
+			$this->log->write('Callback received for an order which currently do not have a MultiSafepay payment method assigned.');
+			$this->response->addHeader('Content-type: text/plain');
+			$this->response->setOutput('OK');
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * Check if POST notification is empty
+	 *
+	 * @return bool
+	 */
+	private function checkIfPostBodyNotEmpty() {
+		if (empty(file_get_contents('php://input'))) {
+			$message = "It seems the notification URL has been triggered but doesn't contain a body in the POST request";
+			$this->log->write($message);
+			$this->response->addHeader('Content-type: text/plain');
+			$this->response->setOutput('OK');
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * Check if the signature of a POST request is valid
+	 *
+	 * @return bool
+	 */
+	private function checkIfSignatureIsValid($body) {
+		$this->load->model($this->route);
+		$environment = $this->{$this->model_call}->getSettingValue($this->key_prefix . 'multisafepay_environment', $this->config->get('config_store_id'));
+		$environment = (empty($environment) ? true : false);
+		$api_key = (($environment) ? $this->{$this->model_call}->getSettingValue($this->key_prefix . 'multisafepay_api_key', $this->config->get('config_store_id')) : $this->{$this->model_call}->getSettingValue($this->key_prefix . 'multisafepay_sandbox_api_key', $this->config->get('config_store_id')));
+		$this->registry->set('multisafepay', new Multisafepay($this->registry));
+		if (!$this->multisafepay->verifyNotification($body, $_SERVER['HTTP_AUTH'], $api_key)) {
+			$message = "Notification for transaction ID " . $this->request->get['transactionid'] . " has been received but is not valid";
+			$this->log->write($message);
+			$this->response->addHeader('Content-type: text/plain');
+			$this->response->setOutput('OK');
+			return false;
+		}
+		return true;
+	}
 
     /**
      * Return custom order status id initialized when this one has been set

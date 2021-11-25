@@ -531,8 +531,7 @@ class Multisafepay {
      */
     public function getPaymentOptionsObject() {
         $payment_options_details = new \MultiSafepay\Api\Transactions\OrderRequest\Arguments\PaymentOptions();
-        $payment_options_details->addNotificationMethod('GET');
-        $payment_options_details->addNotificationUrl($this->url->link($this->route . '/callback', '', 'SSL'));
+        $payment_options_details->addNotificationUrl($this->url->link($this->route . '/postCallback', '', 'SSL'));
         $payment_options_details->addRedirectUrl($this->url->link('checkout/success', '', 'SSL'));
         $payment_options_details->addCancelUrl($this->url->link('checkout/checkout', '', 'SSL'));
         return $payment_options_details;
@@ -2378,7 +2377,6 @@ class Multisafepay {
 
     }
 
-
     /**
      * Return gateway by gateway payment code
      *
@@ -2415,7 +2413,6 @@ class Multisafepay {
 		}
 		return $gateways_requested;
 	}
-
 
     /**
      * Return ordered gateways
@@ -2492,5 +2489,37 @@ class Multisafepay {
 
         return $available_gateways;
     }
+
+	/**
+	 * Verify the signature of a POST notification
+	 *
+	 * @param $body
+	 * @param $auth
+	 * @param $api_key
+	 *
+	 * @return bool
+	 */
+    public function verifyNotification($body, $auth, $api_key) {
+	    require_once(DIR_SYSTEM . 'library/multisafepay/vendor/autoload.php');
+	    if (\MultiSafepay\Util\Notification::verifyNotification($body, $auth, $api_key)) {
+	    	return true;
+	    }
+	    return false;
+    }
+
+	/**
+	 * @param $body
+	 *
+	 * @return false|\MultiSafepay\Api\Transactions\TransactionResponse
+	 */
+    public function getTransactionFromPostNotification($body) {
+	    require_once(DIR_SYSTEM . 'library/multisafepay/vendor/autoload.php');
+    	try {
+		    $transaction = new MultiSafepay\Api\Transactions\TransactionResponse(json_decode($body, true), $body);
+		    return $transaction;
+	    } catch (\MultiSafepay\Exception\ApiException $apiException) {
+		    return false;
+	    }
+	}
 
 }
