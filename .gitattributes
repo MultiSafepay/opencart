@@ -10,3 +10,4 @@
 /src/system/library/session  export-ignore
 /src/catalog/controller/startup export-ignore
 /src/admin/controller/startup export-ignore
+/.editorconfig export-ignore

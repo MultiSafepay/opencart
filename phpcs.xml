@@ -68,7 +68,7 @@
         <exclude-pattern>*/src/system/library/multisafepay.php</exclude-pattern>
         <properties>
             <!-- goal is 10 -->
-            <property name="maxCount" value="70"/>
+            <property name="maxCount" value="80"/>
         </properties>
     </rule>
 
