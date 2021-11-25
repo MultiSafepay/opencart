@@ -176,7 +176,7 @@ class MultiSafePaySystemTest extends MultisafepayTestSuiteForOpenCart {
         $this->assertEquals('246086', $response['amount']);
 
         // Payment Options
-        $this->assertContains("index.php?route=" . $this->multisafepay_version_control->getExtensionRoute() . "/callback", $response['payment_options']['notification_url']);
+        $this->assertContains("index.php?route=" . $this->multisafepay_version_control->getExtensionRoute() . "/postCallback", $response['payment_options']['notification_url']);
         $this->assertContains("index.php?route=checkout/success", $response['payment_options']['redirect_url']);
         $this->assertContains("index.php?route=checkout/checkout", $response['payment_options']['cancel_url']);
         $this->assertEquals('1', $response['payment_options']['close_window']);
@@ -330,7 +330,7 @@ class MultiSafePaySystemTest extends MultisafepayTestSuiteForOpenCart {
         $this->assertIsInt($response['amount']);
 
         // Payment Options
-        $this->assertContains("index.php?route=" . $this->multisafepay_version_control->getExtensionRoute() . "/callback", $response['payment_options']['notification_url']);
+        $this->assertContains("index.php?route=" . $this->multisafepay_version_control->getExtensionRoute() . "/postCallback", $response['payment_options']['notification_url']);
         $this->assertContains("index.php?route=checkout/success", $response['payment_options']['redirect_url']);
         $this->assertContains("index.php?route=checkout/checkout", $response['payment_options']['cancel_url']);
         $this->assertEquals('1', $response['payment_options']['close_window']);
@@ -540,7 +540,7 @@ class MultiSafePaySystemTest extends MultisafepayTestSuiteForOpenCart {
         $this->assertIsInt($response['amount']);
 
         // Payment Options
-        $this->assertContains("index.php?route=" . $this->multisafepay_version_control->getExtensionRoute() . "/callback", $response['payment_options']['notification_url']);
+        $this->assertContains("index.php?route=" . $this->multisafepay_version_control->getExtensionRoute() . "/postCallback", $response['payment_options']['notification_url']);
         $this->assertContains("index.php?route=checkout/success", $response['payment_options']['redirect_url']);
         $this->assertContains("index.php?route=checkout/checkout", $response['payment_options']['cancel_url']);
         $this->assertEquals('1', $response['payment_options']['close_window']);
@@ -636,7 +636,7 @@ class MultiSafePaySystemTest extends MultisafepayTestSuiteForOpenCart {
         $this->assertIsInt($response['amount']);
 
         // Payment Options
-        $this->assertContains("index.php?route=" . $this->multisafepay_version_control->getExtensionRoute() . "/callback", $response['payment_options']['notification_url']);
+        $this->assertContains("index.php?route=" . $this->multisafepay_version_control->getExtensionRoute() . "/postCallback", $response['payment_options']['notification_url']);
         $this->assertContains("index.php?route=checkout/success", $response['payment_options']['redirect_url']);
         $this->assertContains("index.php?route=checkout/checkout", $response['payment_options']['cancel_url']);
         $this->assertEquals('1', $response['payment_options']['close_window']);
@@ -733,7 +733,7 @@ class MultiSafePaySystemTest extends MultisafepayTestSuiteForOpenCart {
         $this->assertIsInt($response['amount']);
 
         // Payment Options
-        $this->assertContains("index.php?route=" . $this->multisafepay_version_control->getExtensionRoute() . "/callback", $response['payment_options']['notification_url']);
+        $this->assertContains("index.php?route=" . $this->multisafepay_version_control->getExtensionRoute() . "/postCallback", $response['payment_options']['notification_url']);
         $this->assertContains("index.php?route=checkout/success", $response['payment_options']['redirect_url']);
         $this->assertContains("index.php?route=checkout/checkout", $response['payment_options']['cancel_url']);
         $this->assertEquals('1', $response['payment_options']['close_window']);
