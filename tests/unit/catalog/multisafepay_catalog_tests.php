@@ -186,15 +186,6 @@ class CatalogControllerExtensionPaymentMultiSafePayTest extends MultisafepayTest
         $this->assertRegExp("/IDEALQR/", $multisafepay_response->getOutput());
     }
 
-    public function testFormPaymentMethodIng() {
-        $this->buildSessionPaymentData('multisafepay/ing', 'iDEAL');
-        $this->cart->add(28, 1);
-        $multisafepay_response = $this->dispatchAction('checkout/confirm');
-        $this->assertRegExp("/order_id/", $multisafepay_response->getOutput());
-        $this->assertRegExp("/direct/", $multisafepay_response->getOutput());
-        $this->assertRegExp("/INGHOME/", $multisafepay_response->getOutput());
-    }
-
     public function testFormPaymentMethodKbc() {
         $this->buildSessionPaymentData('multisafepay/kbc', 'KBC');
         $this->cart->add(28, 1);

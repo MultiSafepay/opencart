@@ -2101,17 +2101,6 @@ class Multisafepay {
                 'image' => 'ideal-qr'
             ),
             array(
-                'id' => 'INGHOME',
-                'code' => 'ing',
-                'route' => 'multisafepay/ing',
-                'description' => $this->language->get('text_title_ing_home_pay'),
-                'type' => 'gateway',
-                'redirect_switch' => false,
-                'docs' => sprintf($this->language->get('text_gateway_docs_info'), 'https://docs.multisafepay.com/payment-methods/banks/ing-home-pay/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_ing_home_pay')),
-                'brief_description' => $this->language->get('text_brief_description_ing'),
-                'image' => 'ing'
-            ),
-            array(
                 'id' => 'KBC',
                 'code' => 'kbc',
                 'route' => 'multisafepay/kbc',

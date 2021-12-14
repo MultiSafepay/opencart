@@ -356,16 +356,6 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
     }
 
     /**
-     * Handles the confirm order form for ING Home\'Pay payment method
-     */
-    public function ing() {
-        $data = $this->paymentMethodBase();
-        $data['gateway'] = 'INGHOME';
-        $data['type'] = 'direct';
-        return $this->multisafepay_version_control->getViewAccordingWithOcVersion($this->route . $this->view_extension_file, $data);
-    }
-
-    /**
      * Handles the confirm order form for KBC payment method
      */
     public function kbc() {

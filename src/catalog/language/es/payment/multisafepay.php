@@ -47,7 +47,6 @@ $_['text_title_giropay']                    = 'Giropay';
 $_['text_title_good4fun']                   = 'Good4fun Giftcard';
 $_['text_title_ideal']                      = 'iDEAL';
 $_['text_title_ideal_qr']                   = 'iDEAL QR';
-$_['text_title_ing_home_pay']               = 'ING Home\'Pay';
 $_['text_title_kbc']                        = 'KBC';
 $_['text_title_klarna']                     = 'Klarna - Compra ahora, paga después';
 $_['text_title_maestro']                    = 'Maestro';
