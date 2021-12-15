@@ -11,3 +11,4 @@
 /src/catalog/controller/startup export-ignore
 /src/admin/controller/startup export-ignore
 /.editorconfig export-ignore
+/ocmod-to-support-third-party-extensions export-ignore

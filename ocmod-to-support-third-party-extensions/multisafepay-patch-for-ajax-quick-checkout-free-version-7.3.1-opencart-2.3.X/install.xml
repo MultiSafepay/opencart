@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="utf-8"?>
+<modification>
+	<name>MultiSafepay: Patch for AJAX Quick Checkout 7.3.1 for OC version 2.3.X</name>
+    <version>1.0</version>
+    <code>MSP-AJAX-QUICK-CHECKOUT-PATCH</code>
+    <author>MultiSafepay</author>
+    <link>https://www.multisafepay.com</link>
+    <file path="catalog/view/theme/default/template/extension/payment/multisafepay.tpl">
+    	<operation info="Set validations in view file">
+            <search><![CDATA[<?php if($test_mode) { ?>]]></search>
+            <add position="replace" offset="168"><![CDATA[
+
+<style>.show-always {display: inline-block !important;}</style>
+<div class="ve-card">
+    <div class="ve-card__header">
+        <h4 class="ve-h4"><?php echo $text_legend; ?></h4>
+    </div>
+    <div class="ve-card__section">
+        <?php if($test_mode) { ?>
+            <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> <?php echo $text_testmode; ?></div>
+        <?php } ?>
+        <form action="<?php echo $action; ?>" method="post" class="form-horizontal" id="multisafepay-form">
+            <input type="hidden" name="order_id" value="<?php echo $order_id; ?>" />
+            <input type="hidden" name="type" value="<?php echo $type; ?>" />
+            <?php if($gateway) { ?>
+                <input type="hidden" name="gateway" value="<?php echo $gateway; ?>" />
+            <?php } ?>
+            <?php if($gateway_info) { ?>
+                <input type="hidden" name="gateway_info" value="<?php echo $gateway_info; ?>" />
+            <?php } ?>
+            <?php if($issuers) { ?>
+                <fieldset>
+                    <div class="form-group form-group-issuer-id">
+                        <label class="col-sm-2 control-label" for="input-issuer-id"><?php echo $entry_issuer; ?> </label>
+                        <div class="col-sm-10">
+                            <select name="issuer_id" id="input-issuer-id" class="form-control">
+                                <option value=""><?php echo $text_select; ?></option>
+                                <?php foreach ($issuers as $issuer) { ?>
+                                    <option value="<?php echo $issuer['code']; ?>"><?php echo $issuer['description']; ?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
+                    </div>
+                </fieldset>
+            <?php } ?>
+            <?php if($fields) { ?>
+                <fieldset>
+                    <?php if(isset($fields['gender'])) { ?>
+                        <div class="form-group required form-group-gender">
+                            <label class="col-sm-2 control-label" for="input-gender"><?php echo $entry_gender; ?> </label>
+                            <div class="col-sm-10">
+                                <select name="gender" id="input-gender" class="form-control">
+                                    <option value=""><?php echo $text_select; ?></option>
+                                    <option value="male"><?php echo $text_mr; ?></option>
+                                    <option value="female"><?php echo $text_mrs; ?></option>
+                                    <option value="female"><?php echo $text_miss; ?></option>
+                                </select>
+                            </div>
+                        </div>
+                    <?php } ?>
+                    <?php if(isset($fields['sex'])) { ?>
+                    <div class="form-group required form-group-gender">
+                        <label class="col-sm-2 control-label" for="input-gender"><?php echo $entry_gender; ?> </label>
+                        <div class="col-sm-10">
+                            <select name="gender" id="input-gender" class="form-control">
+                                <option value=""><?php echo $text_select; ?></option>
+                                <option value="male"><?php echo $text_mr; ?></option>
+                                <option value="female"><?php echo $text_mrs; ?></option>
+                            </select>
+                        </div>
+                    </div>
+                    <?php } ?>
+                    <?php if(isset($fields['birthday'])) { ?>
+                        <div class="form-group required form-group-birthday">
+                            <label class="col-sm-2 control-label" for="input-birthday"><?php echo $entry_date_of_birth; ?> </label>
+                            <div class="col-sm-10">
+                                <div class="input-group date">
+                                    <input type="text" name="birthday" value="" placeholder="<?php echo $placeholder_date_of_birth; ?>" id="input-birthday" data-date-format="YYYY-MM-DD" class="form-control" />
+                                    <span class="input-group-btn">
+                                <button type="button" class="btn btn-default show-always"><i class="fa fa-calendar"></i></button>
+                            </span>
+                                </div>
+                            </div>
+                        </div>
+                    <?php } ?>
+                    <?php if(isset($fields['bankaccount'])) { ?>
+                        <div class="form-group required form-group-bankaccount">
+                            <label class="col-sm-2 control-label" for="input-bankaccount"><?php echo $entry_bank_account; ?> </label>
+                            <div class="col-sm-10">
+                                <input type="text" name="bankaccount" value="" placeholder="<?php echo $placeholder_bank_account; ?>" id="input-bankaccount" class="form-control" />
+                            </div>
+                        </div>
+                    <?php } ?>
+                    <?php if(isset($fields['account_holder_name'])) { ?>
+                        <div class="form-group required form-group-account-holder-name">
+                            <label class="col-sm-2 control-label" for="input-account-holder-name"><?php echo $entry_account_holder_name; ?> </label>
+                            <div class="col-sm-10">
+                                <input type="text" name="account_holder_name" value="" placeholder="<?php echo $entry_account_holder_name; ?>" id="input-account-holder-name" class="form-control" />
+                            </div>
+                        </div>
+                    <?php } ?>
+                    <?php if(isset($fields['account_holder_iban'])) { ?>
+                        <div class="form-group required form-group-account-holder-iban">
+                            <label class="col-sm-2 control-label" for="input-account-holder-iban"><?php echo $entry_account_holder_iban; ?> </label>
+                            <div class="col-sm-10">
+                                <input type="text" name="account_holder_iban" value="" placeholder="<?php echo $placeholder_account_holder_iban; ?>" id="input-account-holder-iban" class="form-control" />
+                            </div>
+                        </div>
+                    <?php } ?>
+                    <?php if(isset($fields['emandate'])) { ?>
+                        <input type="hidden" name="emandate" value="<?php echo $order_id; ?>" />
+                    <?php } ?>
+                </fieldset>
+            <?php } ?>
+            <div class="buttons">
+                    <div class="pull-right">
+                        <input id="button-confirm" type="submit" value="<?php echo $button_confirm; ?>" class="btn btn-primary" />
+                    </div>
+            </div>
+        </form>
+    </div>
+    <?php if($gateway === 'APPLEPAY') { ?>
+    <script type="text/javascript"><!--
+        $( document ).ready(function() {
+            if (window.ApplePaySession && ApplePaySession.canMakePayments()) {
+                $('#button-confirm').prop('disabled', false);
+            } else {
+                $('#multisafepay-form').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> <?php echo $text_error_apple_pay; ?></div>');
+                $('#button-confirm').prop('disabled', true);
+            }
+        });
+        //--></script>
+    <?php } ?>
+    <?php if(isset($fields['birthday']) && isset($datepicker)) { ?>
+    <script type="text/javascript"><!--
+        $('.date').datetimepicker({
+            language: '<?php echo $datepicker; ?>',
+            pickTime: false
+        });
+        //--></script>
+    <?php } else { ?>
+    <script type="text/javascript"><!--
+        $('.date').datetimepicker({
+            language: 'en-gb',
+            pickTime: false
+        });
+        //--></script>
+    <?php } ?>
+    <?php if($fields) { ?>
+        <script type="text/javascript"><!--
+            $( document ).ready(function() {
+                $('#multisafepay-form').on('click', '#button-confirm', function(e) {
+                    e.preventDefault();
+                    $.ajax({
+                        url: 'index.php?route=extension/payment/multisafepay/validateForm',
+                        type: 'post',
+                        data: $('#multisafepay-form :input, #multisafepay-form select'),
+                        dataType: 'json',
+                        cache: false,
+                        beforeSend: function() {
+                            $('#multisafepay-form').unbind();
+                            $('#multisafepay-form .alert-danger').remove();
+                            $('#multisafepay-form .text-danger').remove();
+                            $('#multisafepay-form .form-group').removeClass('has-error');
+                            $('.qc-confirm button').button('loading');
+                        },
+                        complete: function() {
+                            $('.qc-confirm button').button('reset');
+                            $(".show-always").blur();
+                        },
+                        success: function(json) {
+                            if(!json['error']) {
+                                $("#multisafepay-form").submit();
+                            }
+                            if(json['error']) {
+                                $('#multisafepay-form').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> <?php echo $text_error_on_submit; ?></div>');
+                                $.each( json['error'], function( index, value ){
+                                    $('.form-group-'+ index + ' .col-sm-10').append('<div class="text-danger">' + value + '</div>');
+                                    $('.form-group-'+ index).addClass('has-error');
+                                });
+                                return;
+                            }
+                        }
+                    });
+                });
+            });
+            //--></script>
+    <?php } else { ?>
+    <script type="text/javascript"><!--
+            $( document ).ready(function() {
+            	$('#multisafepay-form').unbind(); 
+            });
+            //--></script>
+    <?php } ?>
+</div>
+            ]]>
+            </add>
+        </operation>    	
+    </file>
+    <file path="catalog/model/extension/d_quickcheckout/method.php">
+    	<operation info="Set all payment methods at front">
+            <search><![CDATA[public function getPaymentMethods($payment_address, $total){]]></search>
+            <add position="before"><![CDATA[
+	private function sortMethods($method_data) {
+		$sort_order = array();
+		foreach($method_data as $key => $value) {
+			if(strpos($key, 'multisafepay') !== false && $value['sort_order']) {
+				$sort_order[$key] = $this->config->get('payment_multisafepay_sort_order') . '.' . $value['sort_order'];
+			}
+			if(strpos($key, 'multisafepay') !== false && !$value['sort_order']) {
+				$sort_order[$key] = $this->config->get('payment_multisafepay_sort_order');
+			}
+			if(strpos($key, 'multisafepay') === false) {
+				$sort_order[$key] = $value['sort_order'];
+			}
+		}
+		array_multisort($sort_order, SORT_ASC, SORT_NATURAL, $method_data);
+		return $method_data;
+	}
+
+	private function extractPaymentMethodsArray($method, $extension, $total, $recurring = false, $method_data = array()) {
+		if ($method && $extension['code'] === 'multisafepay') {
+			$methods = $this->{'model_extension_payment_'.$extension['code']}->getMethods($this->session->data['payment_address'],
+				$total);
+			foreach ($methods as $msp_method) {
+				$method_data[$msp_method['code']] = $msp_method;
+			}
+			return $method_data;
+		}
+		if ($method && $extension['code'] !== 'multisafepay' && $recurring) {
+			if (property_exists($this->{'model_extension_payment_'.$extension['code']},
+					'recurringPayments') && $this->{'model_extension_payment_'.$extension['code']}->recurringPayments()) {
+				$method_data[$method['code']] = $method;
+				return $method_data;
+			}
+		}
+		if ($method && $extension['code'] !== 'multisafepay' && !$recurring) {
+			$method_data[$method['code']] = $method;
+			return $method_data;
+		}
+	}
+
+	private function getMultiSafepayImageByGatewayRoute($route) {
+		$gateways = $this->multisafepay->getGateways();
+		$gateway_key = array_search($route, array_column($gateways, 'route'));
+		if(isset($gateways[$gateway_key]['image'])) {
+			return $gateways[$gateway_key]['image'];
+		}
+		return false;
+	}
+
+	public function __construct($registry) {
+		parent::__construct($registry);
+		$this->registry->set('multisafepay', new Multisafepay($registry));
+		$this->registry->set('multisafepay_version_control', new Multisafepayversioncontrol($registry));
+		$this->key_prefix = $this->multisafepay_version_control->getKeyPrefix();
+	}
+            ]]>
+            </add>
+        </operation>
+    	<operation info="Set all payment methods at front">
+            <search><![CDATA[$method_data[$result['code']] = $method;]]></search>
+            <add position="replace"><![CDATA[
+								$method_data = $this->extractPaymentMethodsArray($method, $result, $total, $recurring, $method_data);
+            ]]>
+            </add>
+        </operation>
+        <operation info="Set payment methods icons at front">
+        	<search><![CDATA[if(file_exists(DIR_IMAGE.'catalog/d_quickcheckout/payment/'.$result['code'].'.png')){]]></search>
+            <add position="before"><![CDATA[
+                    foreach ($method_data as $method_key => $multisafepay_method) {
+						$method_data[$method_key]['image'] = '';
+					}
+					if ($this->config->get($this->key_prefix . 'multisafepay_use_payment_logo')) {
+						$this->load->model('tool/image');
+						foreach ($method_data as $multisafepay_method_key => $multisafepay_method) {
+							$image = $this->getMultiSafepayImageByGatewayRoute($multisafepay_method['code']);
+							if($image && file_exists(DIR_IMAGE.'catalog/multisafepay/' . $image . '.png')) {
+								$method_data[$multisafepay_method_key]['image'] = $this->model_tool_image->resize( 'catalog/multisafepay/' . $image . '.png', 32, 32);
+							}
+						}
+					}
+            ]]>
+            </add>
+        </operation>
+	</file>
+    <file path="catalog/model/extension/payment/multisafepay.php">
+        <operation info="Remove icons on title string">
+            <search><![CDATA[$title = $this->getTitle($gateway['description'], $gateway['image']);]]></search>
+            <add position="replace"><![CDATA[
+					$title = $gateway['description'];
+            ]]>
+            </add>
+        </operation>
+    </file>
+</modification>
