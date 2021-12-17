@@ -1944,7 +1944,7 @@ class Multisafepay {
                 'redirect_switch' => false,
                 'docs' => sprintf($this->language->get('text_gateway_docs_info'), 'https://docs.multisafepay.com/payment-methods/banks/sofort-banking/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_direct_bank')),
                 'brief_description' => $this->language->get('text_brief_description_directbank'),
-                'image' => 'directbank'
+                'image' => 'sofort'
             ),
             array(
                 'id' => 'DOTPAY',
