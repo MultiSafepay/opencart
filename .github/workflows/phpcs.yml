@@ -1,0 +1,20 @@
+name: Code sniffer
+on:
+  pull_request:
+    branches:
+      - master
+jobs:
+  code_sniffer:
+    name: Code sniffer
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.3'
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Install composer dependencies
+        run:  composer install
+      - name: PHP Code Sniffer
+        run:  composer run-script phpcs
