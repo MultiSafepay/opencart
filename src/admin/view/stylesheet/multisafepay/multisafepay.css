@@ -121,6 +121,36 @@
 #multisafepay-order-tab .pull-right button {
     margin-bottom: 25px;
 }
+/* Status Switcher */
+.multisafepay-admin-page #tab-payment-methods .panel-group .panel .panel-heading .panel-title a .status {
+    display: block;
+    background-color: #f6f6f6;
+    border: 1px solid #dcdcdc;
+}
+.multisafepay-admin-page #tab-payment-methods .panel-group .panel .panel-heading .panel-title a .status {
+    position: relative;
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    padding: 0;
+    margin: 5px 5px 5px 0px;
+    text-align: center;
+    border: 1px solid #DDDDDD;
+}
+.multisafepay-admin-page #tab-payment-methods .panel-group .panel .panel-heading .panel-title a .status:after {
+    font-size: 14px;
+    line-height: 30px;
+    text-align: center;
+    content: "\f00d";
+    font-family: 'FontAwesome';
+    color: darkred;
+}
+.multisafepay-admin-page #tab-payment-methods .panel-group .panel .panel-heading .panel-title a .status.active:after {
+    content: "\f00c" !important;
+    font-family: 'FontAwesome';
+    color: forestgreen;
+}
 /* Drag and Drop */
 .multisafepay-admin-page #tab-payment-methods .panel-group .panel .panel-heading .panel-title a.collapsed .drag-and-drop-control {
     background-color: #f6f6f6;

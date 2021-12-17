@@ -418,12 +418,15 @@
                                             <div class="panel-heading" role="tab" id="heading-payment-method-<?php echo $gateway['code']; ?>">
                                                 <h4 class="panel-title">
                                                     <a role="button" data-toggle="collapse" data-parent="#accordion" href="#payment-method-<?php echo $gateway['code']; ?>" aria-expanded="true" aria-controls="payment-method-<?php echo $gateway['code']; ?>" class="collapsed <?php if(isset($error_gateway[$gateway['code']])) { ?> has-warning <?php } ?>">
-                                                    <span class="drag-and-drop-control" data-toggle="tooltip" title="" data-original-title="<?php echo $text_help_drag_and_drop; ?>">
+                                                        <span class="status<?php if($payment_methods_fields_values[$gateway['code']]['status'] == 1) { ?> active<?php } ?>">
 
-                                                    </span>
+                                                        </span>
+                                                        <span class="drag-and-drop-control" data-toggle="tooltip" title="" data-original-title="<?php echo $text_help_drag_and_drop; ?>">
+
+                                                        </span>
                                                         <span class="title">
-                                                        <?php echo $gateway['description']; ?>
-                                                    </span>
+                                                            <?php echo $gateway['description']; ?>
+                                                        </span>
                                                     </a>
                                                 </h4>
                                             </div>
@@ -827,5 +830,34 @@
             });
         });
     });
+    //--></script>
+<script type="text/javascript"><!--
+    $( document ).ready(function() {
+        $('.multisafepay-admin-page #tab-payment-methods .panel-group .panel').each(function () {
+            var payment_method_panel = $(this);
+            payment_method_panel.find('.panel-heading .panel-title a span.status').click(function (event) {
+                event.preventDefault();
+                event.stopPropagation();
+                togglePaymentOptionFieldStatus(payment_method_panel, $(this).hasClass('active'));
+            });
+            payment_method_panel.find('.panel-body .form-group:first select.form-control').change(function () {
+                togglePaymentOptionIconStatus(payment_method_panel, $(this).val());
+            });
+        });
+    });
+    function togglePaymentOptionFieldStatus(payment_method_panel, is_active) {
+        if (is_active) {
+            payment_method_panel.find('.panel-body .form-group:first select.form-control').val(0).change();
+        } else {
+            payment_method_panel.find('.panel-body .form-group:first select.form-control').val(1).change();
+        }
+    }
+    function togglePaymentOptionIconStatus(payment_method_panel, status) {
+        if (status === '1') {
+            payment_method_panel.find('.panel-heading .panel-title a span.status').addClass('active');
+        } else {
+            payment_method_panel.find('.panel-heading .panel-title a span.status').removeClass('active');
+        }
+    }
     //--></script>
 <?php echo $footer; ?>
