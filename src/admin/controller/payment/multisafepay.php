@@ -494,6 +494,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
             $this->key_prefix . 'multisafepay_unit_lifetime_payment_link',
             $this->key_prefix . 'multisafepay_second_chance',
             $this->key_prefix . 'multisafepay_use_payment_logo',
+            $this->key_prefix . 'multisafepay_shopping_cart_disabled',
             $this->key_prefix . 'multisafepay_generate_payment_links_status',
             $this->key_prefix . 'multisafepay_order_status_id_initialized',
             $this->key_prefix . 'multisafepay_order_status_id_completed',

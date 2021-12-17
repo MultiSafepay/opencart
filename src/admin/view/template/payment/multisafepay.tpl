@@ -182,6 +182,17 @@
                                     </select>
                                 </div>
                             </div>
+                            <?php //  Disable Shopping Cart ?>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" for="payment-multisafepay-shopping-cart-disabled"><?php echo $entry_multisafepay_shopping_cart_disabled; ?></label>
+                                <div class="col-sm-10">
+                                    <select name="multisafepay_shopping_cart_disabled" id="payment-multisafepay-shopping-cart-disabled" class="form-control">
+                                        <option value="0" <?php if($multisafepay_shopping_cart_disabled == '0') { ?> selected <?php } ?>><?php echo $text_no; ?></option>
+                                        <option value="1" <?php if($multisafepay_shopping_cart_disabled == '1') { ?> selected <?php } ?>><?php echo $text_yes; ?></option>
+                                    </select>
+                                    <p class="help-block"><?php echo $text_help_shopping_cart_disabled; ?></p>
+                                </div>
+                            </div>
                             <?php //  Generate Payment Links from admin ?>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label" for="payment-multisafepay-generate-payment-links-status"><?php echo $entry_multisafepay_generate_payment_links_status; ?></label>

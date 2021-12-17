@@ -121,6 +121,7 @@ $_['entry_multisafepay_lifetime_payment_link']          = 'Levensduur van betaal
 $_['entry_multisafepay_api_key']        				= 'Live API-sleutel';
 $_['entry_multisafepay_sandbox_api_key']        		= 'Test API-sleutel';
 $_['entry_multisafepay_use_payment_logo']   			= 'Gebruik logo\'s tijdens het afrekenen';
+$_['entry_multisafepay_shopping_cart_disabled']   		= 'Winkelmandje uitschakelen';
 $_['entry_geo_zone']				 					= 'Geo-zone';
 $_['entry_sort_order']                      			= 'Sorteeropdracht';
 $_['entry_status']                          			= 'Status';
@@ -244,6 +245,7 @@ $_['text_help_drag_and_drop']                           = 'Sleep dit element en 
 $_['text_help_generate_payment_links_status']           = 'Meer informatie over het genereren van een bestelling met betalingslink vindt u in onze <a href="https://docs.multisafepay.com/integrations/plugins/opencart/faq/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms" target="_blank">documentatie</a>';
 $_['text_help_generate_payment_links']                  = 'Als u een bestelling genereert vanuit de OpenCart-administratie en de bestelstatus toewijst die is geselecteerd in het volgende veld, ontvangt de gebruiker de bestelgegevens in de e-mail, inclusief een betalingslink';
 $_['text_help_lifetime_payment_link']				    = 'Dit geeft de levensduur van een betaallink aan. Standaard is 30 dagen. Dit betekent dat de klant 30 dagen de tijd heeft om de transactie af te ronden via de betaallink';
+$_['text_help_shopping_cart_disabled']				    = 'Selecteer "Ja" om de winkelwagenitems op de MultiSafepay-betaalpagina te verbergen, zodat alleen het totale orderbedrag overblijft. <br />Als u "Ja" selecteert, werken de betaalmethoden waarvoor een winkelwagentje nodig is niet: Afterpay, E-Invoicing, in3, Klarna and Pay After Delivery.';
 $_['error_permission']				                    = 'Waarschuwing: U heeft geen toestemming om betaalmethode MultiSafepay te wijzigen';
 $_['error_check_form']   		                        = 'Waarschuwing: Controleer het formulier graag nogmaals en let op foutmeldingen';
 $_['error_empty_api_key']		                        = 'Waarschuwing: API Key kan niet leeg zijn voor de geselecteerde omgeving';

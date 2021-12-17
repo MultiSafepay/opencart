@@ -120,6 +120,7 @@ $_['entry_multisafepay_lifetime_payment_link']          = 'Tiempo de vida del en
 $_['entry_multisafepay_api_key']        				= 'API Key';
 $_['entry_multisafepay_sandbox_api_key']        		= 'API Key de Pruebas';
 $_['entry_multisafepay_use_payment_logo']   			= 'Mostrar logos en página de pago';
+$_['entry_multisafepay_shopping_cart_disabled']   		= 'Desactivar Carrito de Compras';
 $_['entry_geo_zone']				 					= 'Geo Zona';
 $_['entry_sort_order']                      			= 'Orden / Prioridad';
 $_['entry_status']                          			= 'Estado';
@@ -243,6 +244,7 @@ $_['text_help_drag_and_drop']                           = 'Arrastre y suelte est
 $_['text_help_generate_payment_links_status']           = 'Más información sobre cómo generar un pedido con enlace de pago en nuestra <a href="https://docs.multisafepay.com/integrations/plugins/opencart/faq/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms" target="_blank">documentación</a>';
 $_['text_help_generate_payment_links']                  = 'Si generas un pedido desde la administración de OpenCart, y le asignes el estado de pedido seleccionado en el siguiente campo, el usuario recibira en el correo, los detalles del pedido, incluyendo un enlace de pago';
 $_['text_help_lifetime_payment_link']				    = 'Esto indica la vida útil de un enlace de pago. El valor predeterminado es 30 días. Esto significa que el cliente tiene 30 días para completar la transacción mediante el enlace de pago.';
+$_['text_help_shopping_cart_disabled']				    = 'Seleccione "Sí" para ocultar los artículos del carrito en la página de pago de MultiSafepay, dejando solo el monto total del pedido. <br />Si selecciona "Sí", los métodos de pago que requieren carrito de compras no funcionarán: Afterpay, E-Invoicing, in3, Klarna and Pay After Delivery.';
 $_['error_permission']				                    = 'Advertencia: no tiene permiso para modificar la extensión de MultiSafepay!';
 $_['error_check_form']   		                        = 'Advertencia: por favor, revise el formulario cuidadosamente y busque mensajes de error';
 $_['error_empty_api_key']		                        = 'Advertencia: la clave API no puede estar vacía para el entorno seleccionado';

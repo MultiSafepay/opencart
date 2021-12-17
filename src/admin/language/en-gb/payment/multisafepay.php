@@ -120,6 +120,7 @@ $_['entry_multisafepay_lifetime_payment_link']          = 'Lifetime of payment l
 $_['entry_multisafepay_api_key']        				= 'Live API Key';
 $_['entry_multisafepay_sandbox_api_key']        		= 'Test API Key';
 $_['entry_multisafepay_use_payment_logo']   			= 'Use logo\'s during checkout';
+$_['entry_multisafepay_shopping_cart_disabled']   		= 'Disable Shopping Cart';
 $_['entry_geo_zone']				 					= 'Geo Zone';
 $_['entry_sort_order']                      			= 'Sort Order';
 $_['entry_status']                          			= 'Status';
@@ -243,6 +244,7 @@ $_['text_help_drag_and_drop']                           = 'Drag and drop this el
 $_['text_help_generate_payment_links_status']           = 'More information about how to generate an order with payment link in our <a href="https://docs.multisafepay.com/integrations/plugins/opencart/faq/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms" target="_blank">documentation</a>';
 $_['text_help_generate_payment_links']                  = 'If you generate an order from the OpenCart administration, and assign the order status selected in the next field, the user will receive the order details in the mail, including a payment link';
 $_['text_help_lifetime_payment_link']				    = 'This indicates the lifetime of a payment link. By default is 30 days. This means that the customer has 30 days to complete the transaction using the payment link';
+$_['text_help_shopping_cart_disabled']				    = 'Select "Yes" to hide the cart items on the MultiSafepay payment page, leaving only the total order amount. <br /> Note: If select "Yes" the payment methods which require shopping cart won\'t work: Afterpay, E-Invoicing, in3, Klarna and Pay After Delivery.';
 $_['error_permission']				                    = 'Warning: You do not have permission to modify payment MultiSafepay';
 $_['error_check_form']   		                        = 'Warning: Please, check the form carefully and look for error messages';
 $_['error_empty_api_key']		                        = 'Warning: API Key can not be empty for the selected enviroment';

@@ -183,6 +183,17 @@
                                     </select>
                                 </div>
                             </div>
+                            {# -- Disable Shopping Cart -- #}
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" for="payment-multisafepay-shopping-cart-disabled">{{ entry_multisafepay_shopping_cart_disabled }}</label>
+                                <div class="col-sm-10">
+                                    <select name="payment_multisafepay_shopping_cart_disabled" id="payment-multisafepay-shopping-cart-disabled" class="form-control">
+                                        <option value="0" {% if payment_multisafepay_shopping_cart_disabled == '0' %} selected {% endif %}>{{ text_no }}</option>
+                                        <option value="1" {% if payment_multisafepay_shopping_cart_disabled == '1' %} selected {% endif %}>{{ text_yes }}</option>
+                                    </select>
+                                    <p class="help-block">{{ text_help_shopping_cart_disabled }}</p>
+                                </div>
+                            </div>
                             {# -- Generate Payment Links from admin -- #}
                             <div class="form-group">
                                 <label class="col-sm-2 control-label" for="payment-multisafepay-generate-payment-links-status"><span data-toggle="tooltip" title="{{ text_help_generate_payment_links }}">{{ entry_multisafepay_generate_payment_links_status }}</span></label>

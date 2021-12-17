@@ -260,8 +260,10 @@ class Multisafepay {
         }
 
         // Order Request: Shopping Cart Items - Products
-        $shopping_cart = $this->getShoppingCartItems($data['order_id']);
-        $multisafepay_order->addShoppingCart($shopping_cart);
+        if(!(bool)$this->config->get($this->key_prefix . 'multisafepay_shopping_cart_disabled')) {
+            $shopping_cart = $this->getShoppingCartItems($data['order_id']);
+            $multisafepay_order->addShoppingCart($shopping_cart);
+        }
 
         // Order Request: Customer
         $customer_payment = $this->getCustomerObject($data['order_id'], 'payment');

@@ -119,6 +119,7 @@ $_['entry_multisafepay_lifetime_payment_link']          = 'Durata del collegamen
 $_['entry_multisafepay_api_key']        				= 'Chiave API per live';
 $_['entry_multisafepay_sandbox_api_key']        		= 'Chiave API per test';
 $_['entry_multisafepay_use_payment_logo']   			= 'Utilizza loghi durante il checkout';
+$_['entry_multisafepay_shopping_cart_disabled']   		= 'Disabilita il carrello';
 $_['entry_geo_zone']				 					= 'Zona geografica';
 $_['entry_sort_order']                      			= 'Filtra gli ordini';
 $_['entry_status']                          			= 'Status';
@@ -241,6 +242,7 @@ $_['text_help_drag_and_drop']                           = 'Trascina e rilascia q
 $_['text_help_generate_payment_links_status']           = 'Maggiori informazioni su come generare un ordine con link di pagamento in la nostra <a href="https://docs.multisafepay.com/integrations/plugins/opencart/faq/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms" target="_blank">documentazione</a>';
 $_['text_help_generate_payment_links']                  = 'Se si genera un ordine dall\'amministrazione OpenCart e si assegna lo stato dell\'ordine selezionato nel campo successivo, l\'utente riceverà i dettagli dell\'ordine per posta, incluso un collegamento di pagamento.';
 $_['text_help_lifetime_payment_link']				    = 'Ciò indica la durata di un collegamento di pagamento. L\'impostazione predefinita è 30 giorni. Ciò significa che il cliente ha 30 giorni di tempo per completare la transazione utilizzando il link di pagamento';
+$_['text_help_shopping_cart_disabled']				    = 'Seleziona "Sì" per nascondere gli articoli del carrello nella pagina di pagamento MultiSafepay, lasciando solo l\'importo totale dell\'ordine. <br />Se selezioni "Sì" i metodi di pagamento che richiedono il carrello non funzioneranno: Afterpay, E-Invoicing, in3, Klarna and Pay After Delivery.';
 $_['error_permission']				                    = 'Avviso: non hai il permesso di modificare le informazioni per i pagamenti MultiSafepay';
 $_['error_check_form']   		                        = 'Avviso: per favore, controlla attentamente il form e controlla le notifiche degli errori';
 $_['error_empty_api_key']		                        = 'Avviso: la chiave API non può essere vuota';

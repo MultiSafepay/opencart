@@ -119,6 +119,7 @@ $_['entry_multisafepay_lifetime_payment_link']          = 'Lebensdauer des Zahlu
 $_['entry_multisafepay_api_key']        				= 'Live API Key';
 $_['entry_multisafepay_sandbox_api_key']        		= 'Test API Key';
 $_['entry_multisafepay_use_payment_logo']   			= 'Bei der Abmeldung Logos verwenden';
+$_['entry_multisafepay_shopping_cart_disabled']   		= 'Warenkorb deaktivieren';
 $_['entry_geo_zone']				 					= 'Geo-Zone';
 $_['entry_sort_order']                      			= 'Reihenfolge sortieren';
 $_['entry_status']                          			= 'Status';
@@ -242,6 +243,7 @@ $_['text_help_drag_and_drop']                           = 'Ziehen Sie dieses Ele
 $_['text_help_generate_payment_links_status']           = 'Weitere Informationen zum Generieren einer Bestellung mit Zahlungslink finden Sie in unserer <a href="https://docs.multisafepay.com/integrations/plugins/opencart/faq/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms" target="_blank">Dokumentation</a>';
 $_['text_help_generate_payment_links']                  = 'Wenn Sie eine Bestellung aus der OpenCart-Administration generieren und den im folgenden Feld ausgewählten Bestellstatus zuweisen, erhält der Benutzer die Bestelldetails per E-Mail, einschließlich eines Zahlungslinks';
 $_['text_help_lifetime_payment_link']				    = 'Dies zeigt die Lebensdauer eines Zahlungslinks an. Standardmäßig sind es 30 Tage. Dies bedeutet, dass der Kunde 30 Tage Zeit hat, um die Transaktion über den Zahlungslink abzuschließen';
+$_['text_help_shopping_cart_disabled']				    = 'Wählen Sie "Ja", um die Warenkorbartikel auf der MultiSafepay-Zahlungsseite auszublenden, sodass nur der Gesamtbestellbetrag übrig bleibt. <br />Wenn Sie "Ja" auswählen, funktionieren die Zahlungsmethoden, die einen Warenkorb erfordern, nicht: Afterpay, E-Invoicing, in3, Klarna and Pay After Delivery.';
 $_['error_permission']				                    = 'Warnung: Sie haben keine Berechtigung zur Änderung der Zahlungsweise MultiSafepay';
 $_['error_check_form']   		                        = 'Warnung: Bitte das Formular sorgfältig prüfen und nach Fehlermeldungen suchen';
 $_['error_empty_api_key']		                        = 'Warnung: API Key kann für die ausgewählte Umgebung nicht leer sein';
