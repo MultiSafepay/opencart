@@ -167,13 +167,12 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
 		// Generic
         $data['payment_generic_fields_values'] = $this->getPaymentGenericFieldsValues($data['store_id']);
 
-        $data['header']     = $this->load->controller('common/header');
-        $data['column_left']= $this->load->controller('common/column_left');
-        $data['footer']     = $this->load->controller('common/footer');
+        $data['header']      = $this->load->controller('common/header');
+        $data['column_left'] = $this->load->controller('common/column_left');
+        $data['footer']      = $this->load->controller('common/footer');
 
         $this->response->setOutput($this->load->view($this->route . $this->view_extension_file, $data));
     }
-
 
 	/**
 	 * Define the common fields for each payment method
@@ -246,7 +245,6 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
 		return $fields;
 	}
 
-
     /**
      * Return error message is PHP Version is not supported by the extension
      *
@@ -282,7 +280,6 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
         $this->response->addHeader('Content-Type: application/json');
         $this->response->setOutput(json_encode($json));
     }
-
 
     /**
      * Uninstall default action for this admin extension controller
@@ -507,7 +504,8 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
             $this->key_prefix . 'multisafepay_order_status_id_shipped',
             $this->key_prefix . 'multisafepay_order_status_id_partial_refunded',
             $this->key_prefix . 'multisafepay_order_status_id_cancelled',
-            $this->key_prefix . 'multisafepay_order_status_id_initialize_payment_request'
+            $this->key_prefix . 'multisafepay_order_status_id_initialize_payment_request',
+            $this->key_prefix . 'multisafepay_custom_order_total_keys'
         );
     }
 

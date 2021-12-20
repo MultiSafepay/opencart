@@ -96,10 +96,10 @@ class ModelExtensionPaymentMultiSafePay extends Model {
             }
 
             $query = $this->db->query(
-                "SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE 
-                geo_zone_id = '" . (int)$this->config->get($this->key_prefix . 'multisafepay_'.$gateway['code'].'_geo_zone_id') . "' AND 
-                country_id = '" . (int)$address['country_id'] . "' 
-                AND (zone_id = '" . (int)$address['zone_id'] . "' 
+                "SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE
+                geo_zone_id = '" . (int)$this->config->get($this->key_prefix . 'multisafepay_'.$gateway['code'].'_geo_zone_id') . "' AND
+                country_id = '" . (int)$address['country_id'] . "'
+                AND (zone_id = '" . (int)$address['zone_id'] . "'
                 OR zone_id = '0')"
             );
 
@@ -288,8 +288,22 @@ class ModelExtensionPaymentMultiSafePay extends Model {
         return $order_status_data;
     }
 
+    /**
+     * Explore the database and return the Order Totals Keys
+     */
+    public function getDetectedOrderTotalsKeys() {
+        $query = $this->db->query("SELECT DISTINCT code FROM " . DB_PREFIX . "extension WHERE type = 'total'");
+        if ($query->num_rows) {
+            $codes = array();
+            foreach ($query->rows as $result) {
+                $codes[] = $result['code'];
+            }
+            return $codes;
+        }
+        return array();
+    }
 
-    // phpcs:ignore 
+    // phpcs:ignore
     public function getCoupon($code) {
         $status = true;
 
@@ -386,7 +400,6 @@ class ModelExtensionPaymentMultiSafePay extends Model {
             );
         }
     }
-
 
 }
 

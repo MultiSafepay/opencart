@@ -215,6 +215,13 @@
                                     </select>
                                 </div>
                             </div>
+                            <?php // Set custom order totals keys ?>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" for="payment-multisafepay-custom-order-totals-keys"><span data-toggle="tooltip" title="<?php echo $text_help_custom_order_total_keys; ?>"><?php echo $entry_custom_order_total_keys; ?></span></label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="multisafepay_custom_order_total_keys" value="<?php echo $multisafepay_custom_order_total_keys; ?>" id="payment-multisafepay-custom-order-totals-keys" placeholder="<?php echo $entry_custom_order_total_keys; ?>" class="form-control" />
+                                </div>
+                            </div>
                         </div>
                         <?php // Tab Order Status ?>
                         <div class="tab-pane" id="tab-status">

@@ -46,7 +46,7 @@ class Multisafepay {
      *
      * @param int $order_id
      * @return ShoppingCart  object
-     *
+     * @phpcs:disabled ObjectCalisthenics.Metrics.MaxNestingLevel
      */
     public function getShoppingCartItems($order_id) {
         $order_info = $this->getOrderInfo($order_id);
@@ -118,12 +118,41 @@ class Multisafepay {
 	        $shopping_cart_items[$this->config->get($this->total_extension_key_prefix . 'voucher_sort_order')] = $voucher_info_cart_item;
         }
 
+        // Custom Order Totals
+        $detected_order_total_keys = $this->checkForThirdPartyPluginsOrderTotals();
+        if(!empty($detected_order_total_keys)) {
+            foreach ($detected_order_total_keys as $custom_order_total_key) {
+                $custom_order_total_key = trim($custom_order_total_key);
+                $custom_order_total_info = $this->getCustomOrderTotalInfo($order_id, $custom_order_total_key);
+                if ($custom_order_total_info) {
+                    $custom_order_total_cart_item = $this->getCustomOrderTotalItem($order_id, $custom_order_total_key);
+                    $shopping_cart_items[$this->config->get($this->total_extension_key_prefix . $custom_order_total_key . '_sort_order')][] = $custom_order_total_cart_item;
+                }
+            }
+        }
+
         // Sort Order Shopping Cart Items
         $cart_items = $this->reOrderShoppingCartItems($shopping_cart_items);
 
         $shopping_cart = new \MultiSafepay\Api\Transactions\OrderRequest\Arguments\ShoppingCart($cart_items);
 
         return $shopping_cart;
+    }
+
+    /**
+     * Compare the result of the order totals keys found in database; and
+     * return a result
+     */
+    public function checkForThirdPartyPluginsOrderTotals() {
+        $default_order_total_keys = array('sub_total', 'shipping', 'total', 'coupon', 'tax', 'handling', 'voucher', 'credit', 'low_order_fee', 'reward', 'klarna_fee');
+        $detected_order_total_keys = $this->{$this->model_call}->getDetectedOrderTotalsKeys();
+
+        // Custom order totals keys, after remove default ones included in OpenCart
+        $custom_order_total_keys = array_diff($detected_order_total_keys, $default_order_total_keys);
+
+        // Custom order totals keys defined in settings to be excluded
+        $exclude_order_total_keys = explode(",", ($this->config->get($this->key_prefix . 'multisafepay_custom_order_total_keys') ?? ''));
+        return array_diff($custom_order_total_keys, $exclude_order_total_keys);
     }
 
     /**
@@ -276,6 +305,7 @@ class Multisafepay {
         }
 
         // Order Request: Lifetime of payment link.
+
         if ($this->config->get($this->key_prefix . 'multisafepay_days_active') && $this->config->get($this->key_prefix . 'multisafepay_unit_lifetime_payment_link')) {
             $payment_multisafepay_unit_lifetime_payment_link = $this->config->get($this->key_prefix . 'multisafepay_unit_lifetime_payment_link');
             switch ($payment_multisafepay_unit_lifetime_payment_link) {
@@ -1080,6 +1110,7 @@ class Multisafepay {
         $order_info = $this->getOrderInfo($order_id);
         $order_products = $this->getOrderProducts($order_id);
         $coupon_info = $this->getCouponInfo($order_id);
+        $detected_third_party_order_total_keys = $this->checkForThirdPartyPluginsOrderTotals();
 
         $has_handling = array_search('handling', array_column($order_totals, 'code'));
         $has_low_order_fee = array_search('low_order_fee', array_column($order_totals, 'code'));
@@ -1108,7 +1139,17 @@ class Multisafepay {
         }
 
         if ($has_low_order_fee !== false) {
-            $fixed_taxes_items = $this->extractFixedTaxesFromHandlingLowOrderFee($product, $fixed_taxes_items, $has_low_order_fee, 'low_order_fee');
+            $fixed_taxes_items = $this->extractFixedTaxesFromHandlingLowOrderFee($order_totals, $fixed_taxes_items, $has_low_order_fee, 'low_order_fee');
+        }
+
+        if(!empty($detected_third_party_order_total_keys)) {
+            foreach ($detected_third_party_order_total_keys as $custom_order_total_key) {
+                $custom_order_total_key = trim($custom_order_total_key);
+                $has_custom_order_total = array_search($custom_order_total_key, array_column($order_totals, 'code'));
+                if ($has_custom_order_total) {
+                  $fixed_taxes_items = $this->extractFixedTaxesFromHandlingLowOrderFee($order_totals, $fixed_taxes_items, $has_custom_order_total, $custom_order_total_key);
+                }
+            }
         }
 
         if (empty($fixed_taxes_items)) {
@@ -1733,6 +1774,13 @@ class Multisafepay {
         return $cart_items;
     }
 
+    /**
+     * Returns voucher information if exist, or false.
+     *
+     * @param int $order_id
+     * @return mixed false|array
+     *
+     */
     private function getOrderVouchersItem($order_id, $voucher_info) {
 	    $order_info = $this->getOrderInfo($order_id);
 	    return $this->getCartItemObject(
@@ -1743,6 +1791,59 @@ class Multisafepay {
 		    $voucher_info['order_voucher_id'],
 		    0
 	    );
+    }
+
+    /**
+     * Returns Custom Order Total information if exist, or false.
+     *
+     * @param int $order_id
+     * @return mixed false|array
+     *
+     */
+    private function getCustomOrderTotalInfo($order_id, $custom_order_total_key) {
+        $order_totals = $this->getOrderTotals($order_id);
+        $has_custom_order_total = array_search($custom_order_total_key, array_column($order_totals, 'code'));
+        if ($has_custom_order_total === false) {
+            return false;
+        }
+
+        $custom_order_total_tax_class_id  = $this->config->get($this->total_extension_key_prefix . $custom_order_total_key . '_tax_class_id');
+        $tax_rate = $this->getItemTaxRate($order_totals[$has_custom_order_total]['value'], $custom_order_total_tax_class_id);
+        $custom_order_total_info = array(
+            'value' => $order_totals[$has_custom_order_total]['value'],
+            'title' => $this->htmlEntityDecode($order_totals[$has_custom_order_total]['title']),
+            'is_order_lower_than_taxes' => $this->isSortOrderLowerThanTaxes($this->config->get($this->total_extension_key_prefix . $custom_order_total_key . '_sort_order')),
+            'tax_rate' => $tax_rate
+        );
+        return $custom_order_total_info;
+    }
+
+    /**
+     * Returns Custom Order Total Cart Item object
+     *
+     * @param int $order_id
+     * @return CartItem object
+     *
+     */
+    private function getCustomOrderTotalItem($order_id, $custom_order_total_key) {
+        $custom_order_total_info = $this->getCustomOrderTotalInfo($order_id, $custom_order_total_key);
+        $order_info = $this->getOrderInfo($order_id);
+        if (!$custom_order_total_info) {
+            return false;
+        }
+
+        if(!$custom_order_total_info['is_order_lower_than_taxes']) {
+            $custom_order_total_info['tax_rate'] = 0;
+        }
+
+        return $this->getCartItemObject(
+            $custom_order_total_info['value'],
+            $order_info,
+            $custom_order_total_info['title'],
+            1,
+            $custom_order_total_key,
+            $custom_order_total_info['tax_rate']
+        );
     }
 
     /**

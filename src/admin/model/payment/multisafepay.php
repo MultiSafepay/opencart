@@ -382,7 +382,6 @@ class ModelExtensionPaymentMultiSafePay extends Model {
         return null;
     }
 
-
     /**
      * Remove coupons, vouchers, reward points and affiliate commission in full refunds
      *
@@ -397,7 +396,6 @@ class ModelExtensionPaymentMultiSafePay extends Model {
         $this->db->query("DELETE FROM " . DB_PREFIX . "customer_transaction WHERE order_id = '" . (int)$order_id . "'");
 
     }
-
 
 }
 
