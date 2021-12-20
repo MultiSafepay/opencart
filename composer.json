@@ -36,6 +36,7 @@
     "admin-tests": "src/system/library/multisafepay/vendor/bin/phpunit --testsuite admin-tests",
     "system-tests": "src/system/library/multisafepay/vendor/bin/phpunit --testsuite system-tests",
     "language-tests": "src/system/library/multisafepay/vendor/bin/phpunit --testsuite language-tests",
+    "opencart-tests": "src/system/library/multisafepay/vendor/bin/phpunit",
     "run-grumphp": "php src/system/library/multisafepay/vendor/bin/grumphp run"
   },
   "autoload-dev": {

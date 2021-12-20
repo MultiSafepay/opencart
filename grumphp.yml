@@ -9,9 +9,9 @@ grumphp:
     tasks:
         phpcs:
             standard: phpcs.xml
-        phpunit:
-            config_file: phpunit.xml
-            testsuite: 'catalog-tests, admin-tests, system-tests, language-tests'
+        composer_script:
+            script: 'opencart-tests'
+            triggered_by: [ 'php' ]
     testsuites:
         git_pre_commit:
-            tasks: ['phpcs', 'phpunit']
+            tasks: ['phpcs', 'composer_script']
