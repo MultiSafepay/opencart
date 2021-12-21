@@ -6,6 +6,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ***
 
+## 3.12.0
+Release date: Dec, 21th 2021
+
+### Added
++ PLGOPNS-428: Add button to switch the status of each payment method.
++ PLGOPNS-432: Add support to include any custom order total line in the ShoppingCart object.
++ PLGOPNS-435: Add support to disable the shopping cart in MultiSafepay payment page.
+
+### Fixed
++ PLGOPNS-442: Remove duplicated option in custom initialized order status field, within the settings for each payment method.
+
+### Changed
++ PLGOPNS-429: Replace payment icon according with rebrand guidelines of Bancontact.
++ PLGOPNS-430: Replace payment icon and change payment method name according with rebrand guidelines of Sofort.
++ PLGOPNS-443: Improvement in dutch translations.
+
+### Removed
++ DAVAMS-464: Remove ING Home’Pay.
+
+***
+
 ## 3.11.0
 Release date: Nov, 25th 2021
 

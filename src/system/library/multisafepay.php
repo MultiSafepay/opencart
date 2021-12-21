@@ -37,7 +37,7 @@ class Multisafepay {
      *
      */
     public function getPluginVersion() {
-        $plugin_version = '3.11.0';
+        $plugin_version = '3.12.0';
         return $plugin_version;
     }
 
