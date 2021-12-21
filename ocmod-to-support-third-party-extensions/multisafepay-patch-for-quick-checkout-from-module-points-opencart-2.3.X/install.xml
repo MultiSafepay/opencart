@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<modification>
+    <name>MultiSafepay: Patch for Quick Checkout from Module Points for OC version 2.3.X</name>
+    <version>1.0</version>
+    <code>MSP-QUICK-CHECKOUT-BY-MODULE-POINTS</code>
+    <author>MultiSafepay</author>
+    <link>https://www.multisafepay.com</link>
+    <file path="catalog/controller/mpcheckout/payment_method.php">
+        <operation info="Operation 1">
+            <search><![CDATA[public function save() {]]></search>
+            <add position="before"><![CDATA[
+    private function sortMethods($method_data) {
+		$sort_order = array();
+		foreach($method_data as $key => $value) {
+			if(strpos($key, 'multisafepay') !== false && $value['sort_order']) {
+				$sort_order[$key] = $this->config->get('payment_multisafepay_sort_order') . '.' . $value['sort_order'];
+			}
+			if(strpos($key, 'multisafepay') !== false && !$value['sort_order']) {
+				$sort_order[$key] = $this->config->get('payment_multisafepay_sort_order');
+			}
+			if(strpos($key, 'multisafepay') === false) {
+				$sort_order[$key] = $value['sort_order'];
+			}
+		}
+		array_multisort($sort_order, SORT_ASC, SORT_NATURAL, $method_data);
+		return $method_data;
+	}
+
+	private function extractPaymentMethodsArray($method, $extension, $total, $recurring = false, $method_data = array()) {
+		if ($method && $extension['code'] === 'multisafepay') {
+			$methods = $this->{'model_extension_payment_'.$extension['code']}->getMethods($this->session->data['payment_address'],
+				$total);
+			foreach ($methods as $msp_method) {
+				$method_data[$msp_method['code']] = $msp_method;
+			}
+			return $method_data;
+		}
+		if ($method && $extension['code'] !== 'multisafepay' && $recurring) {
+			if (property_exists($this->{'model_extension_payment_'.$extension['code']},
+					'recurringPayments') && $this->{'model_extension_payment_'.$extension['code']}->recurringPayments()) {
+				$method_data[$method['code']] = $method;
+				return $method_data;
+			}
+		}
+		if ($method && $extension['code'] !== 'multisafepay' && !$recurring) {
+			$method_data[$method['code']] = $method;
+			return $method_data;
+		}
+	}
+
+	private function getMultiSafepayImageByGatewayRoute($route) {
+		$gateways = $this->multisafepay->getGateways();
+		$gateway_key = array_search($route, array_column($gateways, 'route'));
+		if(isset($gateways[$gateway_key]['image'])) {
+			return $gateways[$gateway_key]['image'];
+		}
+		return false;
+	}
+
+            ]]>
+            </add>
+        </operation>
+        <operation info="Operation 2">
+            <search><![CDATA[$recurring = $this->cart->hasRecurringProducts();]]></search>
+            <add position="replace" offset="29"><![CDATA[
+
+            $recurring = $this->cart->hasRecurringProducts();
+
+            foreach ($results as $result) {
+                if ($this->config->get($this->key_prefix . $result['code'] . '_status')) {
+                    $this->load->model('extension/payment/' . $result['code']);
+                    $method = $this->{'model_extension_payment_' . $result['code']}->getMethod($this->session->data['payment_address'], $total);
+                    $method_data = $this->extractPaymentMethodsArray($method, $result, $total, $recurring, $method_data);
+                }
+            }
+
+            ]]>
+            </add>
+        </operation>
+        <operation info="Operation 3">
+            <search index="2"><![CDATA[$sort_order = array();]]></search>
+            <add position="replace" offset="6"><![CDATA[
+            $method_data = $this->sortMethods($method_data);
+            ]]>
+            </add>
+        </operation>
+        <operation info="Operation 4">
+            <search><![CDATA[parent::__construct($registry);]]></search>
+            <add position="after"><![CDATA[
+        $this->registry->set('multisafepay', new Multisafepay($registry));
+		$this->registry->set('multisafepay_version_control', new Multisafepayversioncontrol($registry));
+		$this->key_prefix = $this->multisafepay_version_control->getKeyPrefix();
+            ]]>
+            </add>
+        </operation>
+    </file>
+    <file path="admin/controller/mpcheckout/mpcheckout.php">
+        <operation info="Operation 1">
+            <search><![CDATA[public function install() {]]></search>
+            <add position="before"><![CDATA[
+    public function __construct($registry) {
+        parent::__construct($registry);
+        $this->registry->set('multisafepay', new Multisafepay($registry));
+    }
+
+    public function array_multidimensional_unique($input){
+        $output = array_map("unserialize",
+        array_unique(array_map("serialize", $input)));
+        return $output;
+    }
+            ]]>
+            </add>
+        </operation>
+        <operation info="Operation 2">
+            <search><![CDATA[$shipping_methods = $this->model_extension_extension->getInstalled('shipping');]]></search>
+            <add position="before"><![CDATA[
+        $multisafepay_methods = $this->multisafepay->getGateways();
+        $multisafepay_payments_for_onepagecheckout = array();
+        foreach ($multisafepay_methods as $multisafepay_method) {
+            $multisafepay_payments_for_onepagecheckout[] = array(
+                'name' 	=> $multisafepay_method['description'],
+                'code'	=> $multisafepay_method['route']
+            );
+        }
+        $data['payment_methods'] = $this->array_multidimensional_unique(array_merge($data['payment_methods'], $multisafepay_payments_for_onepagecheckout));
+            ]]>
+            </add>
+        </operation>
+    </file>
+</modification>
