@@ -726,7 +726,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
 		    $this->log->write('Callback received with a non registered payment method for ' . $order_id . ' on ' . $timestamp . ' with status: ' . $status . ', and PSP ID: ' . $psp_id );
 	    }
 
-	    if ($order_status_id && $order_status_id != $current_order_status) {
+	    if ($order_status_id !== '0' && $order_status_id != $current_order_status) {
 		    if ($this->config->get($this->key_prefix . 'multisafepay_debug_mode')) {
 			    $this->log->write('Callback received for Order ID ' . $order_id . ' on ' . $timestamp . ' with status: ' . $status . ', and PSP ID: ' . $psp_id . '.');
 		    }
@@ -737,7 +737,8 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
 		    $this->model_checkout_order->addOrderHistory($order_id, $order_status_id, $comment, true);
 	    }
 
-	    if (!$order_status_id && $order_status_id != $current_order_status && $this->config->get($this->key_prefix . 'multisafepay_debug_mode')) {
+        // If $order_status_id is 0, it means do nothing. Callback will not trigger order status change
+	    if ($order_status_id == '0' && $order_status_id != $current_order_status && $this->config->get($this->key_prefix . 'multisafepay_debug_mode')) {
 		    $comment = sprintf($this->language->get('text_comment_callback'), $order_id, $timestamp, $status, $psp_id);
 		    $this->model_checkout_order->addOrderHistory($order_id, $current_order_status, $comment, false);
 		    $this->log->write('Callback received for Order ID ' . $order_id . ', has not been process.');

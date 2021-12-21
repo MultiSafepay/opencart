@@ -234,6 +234,7 @@
                                         {% for order_status in order_statuses %}
                                             <option value="{{ order_status.order_status_id }}"{% if order_status.order_status_id == payment_multisafepay_order_status_id_initialized %} selected {% endif %}>{{ order_status.name }}</option>
                                         {% endfor %}
+                                        <option value="0"{% if '0' == payment_multisafepay_order_status_id_initialized %} selected {% endif %}>{{ text_do_nothing }}</option>
                                     </select>
                                 </div>
                             </div>
@@ -245,6 +246,7 @@
                                         {% for order_status in order_statuses %}
                                             <option value="{{ order_status.order_status_id }}"{% if order_status.order_status_id == payment_multisafepay_order_status_id_completed %} selected {% endif %}>{{ order_status.name }}</option>
                                         {% endfor %}
+                                        <option value="0"{% if '0' == payment_multisafepay_order_status_id_completed %} selected {% endif %}>{{ text_do_nothing }}</option>
                                     </select>
                                 </div>
                             </div>
@@ -256,6 +258,7 @@
                                         {% for order_status in order_statuses %}
                                             <option value="{{ order_status.order_status_id }}"{% if order_status.order_status_id == payment_multisafepay_order_status_id_uncleared %} selected {% endif %}>{{ order_status.name }}</option>
                                         {% endfor %}
+                                        <option value="0"{% if '0' == payment_multisafepay_order_status_id_uncleared %} selected {% endif %}>{{ text_do_nothing }}</option>
                                     </select>
                                 </div>
                             </div>
@@ -267,6 +270,7 @@
                                         {% for order_status in order_statuses %}
                                             <option value="{{ order_status.order_status_id }}"{% if order_status.order_status_id == payment_multisafepay_order_status_id_reserved %} selected {% endif %}>{{ order_status.name }}</option>
                                         {% endfor %}
+                                        <option value="0"{% if '0' == payment_multisafepay_order_status_id_reserved %} selected {% endif %}>{{ text_do_nothing }}</option>
                                     </select>
                                 </div>
                             </div>
@@ -278,6 +282,7 @@
                                         {% for order_status in order_statuses %}
                                             <option value="{{ order_status.order_status_id }}"{% if order_status.order_status_id == payment_multisafepay_order_status_id_void %} selected {% endif %}>{{ order_status.name }}</option>
                                         {% endfor %}
+                                        <option value="0"{% if '0' == payment_multisafepay_order_status_id_void %} selected {% endif %}>{{ text_do_nothing }}</option>
                                     </select>
                                 </div>
                             </div>
@@ -289,6 +294,7 @@
                                         {% for order_status in order_statuses %}
                                             <option value="{{ order_status.order_status_id }}"{% if order_status.order_status_id == payment_multisafepay_order_status_id_declined %} selected {% endif %}>{{ order_status.name }}</option>
                                         {% endfor %}
+                                        <option value="0"{% if '0' == payment_multisafepay_order_status_id_declined %} selected {% endif %}>{{ text_do_nothing }}</option>
                                     </select>
                                 </div>
                             </div>
@@ -300,6 +306,7 @@
                                         {% for order_status in order_statuses %}
                                             <option value="{{ order_status.order_status_id }}"{% if order_status.order_status_id == payment_multisafepay_order_status_id_expired %} selected {% endif %}>{{ order_status.name }}</option>
                                         {% endfor %}
+                                        <option value="0"{% if '0' == payment_multisafepay_order_status_id_expired %} selected {% endif %}>{{ text_do_nothing }}</option>
                                     </select>
                                 </div>
                             </div>
@@ -311,6 +318,7 @@
                                         {% for order_status in order_statuses %}
                                             <option value="{{ order_status.order_status_id }}"{% if order_status.order_status_id == payment_multisafepay_order_status_id_shipped %} selected {% endif %}>{{ order_status.name }}</option>
                                         {% endfor %}
+                                        <option value="0"{% if '0' == payment_multisafepay_order_status_id_shipped %} selected {% endif %}>{{ text_do_nothing }}</option>
                                     </select>
                                 </div>
                             </div>
@@ -322,6 +330,7 @@
                                         {% for order_status in order_statuses %}
                                             <option value="{{ order_status.order_status_id }}"{% if order_status.order_status_id == payment_multisafepay_order_status_id_refunded %} selected {% endif %}>{{ order_status.name }}</option>
                                         {% endfor %}
+                                        <option value="0"{% if '0' == payment_multisafepay_order_status_id_refunded %} selected {% endif %}>{{ text_do_nothing }}</option>
                                     </select>
                                 </div>
                             </div>
@@ -333,6 +342,7 @@
                                         {% for order_status in order_statuses %}
                                             <option value="{{ order_status.order_status_id }}"{% if order_status.order_status_id == payment_multisafepay_order_status_id_partial_refunded %} selected {% endif %}>{{ order_status.name }}</option>
                                         {% endfor %}
+                                        <option value="0"{% if '0' == payment_multisafepay_order_status_id_partial_refunded %} selected {% endif %}>{{ text_do_nothing }}</option>
                                     </select>
                                 </div>
                             </div>
@@ -344,6 +354,7 @@
                                         {% for order_status in order_statuses %}
                                             <option value="{{ order_status.order_status_id }}"{% if order_status.order_status_id == payment_multisafepay_order_status_id_cancelled %} selected {% endif %}>{{ order_status.name }}</option>
                                         {% endfor %}
+                                        <option value="0"{% if '0' == payment_multisafepay_order_status_id_cancelled %} selected {% endif %}>{{ text_do_nothing }}</option>
                                     </select>
                                 </div>
                             </div>

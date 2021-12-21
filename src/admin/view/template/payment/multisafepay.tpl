@@ -238,6 +238,7 @@
                                                 <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
                                             <?php } ?>
                                         <?php } ?>
+                                        <option value="0"<?php if ('0' == $multisafepay_order_status_id_initialized) { ?> selected <?php } ?>><?php echo $text_do_nothing; ?></option>
                                     </select>
                                 </div>
                             </div>
@@ -254,6 +255,7 @@
                                                 <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
                                             <?php } ?>
                                         <?php } ?>
+                                        <option value="0"<?php if ('0' == $multisafepay_order_status_id_completed) { ?> selected <?php } ?>><?php echo $text_do_nothing; ?></option>
                                     </select>
                                 </div>
                             </div>
@@ -270,6 +272,7 @@
                                                 <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
                                             <?php } ?>
                                         <?php } ?>
+                                        <option value="0"<?php if ('0' == $multisafepay_order_status_id_uncleared) { ?> selected <?php } ?>><?php echo $text_do_nothing; ?></option>
                                     </select>
                                 </div>
                             </div>
@@ -286,6 +289,7 @@
                                                 <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
                                             <?php } ?>
                                         <?php } ?>
+                                        <option value="0"<?php if ('0' == $multisafepay_order_status_id_reserved) { ?> selected <?php } ?>><?php echo $text_do_nothing; ?></option>
                                     </select>
                                 </div>
                             </div>
@@ -302,6 +306,7 @@
                                                 <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
                                             <?php } ?>
                                         <?php } ?>
+                                        <option value="0"<?php if ('0' == $multisafepay_order_status_id_void) { ?> selected <?php } ?>><?php echo $text_do_nothing; ?></option>
                                     </select>
                                 </div>
                             </div>
@@ -318,6 +323,7 @@
                                                 <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
                                             <?php } ?>
                                         <?php } ?>
+                                        <option value="0"<?php if ('0' == $multisafepay_order_status_id_declined) { ?> selected <?php } ?>><?php echo $text_do_nothing; ?></option>
                                     </select>
                                 </div>
                             </div>
@@ -334,6 +340,7 @@
                                                 <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
                                             <?php } ?>
                                         <?php } ?>
+                                        <option value="0"<?php if ('0' == $multisafepay_order_status_id_expired) { ?> selected <?php } ?>><?php echo $text_do_nothing; ?></option>
                                     </select>
                                 </div>
                             </div>
@@ -350,6 +357,7 @@
                                                 <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
                                             <?php } ?>
                                         <?php } ?>
+                                        <option value="0"<?php if ('0' == $multisafepay_order_status_id_shipped) { ?> selected <?php } ?>><?php echo $text_do_nothing; ?></option>
                                     </select>
                                 </div>
                             </div>
@@ -366,6 +374,7 @@
                                                 <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
                                             <?php } ?>
                                         <?php } ?>
+                                        <option value="0"<?php if ('0' == $multisafepay_order_status_id_refunded) { ?> selected <?php } ?>><?php echo $text_do_nothing; ?></option>
                                     </select>
                                 </div>
                             </div>
@@ -382,6 +391,7 @@
                                                 <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
                                             <?php } ?>
                                         <?php } ?>
+                                        <option value="0"<?php if ('0' == $multisafepay_order_status_id_partial_refunded) { ?> selected <?php } ?>><?php echo $text_do_nothing; ?></option>
                                     </select>
                                 </div>
                             </div>
@@ -398,6 +408,7 @@
                                                 <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
                                             <?php } ?>
                                         <?php } ?>
+                                        <option value="0"<?php if ('0' == $multisafepay_order_status_id_cancelled) { ?> selected <?php } ?>><?php echo $text_do_nothing; ?></option>
                                     </select>
                                 </div>
                             </div>

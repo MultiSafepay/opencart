@@ -132,8 +132,6 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
 
         $this->load->model('localisation/order_status');
         $data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
-        // We include in the order status array an option for do nothing and ignore the notifications
-        array_push($data['order_statuses'], array( 'order_status_id' => 0, 'name' => $this->language->get('text_do_nothing')));
 
         $gateways = $this->multisafepay->getOrderedGateways($data['store_id']);
 
@@ -153,6 +151,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
 
         $fields = $this->getFields();
         $data['payment_methods_fields_values'] = $this->getPaymentMethodsFieldsValues($data['store_id']);
+
         foreach ($fields as $field) {
             if (isset($this->request->post[$field])) {
                 $data[$field] = $this->request->post[$field];
