@@ -45,6 +45,10 @@
     }
   },
   "config": {
-    "vendor-dir": "src/system/library/multisafepay/vendor/"
+    "vendor-dir": "src/system/library/multisafepay/vendor/",
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true,
+      "phpro/grumphp": true
+    }
   }
 }
