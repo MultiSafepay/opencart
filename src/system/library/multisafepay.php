@@ -12,6 +12,7 @@ class Multisafepay {
         $this->route = $this->multisafepay_version_control->getExtensionRoute();
         $this->oc_version = $this->multisafepay_version_control->getOcVersion();
         $this->key_prefix = $this->multisafepay_version_control->getKeyPrefix();
+        $this->shipping_key_prefix = $this->multisafepay_version_control->getShippingKeyPrefix();
         $this->model_call = $this->multisafepay_version_control->getStandartModelCall();
         $this->non_standart_model_call = $this->multisafepay_version_control->getNonStandartModelCall();
         $this->total_extension_key_prefix = $this->multisafepay_version_control->getTotalExtensionPrefix();
@@ -1207,7 +1208,7 @@ class Multisafepay {
      */
     private function getShippingTaxClassId($shipping_code) {
         $shipping_code = explode('.', $shipping_code);
-        $shipping_tax_class_id_key = 'shipping_' . $shipping_code['0'] . '_tax_class_id';
+        $shipping_tax_class_id_key = $this->shipping_key_prefix . $shipping_code['0'] . '_tax_class_id';
         $shipping_tax_class_id = $this->config->get($shipping_tax_class_id_key);
         return $shipping_tax_class_id;
     }
