@@ -20,7 +20,7 @@ class ModelExtensionPaymentMultiSafePay extends Model {
      */
     public function getMethod($address, $total) {
 
-        if ($total == 0 || !$this->config->get($this->key_prefix . 'multisafepay_status')) {
+        if ($total <= 0 || !$this->config->get($this->key_prefix . 'multisafepay_status')) {
             return false;
         }
 

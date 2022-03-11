@@ -107,9 +107,13 @@ class Multisafepay {
 
         // Customer Balance - Credit
         $customer_additional_data = $this->getAdditionalCustomerData();
-        if ($customer_additional_data['customer_balance'] > 0) {
+        // Customer Balance included in the order
+        $customer_balance_info = $this->getCustomerBalanceInfo($order_id);
+        if ($customer_additional_data['customer_balance'] > 0 && $customer_balance_info) {
             $customer_balance_item = $this->getCustomerBalanceItem($order_id);
-            $shopping_cart_items[$this->config->get($this->total_extension_key_prefix . 'credit_sort_order')][] = $customer_balance_item;
+            if($customer_balance_item) {
+                $shopping_cart_items[$this->config->get($this->total_extension_key_prefix . 'credit_sort_order')][] = $customer_balance_item;
+            }
         }
 
         // Vouchers Gift Cards
@@ -1688,6 +1692,28 @@ class Multisafepay {
     }
 
     /**
+     * Return if the order contains a credit - customer balance item
+     *
+     * @param int $order_id
+     * @return mixed
+     */
+    private function getCustomerBalanceInfo($order_id) {
+        $this->load->language($this->route);
+
+        $order_totals = $this->getOrderTotals($order_id);
+        $has_credit = array_search('credit', array_column($order_totals, 'code'));
+        if ($has_credit === false) {
+            return false;
+        }
+
+        $credit_info = array(
+            'value' => $order_totals[$has_credit]['value'],
+            'title' => $this->htmlEntityDecode($this->language->get('text_customer_balance')),
+        );
+        return $credit_info;
+    }
+
+    /**
      * Returns CartItem object with customer balance.
      *
      * @param int $order_id
@@ -1695,13 +1721,12 @@ class Multisafepay {
      *
      */
     private function getCustomerBalanceItem($order_id) {
-        $this->load->language($this->route);
-        $customer_additional_data = $this->getAdditionalCustomerData();
+        $customer_balance_item = $this->getCustomerBalanceInfo($order_id);
         $order_info = $this->getOrderInfo($order_id);
         return $this->getNegativeCartItemObject(
-            $customer_additional_data['customer_balance'],
+            -$customer_balance_item['value'],
             $order_info,
-            $this->language->get('text_customer_balance'),
+            $customer_balance_item['title'],
             1,
             'CREDIT',
             0
