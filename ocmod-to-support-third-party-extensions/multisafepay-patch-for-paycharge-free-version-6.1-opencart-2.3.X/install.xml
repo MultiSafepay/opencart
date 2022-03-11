@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<modification>
+    <name>MultiSafepay: Patch for PayCharge 6.1 for OC version 2.3.X</name>
+    <version>1.0</version>
+    <code>MSP-PAYCHARGE-PATCH</code>
+    <author>MultiSafepay</author>
+    <link>https://www.multisafepay.com</link>
+    <file path="admin/controller/extension/total/paycharge.php">
+        <operation info="Register MultiSafepay objects">
+            <search><![CDATA[public function index() {]]></search>
+            <add position="before"><![CDATA[
+            public function __construct($registry) {
+                parent::__construct($registry);
+                $this->registry->set('multisafepay', new Multisafepay($registry));
+                $this->registry->set('multisafepay_version_control', new Multisafepayversioncontrol($registry));
+                $this->key_prefix = $this->multisafepay_version_control->getKeyPrefix();
+            }
+            ]]>
+            </add>
+        </operation>
+        <operation info="Show the list of all payment methods in backend">
+            <search><![CDATA[$data['payments'][] = array(]]></search>
+            <add position="replace" offset="3"><![CDATA[
+				if ($payment === 'multisafepay') {
+					$this->load->language('extension/payment/multisafepay');
+					$gateways = $this->multisafepay->getGateways();
+					foreach($gateways as $gateway) {
+					    // Exclude non active gateways
+						if (!$this->config->get($this->key_prefix . 'multisafepay_'.$gateway['code'].'_status')) {
+							continue;
+						}
+						$data['payments'][] = array(
+						    'code' => $gateway['route'],
+						    'name' => $gateway['description']
+						);
+					}
+				} else {
+					$data['payments'][] = array(
+						'name' => $this->language->get('heading_title'),
+						'code' => $payment,
+					);
+				}
+            ]]>
+            </add>
+        </operation>
+    </file>
+</modification>
