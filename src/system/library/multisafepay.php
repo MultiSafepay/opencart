@@ -1401,7 +1401,13 @@ class Multisafepay {
         $product_price = $product['price'];
         $product_description = '';
         $merchant_item_id = $this->getUniqueProductId($order_id, $product);
+
         $tax_rate = $this->getItemTaxRate($product['price'], $product_info['tax_class_id']);
+
+        // Some third party extensions could set the product taxes to 0, even when the product has valid tax class id assigned
+        if (isset($product['tax']) && $product['tax'] == 0) {
+            $tax_rate = 0;
+        }
 
         $reward_info = $this->getRewardInfo($order_id);
         $coupon_info = $this->getCouponInfo($order_id);
@@ -1441,8 +1447,6 @@ class Multisafepay {
 			    $coupon_info['name']
 		    );
 	    }
-
-
 
 	    // Coupons is fixed type and apply to all items in the order before taxes
 	    if (
@@ -1560,6 +1564,7 @@ class Multisafepay {
 
         $handling_tax_class_id  = $this->config->get($this->total_extension_key_prefix . 'handling_tax_class_id');
         $tax_rate = $this->getItemTaxRate($order_totals[$has_handling_fee]['value'], $handling_tax_class_id);
+
         $handling_fee_info = array(
             'value' => $order_totals[$has_handling_fee]['value'],
             'title' => $this->htmlEntityDecode($order_totals[$has_handling_fee]['title']),

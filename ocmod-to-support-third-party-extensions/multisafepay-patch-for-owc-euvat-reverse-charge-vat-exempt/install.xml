@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<modification>
+    <name>MultiSafepay: Patch for EU VAT Compliant from Open Web Creations for OC version 3.0.X</name>
+    <version>1.0</version>
+    <code>MSP-FOR-EU-VAT-COMPLIANT-FROM-OPEN-WEB-CREATIONS-PATCH</code>
+    <author>MultiSafepay</author>
+    <link>https://www.multisafepay.com</link>
+    <file path="system/library/multisafepay.php">
+        <operation>
+            <search><![CDATA[$shipping_tax_class_id = $this->getShippingTaxClassId($order_info['shipping_code']);]]></search>
+            <add position="after"><![CDATA[
+        if ((isset($this->session->data['owc_euvat_reverse_charge_vat_exempt']) && $this->session->data['owc_euvat_reverse_charge_vat_exempt'] == 1) || (isset($this->session->data['owc_euvat_reverse_charge_vat_exempt_uk']) && $this->session->data['owc_euvat_reverse_charge_vat_exempt_uk'] == 1)) {
+            $shipping_tax_class_id = 0;
+        }
+            ]]>
+            </add>
+        </operation>
+        <operation>
+            <search><![CDATA[$handling_tax_class_id  = $this->config->get($this->total_extension_key_prefix . 'handling_tax_class_id');]]></search>
+            <add position="after"><![CDATA[
+        if ((isset($this->session->data['owc_euvat_reverse_charge_vat_exempt']) && $this->session->data['owc_euvat_reverse_charge_vat_exempt'] == 1) || (isset($this->session->data['owc_euvat_reverse_charge_vat_exempt_uk']) && $this->session->data['owc_euvat_reverse_charge_vat_exempt_uk'] == 1)) {
+            $handling_tax_class_id  = 0;
+        }
+            ]]>
+            </add>
+        </operation>
+        <operation>
+            <search><![CDATA[$low_order_fee_tax_class_id  = $this->config->get($this->total_extension_key_prefix . 'low_order_fee_tax_class_id');]]></search>
+            <add position="after"><![CDATA[
+        if ((isset($this->session->data['owc_euvat_reverse_charge_vat_exempt']) && $this->session->data['owc_euvat_reverse_charge_vat_exempt'] == 1) || (isset($this->session->data['owc_euvat_reverse_charge_vat_exempt_uk']) && $this->session->data['owc_euvat_reverse_charge_vat_exempt_uk'] == 1)) {
+            $low_order_fee_tax_class_id  = 0;
+        }
+            ]]>
+            </add>
+        </operation>
+        <operation>
+            <search><![CDATA[$custom_order_total_tax_class_id  = $this->config->get($this->total_extension_key_prefix . $custom_order_total_key . '_tax_class_id');]]></search>
+            <add position="after"><![CDATA[
+        if ((isset($this->session->data['owc_euvat_reverse_charge_vat_exempt']) && $this->session->data['owc_euvat_reverse_charge_vat_exempt'] == 1) || (isset($this->session->data['owc_euvat_reverse_charge_vat_exempt_uk']) && $this->session->data['owc_euvat_reverse_charge_vat_exempt_uk'] == 1)) {
+            $custom_order_total_tax_class_id  = 0;
+        }
+            ]]>
+            </add>
+        </operation>
+        <operation>
+            <search><![CDATA[$tax_class_id  = $this->config->get($this->total_extension_key_prefix . $type . '_tax_class_id');]]></search>
+            <add position="after"><![CDATA[
+        if ((isset($this->session->data['owc_euvat_reverse_charge_vat_exempt']) && $this->session->data['owc_euvat_reverse_charge_vat_exempt'] == 1) || (isset($this->session->data['owc_euvat_reverse_charge_vat_exempt_uk']) && $this->session->data['owc_euvat_reverse_charge_vat_exempt_uk'] == 1)) {
+            $tax_class_id  = 0;
+        }
+            ]]>
+            </add>
+        </operation>
+        <operation>
+            <search><![CDATA[$fixed_taxes_items = $this->extractFixedTaxesRatesFromProducts($oc_tax_rate, $product['quantity'], $fixed_taxes_items);]]></search>
+            <add position="replace"><![CDATA[
+        if ((isset($this->session->data['owc_euvat_reverse_charge_vat_exempt']) && $this->session->data['owc_euvat_reverse_charge_vat_exempt'] == 1) || (isset($this->session->data['owc_euvat_reverse_charge_vat_exempt_uk']) && $this->session->data['owc_euvat_reverse_charge_vat_exempt_uk'] == 1)) {
+
+        } else {
+            $fixed_taxes_items = $this->extractFixedTaxesRatesFromProducts($oc_tax_rate, $product['quantity'], $fixed_taxes_items);
+        }
+            ]]>
+            </add>
+        </operation>
+    </file>
+</modification>
