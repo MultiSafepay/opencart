@@ -6,6 +6,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ***
 
+## 3.13.0
+Release date: Mar, 14th 2022
+
+### Added 
++ PLGOPNS-450: Add support for third party extensions EU VAT Compliant from Open Web Creations (Thanks to @dennisbuijsgmailcom)
++ PLGOPNS-446: OCMOD to support third party module PayCharge (Thanks to @dennisbuijsgmailcom)
+
+### Fixed
++ PLGOPNS-447: Fix shipping tax calculations for OpenCart 2.3.x and lower versions (Thanks to @dennisbuijsgmailcom)
+
+### Changed
++ PLGOPNS-445: Replace MultiSafepay logos according with new brand guidelines
+
+***
+
 ## 3.12.0
 Release date: Dec, 21th 2021
 
