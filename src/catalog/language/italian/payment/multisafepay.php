@@ -23,6 +23,7 @@ $_['entry_date_of_birth']                   = 'Data di nascita';
 $_['entry_bank_account']                    = 'IBAN del conto bancario';
 $_['entry_account_holder_name']             = 'Titolare';
 $_['entry_account_holder_iban']             = 'IBAN';
+$_['entry_afterpay_terms']                  = '<b><a href="https://www.afterpay.nl/en/about/pay-with-afterpay/payment-conditions" target="_blank">Ho letto e accetto i termini e condizioni Afterpay del pagamento</a></b>';
 $_['placeholder_date_of_birth']             = 'Data di nascita: AAAA-MM-GG';
 $_['placeholder_bank_account']              = 'IBAN del conto bancario';
 $_['placeholder_account_holder_iban']       = 'IBAN titolare ';
@@ -88,3 +89,4 @@ $_['text_error_empty_bank_account']         = 'Il contro bancario è obbliatorio
 $_['text_error_empty_account_holder_iban']  = 'L\'IBAN è obbligatorio';
 $_['text_error_empty_account_holder_name']  = 'Il titolare è obbligatorio';
 $_['text_error_not_valid_iban']             = 'L\'IBAN non è corretto';
+$_['text_error_empty_afterpay_terms']       = 'I termini di pagamento Postpay devono essere accettati';

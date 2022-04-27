@@ -23,6 +23,7 @@ $_['entry_date_of_birth']                   = 'Geburtsdatum';
 $_['entry_bank_account']                    = 'IBAN des Bankkontos';
 $_['entry_account_holder_name']             = 'Kontoinhaber';
 $_['entry_account_holder_iban']             = 'IBAN';
+$_['entry_afterpay_terms']                  = '<b><a href="https://www.afterpay.nl/nl/algemeen/betalen-met-afterpay/betalingsvoorwaarden" target="_blank">Ich habe die Afterpay Zahlungsbedingungen gelesen und bin damit einverstanden</a></b>';
 $_['placeholder_date_of_birth']             = 'Geburtsdatum: YYYY-MM-DD';
 $_['placeholder_bank_account']              = 'IBAN des Bankkontos';
 $_['placeholder_account_holder_iban']       = 'IBAN des Kontoinhabers';
@@ -87,3 +88,4 @@ $_['text_error_empty_bank_account']         = 'Bankkonto ist ein erforderliches 
 $_['text_error_empty_account_holder_iban']  = 'IBAN ist ein erforderliches Feld';
 $_['text_error_empty_account_holder_name']  = 'Kontoinhaber ein erforderliches Feld';
 $_['text_error_not_valid_iban']             = 'IBAN scheint ungültig zu sein';
+$_['text_error_empty_afterpay_terms']       = 'Die Afterpay-Zahlungsbedingungen müssen akzeptiert werden';

@@ -91,6 +91,17 @@
                     </div>
                 </div>
             <?php } ?>
+            <?php if(isset($fields['afterpay_terms'])) { ?>
+                <div class="form-group required form-group-afterpay-terms">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="afterpay_terms" value="1"> <?php echo $entry_afterpay_terms; ?>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            <?php } ?>
             <?php if(isset($fields['emandate'])) { ?>
                 <input type="hidden" name="emandate" value="<?php echo $order_id; ?>" />
             <?php } ?>

@@ -74,7 +74,8 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
 		    $data['gateway_info'] = 'Meta';
 		    $data['fields'] = array(
 			    'gender' => true,
-			    'birthday' => true
+			    'birthday' => true,
+                'afterpay_terms' => true
 		    );
 	    }
         return $this->multisafepay_version_control->getViewAccordingWithOcVersion($this->route . $this->view_extension_file, $data);
@@ -623,6 +624,11 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
             }
         }
 
+        if(isset($this->request->post['afterpay_terms']) && $this->request->post['afterpay_terms'] !== "1" ) {
+            $json['error']['afterpay-terms'] = $this->language->get('text_error_empty_afterpay_terms');
+        }
+
+
         $this->response->addHeader('Content-Type: application/json');
         $this->response->setOutput(json_encode($json));
 
@@ -894,7 +900,6 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
         if(!$gateway_details) {
             return $this->config->get($this->key_prefix . 'multisafepay_order_status_id_initialized');
         }
-
 
         $order_status_id_initialized_key = $this->key_prefix . 'multisafepay_' . $gateway_details['code'] . '_order_status_id_initialized';
         $custom_order_status_id_initialized = $this->config->get($order_status_id_initialized_key);

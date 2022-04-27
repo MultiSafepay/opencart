@@ -91,6 +91,17 @@
                     </div>
                 </div>
             {% endif %}
+            {% if fields.afterpay_terms %}
+                <div class="form-group required form-group-afterpay-terms">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="afterpay_terms" value="0"> {{ entry_afterpay_terms }}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
             {% if fields.emandate %}
                 <input type="hidden" name="emandate" value="{{ order_id }}" />
             {% endif %}
@@ -102,6 +113,16 @@
         </div>
     </div>
 </form>
+
+{% if gateway == 'AFTERPAY' %}
+    <script type="text/javascript"><!--
+        $( document ).ready(function() {
+            $('.form-group-afterpay-terms input').on('change', function(){
+                $('.form-group-afterpay-terms input').val(this.checked ? 1 : 0);
+            });
+        });
+        //--></script>
+{% endif %}
 {% if gateway == 'APPLEPAY' %}
     <script type="text/javascript"><!--
         $( document ).ready(function() {
