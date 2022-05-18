@@ -119,7 +119,7 @@ src/admin/controller/startup/test-startup-3-0.php admin/controller/startup/test_
 # src/catalog/controller/startup/test_startup.php catalog/controller/startup/test_startup.php
 # src/admin/controller/startup/test-startup-2-1.php admin/controller/startup/test_startup.php
 # src/system/test-framework.php system/test-framework.php
-
+# install.xml system/multisafepay.ocmod.xml
 
 
 # Modman for OpenCart 2.0.X.X
@@ -152,3 +152,4 @@ src/admin/controller/startup/test-startup-3-0.php admin/controller/startup/test_
 # src/catalog/controller/startup/test_startup.php catalog/controller/startup/test_startup.php
 # src/admin/controller/startup/test-startup-2-0.php admin/controller/startup/test_startup.php
 # src/system/test-framework.php system/test-framework.php
+# install.xml system/multisafepay.ocmod.xml
