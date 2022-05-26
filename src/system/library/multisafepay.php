@@ -1949,6 +1949,17 @@ class Multisafepay {
                 'image' => 'alipay'
             ),
             array(
+                'id' => 'ALIPAYPLUS',
+                'code' => 'alipayplus',
+                'route' => 'multisafepay/alipayplus',
+                'description' => $this->language->get('text_title_alipayplus'),
+                'type' => 'gateway',
+                'redirect_switch' => false,
+                'docs' => sprintf($this->language->get('text_gateway_docs_info'), 'https://docs.multisafepay.com/payment-methods/wallet/alipay/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_alipayplus')),
+                'brief_description' => $this->language->get('text_brief_description_alipay'),
+                'image' => 'alipayplus'
+            ),
+            array(
                 'id' => 'AMEX',
                 'code' => 'amex',
                 'route' => 'multisafepay/amex',

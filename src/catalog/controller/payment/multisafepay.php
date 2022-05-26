@@ -93,9 +93,19 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
     /**
      * Handles the confirm order form for Alipay payment method
      */
-    public function aliPay() {
+    public function alipay() {
         $data = $this->paymentMethodBase();
         $data['gateway'] = 'ALIPAY';
+        $data['type'] = 'direct';
+        return $this->multisafepay_version_control->getViewAccordingWithOcVersion($this->route . $this->view_extension_file, $data);
+    }
+
+    /**
+     * Handles the confirm order form for Alipay+ payment method
+     */
+    public function alipayplus() {
+        $data = $this->paymentMethodBase();
+        $data['gateway'] = 'ALIPAYPLUS';
         $data['type'] = 'direct';
         return $this->multisafepay_version_control->getViewAccordingWithOcVersion($this->route . $this->view_extension_file, $data);
     }
