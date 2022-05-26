@@ -7,3 +7,4 @@
 /src/patches-for-third-party-integrations
 /coverage.xml
 /phpunit.xml
+/bin/private/*
