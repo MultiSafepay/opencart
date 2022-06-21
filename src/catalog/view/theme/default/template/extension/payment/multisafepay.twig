@@ -10,6 +10,9 @@
     {% if gateway_info %}
         <input type="hidden" name="gateway_info" value="{{ gateway_info }}" />
     {% endif %}
+    {% if fields.payment_component_enabled %}
+        <input type="hidden" name="payload" value="" />
+    {% endif %}
     {% if issuers %}
         <fieldset>
             <legend>{{ text_legend }}</legend>
@@ -29,6 +32,9 @@
     {% if fields %}
         <fieldset>
             <legend>{{ text_legend }}</legend>
+            {% if fields.payment_component_enabled %}
+            <div id="multisafepay-payment"></div>
+            {% endif %}
             {% if fields.gender %}
                 <div class="form-group required form-group-gender">
                     <label class="col-sm-2 control-label" for="input-gender">{{ entry_gender }} </label>
@@ -180,4 +186,25 @@
             });
         });
     //--></script>
+    {% if fields.payment_component_enabled %}
+    <script type="text/javascript"><!--
+        function createMultiSafepayPaymentComponents() {
+            var config = {
+                {% if env is defined %}
+                env: '{{ env }}',
+                {% endif %}
+                apiToken: '{{ apiToken }}',
+                orderData: {{ order_data }}
+            };
+            var multisafepay_payment_component = new MultiSafepayPaymentComponent(config, '{{ gateway }}');
+            $('#multisafepay-form').submit(function(event) {
+                multisafepay_payment_component.onSubmitCheckoutForm(event);
+            });
+        }
+
+        $(document).ready(function () {
+            createMultiSafepayPaymentComponents();
+        });
+    //--></script>
+    {% endif %}
 {% endif %}

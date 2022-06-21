@@ -929,4 +929,34 @@ class Multisafepayevents {
         return $args;
     }
 
+    /**
+     * Trigger that is called before ...
+     * catalog/view/common/header/before
+     * and ...
+     * catalog/view/common/footer/before
+     * using OpenCart events system and overwrites it
+     *
+     * @param string $route
+     * @param array $args
+     */
+    public function catalogViewCommonHeaderFooterBefore(&$route, &$args, $position) {
+        if (!empty($this->request->get['route']) && strpos($this->request->get['route'], 'checkout/checkout') !== false) {
+            if ($position === 'header') {
+                $this->document->addStyle('https://pay.multisafepay.com/sdk/components/v2/components.css');
+                $this->document->addStyle('catalog/view/theme/default/stylesheet/multisafepay/multisafepay.css');
+                $args['styles'] = $this->document->getStyles();
+                return $args;
+            }
+
+            $oc_version = $this->multisafepay_version_control->getOcVersion();
+            $js_position = 'header';
+            if ($oc_version === '3.0' && ($this->config->get('config_theme') !== 'journal3')) {
+                $js_position = 'footer';
+            }
+            $this->document->addScript('https://pay.multisafepay.com/sdk/components/v2/components.js', $js_position);
+            $this->document->addScript('catalog/view/javascript/multisafepay/multisafepay.js', $js_position);
+            $args['scripts'] = $this->document->getScripts($js_position);
+        }
+        return $args;
+    }
 }

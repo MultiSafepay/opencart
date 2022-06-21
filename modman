@@ -8,6 +8,7 @@ src/admin/language/nl-nl/extension/payment/multisafepay.php admin/language/nl-nl
 src/admin/model/extension/payment/multisafepay.php admin/model/extension/payment/multisafepay.php
 src/admin/view/stylesheet/multisafepay/multisafepay.css admin/view/stylesheet/multisafepay/multisafepay.css
 src/admin/view/javascript/multisafepay/dragula.js admin/view/javascript/multisafepay/dragula.js
+src/admin/view/javascript/multisafepay/multisafepay.js admin/view/javascript/multisafepay/multisafepay.js
 src/admin/view/template/extension/payment/multisafepay.twig admin/view/template/extension/payment/multisafepay.twig
 src/admin/view/template/extension/payment/multisafepay_order.twig admin/view/template/extension/payment/multisafepay_order.twig
 src/catalog/controller/extension/payment/multisafepay.php catalog/controller/extension/payment/multisafepay.php
@@ -18,6 +19,8 @@ src/catalog/language/it-it/extension/payment/multisafepay.php catalog/language/i
 src/catalog/language/nl-nl/extension/payment/multisafepay.php catalog/language/nl-nl/extension/payment/multisafepay.php
 src/catalog/model/extension/payment/multisafepay.php catalog/model/extension/payment/multisafepay.php
 src/catalog/view/theme/default/template/extension/payment/multisafepay.twig catalog/view/theme/default/template/extension/payment/multisafepay.twig
+src/catalog/view/javascript/multisafepay/multisafepay.js catalog/view/javascript/multisafepay/multisafepay.js
+src/catalog/view/theme/default/stylesheet/multisafepay/multisafepay.css catalog/view/theme/default/stylesheet/multisafepay/multisafepay.css
 src/image/catalog/multisafepay/ image/catalog/multisafepay
 src/system/library/multisafepay/ system/library/multisafepay
 src/system/library/multisafepay.php system/library/multisafepay.php
@@ -38,6 +41,7 @@ src/admin/controller/startup/test-startup-3-0.php admin/controller/startup/test_
 # src/admin/model/extension/payment/multisafepay.php admin/model/extension/payment/multisafepay.php
 # src/admin/view/stylesheet/multisafepay/multisafepay.css admin/view/stylesheet/multisafepay/multisafepay.css
 # src/admin/view/javascript/multisafepay/dragula.js admin/view/javascript/multisafepay/dragula.js
+# src/admin/view/javascript/multisafepay/multisafepay.js admin/view/javascript/multisafepay/multisafepay.js
 # src/admin/view/template/extension/payment/multisafepay.tpl admin/view/template/extension/payment/multisafepay.tpl
 # src/admin/view/template/extension/payment/multisafepay_order.tpl admin/view/template/extension/payment/multisafepay_order.tpl
 # src/catalog/controller/extension/payment/multisafepay.php catalog/controller/extension/payment/multisafepay.php
@@ -48,6 +52,8 @@ src/admin/controller/startup/test-startup-3-0.php admin/controller/startup/test_
 # src/catalog/language/nl-nl/extension/payment/multisafepay.php catalog/language/nl-nl/extension/payment/multisafepay.php
 # src/catalog/model/extension/payment/multisafepay.php catalog/model/extension/payment/multisafepay.php
 # src/catalog/view/theme/default/template/extension/payment/multisafepay.tpl catalog/view/theme/default/template/extension/payment/multisafepay.tpl
+# src/catalog/view/javascript/multisafepay/multisafepay.js catalog/view/javascript/multisafepay/multisafepay.js
+# src/catalog/view/theme/default/stylesheet/multisafepay/multisafepay.css catalog/view/theme/default/stylesheet/multisafepay/multisafepay.css
 # src/image/catalog/multisafepay/ image/catalog/multisafepay
 # src/system/library/multisafepay/ system/library/multisafepay
 # src/system/library/multisafepay.php system/library/multisafepay.php
@@ -68,6 +74,7 @@ src/admin/controller/startup/test-startup-3-0.php admin/controller/startup/test_
 # src/admin/model/payment/multisafepay.php admin/model/payment/multisafepay.php
 # src/admin/view/stylesheet/multisafepay/multisafepay.css admin/view/stylesheet/multisafepay/multisafepay.css
 # src/admin/view/javascript/multisafepay/dragula.js admin/view/javascript/multisafepay/dragula.js
+# src/admin/view/javascript/multisafepay/multisafepay.js admin/view/javascript/multisafepay/multisafepay.js
 # src/admin/view/template/payment/multisafepay.tpl admin/view/template/payment/multisafepay.tpl
 # src/admin/view/template/payment/multisafepay_order.tpl admin/view/template/payment/multisafepay_order.tpl
 # src/catalog/controller/payment/multisafepay.php catalog/controller/payment/multisafepay.php
@@ -78,6 +85,8 @@ src/admin/controller/startup/test-startup-3-0.php admin/controller/startup/test_
 # src/catalog/language/nl-nl/payment/multisafepay.php catalog/language/nl-nl/payment/multisafepay.php
 # src/catalog/model/payment/multisafepay.php catalog/model/payment/multisafepay.php
 # src/catalog/view/theme/default/template/payment/multisafepay.tpl catalog/view/theme/default/template/payment/multisafepay.tpl
+# src/catalog/view/javascript/multisafepay/multisafepay.js catalog/view/javascript/multisafepay/multisafepay.js
+# src/catalog/view/theme/default/stylesheet/multisafepay/multisafepay.css catalog/view/theme/default/stylesheet/multisafepay/multisafepay.css
 # src/image/catalog/multisafepay/ image/catalog/multisafepay
 # src/system/library/multisafepay/ system/library/multisafepay
 # src/system/library/multisafepay.php system/library/multisafepay.php
@@ -99,6 +108,7 @@ src/admin/controller/startup/test-startup-3-0.php admin/controller/startup/test_
 # src/admin/model/payment/multisafepay.php admin/model/payment/multisafepay.php
 # src/admin/view/stylesheet/multisafepay/multisafepay.css admin/view/stylesheet/multisafepay/multisafepay.css
 # src/admin/view/javascript/multisafepay/dragula.js admin/view/javascript/multisafepay/dragula.js
+# src/admin/view/javascript/multisafepay/multisafepay.js admin/view/javascript/multisafepay/multisafepay.js
 # src/admin/view/template/payment/multisafepay.tpl admin/view/template/payment/multisafepay.tpl
 # src/admin/view/template/payment/multisafepay_order.tpl admin/view/template/payment/multisafepay_order.tpl
 # src/catalog/controller/payment/multisafepay.php catalog/controller/payment/multisafepay.php
@@ -109,6 +119,8 @@ src/admin/controller/startup/test-startup-3-0.php admin/controller/startup/test_
 # src/catalog/language/dutch/payment/multisafepay.php catalog/language/dutch/payment/multisafepay.php
 # src/catalog/model/payment/multisafepay.php catalog/model/payment/multisafepay.php
 # src/catalog/view/theme/default/template/payment/multisafepay.tpl catalog/view/theme/default/template/payment/multisafepay.tpl
+# src/catalog/view/javascript/multisafepay/multisafepay.js catalog/view/javascript/multisafepay/multisafepay.js
+# src/catalog/view/theme/default/stylesheet/multisafepay/multisafepay.css catalog/view/theme/default/stylesheet/multisafepay/multisafepay.css
 # src/image/catalog/multisafepay/ image/catalog/multisafepay
 # src/system/library/multisafepay/ system/library/multisafepay
 # src/system/library/multisafepay.php system/library/multisafepay.php
@@ -132,6 +144,7 @@ src/admin/controller/startup/test-startup-3-0.php admin/controller/startup/test_
 # src/admin/model/payment/multisafepay.php admin/model/payment/multisafepay.php
 # src/admin/view/stylesheet/multisafepay/multisafepay.css admin/view/stylesheet/multisafepay/multisafepay.css
 # src/admin/view/javascript/multisafepay/dragula.js admin/view/javascript/multisafepay/dragula.js
+# src/admin/view/javascript/multisafepay/multisafepay.js admin/view/javascript/multisafepay/multisafepay.js
 # src/admin/view/template/payment/multisafepay.tpl admin/view/template/payment/multisafepay.tpl
 # src/admin/view/template/payment/multisafepay_order.tpl admin/view/template/payment/multisafepay_order.tpl
 # src/catalog/controller/payment/multisafepay.php catalog/controller/payment/multisafepay.php
@@ -142,6 +155,8 @@ src/admin/controller/startup/test-startup-3-0.php admin/controller/startup/test_
 # src/catalog/language/dutch/payment/multisafepay.php catalog/language/dutch/payment/multisafepay.php
 # src/catalog/model/payment/multisafepay.php catalog/model/payment/multisafepay.php
 # src/catalog/view/theme/default/template/payment/multisafepay.tpl catalog/view/theme/default/template/payment/multisafepay.tpl
+# src/catalog/view/javascript/multisafepay/multisafepay.js catalog/view/javascript/multisafepay/multisafepay.js
+# src/catalog/view/theme/default/stylesheet/multisafepay/multisafepay.css catalog/view/theme/default/stylesheet/multisafepay/multisafepay.css
 # src/image/catalog/multisafepay/ image/catalog/multisafepay
 # src/system/library/multisafepay/ system/library/multisafepay
 # src/system/library/multisafepay.php system/library/multisafepay.php
@@ -153,3 +168,17 @@ src/admin/controller/startup/test-startup-3-0.php admin/controller/startup/test_
 # src/admin/controller/startup/test-startup-2-0.php admin/controller/startup/test_startup.php
 # src/system/test-framework.php system/test-framework.php
 # install.xml system/multisafepay.ocmod.xml
+
+# Third party checkouts OC 3.0.X
+# ocmod-to-support-third-party-extensions/multisafepay-patch-for-ajax-quick-checkout-free-version-7.3.1-opencart-3.0.X/install.xml system/d_quickcheckout_multisafepay.ocmod.xml
+# ocmod-to-support-third-party-extensions/multisafepay-patch-for-ajax-quick-checkout-free-version-7.3.1-opencart-3.0.X/upload/qc_payment_multisafepay.tag catalog/view/theme/default/template/extension/d_quickcheckout/step/qc_payment_multisafepay.tag
+# ocmod-to-support-third-party-extensions/multisafepay-patch-for-onepage-checkout-4.0.0-opencart-3.0.X/install.xml system/onepagecheckout_multisafepay.ocmod.xml
+# ocmod-to-support-third-party-extensions/multisafepay-patch-for-journal3-opencart-3.0.X.ocmod/install.xml system/journal3_multisafepay.ocmod.xml
+# ocmod-to-support-third-party-extensions/multisafepay-patch-for-journal3-opencart-3.0.X.ocmod/upload/catalog/view/theme/journal3/template/extension/payment/multisafepay.twig catalog/view/theme/journal3/template/extension/payment/multisafepay.twig
+
+# Third party checkouts OC 2.3.X
+# ocmod-to-support-third-party-extensions/multisafepay-patch-for-ajax-quick-checkout-free-version-7.3.1-opencart-2.3.X/install.xml system/d_quickcheckout_multisafepay.ocmod.xml
+# ocmod-to-support-third-party-extensions/multisafepay-patch-for-ajax-quick-checkout-free-version-7.3.1-opencart-2.3.X/upload/qc_payment_multisafepay.tag catalog/view/theme/default/template/extension/d_quickcheckout/step/qc_payment_multisafepay.tag
+# ocmod-to-support-third-party-extensions/multisafepay-patch-for-onepage-checkout-4.0.0-opencart-2.3.X/install.xml system/onepagecheckout_multisafepay.ocmod.xml
+# ocmod-to-support-third-party-extensions/multisafepay-patch-for-journal3-opencart-2.3.X.ocmod/install.xml system/journal3_multisafepay.ocmod.xml
+# ocmod-to-support-third-party-extensions/multisafepay-patch-for-journal3-opencart-2.3.X.ocmod/upload/catalog/view/theme/journal3/template/extension/payment/multisafepay.tpl catalog/view/theme/journal3/template/extension/payment/multisafepay.tpl

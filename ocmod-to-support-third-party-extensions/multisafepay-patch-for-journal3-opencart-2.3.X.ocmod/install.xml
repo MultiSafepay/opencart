@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+    <name>MultiSafepay: Patch for Journal3 Theme</name>
+    <version>1.0</version>
+    <code>MSP-PATCH-FOR-JOURNAL3-THEME</code>
+    <author>MultiSafepay</author>
+    <link>https://www.multisafepay.com</link>
+    <file path="catalog/model/extension/payment/multisafepay.php">
+        <operation info="Change image dimensions. Operation 1.">
+            <search><![CDATA[$logo = '<img height=20 src="' . $shop_url . 'image/catalog/multisafepay/' . $image . '.png" alt="' . $title . '"/>';]]></search>
+            <add position="replace"><![CDATA[
+            $logo = '<img style="height: 20px;" src="' . $shop_url . 'image/catalog/multisafepay/' . $image . '.png" alt="' . $title . '"/>';
+            ]]>
+            </add>
+        </operation>
+        <operation info="Change image dimensions. Operation 1.">
+            <search><![CDATA[$logo = '<img height=20 src="' . $shop_url . 'image/catalog/multisafepay/' . $image . '-' . $locale_code . '.png" alt="' . $title . '"/>';]]></search>
+            <add position="replace"><![CDATA[
+            $logo = '<img style="height: 20px;" src="' . $shop_url . 'image/catalog/multisafepay/' . $image . '-' . $locale_code . '.png" alt="' . $title . '"/>';
+            ]]>
+            </add>
+        </operation>
+    </file>
+    <file path="catalog/model/journal3/checkout.php">
+        <operation info="Patch for Journal3 Theme. Operation 1.">
+            <search index="4"><![CDATA[$sort_order = array();]]></search>
+            <add position="replace" offset="6"><![CDATA[
+        $method_data = $this->sortMethods($method_data);
+            ]]>
+            </add>
+        </operation>
+        <operation info="Patch for Journal3 Theme. Operation 2.">
+            <search index="1"><![CDATA[$method_data[$result['code']] = $method;]]></search>
+            <add position="replace" offset="0"><![CDATA[
+            $method_data = $this->extractPaymentMethodsArray($method, $result, $total, $recurring, $method_data);
+
+            ]]>
+            </add>
+        </operation>
+        <operation info="Patch for Journal3 Theme. Operation 3.">
+            <search index="1"><![CDATA[$recurring = $this->cart->hasRecurringProducts();]]></search>
+            <add position="replace" offset="18"><![CDATA[
+            $recurring = $this->cart->hasRecurringProducts();
+
+            foreach ($results as $result) {
+                if ($this->config->get('payment_' . $result['code'] . '_status')) {
+                    $this->load->model('extension/payment/' . $result['code']);
+                    $method = $this->{'model_extension_payment_' . $result['code']}->getMethod($this->session->data['payment_address'], $total);
+                    $method_data = $this->extractPaymentMethodsArray($method, $result, $total, $recurring, $method_data);
+                }
+            }
+            ]]>
+            </add>
+        </operation>
+        <operation info="Patch for Journal3 Theme. Operation 4.">
+            <search><![CDATA[private function payment_methods($total) {]]></search>
+            <add position="before"><![CDATA[
+    private function sortMethods($method_data) {
+        $sort_order = array();
+        foreach($method_data as $key => $value) {
+            if(strpos($key, 'multisafepay') !== false && $value['sort_order']) {
+                $sort_order[$key] = $this->config->get('payment_multisafepay_sort_order') . '.' . $value['sort_order'];
+            }
+            if(strpos($key, 'multisafepay') !== false && !$value['sort_order']) {
+                $sort_order[$key] = $this->config->get('payment_multisafepay_sort_order');
+            }
+            if(strpos($key, 'multisafepay') === false) {
+                $sort_order[$key] = $value['sort_order'];
+            }
+        }
+        array_multisort($sort_order, SORT_ASC, SORT_NATURAL, $method_data);
+        return $method_data;
+    }
+
+    private function extractPaymentMethodsArray($method, $extension, $total, $recurring = false, $method_data = array()) {
+        if ($method && $extension['code'] === 'multisafepay') {
+            $methods = $this->{'model_extension_payment_'.$extension['code']}->getMethods($this->session->data['payment_address'],
+                $total);
+            foreach ($methods as $msp_method) {
+                $method_data[$msp_method['code']] = $msp_method;
+            }
+            return $method_data;
+        }
+        if ($method && $extension['code'] !== 'multisafepay' && $recurring) {
+            if (property_exists($this->{'model_extension_payment_'.$extension['code']},
+                    'recurringPayments') && $this->{'model_extension_payment_'.$extension['code']}->recurringPayments()) {
+                $method_data[$method['code']] = $method;
+                return $method_data;
+            }
+        }
+        if ($method && $extension['code'] !== 'multisafepay' && !$recurring) {
+            $method_data[$method['code']] = $method;
+            return $method_data;
+        }
+    }
+            ]]>
+            </add>
+        </operation>
+    </file>
+</modification>

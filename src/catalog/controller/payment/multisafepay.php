@@ -7,6 +7,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
     public function __construct($registry) {
         parent::__construct($registry);
         $this->registry->set('multisafepay_version_control', new Multisafepayversioncontrol($registry));
+        $this->registry->set('multisafepay', new Multisafepay($registry));
         $this->key_prefix = $this->multisafepay_version_control->getKeyPrefix();
         $this->route = $this->multisafepay_version_control->getExtensionRoute();
         $this->view_extension_file = $this->multisafepay_version_control->getFileExtensionView();
@@ -36,20 +37,74 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
     }
 
     /**
-     * Data to be include in each payment method as base
+     * Get Extra Data for Payment Component
      */
-    private function paymentMethodBase() {
+    public function getDataForPaymentComponent($data) {
+        $order_info = $this->multisafepay->getOrderInfo($data['order_id']);
+
+        $data['type'] = 'direct';
+
+        $data['fields']['payment_component_enabled'] = (bool)$this->config->get($this->key_prefix . 'multisafepay_' . strtolower($data['gateway']) . '_payment_component');
+        $data['fields']['tokenization'] = (bool)$this->config->get($this->key_prefix . 'multisafepay_' . strtolower($data['gateway']) . '_tokenization');
+        $data['currency'] = $order_info['currency_code'];
+        $data['amount'] = (float)$order_info['total'] * 100;
+        $data['locale'] = $this->multisafepay->getLocale();
+        $data['country'] = $order_info['payment_iso_code_2'];
+        $data['apiToken'] = $this->multisafepay->getUserApiToken();
+
+        if ($data['test_mode']) {
+            $data['env'] = 'test';
+        }
+
+        $order_template = array(
+            'currency' => $data['currency'],
+            'amount' => $data['amount'],
+            'customer' => array(
+                'locale' => $data['locale'],
+                'country' => $data['country'],
+            ),
+            'template' => array(
+                'settings' => array(
+                    'embed_mode' => true
+                )
+            )
+        );
+
+        // Recurring model is just working when payment components and tokenization are enabled at the same time, and for some specific credit cards
+        if ($this->customer->isLogged() && $data['fields']['tokenization'] && in_array($data['gateway'], $this->multisafepay->configurable_recurring_payment_methods, true)) {
+            $order_template['recurring']['model'] = 'cardOnFile';
+            $order_template['customer']['reference'] = $order_info['customer_id'];
+        }
+        $data['order_data'] = json_encode($order_template);
+
+        return $data;
+    }
+
+    /**
+     * Data to be included in each payment method as base
+     */
+    private function paymentMethodBase($gateway = '') {
         $data = $this->getTexts();
         $data['issuers'] = array();
         $data['fields'] = array();
         $data['gateway_info'] = array();
-        $data['gateway'] = '';
+        $data['gateway'] = $gateway;
         $data['order_id'] = $this->session->data['order_id'];
         $data['action'] = $this->url->link($this->route . '/confirm', '', true);
         $data['back'] = $this->url->link('checkout/checkout', '', true);
         $data['type'] = 'redirect';
         $data['route'] = $this->route;
         $data['test_mode'] = ($this->config->get($this->key_prefix . 'multisafepay_environment')) ? true : false;
+
+        if (in_array($gateway, $this->multisafepay->configurable_type_search, true)) {
+            $data['type'] = $this->config->get($this->key_prefix . 'multisafepay_' . strtolower($gateway) . '_redirect') ? 'redirect' : 'direct';
+        }
+
+        // Payment component enabled both with and without tokenization
+        if (in_array($gateway, $this->multisafepay->configurable_payment_component, true) && (bool)$this->config->get($this->key_prefix . 'multisafepay_' . strtolower($gateway) . '_payment_component')) {
+            $data = $this->getDataForPaymentComponent($data);
+        }
+
         return $data;
     }
 
@@ -67,9 +122,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
      * Handles the confirm order form for Afterpay payment method
      */
     public function afterPay() {
-        $data = $this->paymentMethodBase();
-        $data['gateway'] = 'AFTERPAY';
-	    $data['type'] = $this->config->get($this->key_prefix . 'multisafepay_afterpay_redirect') ? 'redirect' : 'direct';
+        $data = $this->paymentMethodBase('AFTERPAY');
 	    if($data['type'] === 'direct') {
 		    $data['gateway_info'] = 'Meta';
 		    $data['fields'] = array(
@@ -85,27 +138,15 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
      * Handles the confirm order form for Amex payment method
      */
     public function amex() {
-        $data = $this->paymentMethodBase();
-        $data['gateway'] = 'AMEX';
+        $data = $this->paymentMethodBase('AMEX');
         return $this->multisafepay_version_control->getViewAccordingWithOcVersion($this->route . $this->view_extension_file, $data);
     }
 
     /**
      * Handles the confirm order form for Alipay payment method
      */
-    public function alipay() {
-        $data = $this->paymentMethodBase();
-        $data['gateway'] = 'ALIPAY';
-        $data['type'] = 'direct';
-        return $this->multisafepay_version_control->getViewAccordingWithOcVersion($this->route . $this->view_extension_file, $data);
-    }
-
-    /**
-     * Handles the confirm order form for Alipay+ payment method
-     */
-    public function alipayplus() {
-        $data = $this->paymentMethodBase();
-        $data['gateway'] = 'ALIPAYPLUS';
+    public function aliPay() {
+        $data = $this->paymentMethodBase('ALIPAY');
         $data['type'] = 'direct';
         return $this->multisafepay_version_control->getViewAccordingWithOcVersion($this->route . $this->view_extension_file, $data);
     }
@@ -114,8 +155,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
      * Handles the confirm order form for Apple Pay payment method
      */
     public function applePay() {
-        $data = $this->paymentMethodBase();
-        $data['gateway'] = 'APPLEPAY';
+        $data = $this->paymentMethodBase('APPLEPAY');
         return $this->multisafepay_version_control->getViewAccordingWithOcVersion($this->route . $this->view_extension_file, $data);
     }
 
@@ -123,9 +163,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
      * Handles the confirm order form for Baby Cadeaubon payment method
      */
     public function babycad() {
-        $data = $this->paymentMethodBase();
-        $data['gateway'] = 'BABYCAD';
-
+        $data = $this->paymentMethodBase('BABYCAD');
         return $this->multisafepay_version_control->getViewAccordingWithOcVersion($this->route . $this->view_extension_file, $data);
     }
 
@@ -133,8 +171,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
      * Handles the confirm order form for Bancontact payment method
      */
     public function bancontact() {
-        $data = $this->paymentMethodBase();
-        $data['gateway'] = 'MISTERCASH';
+        $data = $this->paymentMethodBase('MISTERCASH');
         return $this->multisafepay_version_control->getViewAccordingWithOcVersion($this->route . $this->view_extension_file, $data);
     }
 
@@ -142,9 +179,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
      * Handles the confirm order form for Bank Transfer payment method
      */
     public function bankTransfer() {
-        $data = $this->paymentMethodBase();
-        $data['gateway'] = 'BANKTRANS';
-        $data['type'] = $this->config->get($this->key_prefix . 'multisafepay_banktrans_redirect') ? 'redirect' : 'direct';
+        $data = $this->paymentMethodBase('BANKTRANS');
         return $this->multisafepay_version_control->getViewAccordingWithOcVersion($this->route . $this->view_extension_file, $data);
     }
 
@@ -152,8 +187,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
      * Handles the confirm order form for Beauty & Wellness payment method
      */
     public function beautyWellness() {
-        $data = $this->paymentMethodBase();
-        $data['gateway'] = 'BEAUTYWELL';
+        $data = $this->paymentMethodBase('BEAUTYWELL');
         return $this->multisafepay_version_control->getViewAccordingWithOcVersion($this->route . $this->view_extension_file, $data);
     }
 
@@ -161,8 +195,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
      * Handles the confirm order form for Belfius payment method
      */
     public function belfius() {
-        $data = $this->paymentMethodBase();
-        $data['gateway'] = 'BELFIUS';
+        $data = $this->paymentMethodBase('BELFIUS');
         return $this->multisafepay_version_control->getViewAccordingWithOcVersion($this->route . $this->view_extension_file, $data);
     }
 
@@ -170,8 +203,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
      * Handles the confirm order form for Boekenbon payment method
      */
     public function boekenbon() {
-        $data = $this->paymentMethodBase();
-        $data['gateway'] = 'BOEKENBON';
+        $data = $this->paymentMethodBase('BOEKENBON');
         return $this->multisafepay_version_control->getViewAccordingWithOcVersion($this->route . $this->view_extension_file, $data);
     }
 
@@ -179,8 +211,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
      * Handles the confirm order form for CBC payment method
      */
     public function cbc() {
-        $data = $this->paymentMethodBase();
-        $data['gateway'] = 'CBC';
+        $data = $this->paymentMethodBase('CBC');
         $data['type'] = 'direct';
         return $this->multisafepay_version_control->getViewAccordingWithOcVersion($this->route . $this->view_extension_file, $data);
     }
@@ -189,8 +220,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
      * Handles the confirm order form for CreditCard payment method
      */
     public function creditCard() {
-        $data = $this->paymentMethodBase();
-        $data['gateway'] = 'CREDITCARD';
+        $data = $this->paymentMethodBase('CREDITCARD');
         return $this->multisafepay_version_control->getViewAccordingWithOcVersion($this->route . $this->view_extension_file, $data);
     }
 
@@ -198,8 +228,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
      * Handles the confirm order form for Request to Pay powered by Deutsche Bank payment method
      */
     public function dbrtp() {
-        $data = $this->paymentMethodBase();
-        $data['gateway'] = 'DBRTP';
+        $data = $this->paymentMethodBase('DBRTP');
         return $this->multisafepay_version_control->getViewAccordingWithOcVersion($this->route . $this->view_extension_file, $data);
     }
 
@@ -207,8 +236,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
      * Handles the confirm order form for Direct Bank payment method
      */
     public function directBank() {
-        $data = $this->paymentMethodBase();
-        $data['gateway'] = 'DIRECTBANK';
+        $data = $this->paymentMethodBase('DIRECTBANK');
         return $this->multisafepay_version_control->getViewAccordingWithOcVersion($this->route . $this->view_extension_file, $data);
     }
 
@@ -216,8 +244,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
      * Handles the confirm order form for Dotpay payment method
      */
     public function dotpay() {
-        $data = $this->paymentMethodBase();
-        $data['gateway'] = 'DOTPAY';
+        $data = $this->paymentMethodBase('DOTPAY');
         $data['gateway_info'] = 'Meta';
         return $this->multisafepay_version_control->getViewAccordingWithOcVersion($this->route . $this->view_extension_file, $data);
     }
@@ -226,9 +253,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
      * Handles the confirm order form for E-Invoicing payment method
      */
     public function eInvoice() {
-        $data = $this->paymentMethodBase();
-	    $data['gateway'] = 'EINVOICE';
-	    $data['type'] = $this->config->get($this->key_prefix . 'multisafepay_einvoice_redirect') ? 'redirect' : 'direct';
+        $data = $this->paymentMethodBase('EINVOICE');
 	    if($data['type'] === 'direct') {
 		    $data['fields'] = array(
 			    'birthday' => true,
@@ -243,8 +268,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
      * Handles the confirm order form for EPS payment method
      */
     public function eps() {
-        $data = $this->paymentMethodBase();
-        $data['gateway'] = 'EPS';
+        $data = $this->paymentMethodBase('EPS');
         return $this->multisafepay_version_control->getViewAccordingWithOcVersion($this->route . $this->view_extension_file, $data);
     }
 
@@ -252,8 +276,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
      * Handles the confirm order form for fashionCheque payment method
      */
     public function fashionCheque() {
-        $data = $this->paymentMethodBase();
-        $data['gateway'] = 'FASHIONCHQ';
+        $data = $this->paymentMethodBase('FASHIONCHQ');
         return $this->multisafepay_version_control->getViewAccordingWithOcVersion($this->route . $this->view_extension_file, $data);
     }
 
@@ -261,8 +284,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
      * Handles the confirm order form for fashionGiftCard payment method
      */
     public function fashionGiftCard() {
-        $data = $this->paymentMethodBase();
-        $data['gateway'] = 'FASHIONGFT';
+        $data = $this->paymentMethodBase('FASHIONGFT');
         return $this->multisafepay_version_control->getViewAccordingWithOcVersion($this->route . $this->view_extension_file, $data);
     }
 
@@ -270,8 +292,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
      * Handles the confirm order form for Fietsenbon payment method
      */
     public function fietsenbon() {
-        $data = $this->paymentMethodBase();
-        $data['gateway'] = 'FIETSENBON';
+        $data = $this->paymentMethodBase('FIETSENBON');
         return $this->multisafepay_version_control->getViewAccordingWithOcVersion($this->route . $this->view_extension_file, $data);
     }
 
@@ -279,8 +300,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
      * Handles the confirm order form for GivaCard payment method
      */
     public function givaCard() {
-        $data = $this->paymentMethodBase();
-        $data['gateway'] = 'GIVACARD';
+        $data = $this->paymentMethodBase('GIVACARD');
         return $this->multisafepay_version_control->getViewAccordingWithOcVersion($this->route . $this->view_extension_file, $data);
     }
 
@@ -288,8 +308,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
      * Handles the confirm order form for Good Card payment method
      */
     public function goodCard() {
-        $data = $this->paymentMethodBase();
-        $data['gateway'] = 'GOODCARD';
+        $data = $this->paymentMethodBase('GOODCARD');
         return $this->multisafepay_version_control->getViewAccordingWithOcVersion($this->route . $this->view_extension_file, $data);
     }
 
@@ -297,9 +316,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
      * Handles the confirm order form for in3 payment method
      */
     public function in3() {
-        $data = $this->paymentMethodBase();
-        $data['gateway'] = 'IN3';
-	    $data['type'] = $this->config->get($this->key_prefix . 'multisafepay_in3_redirect') ? 'redirect' : 'direct';
+        $data = $this->paymentMethodBase('IN3');
 	    if($data['type'] === 'direct') {
 		    $data['gateway_info'] = 'Meta';
 		    $data['fields'] = array(
@@ -314,8 +331,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
      * Handles the confirm order form for Gezondheidsbon payment method
      */
     public function gezondheidsbon() {
-        $data = $this->paymentMethodBase();
-        $data['gateway'] = 'GEZONDHEID';
+        $data = $this->paymentMethodBase('GEZONDHEID');
         return $this->multisafepay_version_control->getViewAccordingWithOcVersion($this->route . $this->view_extension_file, $data);
     }
 
@@ -323,8 +339,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
      * Handles the confirm order form for giroPay payment method
      */
     public function giroPay() {
-        $data = $this->paymentMethodBase();
-        $data['gateway'] = 'GIROPAY';
+        $data = $this->paymentMethodBase('GIROPAY');
         return $this->multisafepay_version_control->getViewAccordingWithOcVersion($this->route . $this->view_extension_file, $data);
     }
 
@@ -332,8 +347,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
      * Handles the confirm order form for Good4fun Giftcard payment method
      */
     public function good4fun() {
-        $data = $this->paymentMethodBase();
-        $data['gateway'] = 'GOOD4FUN';
+        $data = $this->paymentMethodBase('GOOD4FUN');
         return $this->multisafepay_version_control->getViewAccordingWithOcVersion($this->route . $this->view_extension_file, $data);
     }
 
@@ -341,11 +355,8 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
      * Handles the confirm order form for iDEAL payment method
      */
     public function ideal() {
-        $data = $this->paymentMethodBase();
-        $data['gateway'] = 'IDEAL';
-	    $data['type'] = $this->config->get($this->key_prefix . 'multisafepay_ideal_redirect') ? 'redirect' : 'direct';
+        $data = $this->paymentMethodBase('IDEAL');
 	    if($data['type'] === 'direct') {
-		    $this->registry->set('multisafepay', new Multisafepay($this->registry));
 		    $issuers = $this->multisafepay->getIssuersByGatewayCode($data['gateway']);
 		    if($issuers) {
 			    $data['issuers'] = $issuers;
@@ -360,8 +371,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
      * Handles the confirm order form for iDEAL QR payment method
      */
     public function idealQr() {
-        $data = $this->paymentMethodBase();
-        $data['gateway'] = 'IDEALQR';
+        $data = $this->paymentMethodBase('IDEALQR');
         $data['gateway_info'] = 'QrCode';
         return $this->multisafepay_version_control->getViewAccordingWithOcVersion($this->route . $this->view_extension_file, $data);
     }
@@ -370,8 +380,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
      * Handles the confirm order form for KBC payment method
      */
     public function kbc() {
-        $data = $this->paymentMethodBase();
-        $data['gateway'] = 'KBC';
+        $data = $this->paymentMethodBase('KBC');
         $data['type'] = 'direct';
         return $this->multisafepay_version_control->getViewAccordingWithOcVersion($this->route . $this->view_extension_file, $data);
     }
@@ -380,8 +389,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
      * Handles the confirm order form for Klarna payment method
      */
     public function klarna() {
-        $data = $this->paymentMethodBase();
-        $data['gateway'] = 'KLARNA';
+        $data = $this->paymentMethodBase('KLARNA');
         return $this->multisafepay_version_control->getViewAccordingWithOcVersion($this->route . $this->view_extension_file, $data);
     }
 
@@ -389,8 +397,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
      * Handles the confirm order form for Visa payment method
      */
     public function maestro() {
-        $data = $this->paymentMethodBase();
-        $data['gateway'] = 'MAESTRO';
+        $data = $this->paymentMethodBase('MAESTRO');
         return $this->multisafepay_version_control->getViewAccordingWithOcVersion($this->route . $this->view_extension_file, $data);
     }
 
@@ -398,8 +405,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
      * Handles the confirm order form for Mastercard payment method
      */
     public function mastercard() {
-        $data = $this->paymentMethodBase();
-        $data['gateway'] = 'MASTERCARD';
+        $data = $this->paymentMethodBase('MASTERCARD');
         return $this->multisafepay_version_control->getViewAccordingWithOcVersion($this->route . $this->view_extension_file, $data);
     }
 
@@ -407,8 +413,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
      * Handles the confirm order form for Nationale Tuinbon payment method
      */
     public function nationaleTuinbon() {
-        $data = $this->paymentMethodBase();
-        $data['gateway'] = 'NATNLETUIN';
+        $data = $this->paymentMethodBase('NATNLETUIN');
         return $this->multisafepay_version_control->getViewAccordingWithOcVersion($this->route . $this->view_extension_file, $data);
     }
 
@@ -416,8 +421,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
      * Handles the confirm order form for Parfum Cadeaukaart payment method
      */
     public function parfumCadeaukaart() {
-        $data = $this->paymentMethodBase();
-        $data['gateway'] = 'PARFUMCADE';
+        $data = $this->paymentMethodBase('PARFUMCADE');
         return $this->multisafepay_version_control->getViewAccordingWithOcVersion($this->route . $this->view_extension_file, $data);
     }
 
@@ -425,9 +429,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
      * Handles the confirm order form for Pay After Delivery payment method
      */
     public function payAfterDelivery() {
-        $data = $this->paymentMethodBase();
-        $data['gateway'] = 'PAYAFTER';
-	    $data['type'] = $this->config->get($this->key_prefix . 'multisafepay_payafter_redirect') ? 'redirect' : 'direct';
+        $data = $this->paymentMethodBase('PAYAFTER');
 	    if($data['type'] === 'direct') {
 		    $data['gateway_info'] = 'Meta';
 		    $data['fields'] = array(
@@ -442,8 +444,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
      * Handles the confirm order form for PayPal payment method
      */
     public function payPal() {
-        $data = $this->paymentMethodBase();
-        $data['gateway'] = 'PAYPAL';
+        $data = $this->paymentMethodBase('PAYPAL');
         $data['type'] = 'direct';
         return $this->multisafepay_version_control->getViewAccordingWithOcVersion($this->route . $this->view_extension_file, $data);
     }
@@ -452,8 +453,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
      * Handles the confirm order form for paysafecard payment method
      */
     public function paysafecard() {
-        $data = $this->paymentMethodBase();
-        $data['gateway'] = 'PSAFECARD';
+        $data = $this->paymentMethodBase('PSAFECARD');
         return $this->multisafepay_version_control->getViewAccordingWithOcVersion($this->route . $this->view_extension_file, $data);
     }
 
@@ -461,8 +461,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
      * Handles the confirm order form for Podium payment method
      */
     public function podium() {
-        $data = $this->paymentMethodBase();
-        $data['gateway'] = 'PODIUM';
+        $data = $this->paymentMethodBase('PODIUM');
         return $this->multisafepay_version_control->getViewAccordingWithOcVersion($this->route . $this->view_extension_file, $data);
     }
 
@@ -470,9 +469,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
      * Handles the confirm order form for betaalplan payment method
      */
     public function betaalplan() {
-        $data = $this->paymentMethodBase();
-        $data['gateway'] = 'SANTANDER';
-	    $data['type'] = $this->config->get($this->key_prefix . 'multisafepay_santander_redirect') ? 'redirect' : 'direct';
+        $data = $this->paymentMethodBase('SANTANDER');
 	    if($data['type'] === 'direct') {
 		    $data['gateway_info'] = 'Meta';
 		    $data['fields'] = array(
@@ -488,9 +485,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
      * Handles the confirm order form for SEPA Direct Debt payment method
      */
     public function dirDeb() {
-        $data = $this->paymentMethodBase();
-        $data['gateway'] = 'DIRDEB';
-	    $data['type'] = $this->config->get($this->key_prefix . 'multisafepay_dirdeb_redirect') ? 'redirect' : 'direct';
+        $data = $this->paymentMethodBase('DIRDEB');
 	    if($data['type'] === 'direct') {
 		    $data['gateway_info'] = 'Account';
 		    $data['fields'] = array(
@@ -506,8 +501,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
      * Handles the confirm order form for Sport & Fit payment method
      */
     public function sportFit() {
-        $data = $this->paymentMethodBase();
-        $data['gateway'] = 'SPORTENFIT';
+        $data = $this->paymentMethodBase('SPORTENFIT');
         return $this->multisafepay_version_control->getViewAccordingWithOcVersion($this->route . $this->view_extension_file, $data);
     }
 
@@ -515,8 +509,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
      * Handles the confirm order form for Trustly payment method
      */
     public function trustly() {
-        $data = $this->paymentMethodBase();
-        $data['gateway'] = 'TRUSTLY';
+        $data = $this->paymentMethodBase('TRUSTLY');
         return $this->multisafepay_version_control->getViewAccordingWithOcVersion($this->route . $this->view_extension_file, $data);
     }
 
@@ -524,8 +517,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
      * Handles the confirm order form for Visa payment method
      */
     public function visa() {
-        $data = $this->paymentMethodBase();
-        $data['gateway'] = 'VISA';
+        $data = $this->paymentMethodBase('VISA');
         return $this->multisafepay_version_control->getViewAccordingWithOcVersion($this->route . $this->view_extension_file, $data);
     }
 
@@ -533,8 +525,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
      * Handles the confirm order form for VVV Cadeaukaart payment method
      */
     public function vvvGiftCard() {
-        $data = $this->paymentMethodBase();
-        $data['gateway'] = 'VVVGIFTCRD';
+        $data = $this->paymentMethodBase('VVVGIFTCRD');
         return $this->multisafepay_version_control->getViewAccordingWithOcVersion($this->route . $this->view_extension_file, $data);
     }
 
@@ -542,8 +533,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
      * Handles the confirm order form for Webshop Giftcard payment method
      */
     public function webshopGiftCard() {
-        $data = $this->paymentMethodBase();
-        $data['gateway'] = 'WEBSHOPGIFTCARD';
+        $data = $this->paymentMethodBase('WEBSHOPGIFTCARD');
         return $this->multisafepay_version_control->getViewAccordingWithOcVersion($this->route . $this->view_extension_file, $data);
     }
 
@@ -551,8 +541,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
      * Handles the confirm order form for Wellness gift card payment method
      */
     public function wellnessGiftCard() {
-        $data = $this->paymentMethodBase();
-        $data['gateway'] = 'WELLNESSGIFTCARD';
+        $data = $this->paymentMethodBase('WELLNESSGIFTCARD');
         return $this->multisafepay_version_control->getViewAccordingWithOcVersion($this->route . $this->view_extension_file, $data);
     }
 
@@ -560,8 +549,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
      * Handles the confirm order form for Wijncadeau payment method
      */
     public function wijnCadeau() {
-        $data = $this->paymentMethodBase();
-        $data['gateway'] = 'WIJNCADEAU';
+        $data = $this->paymentMethodBase('WIJNCADEAU');
         return $this->multisafepay_version_control->getViewAccordingWithOcVersion($this->route . $this->view_extension_file, $data);
     }
 
@@ -569,8 +557,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
      * Handles the confirm order form for Winkelcheque payment method
      */
     public function winkelCheque() {
-        $data = $this->paymentMethodBase();
-        $data['gateway'] = 'WINKELCHEQUE';
+        $data = $this->paymentMethodBase('WINKELCHEQUE');
         return $this->multisafepay_version_control->getViewAccordingWithOcVersion($this->route . $this->view_extension_file, $data);
     }
 
@@ -578,8 +565,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
      * Handles the confirm order form for YourGift payment method
      */
     public function yourGift() {
-        $data = $this->paymentMethodBase();
-        $data['gateway'] = 'YOURGIFT';
+        $data = $this->paymentMethodBase('YOURGIFT');
         return $this->multisafepay_version_control->getViewAccordingWithOcVersion($this->route . $this->view_extension_file, $data);
     }
 
@@ -587,8 +573,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
 	 * Handles the confirm order form the generic payment method
 	 */
 	public function generic() {
-		$data = $this->paymentMethodBase();
-		$data['gateway'] = $this->config->get($this->key_prefix . 'multisafepay_generic_code');
+		$data = $this->paymentMethodBase($this->config->get($this->key_prefix . 'multisafepay_generic_code'));
 		return $this->multisafepay_version_control->getViewAccordingWithOcVersion($this->route . $this->view_extension_file, $data);
 	}
 
@@ -598,8 +583,6 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
     public function validateForm() {
 
         $this->load->language($this->route);
-
-        $this->registry->set('multisafepay', new Multisafepay($this->registry));
 
         $json = array();
 
@@ -655,7 +638,6 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
             return false;
         }
 
-        $this->registry->set('multisafepay', new Multisafepay($this->registry));
         $order_id = $this->request->post['order_id'];
         $multisafepay_order = $this->multisafepay->getOrderRequestObject($this->request->post);
         $order_request = $this->multisafepay->processOrderRequestObject($multisafepay_order);
@@ -683,7 +665,6 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
 	    $this->load->model($this->route);
 	    $order_info = $this->model_checkout_order->getOrder($order_id);
 
-	    $this->registry->set('multisafepay', new Multisafepay($this->registry));
 	    $current_order_status = $order_info['order_status_id'];
 	    $psp_id = $transaction->getTransactionId();
 	    $payment_details = $transaction->getPaymentDetails();
@@ -793,7 +774,6 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
 			return;
 		}
 
-		$this->registry->set('multisafepay', new Multisafepay($this->registry));
 		$transaction = $this->multisafepay->getTransactionFromPostNotification($body);
 
 		$this->processCallBack($this->request->get['transactionid'], $transaction);
@@ -817,7 +797,6 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
 	    }
 
 		// Get the transaction information from MultiSafepay via API request
-	    $this->registry->set('multisafepay', new Multisafepay($this->registry));
 	    $sdk = $this->multisafepay->getSdkObject($this->config->get('config_store_id'));
 	    $transaction_manager = $sdk->getTransactionManager();
 	    $transaction = $transaction_manager->get($this->request->get['transactionid']);
@@ -887,8 +866,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
 		$environment = $this->{$this->model_call}->getSettingValue($this->key_prefix . 'multisafepay_environment', $this->config->get('config_store_id'));
 		$environment = (empty($environment) ? true : false);
 		$api_key = (($environment) ? $this->{$this->model_call}->getSettingValue($this->key_prefix . 'multisafepay_api_key', $this->config->get('config_store_id')) : $this->{$this->model_call}->getSettingValue($this->key_prefix . 'multisafepay_sandbox_api_key', $this->config->get('config_store_id')));
-		$this->registry->set('multisafepay', new Multisafepay($this->registry));
-		if (!$this->multisafepay->verifyNotification($body, $_SERVER['HTTP_AUTH'], $api_key)) {
+        if (!$this->multisafepay->verifyNotification($body, $_SERVER['HTTP_AUTH'], $api_key)) {
 			$message = "Notification for transaction ID " . $this->request->get['transactionid'] . " has been received but is not valid";
 			$this->log->write($message);
 			$this->response->addHeader('Content-type: text/plain');
@@ -938,6 +916,30 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
         $this->registry->set('multisafepayevents', new Multisafepayevents($this->registry));
         $this->multisafepayevents->catalogControllerCheckoutPaymentMethodAfter();
 	}
+
+    /**
+     * Trigger that is called before catalog/view/common/header/before
+     * using OpenCart events system and overwrites it
+     *
+     * @param string $route
+     * @param array $args
+     */
+    public function catalogViewCommonHeaderBefore(&$route, &$args) {
+        $this->registry->set('multisafepayevents', new Multisafepayevents($this->registry));
+        $this->multisafepayevents->catalogViewCommonHeaderFooterBefore($route, $args, 'header');
+    }
+
+    /**
+     * Trigger that is called before catalog/view/common/footer/before
+     * using OpenCart events system and overwrites it
+     *
+     * @param string $route
+     * @param array $args
+     */
+    public function catalogViewCommonFooterBefore(&$route, &$args) {
+        $this->registry->set('multisafepayevents', new Multisafepayevents($this->registry));
+        $this->multisafepayevents->catalogViewCommonHeaderFooterBefore($route, $args, 'footer');
+    }
 
     /**
      * Trigger that is called before catalog/mail/order/before

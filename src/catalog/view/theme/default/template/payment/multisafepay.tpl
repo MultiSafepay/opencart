@@ -10,6 +10,9 @@
     <?php if($gateway_info) { ?>
         <input type="hidden" name="gateway_info" value="<?php echo $gateway_info; ?>" />
     <?php } ?>
+    <?php if(!empty($fields['payment_component_enabled'])) { ?>
+    <input type="hidden" name="payload" value="" />
+    <?php } ?>
     <?php if($issuers) { ?>
         <fieldset>
             <legend><?php echo $text_legend; ?></legend>
@@ -26,9 +29,12 @@
             </div>
         </fieldset>
     <?php } ?>
-    <?php if($fields) { ?>
+    <?php if(!empty($fields)) { ?>
         <fieldset>
             <legend><?php echo $text_legend; ?></legend>
+            <?php if(!empty($fields['payment_component_enabled'])) { ?>
+            <div id="multisafepay-payment"></div>
+            <?php } ?>
             <?php if(isset($fields['gender'])) { ?>
                 <div class="form-group required form-group-gender">
                     <label class="col-sm-2 control-label" for="input-gender"><?php echo $entry_gender; ?> </label>
@@ -177,4 +183,25 @@
             });
         });
         //--></script>
+    <?php if(!empty($fields['payment_component_enabled'])) { ?>
+    <script type="text/javascript"><!--
+        function createMultiSafepayPaymentComponents() {
+            var config = {
+            <?php if(isset($env)) { ?>
+                env: '<?php echo $env; ?>',
+            <?php } ?>
+                apiToken: '<?php echo $apiToken; ?>',
+                orderData: <?php echo $order_data; ?>
+            };
+            var multisafepay_payment_component = new MultiSafepayPaymentComponent(config, '<?php echo $gateway; ?>');
+            $('#multisafepay-form').submit(function(event) {
+                multisafepay_payment_component.onSubmitCheckoutForm(event);
+            });
+        }
+
+        $(document).ready(function () {
+            createMultiSafepayPaymentComponents();
+        });
+        //--></script>
+    <?php } ?>
 <?php } ?>

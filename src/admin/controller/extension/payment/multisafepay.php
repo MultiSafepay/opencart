@@ -7,6 +7,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
     public function __construct($registry) {
         parent::__construct($registry);
         $this->registry->set('multisafepay_version_control', new Multisafepayversioncontrol($registry));
+        $this->registry->set('multisafepay', new Multisafepay($registry));
         $this->oc_version = $this->multisafepay_version_control->getOcVersion();
         $this->key_prefix = $this->multisafepay_version_control->getKeyPrefix();
         $this->route = $this->multisafepay_version_control->getExtensionRoute();
@@ -37,6 +38,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
         $this->document->addStyle('view/stylesheet/multisafepay/multisafepay.css');
 
         $this->document->addScript('/admin/view/javascript/multisafepay/dragula.js');
+        $this->document->addScript('/admin/view/javascript/multisafepay/multisafepay.js');
 
         $this->load->model('setting/setting');
 
@@ -85,6 +87,8 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
 
         $data['token'] = $this->session->data[$this->token_name];
         $data['token_name'] = $this->token_name;
+        $data['oc_version'] = $this->oc_version;
+
         $data[$this->token_name] = $this->session->data[$this->token_name];
         $data['key_prefix'] = $this->key_prefix;
 
@@ -142,6 +146,8 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
         }
 
         $data['gateways'] = $gateways;
+        $data['configurable_payment_component'] = $this->multisafepay->configurable_payment_component;
+        $data['configurable_tokenization'] = $this->multisafepay->configurable_tokenization;
 
         $this->load->model($this->customer_group_model_route);
         $data['customer_groups'] = $this->{$this->customer_group_model_call}->getCustomerGroups(array('sort' => 'cg.sort_order'));
@@ -363,6 +369,20 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
                 'catalog/model/checkout/order/editOrder/before',
                 $this->extension_directory_route . 'payment/multisafepay/catalogModelCheckoutOrderEditBefore');
         }
+        // Add CSS on Header to the checkout page
+        $event_api_multisafepay_add_payment_component_asset_header = $this->{$this->model_call}->getEventByCode('multisafepay_assets_header');
+        if(!$event_api_multisafepay_add_payment_component_asset_header) {
+            $this->{$this->model_call}->addEvent('multisafepay_assets_header',
+                'catalog/view/common/header/before',
+                $this->extension_directory_route . 'payment/multisafepay/catalogViewCommonHeaderBefore');
+        }
+        // Add JS on Footer to the checkout page
+        $event_api_multisafepay_add_payment_component_asset_footer = $this->{$this->model_call}->getEventByCode('multisafepay_assets_footer');
+        if(!$event_api_multisafepay_add_payment_component_asset_footer) {
+            $this->{$this->model_call}->addEvent('multisafepay_assets_footer',
+                'catalog/view/common/footer/before',
+                $this->extension_directory_route . 'payment/multisafepay/catalogViewCommonFooterBefore');
+        }
     }
 
     /**
@@ -397,7 +417,9 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
             'customer_group_id',
             'order_status_id_initialized',
 	        'redirect',
-            'sort_order'
+            'sort_order',
+            'payment_component',
+            'tokenization'
         );
     }
 

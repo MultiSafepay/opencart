@@ -178,7 +178,7 @@ class MultiSafePaySystemTest extends MultisafepayTestSuiteForOpenCart {
         // Payment Options
         $this->assertContains("index.php?route=" . $this->multisafepay_version_control->getExtensionRoute() . "/postCallback", $response['payment_options']['notification_url']);
         $this->assertContains("index.php?route=checkout/success", $response['payment_options']['redirect_url']);
-        $this->assertContains("index.php?route=checkout/checkout", $response['payment_options']['cancel_url']);
+        $this->assertContains("index.php?route=checkout/failure", $response['payment_options']['cancel_url']);
         $this->assertEquals('1', $response['payment_options']['close_window']);
 
         // Second Chance
@@ -332,7 +332,7 @@ class MultiSafePaySystemTest extends MultisafepayTestSuiteForOpenCart {
         // Payment Options
         $this->assertContains("index.php?route=" . $this->multisafepay_version_control->getExtensionRoute() . "/postCallback", $response['payment_options']['notification_url']);
         $this->assertContains("index.php?route=checkout/success", $response['payment_options']['redirect_url']);
-        $this->assertContains("index.php?route=checkout/checkout", $response['payment_options']['cancel_url']);
+        $this->assertContains("index.php?route=checkout/failure", $response['payment_options']['cancel_url']);
         $this->assertEquals('1', $response['payment_options']['close_window']);
 
         // Second Chance
@@ -542,7 +542,7 @@ class MultiSafePaySystemTest extends MultisafepayTestSuiteForOpenCart {
         // Payment Options
         $this->assertContains("index.php?route=" . $this->multisafepay_version_control->getExtensionRoute() . "/postCallback", $response['payment_options']['notification_url']);
         $this->assertContains("index.php?route=checkout/success", $response['payment_options']['redirect_url']);
-        $this->assertContains("index.php?route=checkout/checkout", $response['payment_options']['cancel_url']);
+        $this->assertContains("index.php?route=checkout/failure", $response['payment_options']['cancel_url']);
         $this->assertEquals('1', $response['payment_options']['close_window']);
 
         // Second Chance
@@ -638,7 +638,7 @@ class MultiSafePaySystemTest extends MultisafepayTestSuiteForOpenCart {
         // Payment Options
         $this->assertContains("index.php?route=" . $this->multisafepay_version_control->getExtensionRoute() . "/postCallback", $response['payment_options']['notification_url']);
         $this->assertContains("index.php?route=checkout/success", $response['payment_options']['redirect_url']);
-        $this->assertContains("index.php?route=checkout/checkout", $response['payment_options']['cancel_url']);
+        $this->assertContains("index.php?route=checkout/failure", $response['payment_options']['cancel_url']);
         $this->assertEquals('1', $response['payment_options']['close_window']);
 
         // Second Chance
@@ -735,7 +735,7 @@ class MultiSafePaySystemTest extends MultisafepayTestSuiteForOpenCart {
         // Payment Options
         $this->assertContains("index.php?route=" . $this->multisafepay_version_control->getExtensionRoute() . "/postCallback", $response['payment_options']['notification_url']);
         $this->assertContains("index.php?route=checkout/success", $response['payment_options']['redirect_url']);
-        $this->assertContains("index.php?route=checkout/checkout", $response['payment_options']['cancel_url']);
+        $this->assertContains("index.php?route=checkout/failure", $response['payment_options']['cancel_url']);
         $this->assertEquals('1', $response['payment_options']['close_window']);
 
         // Second Chance

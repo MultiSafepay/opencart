@@ -336,6 +336,16 @@ class MultisafepayTestSuiteForOpenCart extends TestCase
     }
 
     /**
+     * Return fixture of customer information
+     *
+     */
+    public function getCustomerAccountInformation() {
+        $customerFixture = new Customers(0, 1);
+        $customer_information  = $customerFixture->getCustomerAccountData();
+        return $customer_information;
+    }
+
+    /**
      * Generates a coupon into the database
      * Will be delete in tearDown
      *

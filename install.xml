@@ -466,7 +466,6 @@
             ]]>
             </add>
         </operation>
-
         <operation error="skip" info="Add buttons to set the order as shipped, cancelled, or refunds">
             <search><![CDATA[$this->response->setOutput($this->load->view('sale/order_info.tpl', $data));]]></search>
             <add position="before"><![CDATA[
@@ -504,6 +503,18 @@
 		if (strpos($data['payment_code'], 'multisafepay') !== false) {
             $data['payment_method'] = trim(strip_tags($data['payment_method']));
 		}
+                ]]>
+            </add>
+        </operation>
+    </file>
+    <file path="catalog/controller/checkout/checkout.php">
+        <operation info="Adding JS and CSS for Payment Component">
+            <search><![CDATA[$this->load->language('checkout/checkout');]]></search>
+            <add position="after"><![CDATA[
+        $this->document->addScript('https://pay.multisafepay.com/sdk/components/v2/components.js');
+        $this->document->addStyle('https://pay.multisafepay.com/sdk/components/v2/components.css');
+        $this->document->addScript('catalog/view/javascript/multisafepay/multisafepay.js');
+        $this->document->addStyle('catalog/view/theme/default/stylesheet/multisafepay/multisafepay.css');
                 ]]>
             </add>
         </operation>

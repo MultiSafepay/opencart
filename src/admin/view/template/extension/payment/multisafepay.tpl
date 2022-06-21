@@ -475,6 +475,30 @@
                                                             </select>
                                                         </div>
                                                     </div>
+                                                    <?php // Payment Component ?>
+                                                    <?php if(in_array($gateway['id'], $configurable_payment_component, true)) { ?>
+                                                    <div class="form-group">
+                                                        <label class="col-sm-2 control-label" for="payment-multisafepay-<?php echo $gateway['code']; ?>-payment-component"><?php echo $entry_payment_component; ?></label>
+                                                        <div class="col-sm-10">
+                                                            <select name="multisafepay_<?php echo $gateway['code']; ?>_payment_component" id="payment-multisafepay-<?php echo $gateway['code']; ?>-payment-component" class="form-control">
+                                                                <option value="0" <?php if($payment_methods_fields_values[$gateway['code']]['payment_component'] == 0) { ?> selected <?php } ?>><?php echo $text_disabled; ?></option>
+                                                                <option value="1" <?php if($payment_methods_fields_values[$gateway['code']]['payment_component'] == 1) { ?> selected <?php } ?>><?php echo $text_enabled; ?></option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <?php } ?>
+                                                    <?php // Tokenization ?>
+                                                    <?php if(in_array($gateway['id'], $configurable_tokenization, true)) { ?>
+                                                    <div id="payment-multisafepay-<?php echo $gateway['code']; ?>-tokenization-field" data-gateway="<?php echo $gateway['code']; ?>" class="form-group">
+                                                        <label class="col-sm-2 control-label" for="payment-multisafepay-<?php echo $gateway['code']; ?>-tokenization"><?php echo $entry_tokenization; ?></label>
+                                                        <div class="col-sm-10">
+                                                            <select name="multisafepay_<?php echo $gateway['code']; ?>_tokenization" id="payment-multisafepay-<?php echo $gateway['code']; ?>-tokenization" class="form-control">
+                                                                <option value="0" <?php if($payment_methods_fields_values[$gateway['code']]['tokenization'] == 0) { ?> selected <?php } ?>><?php echo $text_disabled; ?></option>
+                                                                <option value="1" <?php if($payment_methods_fields_values[$gateway['code']]['tokenization'] == 1) { ?> selected <?php } ?>><?php echo $text_enabled; ?></option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <?php } ?>
 	                                                <?php // Generic ?>
                                                     <?php if ($gateway['type'] === 'generic') { ?>
                                                         <div class="form-group">
@@ -755,127 +779,6 @@
     </div>
 </div>
 <script type="text/javascript"><!--
-    $('#payment-multisafepay-generate-payment-links-status').on('change', function(e) {
-        var selected = $(this).val();
-        if(selected === '1') {
-            $('#initialize-payment-request-form-group').slideDown();
-        }
-        if(selected === '0') {
-            $('#initialize-payment-request-form-group').slideUp();
-        }
-    });
-    //--></script>
-<script type="text/javascript"><!--
-    $('#input-filter-payment-method').on('change', function(e) {
-        var selected = $(this).val();
-        if(selected != 'gateway' || selected != 'giftcard' || selected != 'generic') {
-            $('.payment-type-giftcard').show();
-            $('.payment-type-gateway').show();
-            $('.payment-type-generic').show();
-            $('.drag-and-drop-control').show();
-        }
-        if(selected === 'gateway') {
-            $('.payment-type-gateway').show();
-            $('.payment-type-giftcard').hide();
-            $('.payment-type-generic').hide();
-            $('.drag-and-drop-control').hide();
-        }
-        if(selected === 'giftcard') {
-            $('.payment-type-giftcard').show();
-            $('.payment-type-gateway').hide();
-            $('.payment-type-generic').hide();
-            $('.drag-and-drop-control').hide();
-        }
-        if(selected === 'generic') {
-            $('.payment-type-generic').show();
-            $('.payment-type-giftcard').hide();
-            $('.payment-type-gateway').hide();
-            $('.drag-and-drop-control').hide();
-        }
-    });
-    //--></script>
-<script type="text/javascript"><!--
-    $('#remove-old-files').on('click', function(e) {
-        e.preventDefault();
-        if (confirm('<?php echo $text_remove_old_files_confirm ?>')) {
-            $.ajax({
-                url: 'index.php?route=extension/payment/multisafepay/removeOldFiles&<?php echo $token_name; ?>=<?php echo $token; ?>',
-                dataType: 'json',
-                async: false,
-                beforeSend: function() {
-                    $('#remove-old-files').button('loading');
-                },
-                complete: function() {
-                    $('#remove-old-files').button('reset');
-                },
-                success: function(json) {
-                    if (json['error']) {
-                        $('#tab-maintenance').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-                    }
-                    if (json['success']) {
-                        $('#maintenance-warning').remove();
-                        $('#multisafepay-maintenance').html('<?php echo $text_empty_old_files ?>');
-                        $('#tab-maintenance').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-                    }
-                },
-                error: function(xhr, ajaxOptions, thrownError) {
-                    alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-                }
-            });
-        }
-    });
-    //--></script>
-<script type="text/javascript"><!--
-    $( document ).ready(function() {
-        var default_drake = dragula([document.querySelector('#dragula-container #accordion'), document.querySelector('#dragula-container #accordion')], {
-            direction: 'vertical',
-            moves: function (el, container, handle) {
-                return handle.classList.contains('drag-and-drop-control');
-            },
-        });
-        default_drake.on( "drag", function(el) {
-            $(el).find('.panel-heading').parent('.payment-method-panel').addClass('drag-active gu-transit');
-        });
-        default_drake.on( "drop", function(el) {
-            $(el).find('.panel-heading').parent('.payment-method-panel').removeClass('drag-active gu-transit');
-        });
-        default_drake.on( "cancel", function(el) {
-            $(el).find('.panel-heading').parent('.payment-method-panel').removeClass('drag-active gu-transit');
-        });
-        default_drake.on( "dragend", function(el) {
-            $('#dragula-container #accordion .payment-method-panel').each(function(i, obj) {
-                $(obj).find(".sort-order").attr("value", i+1);
-            });
-        });
-    });
-    //--></script>
-<script type="text/javascript"><!--
-    $( document ).ready(function() {
-        $('.multisafepay-admin-page #tab-payment-methods .panel-group .panel').each(function () {
-            var payment_method_panel = $(this);
-            payment_method_panel.find('.panel-heading .panel-title a span.status').click(function (event) {
-                event.preventDefault();
-                event.stopPropagation();
-                togglePaymentOptionFieldStatus(payment_method_panel, $(this).hasClass('active'));
-            });
-            payment_method_panel.find('.panel-body .form-group:first select.form-control').change(function () {
-                togglePaymentOptionIconStatus(payment_method_panel, $(this).val());
-            });
-        });
-    });
-    function togglePaymentOptionFieldStatus(payment_method_panel, is_active) {
-        if (is_active) {
-            payment_method_panel.find('.panel-body .form-group:first select.form-control').val(0).change();
-        } else {
-            payment_method_panel.find('.panel-body .form-group:first select.form-control').val(1).change();
-        }
-    }
-    function togglePaymentOptionIconStatus(payment_method_panel, status) {
-        if (status === '1') {
-            payment_method_panel.find('.panel-heading .panel-title a span.status').addClass('active');
-        } else {
-            payment_method_panel.find('.panel-heading .panel-title a span.status').removeClass('active');
-        }
-    }
+    removeOldFilesVersion('<?php echo $text_remove_old_files_confirm; ?>', '<?php echo $token_name; ?>', '<?php echo $token; ?>', '<?php echo $text_empty_old_files; ?>', '<?php echo $oc_version; ?>');
     //--></script>
 <?php echo $footer; ?>

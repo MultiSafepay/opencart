@@ -460,10 +460,10 @@ class CatalogControllerExtensionPaymentMultiSafePayTest extends MultisafepayTest
     }
 
     public function testGetMethod() {
-        $address = $this->getCustomerPaymentInformation();
+        $customer_information = $this->getCustomerAccountInformation();
         $this->load->model($this->multisafepay_version_control->getExtensionRoute());
         $model_call = $this->multisafepay_version_control->getStandartModelCall();
-        $response = $this->{$model_call}->getMethod(500, $address);
+        $response = $this->{$model_call}->getMethod($customer_information['address'][0], 500);
         $this->assertIsArray($response);
         $this->assertArrayHasKey('code', $response);
         $this->assertArrayHasKey('title', $response);
@@ -472,10 +472,10 @@ class CatalogControllerExtensionPaymentMultiSafePayTest extends MultisafepayTest
     }
 
     public function testGetMethods() {
-        $address = $this->getCustomerPaymentInformation();
+        $customer_information = $this->getCustomerAccountInformation();
         $this->load->model($this->multisafepay_version_control->getExtensionRoute());
         $model_call = $this->multisafepay_version_control->getStandartModelCall();
-        $response = $this->{$model_call}->getMethods(500, $address);
+        $response = $this->{$model_call}->getMethods($customer_information['address'][0], 500);
         $this->assertIsArray($response);
         foreach ($response as $key => $value) {
             $this->assertIsArray($value);

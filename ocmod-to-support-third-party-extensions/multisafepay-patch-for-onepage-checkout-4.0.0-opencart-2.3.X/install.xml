@@ -30,7 +30,7 @@
             </add>
         </operation>
         <operation info="Operation 3">
-            <search><![CDATA[public function index() {]]></search>
+            <search><![CDATA[public function index()]]></search>
             <add position="before"><![CDATA[
         public function array_multidimensional_unique($input){
             $output = array_map("unserialize",
