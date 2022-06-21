@@ -1,5 +1,4 @@
 <?php
-
 // Enviroment variable OC_ROOT exist in phpunit.xml
 if (!getenv('API_KEY')) {
     echo "\033[0;31mYou need to setup up the MultiSafepay API_KEY variable in phpunit.xml file\033[0;m" . PHP_EOL;
@@ -84,7 +83,7 @@ foreach ($fixture_class as $fixture) {
 
 // Load Specific TestCase
 $oc_version = getenv('OC_VERSION');
-if((version_compare($oc_version, '3.0.0.0', '>=') && version_compare($oc_version, '3.0.3.7', '<='))) {
+if((version_compare($oc_version, '3.0.0.0', '>=') && version_compare($oc_version, '3.0.3.8', '<='))) {
     if (file_exists(getenv('TEST_ROOT') . 'multisafepay-test-suite/multisafepay-test-suite-for-opencart-3.0.php')) {
         require_once(getenv('TEST_ROOT') . 'multisafepay-test-suite/multisafepay-test-suite-for-opencart-3.0.php');
     } else {
