@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ***
 
 ## 3.14.0
+Release date: Jun, 22nd 2022
 
 ### Added
 + PLGOPNS-456: Add support for Payment Component and Tokenization
@@ -34,7 +35,7 @@ Release date: Mar, 14th 2022
 ***
 
 ## 3.12.0
-Release date: Dec, 21th 2021
+Release date: Dec, 21st 2021
 
 ### Added
 + PLGOPNS-428: Add button to switch the status of each payment method.
