@@ -6,6 +6,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ***
 
+## 3.14.0
+
+### Added
++ PLGOPNS-456: Add support for Payment Component and Tokenization
++ DAVAMS-474: Add Alipay+ payment method
++ DAVAMS-469: Add AfterPay's terms and condition checkbox when payment method is set as direct
+
+### Changed
++ PLGOPNS-456: Replace cancel url to redirect the user to checkout/failure, instead of checkout/checkout
+
+***
+
 ## 3.13.0
 Release date: Mar, 14th 2022
 
