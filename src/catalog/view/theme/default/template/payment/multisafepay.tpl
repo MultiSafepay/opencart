@@ -19,7 +19,7 @@
             <div class="form-group form-group-issuer-id">
                 <label class="col-sm-2 control-label" for="input-issuer-id"><?php echo $entry_issuer; ?> </label>
                 <div class="col-sm-10">
-                    <select name="issuer_id" id="input-issuer-id" class="form-control">
+                    <select name="issuer_id" id="input-issuer-id" class="form-control gateways-with-issuers">
                         <option value=""><?php echo $text_select; ?></option>
                         <?php foreach ($issuers as $issuer) { ?>
                             <option value="<?php echo $issuer['code']; ?>"><?php echo $issuer['description']; ?></option>
@@ -204,4 +204,13 @@
         });
         //--></script>
     <?php } ?>
+<?php } ?>
+<?php if($issuers) { ?>
+    <script type="text/javascript"><!--
+        $(document).ready(function () {
+            $('.gateways-with-issuers').select2({
+                width: '100%'
+            });
+        });
+        //--></script>
 <?php } ?>

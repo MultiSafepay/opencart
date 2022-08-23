@@ -944,6 +944,7 @@ class Multisafepayevents {
             if ($position === 'header') {
                 $this->document->addStyle('https://pay.multisafepay.com/sdk/components/v2/components.css');
                 $this->document->addStyle('catalog/view/theme/default/stylesheet/multisafepay/multisafepay.css');
+                $this->document->addStyle('catalog/view/theme/default/stylesheet/multisafepay/select2.min.css');
                 $args['styles'] = $this->document->getStyles();
                 return $args;
             }
@@ -955,6 +956,7 @@ class Multisafepayevents {
             }
             $this->document->addScript('https://pay.multisafepay.com/sdk/components/v2/components.js', $js_position);
             $this->document->addScript('catalog/view/javascript/multisafepay/multisafepay.js', $js_position);
+            $this->document->addScript('catalog/view/javascript/multisafepay/select2.min.js', $js_position);
             $args['scripts'] = $this->document->getScripts($js_position);
         }
         return $args;

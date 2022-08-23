@@ -19,7 +19,7 @@
             <div class="form-group form-group-issuer-id">
                 <label class="col-sm-2 control-label" for="input-issuer-id">{{ entry_issuer }} </label>
                 <div class="col-sm-10">
-                    <select name="issuer_id" id="input-issuer-id" class="form-control">
+                    <select name="issuer_id" id="input-issuer-id" class="form-control gateways-with-issuers">
                         <option value="">{{ text_select }}</option>
                         {% for issuer in issuers %}
                             <option value="{{ issuer.code }}">{{ issuer.description }}</option>
@@ -207,4 +207,13 @@
         });
     //--></script>
     {% endif %}
+{% endif %}
+{% if issuers %}
+    <script type="text/javascript"><!--
+        $(document).ready(function () {
+            $('.gateways-with-issuers').select2({
+                width: '100%'
+            });
+        });
+        //--></script>
 {% endif %}

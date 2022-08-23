@@ -370,7 +370,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
 		    if($issuers) {
 			    $data['issuers'] = $issuers;
 			    $data['type'] = 'direct';
-			    $data['gateway_info'] = 'Ideal';
+			    $data['gateway_info'] = 'Issuer';
 		    }
 	    }
         return $this->multisafepay_version_control->getViewAccordingWithOcVersion($this->route . $this->view_extension_file, $data);
@@ -415,6 +415,21 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
      */
     public function mastercard() {
         $data = $this->paymentMethodBase('MASTERCARD');
+        return $this->multisafepay_version_control->getViewAccordingWithOcVersion($this->route . $this->view_extension_file, $data);
+    }
+
+    /**
+     * Handles the confirm order form for Mybank payment method
+     */
+    public function mybank() {
+        $data = $this->paymentMethodBase('MYBANK');
+        if ($data['type'] === 'direct') {
+            $issuers = $this->multisafepay->getIssuersByGatewayCode($data['gateway']);
+            if ($issuers) {
+                $data['issuers'] = $issuers;
+                $data['gateway_info'] = 'Issuer';
+            }
+        }
         return $this->multisafepay_version_control->getViewAccordingWithOcVersion($this->route . $this->view_extension_file, $data);
     }
 

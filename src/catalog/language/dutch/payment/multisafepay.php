@@ -53,6 +53,7 @@ $_['text_title_kbc']                        = 'KBC';
 $_['text_title_klarna']                     = 'Klarna - Betaal later in 14 dagen';
 $_['text_title_maestro']                    = 'Maestro';
 $_['text_title_mastercard']                 = 'Mastercard';
+$_['text_title_mybank']                     = 'MyBank - Bonifico Immediato';
 $_['text_title_parfum_cadeaukaart']         = 'Parfum Cadeaukaart';
 $_['text_title_pay_after_delivery']         = 'Betaal na Ontvangst';
 $_['text_title_paypal']                     = 'PayPal';

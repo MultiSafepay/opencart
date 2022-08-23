@@ -21,6 +21,8 @@ src/catalog/model/extension/payment/multisafepay.php catalog/model/extension/pay
 src/catalog/view/theme/default/template/extension/payment/multisafepay.twig catalog/view/theme/default/template/extension/payment/multisafepay.twig
 src/catalog/view/javascript/multisafepay/multisafepay.js catalog/view/javascript/multisafepay/multisafepay.js
 src/catalog/view/theme/default/stylesheet/multisafepay/multisafepay.css catalog/view/theme/default/stylesheet/multisafepay/multisafepay.css
+src/catalog/view/javascript/multisafepay/select2.min.js catalog/view/javascript/multisafepay/select2.min.js
+src/catalog/view/theme/default/stylesheet/multisafepay/select2.min.css catalog/view/theme/default/stylesheet/multisafepay/select2.min.css
 src/image/catalog/multisafepay/ image/catalog/multisafepay
 src/system/library/multisafepay/ system/library/multisafepay
 src/system/library/multisafepay.php system/library/multisafepay.php
@@ -54,6 +56,8 @@ src/admin/controller/startup/test-startup-3-0.php admin/controller/startup/test_
 # src/catalog/view/theme/default/template/extension/payment/multisafepay.tpl catalog/view/theme/default/template/extension/payment/multisafepay.tpl
 # src/catalog/view/javascript/multisafepay/multisafepay.js catalog/view/javascript/multisafepay/multisafepay.js
 # src/catalog/view/theme/default/stylesheet/multisafepay/multisafepay.css catalog/view/theme/default/stylesheet/multisafepay/multisafepay.css
+# src/catalog/view/javascript/multisafepay/select2.min.js catalog/view/javascript/multisafepay/select2.min.js
+# src/catalog/view/theme/default/stylesheet/multisafepay/select2.min.css catalog/view/theme/default/stylesheet/multisafepay/select2.min.css
 # src/image/catalog/multisafepay/ image/catalog/multisafepay
 # src/system/library/multisafepay/ system/library/multisafepay
 # src/system/library/multisafepay.php system/library/multisafepay.php
@@ -87,6 +91,8 @@ src/admin/controller/startup/test-startup-3-0.php admin/controller/startup/test_
 # src/catalog/view/theme/default/template/payment/multisafepay.tpl catalog/view/theme/default/template/payment/multisafepay.tpl
 # src/catalog/view/javascript/multisafepay/multisafepay.js catalog/view/javascript/multisafepay/multisafepay.js
 # src/catalog/view/theme/default/stylesheet/multisafepay/multisafepay.css catalog/view/theme/default/stylesheet/multisafepay/multisafepay.css
+# src/catalog/view/javascript/multisafepay/select2.min.js catalog/view/javascript/multisafepay/select2.min.js
+# src/catalog/view/theme/default/stylesheet/multisafepay/select2.min.css catalog/view/theme/default/stylesheet/multisafepay/select2.min.css
 # src/image/catalog/multisafepay/ image/catalog/multisafepay
 # src/system/library/multisafepay/ system/library/multisafepay
 # src/system/library/multisafepay.php system/library/multisafepay.php
@@ -121,6 +127,8 @@ src/admin/controller/startup/test-startup-3-0.php admin/controller/startup/test_
 # src/catalog/view/theme/default/template/payment/multisafepay.tpl catalog/view/theme/default/template/payment/multisafepay.tpl
 # src/catalog/view/javascript/multisafepay/multisafepay.js catalog/view/javascript/multisafepay/multisafepay.js
 # src/catalog/view/theme/default/stylesheet/multisafepay/multisafepay.css catalog/view/theme/default/stylesheet/multisafepay/multisafepay.css
+# src/catalog/view/javascript/multisafepay/select2.min.js catalog/view/javascript/multisafepay/select2.min.js
+# src/catalog/view/theme/default/stylesheet/multisafepay/select2.min.css catalog/view/theme/default/stylesheet/multisafepay/select2.min.css
 # src/image/catalog/multisafepay/ image/catalog/multisafepay
 # src/system/library/multisafepay/ system/library/multisafepay
 # src/system/library/multisafepay.php system/library/multisafepay.php
@@ -157,6 +165,8 @@ src/admin/controller/startup/test-startup-3-0.php admin/controller/startup/test_
 # src/catalog/view/theme/default/template/payment/multisafepay.tpl catalog/view/theme/default/template/payment/multisafepay.tpl
 # src/catalog/view/javascript/multisafepay/multisafepay.js catalog/view/javascript/multisafepay/multisafepay.js
 # src/catalog/view/theme/default/stylesheet/multisafepay/multisafepay.css catalog/view/theme/default/stylesheet/multisafepay/multisafepay.css
+# src/catalog/view/javascript/multisafepay/select2.min.js catalog/view/javascript/multisafepay/select2.min.js
+# src/catalog/view/theme/default/stylesheet/multisafepay/select2.min.css catalog/view/theme/default/stylesheet/multisafepay/select2.min.css
 # src/image/catalog/multisafepay/ image/catalog/multisafepay
 # src/system/library/multisafepay/ system/library/multisafepay
 # src/system/library/multisafepay.php system/library/multisafepay.php

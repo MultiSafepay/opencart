@@ -515,6 +515,8 @@
         $this->document->addStyle('https://pay.multisafepay.com/sdk/components/v2/components.css');
         $this->document->addScript('catalog/view/javascript/multisafepay/multisafepay.js');
         $this->document->addStyle('catalog/view/theme/default/stylesheet/multisafepay/multisafepay.css');
+        $this->document->addStyle('catalog/view/theme/default/stylesheet/multisafepay/select2.min.css');
+        $this->document->addScript('catalog/view/javascript/multisafepay/select2.min.js');
                 ]]>
             </add>
         </operation>

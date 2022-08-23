@@ -11,6 +11,8 @@
     <exclude-pattern>*/src/admin/controller/startup/*</exclude-pattern>
     <exclude-pattern>*/src/admin/view/javascript/multisafepay/dragula.js</exclude-pattern>
     <exclude-pattern>*/src/catalog/controller/startup/test_startup.php</exclude-pattern>
+    <exclude-pattern>*/src/catalog/view/javascript/multisafepay/select2.min.js</exclude-pattern>
+    <exclude-pattern>*/src/catalog/view/theme/default/stylesheet/multisafepay/select2.min.css</exclude-pattern>
 
     <config name="installed_paths" value="src/system/library/multisafepay/vendor/object-calisthenics/phpcs-calisthenics-rules/src/ObjectCalisthenics"/>
 
@@ -47,9 +49,11 @@
     <!-- Rule 5: Keep your classes small (with default values) -->
     <rule ref="ObjectCalisthenics.Files.ClassTraitAndInterfaceLength">
         <exclude-pattern>*/src/system/library/multisafepay.php</exclude-pattern>
+        <exclude-pattern>*/src/catalog/controller/extension/payment/multisafepay.php</exclude-pattern>
+        <exclude-pattern>*/src/catalog/controller/payment/multisafepay.php</exclude-pattern>
         <properties>
             <!-- goal is 200 -->
-            <property name="maxLength" value="1000"/>
+            <property name="maxLength" value="1100"/>
         </properties>
     </rule>
     <rule ref="ObjectCalisthenics.Files.FunctionLength">

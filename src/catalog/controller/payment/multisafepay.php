@@ -419,6 +419,21 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
     }
 
     /**
+     * Handles the confirm order form for Mybank payment method
+     */
+    public function mybank() {
+        $data = $this->paymentMethodBase('MYBANK');
+        if ($data['type'] === 'direct') {
+            $issuers = $this->multisafepay->getIssuersByGatewayCode($data['gateway']);
+            if ($issuers) {
+                $data['issuers'] = $issuers;
+                $data['gateway_info'] = 'MyBank';
+            }
+        }
+        return $this->multisafepay_version_control->getViewAccordingWithOcVersion($this->route . $this->view_extension_file, $data);
+    }
+
+    /**
      * Handles the confirm order form for Nationale Tuinbon payment method
      */
     public function nationaleTuinbon() {

@@ -8,7 +8,8 @@ class Multisafepay {
     public const CONFIGURABLE_PAYMENT_COMPONENT = array('AMEX', 'CREDITCARD', 'MAESTRO', 'MASTERCARD', 'VISA');
     public const CONFIGURABLE_TOKENIZATION = array('AMEX', 'CREDITCARD', 'MAESTRO', 'MASTERCARD', 'VISA');
     public const CONFIGURABLE_RECURRING_PAYMENT_METHODS = array('AMEX', 'MAESTRO', 'MASTERCARD', 'VISA');
-    public const CONFIGURABLE_TYPE_SEARCH = array('AFTERPAY', 'EINVOICE', 'IN3', 'IDEAL', 'PAYAFTER', 'SANTANDER', 'DIRDEB');
+    public const CONFIGURABLE_TYPE_SEARCH = array('AFTERPAY', 'DIRDEB', 'EINVOICE', 'IN3', 'IDEAL', 'MYBANK', 'PAYAFTER', 'SANTANDER');
+    public const CONFIGURABLE_GATEWAYS_WITH_ISSUERS = array('IDEAL', 'MYBANK');
 
     public function __construct($registry) {
         $this->registry = $registry;
@@ -25,6 +26,7 @@ class Multisafepay {
         $this->configurable_tokenization = self::CONFIGURABLE_TOKENIZATION;
         $this->configurable_type_search = self::CONFIGURABLE_TYPE_SEARCH;
         $this->configurable_recurring_payment_methods = self::CONFIGURABLE_RECURRING_PAYMENT_METHODS;
+        $this->configurable_gateways_with_issuers = self::CONFIGURABLE_GATEWAYS_WITH_ISSUERS;
     }
 
     /**
@@ -257,7 +259,7 @@ class Multisafepay {
         $multisafepay_order = new \MultiSafepay\Api\Transactions\OrderRequest();
         $multisafepay_order->addOrderId($data['order_id']);
 
-        if(isset($data['gateway']) && $data['gateway'] === 'IDEAL' && empty($data['issuer_id'])) {
+        if (isset($data['gateway']) && empty($data['issuer_id']) && in_array($data['gateway'], $this->configurable_gateways_with_issuers, true)) {
             $data['type'] = 'redirect';
             $data['gateway_info'] = '';
         }
@@ -622,11 +624,11 @@ class Multisafepay {
         }
 
         switch ($data['gateway_info']) {
-            case "Ideal":
+            case "Issuer":
                 if (!isset($data['issuer_id']) && !empty($data['issuer_id'])) {
                     return false;
                 }
-                $gateway_info = new \MultiSafepay\Api\Transactions\OrderRequest\Arguments\GatewayInfo\Ideal();
+                $gateway_info = new \MultiSafepay\Api\Transactions\OrderRequest\Arguments\GatewayInfo\Issuer();
                 $gateway_info->addIssuerId($data['issuer_id']);
                 break;
             case "QrCode":
@@ -2271,6 +2273,16 @@ class Multisafepay {
                 'docs' => sprintf($this->language->get('text_gateway_docs_info'), 'https://docs.multisafepay.com/payment-methods/credit-and-debit-cards/mastercard/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_mastercard')),
                 'brief_description' => $this->language->get('text_brief_description_mastercard'),
                 'image' => 'mastercard'
+            ),
+            array(
+                'id' => 'MYBANK',
+                'code' => 'mybank',
+                'route' => 'multisafepay/mybank',
+                'description' => $this->language->get('text_title_mybank'),
+                'type' => 'gateway',
+                'docs' => sprintf($this->language->get('text_gateway_docs_info'), 'https://docs.multisafepay.com/docs/card-payments?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms', $this->language->get('text_title_mybank')),
+                'brief_description' => $this->language->get('text_brief_description_mybank'),
+                'image' => 'mybank'
             ),
             array(
                 'id' => 'NATNLETUIN',
