@@ -173,12 +173,12 @@ src/admin/controller/startup/test-startup-3-0.php admin/controller/startup/test_
 # ocmod-to-support-third-party-extensions/multisafepay-patch-for-ajax-quick-checkout-free-version-7.3.1-opencart-3.0.X/install.xml system/d_quickcheckout_multisafepay.ocmod.xml
 # ocmod-to-support-third-party-extensions/multisafepay-patch-for-ajax-quick-checkout-free-version-7.3.1-opencart-3.0.X/upload/qc_payment_multisafepay.tag catalog/view/theme/default/template/extension/d_quickcheckout/step/qc_payment_multisafepay.tag
 # ocmod-to-support-third-party-extensions/multisafepay-patch-for-onepage-checkout-4.0.0-opencart-3.0.X/install.xml system/onepagecheckout_multisafepay.ocmod.xml
-# ocmod-to-support-third-party-extensions/multisafepay-patch-for-journal3-opencart-3.0.X.ocmod/install.xml system/journal3_multisafepay.ocmod.xml
-# ocmod-to-support-third-party-extensions/multisafepay-patch-for-journal3-opencart-3.0.X.ocmod/upload/catalog/view/theme/journal3/template/extension/payment/multisafepay.twig catalog/view/theme/journal3/template/extension/payment/multisafepay.twig
+ocmod-to-support-third-party-extensions/multisafepay-patch-for-journal3-opencart-3.0.X/install.xml system/journal3_multisafepay.ocmod.xml
+ocmod-to-support-third-party-extensions/multisafepay-patch-for-journal3-opencart-3.0.X/upload/catalog/view/theme/journal3/template/extension/payment/multisafepay.twig catalog/view/theme/journal3/template/extension/payment/multisafepay.twig
 
 # Third party checkouts OC 2.3.X
 # ocmod-to-support-third-party-extensions/multisafepay-patch-for-ajax-quick-checkout-free-version-7.3.1-opencart-2.3.X/install.xml system/d_quickcheckout_multisafepay.ocmod.xml
 # ocmod-to-support-third-party-extensions/multisafepay-patch-for-ajax-quick-checkout-free-version-7.3.1-opencart-2.3.X/upload/qc_payment_multisafepay.tag catalog/view/theme/default/template/extension/d_quickcheckout/step/qc_payment_multisafepay.tag
 # ocmod-to-support-third-party-extensions/multisafepay-patch-for-onepage-checkout-4.0.0-opencart-2.3.X/install.xml system/onepagecheckout_multisafepay.ocmod.xml
-# ocmod-to-support-third-party-extensions/multisafepay-patch-for-journal3-opencart-2.3.X.ocmod/install.xml system/journal3_multisafepay.ocmod.xml
-# ocmod-to-support-third-party-extensions/multisafepay-patch-for-journal3-opencart-2.3.X.ocmod/upload/catalog/view/theme/journal3/template/extension/payment/multisafepay.tpl catalog/view/theme/journal3/template/extension/payment/multisafepay.tpl
+# ocmod-to-support-third-party-extensions/multisafepay-patch-for-journal3-opencart-2.3.X/install.xml system/journal3_multisafepay.ocmod.xml
+# ocmod-to-support-third-party-extensions/multisafepay-patch-for-journal3-opencart-2.3.X/upload/catalog/view/theme/journal3/template/extension/payment/multisafepay.tpl catalog/view/theme/journal3/template/extension/payment/multisafepay.tpl
