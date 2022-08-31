@@ -142,9 +142,9 @@
     font-size: 14px;
     line-height: 30px;
     text-align: center;
-    content: "\f00d";
+    content: "\f05e";
     font-family: 'FontAwesome';
-    color: darkred;
+    color: #C7C6C6;
 }
 .multisafepay-admin-page #tab-payment-methods .panel-group .panel .panel-heading .panel-title a .status.active:after {
     content: "\f00c" !important;
