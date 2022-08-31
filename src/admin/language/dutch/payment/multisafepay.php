@@ -49,7 +49,6 @@ $_['text_assistance_email']								= 'E-mail: <a href="%s">%s</a>';
 $_['text_show_all_payment_methods']                     = 'Toon alle betaalmethoden';
 $_['text_show_gift_cards']                              = 'Toon alleen cadeaubonnen';
 $_['text_show_gateways']                                = 'Toon alleen betalingsgateways';
-$_['text_gateway_docs_info']                            = 'Lees meer over <a href="%s" target="_blank">%s</a> op onze documentatiepagina.';
 $_['text_order_status_id_initialized_default']          = 'Gebruik de standaard bestelstatus geïnitialiseerd';
 $_['text_days']                                         = 'Dagen';
 $_['text_hours']                                        = 'Uren';
@@ -248,7 +247,7 @@ $_['text_help_initialize_payment_request']              = 'U kunt een bestelling
 $_['text_help_order_status_id_initialized']             = 'Standaard geïnitialiseerde bestelstatus voor alle betaalmethoden. Later in elke betalingsmethode is het mogelijk om elke andere voor elke instelling aan te passen.';
 $_['text_help_customer_group']                          = 'Wij zullen deze orderstatus gebruiken voor de email met betaallink wanneer een order gegenereerd word in de admin.';
 $_['text_help_drag_and_drop']                           = 'Sleep dit element en zet het neer om de volgorde in te stellen waarin deze betaalmethode in de winkel wordt getoond';
-$_['text_help_generate_payment_links_status']           = 'Meer informatie over het genereren van een bestelling met betalingslink vindt u in onze <a href="https://docs.multisafepay.com/integrations/plugins/opencart/faq/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms" target="_blank">documentatie</a>';
+$_['text_help_generate_payment_links_status']           = 'Meer informatie over het genereren van een bestelling met betalingslink vindt u in onze <a href="https://docs.multisafepay.com/docs/payment-links" target="_blank">documentatie</a>';
 $_['text_help_generate_payment_links']                  = 'Als u een bestelling genereert vanuit de OpenCart-administratie en de bestelstatus toewijst die is geselecteerd in het volgende veld, ontvangt de gebruiker de bestelgegevens in de e-mail, inclusief een betalingslink';
 $_['text_help_lifetime_payment_link']				    = 'Dit geeft de levensduur van een betaallink aan. Standaard is 30 dagen. Dit betekent dat de klant 30 dagen de tijd heeft om de transactie af te ronden via de betaallink';
 $_['text_help_shopping_cart_disabled']				    = 'Selecteer "Ja" om de winkelwagenitems op de MultiSafepay-betaalpagina te verbergen, zodat alleen het totale orderbedrag overblijft. <br />Als u "Ja" selecteert, werken de betaalmethoden waarvoor een winkelwagentje nodig is niet: Afterpay, E-Invoicing, in3, Klarna and Pay After Delivery.';

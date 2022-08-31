@@ -450,15 +450,12 @@
                                             </div>
                                             <div class="panel-collapse collapse" role="tabpanel" id="payment-method-<?php echo $gateway['code']; ?>"  aria-labelledby="heading-payment-method-<?php echo $gateway['code']; ?>">
                                                 <div class="panel-body">
-                                                    <?php if($gateway['docs']) { ?>
+                                                    <?php if($gateway['brief_description']) { ?>
                                                         <p>
                                                             <?php if($gateway['image']) { ?>
                                                                 <img src="../image/catalog/multisafepay/<?php echo $gateway['image']; ?>.png" class="payment-logo" alt="<?php echo $gateway['description']; ?>" title="<?php echo $gateway['description']; ?>" />
                                                             <?php } ?>
-                                                            <?php if($gateway['brief_description']) { ?>
-                                                                <?php echo $gateway['brief_description']; ?>
-                                                            <?php } ?>
-                                                            <?php echo $gateway['docs']; ?>
+                                                            <?php echo $gateway['brief_description']; ?>
                                                         </p>
                                                         <hr>
                                                     <?php } ?>

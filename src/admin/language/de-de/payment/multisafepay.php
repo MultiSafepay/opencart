@@ -48,7 +48,6 @@ $_['text_assistance_email']								= 'E-mail: <a href="%s">%s</a>';
 $_['text_show_all_payment_methods']                     = 'Alle Zahlungsmethoden anzeigen';
 $_['text_show_gift_cards']                              = 'Nur Geschenkkarten anzeigen';
 $_['text_show_gateways']                                = 'Nur Zahlungsgateways anzeigen';
-$_['text_gateway_docs_info']                            = 'Weitere Informationen zu <a href="%s" target="_blank">%s</a> finden Sie auf unserer Dokumentationsseite.';
 $_['text_order_status_id_initialized_default']          = 'Verwenden Sie den initialisierten Standardbestellstatus';
 $_['text_days']                                         = 'Tage';
 $_['text_hours']                                        = 'Std';
@@ -240,13 +239,13 @@ $_['text_help_second_chance']       			        = 'Wenn ein Kunde eine Zahlung in
                                                         . 'In diese E-Mails fügt MultiSafepay einen Links ein, der es gestattet, die Zahlung abzuschließen. '
                                                         . 'Die erste Second-Chance-E-Mail wird eine Stunde nach der Initiierung der Zahlung gesendet und die zweite nach 24 Stunden. '
                                                         . 'Um E-Mails der zweiten Chance zu erhalten, muss diese Option auch in Ihrem MultiSafepay-Konto aktiviert sein, da sie sonst nicht funktioniert.';
-$_['text_help_more_info_second_chance']                 = 'Weitere Informationen zu Second Chance finden Sie in unserer <a href="https://docs.multisafepay.com/tools/second-chance/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms" target="_blank">Dokumentation</a>';
+$_['text_help_more_info_second_chance']                 = 'Weitere Informationen zu Second Chance finden Sie in unserer <a href="https://docs.multisafepay.com/docs/second-chance" target="_blank">Dokumentation</a>';
 $_['text_help_currency']                                = 'Sie können die Währungen auswählen, für die diese Zahlungsweise angezeigt wird. Für ohne Einschränkungen frei lassen.';
 $_['text_help_initialize_payment_request']              = 'Wir werden diese Zahlungsweise für die e-Mail verwenden, die den Zahlungs-Link enthält, wenn ein Auftrag in Admin. erzeugt wird.';
 $_['text_help_order_status_id_initialized']             = 'Standardmäßig initialisierter Bestellstatus für alle Zahlungsmethoden. Später in jeder Zahlungsmethode können Einstellungen für jede andere angepasst werden.';
 $_['text_help_customer_group']                          = 'Sie können die Kundengruppe auswählen, für die diese Zahlungsweise angezeigt wird. Für ohne Einschränkungen frei lassen.';
 $_['text_help_drag_and_drop']                           = 'Ziehen Sie dieses Element per Drag & Drop, um die Reihenfolge festzulegen, in der diese Zahlungsmethode im Geschäft angezeigt wird';
-$_['text_help_generate_payment_links_status']           = 'Weitere Informationen zum Generieren einer Bestellung mit Zahlungslink finden Sie in unserer <a href="https://docs.multisafepay.com/integrations/plugins/opencart/faq/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms" target="_blank">Dokumentation</a>';
+$_['text_help_generate_payment_links_status']           = 'Weitere Informationen zum Generieren einer Bestellung mit Zahlungslink finden Sie in unserer <a href="https://docs.multisafepay.com/docs/payment-links" target="_blank">Dokumentation</a>';
 $_['text_help_generate_payment_links']                  = 'Wenn Sie eine Bestellung aus der OpenCart-Administration generieren und den im folgenden Feld ausgewählten Bestellstatus zuweisen, erhält der Benutzer die Bestelldetails per E-Mail, einschließlich eines Zahlungslinks';
 $_['text_help_lifetime_payment_link']				    = 'Dies zeigt die Lebensdauer eines Zahlungslinks an. Standardmäßig sind es 30 Tage. Dies bedeutet, dass der Kunde 30 Tage Zeit hat, um die Transaktion über den Zahlungslink abzuschließen';
 $_['text_help_shopping_cart_disabled']				    = 'Wählen Sie "Ja", um die Warenkorbartikel auf der MultiSafepay-Zahlungsseite auszublenden, sodass nur der Gesamtbestellbetrag übrig bleibt. <br />Wenn Sie "Ja" auswählen, funktionieren die Zahlungsmethoden, die einen Warenkorb erfordern, nicht: Afterpay, E-Invoicing, in3, Klarna and Pay After Delivery.';

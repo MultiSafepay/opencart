@@ -396,15 +396,12 @@
                                             </div>
                                             <div class="panel-collapse collapse" role="tabpanel" id="payment-method-{{ gateway.code }}"  aria-labelledby="heading-payment-method-{{ gateway.code }}">
                                                 <div class="panel-body">
-                                                    {% if gateway.docs %}
+                                                    {% if gateway.brief_description %}
                                                         <p>
                                                             {% if gateway.image %}
                                                                 <img src="../image/catalog/multisafepay/{{ gateway.image }}.png" class="payment-logo" alt="{{ gateway.description }}" title="{{ gateway.description }}" />
                                                             {% endif %}
-                                                            {% if gateway.brief_description %}
-                                                                {{ gateway.brief_description }}
-                                                            {% endif %}
-                                                            {{ gateway.docs }}
+                                                            {{ gateway.brief_description }}
                                                         </p>
                                                         <hr>
                                                     {% endif %}

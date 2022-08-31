@@ -48,7 +48,6 @@ $_['text_assistance_email']								= 'E-mail: <a href="%s">%s</a>';
 $_['text_show_all_payment_methods']                     = 'Mostra tutti i metodi di pagamento';
 $_['text_show_gift_cards']                              = 'Mostra solo buoni regalo';
 $_['text_show_gateways']                                = 'Mostra solo i gateway di pagamento';
-$_['text_gateway_docs_info']                            = 'Maggiori informazioni su <a href="%s" target="_blank">%s</a> sulla nostra pagina di documentazione.';
 $_['text_order_status_id_initialized_default']          = 'Usa lo stato dell\'ordine predefinito inizializzato';
 $_['text_days']                                         = 'Giorni';
 $_['text_hours']                                        = 'Ore';
@@ -239,13 +238,13 @@ $_['text_help_second_chance']       			        = 'Quando un consumatore iniziali
                                                         . 'MultiSafepay invierà due Second Chance email come sollecito. Nelle email sarà presente un link di '
                                                         . 'pagamento per permettere al consumatore di finalizzare il pagamento. La prima email Second Chance viene '
                                                         . 'inviata 1 ora dopo l\'inizializzazione della transazione, la seconda dopo 24 ore. Per ricevere le email della seconda possibilità, questa opzione deve essere attivata anche all\'interno del tuo account MultiSafepay, altrimenti non funzionerà.';
-$_['text_help_more_info_second_chance']                 = 'Ulteriori informazioni su Second Chance nella nostra <a href="https://docs.multisafepay.com/tools/second-chance/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms" target="_blank">documentazione</a>';
+$_['text_help_more_info_second_chance']                 = 'Ulteriori informazioni su Second Chance nella nostra <a href="https://docs.multisafepay.com/docs/second-chance" target="_blank">documentazione</a>';
 $_['text_help_currency']                                = 'Puoi selezionare le valute per le quali vuoi mostrare questo metodo di pagamento. Lasciare vuoti per non avere questa restrizione.';
 $_['text_help_initialize_payment_request']              = 'Puoi generare un ordine dall\'amministratore, con questo stato dell\'ordine assegnato, quindi questo ordine includerà un link di pagamento nell\'e-mail inviata al cliente. Si consiglia di utilizzare questo stato dell\'ordine, solo per questo scopo';
 $_['text_help_order_status_id_initialized']             = 'Stato dell\'ordine inizializzato predefinito per tutti i metodi di pagamento. Successivamente in ciascuna modalità di pagamento è possibile personalizzare le altre per ognuna.';
 $_['text_help_customer_group']                          = 'Seleziona un gruppo di consumatori a cui mostrare questo metodo di pagamento. Lasciare vuoto per non avere questa restrizione.';
 $_['text_help_drag_and_drop']                           = 'Trascina e rilascia questo elemento per impostare l\'ordine in cui questo metodo di pagamento verrà mostrato nel negozio';
-$_['text_help_generate_payment_links_status']           = 'Maggiori informazioni su come generare un ordine con link di pagamento in la nostra <a href="https://docs.multisafepay.com/integrations/plugins/opencart/faq/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms" target="_blank">documentazione</a>';
+$_['text_help_generate_payment_links_status']           = 'Maggiori informazioni su come generare un ordine con link di pagamento in la nostra <a href="https://docs.multisafepay.com/docs/payment-links" target="_blank">documentazione</a>';
 $_['text_help_generate_payment_links']                  = 'Se si genera un ordine dall\'amministrazione OpenCart e si assegna lo stato dell\'ordine selezionato nel campo successivo, l\'utente riceverà i dettagli dell\'ordine per posta, incluso un collegamento di pagamento.';
 $_['text_help_lifetime_payment_link']				    = 'Ciò indica la durata di un collegamento di pagamento. L\'impostazione predefinita è 30 giorni. Ciò significa che il cliente ha 30 giorni di tempo per completare la transazione utilizzando il link di pagamento';
 $_['text_help_shopping_cart_disabled']				    = 'Seleziona "Sì" per nascondere gli articoli del carrello nella pagina di pagamento MultiSafepay, lasciando solo l\'importo totale dell\'ordine. <br />Se selezioni "Sì" i metodi di pagamento che richiedono il carrello non funzioneranno: Afterpay, E-Invoicing, in3, Klarna and Pay After Delivery.';

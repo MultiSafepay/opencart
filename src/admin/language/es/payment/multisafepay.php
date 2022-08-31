@@ -49,7 +49,6 @@ $_['text_assistance_email']								= 'E-mail: <a href="%s">%s</a>';
 $_['text_show_all_payment_methods']                     = 'Mostrar todos los métodos de pago';
 $_['text_show_gift_cards']                              = 'Mostrar solo las tarjetas de regalo';
 $_['text_show_gateways']                                = 'Mostrar solo las pasarelas de pago';
-$_['text_gateway_docs_info']                            = 'Puedes leer más de <a href="%s" target="_blank">%s</a> en nuestra página de documentación.';
 $_['text_order_status_id_initialized_default']          = 'Usar estado de pedido inicializado predeterminado';
 $_['text_days']                                         = 'Días';
 $_['text_hours']                                        = 'Horas';
@@ -241,13 +240,13 @@ $_['text_help_second_chance']       			        = 'Cuando un cliente inicia un pa
                                                         . 'hay un enlace de pago que permitirá al cliente finalizar el pago.'
                                                         . 'El primer correo electrónico se envía después de 1 hora y el segundo después de 24 '
                                                         . 'horas de que se ha iniciado la transacción. Para recibir correos electrónicos de segunda oportunidad, esta opción también debe estar activada dentro de su cuenta MultiSafepay; de lo contrario, no funcionará.';
-$_['text_help_more_info_second_chance']                 = 'Más información sobre Second Chance en nuestra <a href="https://docs.multisafepay.com/tools/second-chance/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms" target="_blank">documentación</a>';
+$_['text_help_more_info_second_chance']                 = 'Más información sobre Second Chance en nuestra <a href="https://docs.multisafepay.com/docs/second-chance" target="_blank">documentación</a>';
 $_['text_help_currency']                                = 'Seleccione la moneda para restringir estos métodos de pago. Déjelo en blanco si no desea configurar restricciones.';
 $_['text_help_initialize_payment_request']              = 'Puede generar un pedido desde el administrador, con este estado de pedido asignado, de esta forma este pedido incluirá un enlace de pago en el correo electrónico enviado al cliente. Recomendamos utilizar este estado de pedido, solo con esta finalidad';
 $_['text_help_order_status_id_initialized']             = 'Estado de pedido inicializado predeterminado para todos los métodos de pago. Más adelante, en la configuración de cada método de pago, es posible personalizar cualquier otro para cada uno.';
 $_['text_help_customer_group']                          = 'Seleccione un grupo de clientes para restringir este método de pago a los seleccionados. Déjelo en blanco si no desea configurar restricciones.';
 $_['text_help_drag_and_drop']                           = 'Arrastre y suelte este elemento para establecer el orden en que se mostrará este método de pago en la tienda';
-$_['text_help_generate_payment_links_status']           = 'Más información sobre cómo generar un pedido con enlace de pago en nuestra <a href="https://docs.multisafepay.com/integrations/plugins/opencart/faq/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms" target="_blank">documentación</a>';
+$_['text_help_generate_payment_links_status']           = 'Más información sobre cómo generar un pedido con enlace de pago en nuestra <a href="https://docs.multisafepay.com/docs/payment-links" target="_blank">documentación</a>';
 $_['text_help_generate_payment_links']                  = 'Si generas un pedido desde la administración de OpenCart, y le asignes el estado de pedido seleccionado en el siguiente campo, el usuario recibira en el correo, los detalles del pedido, incluyendo un enlace de pago';
 $_['text_help_lifetime_payment_link']				    = 'Esto indica la vida útil de un enlace de pago. El valor predeterminado es 30 días. Esto significa que el cliente tiene 30 días para completar la transacción mediante el enlace de pago.';
 $_['text_help_shopping_cart_disabled']				    = 'Seleccione "Sí" para ocultar los artículos del carrito en la página de pago de MultiSafepay, dejando solo el monto total del pedido. <br />Si selecciona "Sí", los métodos de pago que requieren carrito de compras no funcionarán: Afterpay, E-Invoicing, in3, Klarna and Pay After Delivery.';

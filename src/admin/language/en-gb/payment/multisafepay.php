@@ -49,7 +49,6 @@ $_['text_assistance_email']								= 'E-mail: <a href="%s">%s</a>';
 $_['text_show_all_payment_methods']                     = 'Show all payment methods';
 $_['text_show_gift_cards']                              = 'Show only giftcards';
 $_['text_show_gateways']                                = 'Show only payment gateways';
-$_['text_gateway_docs_info']                            = 'Read more about <a href="%s" target="_blank">%s</a> on our documentation page.';
 $_['text_order_status_id_initialized_default']          = 'Use default order status initialized';
 $_['text_days']                                         = 'Days';
 $_['text_hours']                                        = 'Hours';
@@ -241,13 +240,13 @@ $_['text_help_second_chance']       			        = 'When a customer initiates but 
                                                         . 'MultiSafepay will include a link to allow the consumer to finalize the payment. '
                                                         . 'The first Second Chance email is sent 1 hour after the transaction was initiated and the second after 24 hours. '
                                                         . 'To receive second chance emails, this option must also be activated within your MultiSafepay account, otherwise it will not work.';
-$_['text_help_more_info_second_chance']                 = 'More information about Second Chance in our <a href="https://docs.multisafepay.com/tools/second-chance/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms" target="_blank">documentation</a>';
+$_['text_help_more_info_second_chance']                 = 'More information about Second Chance in our <a href="https://docs.multisafepay.com/docs/second-chance" target="_blank">documentation</a>';
 $_['text_help_currency']                                = 'You can select the currencies for which you want to show this payment method. Leave black for no restriction.';
 $_['text_help_initialize_payment_request']              = 'You can generate an order from the admin with this order status  assigned, this order will include a payment link in the email sent to the customer. We recommend using this order status, only for this purpose';
 $_['text_help_order_status_id_initialized']             = 'Default initialized order status for all payment methods. Later in each payment method settings is possible to customize any other for each one.';
 $_['text_help_customer_group']                          = 'You can select the consumer group to which you want to show this payment method. Leave black for no restriction.';
 $_['text_help_drag_and_drop']                           = 'Drag and drop this element to set the order in which this payment method will be shown in the store';
-$_['text_help_generate_payment_links_status']           = 'More information about how to generate an order with payment link in our <a href="https://docs.multisafepay.com/integrations/plugins/opencart/faq/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms" target="_blank">documentation</a>';
+$_['text_help_generate_payment_links_status']           = 'More information about how to generate an order with payment link in our <a href="https://docs.multisafepay.com/docs/payment-links" target="_blank">documentation</a>';
 $_['text_help_generate_payment_links']                  = 'If you generate an order from the OpenCart administration, and assign the order status selected in the next field, the user will receive the order details in the mail, including a payment link';
 $_['text_help_lifetime_payment_link']				    = 'This indicates the lifetime of a payment link. By default is 30 days. This means that the customer has 30 days to complete the transaction using the payment link';
 $_['text_help_shopping_cart_disabled']				    = 'Select "Yes" to hide the cart items on the MultiSafepay payment page, leaving only the total order amount. <br /> Note: If select "Yes" the payment methods which require shopping cart won\'t work: Afterpay, E-Invoicing, in3, Klarna and Pay After Delivery.';
