@@ -2178,6 +2178,15 @@ class Multisafepay {
                 'image' => 'goodcard'
             ),
             array(
+                'id' => 'GOOGLEPAY',
+                'code' => 'googlepay',
+                'route' => 'multisafepay/googlePay',
+                'description' => $this->language->get('text_title_google_pay'),
+                'type' => 'gateway',
+                'brief_description' => $this->language->get('text_brief_description_googlepay'),
+                'image' => 'googlepay'
+            ),
+            array(
                 'id' => 'IN3',
                 'code' => 'in3',
                 'route' => 'multisafepay/in3',

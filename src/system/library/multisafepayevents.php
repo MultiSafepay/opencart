@@ -957,6 +957,10 @@ class Multisafepayevents {
             $this->document->addScript('https://pay.multisafepay.com/sdk/components/v2/components.js', $js_position);
             $this->document->addScript('catalog/view/javascript/multisafepay/multisafepay.js', $js_position);
             $this->document->addScript('catalog/view/javascript/multisafepay/select2.min.js', $js_position);
+
+            if ($this->config->get($this->key_prefix . 'multisafepay_googlepay_status')) {
+                $this->document->addScript('https://pay.google.com/gp/p/js/pay.js', $js_position);
+            }
             $args['scripts'] = $this->document->getScripts($js_position);
         }
         return $args;

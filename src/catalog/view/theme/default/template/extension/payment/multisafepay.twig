@@ -141,6 +141,69 @@
         });
         //--></script>
 {% endif %}
+{% if gateway == 'GOOGLEPAY' %}
+    <script type="text/javascript"><!--
+        var paymentsClient = null;
+
+        const baseRequest = {
+            apiVersion: 2,
+            apiVersionMinor: 0
+        };
+
+        const allowedCardNetworks = ['MASTERCARD', 'VISA'];
+        const allowedCardAuthMethods = ['CRYPTOGRAM_3DS', 'PAN_ONLY'];
+
+        const baseCardPaymentMethod = {
+            type: 'CARD',
+            parameters: {
+                allowedAuthMethods: allowedCardAuthMethods,
+                allowedCardNetworks: allowedCardNetworks
+            }
+        };
+
+        function getGooglePaymentsClient() {
+            if (paymentsClient === null) {
+                paymentsClient = new google.payments.api.PaymentsClient({
+                    environment: '{{ mode_string }}'
+                });
+            }
+            return paymentsClient;
+        }
+
+        function getGoogleIsReadyToPayRequest() {
+            return Object.assign({},
+                baseRequest, {
+                    allowedPaymentMethods: [baseCardPaymentMethod]
+                }
+            );
+        }
+
+        function onGooglePayLoaded() {
+            const paymentsClient = getGooglePaymentsClient();
+            paymentsClient.isReadyToPay(getGoogleIsReadyToPayRequest())
+                .then(function(response) {
+                    if (response.result) {
+                        $('#button-confirm').prop('disabled', false);
+                    } else {
+                        $('#multisafepay-form').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ text_error_google_pay }}</div>');
+                        $('#button-confirm').prop('disabled', true);
+                    }
+                })
+                .catch(function(err) {
+                    console.error(err);
+                });
+        }
+
+        $(document).ready(function() {
+            if (window.PaymentRequest) {
+                onGooglePayLoaded();
+            } else {
+                $('#multisafepay-form').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> Please, use the secure context of your browser [HTTPS]. Thanks.</div>');
+                $('#button-confirm').prop('disabled', true);
+            }
+        });
+    //--></script>
+{% endif %}
 {% if fields.birthday %}
     <script type="text/javascript"><!--
         $('.date').datetimepicker({

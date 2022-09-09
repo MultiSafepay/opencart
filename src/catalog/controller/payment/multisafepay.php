@@ -322,6 +322,19 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
     }
 
     /**
+     * Handles the confirm order form for Google Pay payment method
+     */
+    public function googlePay() {
+        $data = $this->paymentMethodBase('GOOGLEPAY');
+        $data['mode_string'] = 'PRODUCTION';
+
+        if ($data['test_mode']) {
+            $data['mode_string'] = 'TEST';
+        }
+        return $this->multisafepay_version_control->getViewAccordingWithOcVersion($this->route . $this->view_extension_file, $data);
+    }
+
+    /**
      * Handles the confirm order form for in3 payment method
      */
     public function in3() {
