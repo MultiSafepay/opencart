@@ -29,6 +29,7 @@ $_['placeholder_bank_account']              = 'IBAN del conto bancario';
 $_['placeholder_account_holder_iban']       = 'IBAN titolare ';
 $_['text_title_multisafepay']               = 'Notifica da MultiSafepay per l\'ordine ID %s su %s con statu: %s.';
 $_['text_title_afterpay']                   = 'AfterPay';
+$_['text_title_amazon_pay']                 = 'Amazon Pay';
 $_['text_title_american_express']           = 'American Express';
 $_['text_title_alipay']                     = 'Alipay';
 $_['text_title_alipayplus']                 = 'Alipay+ &trade; Partner';

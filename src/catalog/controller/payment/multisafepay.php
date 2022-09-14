@@ -135,6 +135,14 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
     }
 
     /**
+     * Handles the confirm order form for Amazon Pay payment method
+     */
+    public function amazonPay() {
+        $data = $this->paymentMethodBase('AMAZONBTN');
+        return $this->multisafepay_version_control->getViewAccordingWithOcVersion($this->route . $this->view_extension_file, $data);
+    }
+
+    /**
      * Handles the confirm order form for Amex payment method
      */
     public function amex() {

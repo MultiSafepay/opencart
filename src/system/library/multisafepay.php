@@ -1971,6 +1971,15 @@ class Multisafepay {
                 'image' => 'alipayplus'
             ),
             array(
+                'id' => 'AMAZONBTN',
+                'code' => 'amazonbtn',
+                'route' => 'multisafepay/amazonPay',
+                'description' => $this->language->get('text_title_amazon_pay'),
+                'type' => 'gateway',
+                'brief_description' => $this->language->get('text_brief_description_amazonpay'),
+                'image' => 'amazonpay'
+            ),
+            array(
                 'id' => 'AMEX',
                 'code' => 'amex',
                 'route' => 'multisafepay/amex',

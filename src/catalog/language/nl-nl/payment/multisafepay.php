@@ -29,6 +29,7 @@ $_['placeholder_bank_account']              = 'Bankrekening IBAN';
 $_['placeholder_account_holder_iban']       = 'Rekeninghouder IBAN';
 $_['text_title_multisafepay']               = 'MultiSafepay';
 $_['text_title_afterpay']                   = 'AfterPay';
+$_['text_title_amazon_pay']                 = 'Amazon Pay';
 $_['text_title_american_express']           = 'American Express';
 $_['text_title_alipay']                     = 'Alipay';
 $_['text_title_alipayplus']                 = 'Alipay+ &trade; Partner';
