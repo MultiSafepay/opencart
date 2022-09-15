@@ -6,6 +6,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ***
 
+## 3.15.0
+Release date: Sep, 15th 2022
+
+### Added
++ DAVAMS-523: Add Amazon Pay payment method
++ PLGOPNS-486: Add Google Pay payment method
++ DAVAMS-483: Add MyBank payment method
+
+### Changed
++ PLGOPNS-485: Update links to documentation
++ PLGOPNS-457: Admin section: change icon
+
+***
+
 ## 3.14.0
 Release date: Jun, 22nd 2022
 
