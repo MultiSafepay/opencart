@@ -400,6 +400,8 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
         $this->{$this->model_call}->deleteEventByCode('msp_payment_links_at_email');
         $this->{$this->model_call}->deleteEventByCode('msp_remove_html_add_order');
         $this->{$this->model_call}->deleteEventByCode('msp_remove_html_edit_order');
+        $this->{$this->model_call}->deleteEventByCode('multisafepay_assets_header');
+        $this->{$this->model_call}->deleteEventByCode('multisafepay_assets_footer');
     }
 
     /**
