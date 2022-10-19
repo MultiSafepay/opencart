@@ -1,4 +1,4 @@
-# Modman for OpenCart 3.0.X
+# MODMAN FOR OPENCART 3.0.X
 src/admin/controller/extension/payment/multisafepay.php admin/controller/extension/payment/multisafepay.php
 src/admin/language/de-de/extension/payment/multisafepay.php admin/language/de-de/extension/payment/multisafepay.php
 src/admin/language/en-gb/extension/payment/multisafepay.php admin/language/en-gb/extension/payment/multisafepay.php
@@ -33,7 +33,7 @@ src/system/library/session/test.php system/library/session/test.php
 src/admin/controller/startup/test-startup-3-0.php admin/controller/startup/test_startup.php
 
 
-# Modman for OpenCart 2.3.X.X
+# MODMAN FOR OPENCART 2.3.X.X
 # src/admin/controller/extension/payment/multisafepay.php admin/controller/extension/payment/multisafepay.php
 # src/admin/language/de-de/extension/payment/multisafepay.php admin/language/de-de/extension/payment/multisafepay.php
 # src/admin/language/en-gb/extension/payment/multisafepay.php admin/language/en-gb/extension/payment/multisafepay.php
@@ -68,7 +68,7 @@ src/admin/controller/startup/test-startup-3-0.php admin/controller/startup/test_
 # src/admin/controller/startup/test-startup-2-3.php admin/controller/startup/test_startup.php
 
 
-# Modman for OpenCart 2.2.X.X
+# MODMAN FOR OPENCART 2.2.X.X
 # src/admin/controller/payment/multisafepay.php admin/controller/payment/multisafepay.php
 # src/admin/language/de-de/payment/multisafepay.php admin/language/de-de/payment/multisafepay.php
 # src/admin/language/en-gb/payment/multisafepay.php admin/language/en-gb/payment/multisafepay.php
@@ -104,7 +104,7 @@ src/admin/controller/startup/test-startup-3-0.php admin/controller/startup/test_
 # src/admin/controller/startup/test-startup-2-2.php admin/controller/startup/test_startup.php
 
 
-# Modman for OpenCart 2.1.X.X
+# MODMAN FOR OPENCART 2.1.X.X
 # src/admin/controller/payment/multisafepay.php admin/controller/payment/multisafepay.php
 # src/admin/language/deutsch/payment/multisafepay.php admin/language/deutsch/payment/multisafepay.php
 # src/admin/language/english/payment/multisafepay.php admin/language/english/payment/multisafepay.php
@@ -142,7 +142,7 @@ src/admin/controller/startup/test-startup-3-0.php admin/controller/startup/test_
 # install.xml system/multisafepay.ocmod.xml
 
 
-# Modman for OpenCart 2.0.X.X
+# MODMAN FOR OPENCART 2.0.X.X
 # src/admin/controller/payment/multisafepay.php admin/controller/payment/multisafepay.php
 # src/admin/language/deutsch/payment/multisafepay.php admin/language/deutsch/payment/multisafepay.php
 # src/admin/language/english/payment/multisafepay.php admin/language/english/payment/multisafepay.php
@@ -179,16 +179,35 @@ src/admin/controller/startup/test-startup-3-0.php admin/controller/startup/test_
 # src/system/test-framework.php system/test-framework.php
 # install.xml system/multisafepay.ocmod.xml
 
-# Third party checkouts OC 3.0.X
+
+
+
+# THIRD PARTY CHECKOUTS OC 3.0.X
+
+# Ajax Quick Checkout Free by Dreamvention. Version: 7.3.1
 # ocmod-to-support-third-party-extensions/multisafepay-patch-for-ajax-quick-checkout-free-version-7.3.1-opencart-3.0.X/install.xml system/d_quickcheckout_multisafepay.ocmod.xml
 # ocmod-to-support-third-party-extensions/multisafepay-patch-for-ajax-quick-checkout-free-version-7.3.1-opencart-3.0.X/upload/qc_payment_multisafepay.tag catalog/view/theme/default/template/extension/d_quickcheckout/step/qc_payment_multisafepay.tag
-# ocmod-to-support-third-party-extensions/multisafepay-patch-for-onepage-checkout-4.0.0-opencart-3.0.X/install.xml system/onepagecheckout_multisafepay.ocmod.xml
-ocmod-to-support-third-party-extensions/multisafepay-patch-for-journal3-opencart-3.0.X/install.xml system/journal3_multisafepay.ocmod.xml
-ocmod-to-support-third-party-extensions/multisafepay-patch-for-journal3-opencart-3.0.X/upload/catalog/view/theme/journal3/template/extension/payment/multisafepay.twig catalog/view/theme/journal3/template/extension/payment/multisafepay.twig
 
-# Third party checkouts OC 2.3.X
+# OnePage Checkout by Extensions Bazaar. Version: 4.0.0
+# ocmod-to-support-third-party-extensions/multisafepay-patch-for-onepage-checkout-4.0.0-opencart-3.0.X/install.xml system/onepagecheckout_multisafepay.ocmod.xml
+
+# Journal 3 Theme by Digital Atelier
+# ocmod-to-support-third-party-extensions/multisafepay-patch-for-journal3-opencart-3.0.X/install.xml system/journal3_multisafepay.ocmod.xml
+# ocmod-to-support-third-party-extensions/multisafepay-patch-for-journal3-opencart-3.0.X/upload/catalog/view/theme/journal3/template/extension/payment/multisafepay.twig catalog/view/theme/journal3/template/extension/payment/multisafepay.twig
+
+
+# THIRD PARTY CHECKOUTS OC 2.3.X
+
+# Ajax Quick Checkout Free by Dreamvention. Version: 7.3.1
 # ocmod-to-support-third-party-extensions/multisafepay-patch-for-ajax-quick-checkout-free-version-7.3.1-opencart-2.3.X/install.xml system/d_quickcheckout_multisafepay.ocmod.xml
 # ocmod-to-support-third-party-extensions/multisafepay-patch-for-ajax-quick-checkout-free-version-7.3.1-opencart-2.3.X/upload/qc_payment_multisafepay.tag catalog/view/theme/default/template/extension/d_quickcheckout/step/qc_payment_multisafepay.tag
+
+# OnePage Checkout by Extensions Bazaar. Version: 4.0.0
 # ocmod-to-support-third-party-extensions/multisafepay-patch-for-onepage-checkout-4.0.0-opencart-2.3.X/install.xml system/onepagecheckout_multisafepay.ocmod.xml
+
+# Journal 3 Theme by Digital Atelier
 # ocmod-to-support-third-party-extensions/multisafepay-patch-for-journal3-opencart-2.3.X/install.xml system/journal3_multisafepay.ocmod.xml
 # ocmod-to-support-third-party-extensions/multisafepay-patch-for-journal3-opencart-2.3.X/upload/catalog/view/theme/journal3/template/extension/payment/multisafepay.tpl catalog/view/theme/journal3/template/extension/payment/multisafepay.tpl
+
+# Quick Checkout by MarketInSG. Version: 11.0.0
+# ocmod-to-support-third-party-extensions/multisafepay-patch-for-quick-checkout-11.0.0-from-marketinsg-opencart-2.3.X/install.xml system/quickcheckout_marketinsg_multisafepay.ocmod.xml

@@ -1,3 +1,7 @@
 .msp-container-ui.msp-embed-mode {
     max-width: 100% !important;
 }
+#quickcheckoutconfirm #quickcheckout-disable .quickcheckoutright #payment-method .quickcheckout-content label[for*="multisafepay"] img {
+    height: 15px !important;
+    margin-right: 5px !important;
+}
