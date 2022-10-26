@@ -52,6 +52,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
         $data['country'] = $order_info['payment_iso_code_2'];
         $data['apiToken'] = $this->multisafepay->getUserApiToken();
 
+        $data['env'] = 'live';
         if ($data['test_mode']) {
             $data['env'] = 'test';
         }
