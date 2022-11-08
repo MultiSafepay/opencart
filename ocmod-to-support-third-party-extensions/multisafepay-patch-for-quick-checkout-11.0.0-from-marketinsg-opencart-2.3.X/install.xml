@@ -57,12 +57,19 @@
 		return false;
 	}
 
+    public function __construct($registry) {
+        parent::__construct($registry);
+        $this->registry->set('multisafepay', new Multisafepay($registry));
+		$this->registry->set('multisafepay_version_control', new Multisafepayversioncontrol($registry));
+		$this->key_prefix = $this->multisafepay_version_control->getKeyPrefix();
+    }
+
             ]]>
             </add>
         </operation>
         <operation info="Operation 2">
             <search><![CDATA[$recurring = $this->cart->hasRecurringProducts();]]></search>
-            <add position="replace" offset="18"><![CDATA[
+            <add position="replace" offset="27"><![CDATA[
             $recurring = $this->cart->hasRecurringProducts();
 
             foreach ($results as $result) {
@@ -71,22 +78,9 @@
                     $method = $this->{'model_extension_payment_' . $result['code']}->getMethod($this->session->data['payment_address'], $total);
                     $method_data = $this->extractPaymentMethodsArray($method, $result, $total, $recurring, $method_data);
                 }
-            }]]>
-            </add>
-        </operation>
-        <operation info="Operation 3">
-            <search index="1"><![CDATA[$sort_order = array();]]></search>
-            <add position="replace" offset="6"><![CDATA[
+            }
+
             $method_data = $this->sortMethods($method_data);
-            ]]>
-            </add>
-        </operation>
-        <operation info="Operation 4">
-            <search><![CDATA[parent::__construct($registry);]]></search>
-            <add position="after"><![CDATA[
-        $this->registry->set('multisafepay', new Multisafepay($registry));
-		$this->registry->set('multisafepay_version_control', new Multisafepayversioncontrol($registry));
-		$this->key_prefix = $this->multisafepay_version_control->getKeyPrefix();
             ]]>
             </add>
         </operation>
