@@ -23,12 +23,12 @@ $_['entry_date_of_birth']                   = 'Date of birth';
 $_['entry_bank_account']                    = 'Bank Account IBAN';
 $_['entry_account_holder_name']             = 'Account holder';
 $_['entry_account_holder_iban']             = 'IBAN';
-$_['entry_afterpay_terms']                  = '<b>I have read and agree to the <a href="https://www.afterpay.nl/en/about/pay-with-afterpay/payment-conditions" target="_blank">Afterpay payment terms</a></b>';
+$_['entry_afterpay_terms']                  = '<b>I have read and agree to the <a href="https://documents.riverty.com/terms_conditions/payment_methods/invoice/nl_en/default" target="_blank">Riverty payment terms</a></b>';
 $_['placeholder_date_of_birth']             = 'Date of birth: YYYY-MM-DD';
 $_['placeholder_bank_account']              = 'Bank Account IBAN ';
 $_['placeholder_account_holder_iban']       = 'Account holder IBAN ';
 $_['text_title_multisafepay']               = 'MultiSafepay';
-$_['text_title_afterpay']                   = 'AfterPay';
+$_['text_title_afterpay']                   = 'Riverty';
 $_['text_title_amazon_pay']                 = 'Amazon Pay';
 $_['text_title_american_express']           = 'American Express';
 $_['text_title_alipay']                     = 'Alipay';
@@ -93,5 +93,5 @@ $_['text_error_empty_bank_account']         = 'Bank Account is a required field'
 $_['text_error_empty_account_holder_iban']  = 'IBAN is a required field';
 $_['text_error_empty_account_holder_name']  = 'Account holder is a required field';
 $_['text_error_not_valid_iban']             = 'IBAN does not seems valid';
-$_['text_error_empty_afterpay_terms']       = 'The Afterpay payment terms must be accepted';
+$_['text_error_empty_afterpay_terms']       = 'The Riverty payment terms must be accepted';
 

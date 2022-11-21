@@ -120,7 +120,47 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
     }
 
     /**
-     * Handles the confirm order form for Afterpay payment method
+     * Change the terms and conditions links for Riverty / Afterpay - Riverty payment
+     * according to the selected language and the billing country of the customer
+     *
+     * @phpcs:disabled ObjectCalisthenics.ControlStructures.NoElse
+     *
+     * @return string
+     */
+    public function afterPayGeoTerms() {
+        $terms = $this->language->get('entry_afterpay_terms');
+
+        if ($this->session->data['payment_address']['country_id']) {
+            $this->load->model('localisation/country');
+            $billing_country = $this->model_localisation_country->getCountry($this->session->data['payment_address']['country_id']);
+            $billing_code = strtolower($billing_country['iso_code_2']);
+            $language_code = strtolower($this->language->get('code'));
+
+            if (($billing_code === 'de') && (strpos($language_code, 'en') !== false)) {
+                $terms = str_replace('/nl_en/', '/de_en/', $terms);
+            } else if (($billing_code === 'at') && (strpos($language_code, 'de') !== false)) {
+                $terms = str_replace('/de_de/', '/at_de/', $terms);
+            } else if ($billing_code === 'at') {
+                $terms = str_replace('/nl_en/', '/at_en/', $terms);
+            } else if (($billing_code === 'ch') && (strpos($language_code, 'de') !== false)) {
+                $terms = str_replace('/de_de/', '/ch_de/', $terms);
+            } else if (($billing_code === 'ch') && (strpos($language_code, 'fr') !== false)) {
+                $terms = str_replace('/nl_en/', '/ch_fr/', $terms);
+            } else if ($billing_code === 'ch') {
+                $terms = str_replace('/nl_en/', '/ch_en/', $terms);
+            } else if (($billing_code === 'be') && (strpos($language_code, 'nl') !== false)) {
+                $terms = str_replace('/nl_nl/', '/be_nl/', $terms);
+            } else if (($billing_code === 'be') && (strpos($language_code, 'fr') !== false)) {
+                $terms = str_replace('/nl_en/', '/be_fr/', $terms);
+            } else if ($billing_code === 'be') {
+                $terms = str_replace('/nl_en/', '/be_en/', $terms);
+            }
+        }
+        return $terms;
+    }
+
+    /**
+     * Handles the confirm order form for Riverty / Afterpay - Riverty payment method
      */
     public function afterPay() {
         $data = $this->paymentMethodBase('AFTERPAY');
@@ -132,6 +172,8 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
                 'afterpay_terms' => true
 		    );
 	    }
+        $data['entry_afterpay_terms'] = $this->afterPayGeoTerms();
+
         return $this->multisafepay_version_control->getViewAccordingWithOcVersion($this->route . $this->view_extension_file, $data);
     }
 

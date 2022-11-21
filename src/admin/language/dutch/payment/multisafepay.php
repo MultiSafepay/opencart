@@ -154,7 +154,7 @@ $_['tab_options']       		 	                    = 'Opties';
 $_['tab_maintenance']       		                    = 'Onderhoud';
 $_['button_remove']                                     = 'Bestanden verwijderen';
 $_['text_title_multisafepay']                           = 'MultiSafepay';
-$_['text_title_afterpay']                               = 'AfterPay';
+$_['text_title_afterpay']                               = 'AfterPay - Riverty';
 $_['text_title_amazon_pay']                             = 'Amazon Pay';
 $_['text_title_american_express']                       = 'American Express';
 $_['text_title_alipay']                                 = 'Alipay';
@@ -254,7 +254,7 @@ $_['text_help_drag_and_drop']                           = 'Sleep dit element en 
 $_['text_help_generate_payment_links_status']           = 'Meer informatie over het genereren van een bestelling met betalingslink vindt u in onze <a href="https://docs.multisafepay.com/docs/payment-links" target="_blank">documentatie</a>';
 $_['text_help_generate_payment_links']                  = 'Als u een bestelling genereert vanuit de OpenCart-administratie en de bestelstatus toewijst die is geselecteerd in het volgende veld, ontvangt de gebruiker de bestelgegevens in de e-mail, inclusief een betalingslink';
 $_['text_help_lifetime_payment_link']				    = 'Dit geeft de levensduur van een betaallink aan. Standaard is 30 dagen. Dit betekent dat de klant 30 dagen de tijd heeft om de transactie af te ronden via de betaallink';
-$_['text_help_shopping_cart_disabled']				    = 'Selecteer "Ja" om de winkelwagenitems op de MultiSafepay-betaalpagina te verbergen, zodat alleen het totale orderbedrag overblijft. <br />Als u "Ja" selecteert, werken de betaalmethoden waarvoor een winkelwagentje nodig is niet: Afterpay, E-Invoicing, in3, Klarna and Pay After Delivery.';
+$_['text_help_shopping_cart_disabled']				    = 'Selecteer "Ja" om de winkelwagenitems op de MultiSafepay-betaalpagina te verbergen, zodat alleen het totale orderbedrag overblijft. <br />Als u "Ja" selecteert, werken de betaalmethoden waarvoor een winkelwagentje nodig is niet: Afterpay - Riverty, E-Invoicing, in3, Klarna and Pay After Delivery.';
 $_['text_help_custom_order_total_keys']				    = 'Vul de aangepaste totaalbestelcode(s) in die niet zichtbaar mogen zijn op de MultiSafepay-betaalpagina. Gebruik een puntkomma (;) om waarden te scheiden';
 $_['error_permission']				                    = 'Waarschuwing: U heeft geen toestemming om betaalmethode MultiSafepay te wijzigen';
 $_['error_check_form']   		                        = 'Waarschuwing: Controleer het formulier graag nogmaals en let op foutmeldingen';

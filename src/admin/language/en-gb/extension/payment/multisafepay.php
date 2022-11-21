@@ -153,7 +153,7 @@ $_['tab_options']       		 	                    = 'Options';
 $_['tab_maintenance']       		                    = 'Maintenance';
 $_['button_remove']                                     = 'Remove files';
 $_['text_title_multisafepay']                           = 'MultiSafepay';
-$_['text_title_afterpay']                               = 'AfterPay';
+$_['text_title_afterpay']                               = 'Riverty';
 $_['text_title_amazon_pay']                             = 'Amazon Pay';
 $_['text_title_american_express']                       = 'American Express';
 $_['text_title_alipay']                                 = 'Alipay';
@@ -253,7 +253,7 @@ $_['text_help_drag_and_drop']                           = 'Drag and drop this el
 $_['text_help_generate_payment_links_status']           = 'More information about how to generate an order with payment link in our <a href="https://docs.multisafepay.com/docs/payment-links" target="_blank">documentation</a>';
 $_['text_help_generate_payment_links']                  = 'If you generate an order from the OpenCart administration, and assign the order status selected in the next field, the user will receive the order details in the mail, including a payment link';
 $_['text_help_lifetime_payment_link']				    = 'This indicates the lifetime of a payment link. By default is 30 days. This means that the customer has 30 days to complete the transaction using the payment link';
-$_['text_help_shopping_cart_disabled']				    = 'Select "Yes" to hide the cart items on the MultiSafepay payment page, leaving only the total order amount. <br /> Note: If select "Yes" the payment methods which require shopping cart won\'t work: Afterpay, E-Invoicing, in3, Klarna and Pay After Delivery.';
+$_['text_help_shopping_cart_disabled']				    = 'Select "Yes" to hide the cart items on the MultiSafepay payment page, leaving only the total order amount. <br /> Note: If select "Yes" the payment methods which require shopping cart won\'t work: Riverty, E-Invoicing, in3, Klarna and Pay After Delivery.';
 $_['text_help_custom_order_total_keys']				    = 'Fill in with the custom total order code(s) that should not be visible on the MultiSafepay payment page. Use a semicolon(;) to separate values';
 $_['error_permission']				                    = 'Warning: You do not have permission to modify payment MultiSafepay';
 $_['error_check_form']   		                        = 'Warning: Please, check the form carefully and look for error messages';

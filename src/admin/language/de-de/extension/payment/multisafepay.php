@@ -152,7 +152,7 @@ $_['tab_options']       		 	                    = 'Optionen';
 $_['tab_maintenance']       		                    = 'Dateien entfernen';
 $_['button_remove']                                     = 'Remove files';
 $_['text_title_multisafepay']                           = 'MultiSafepay';
-$_['text_title_afterpay']                               = 'AfterPay';
+$_['text_title_afterpay']                               = 'Riverty';
 $_['text_title_amazon_pay']                             = 'Amazon Pay';
 $_['text_title_american_express']                       = 'American Express';
 $_['text_title_alipay']                                 = 'Alipay';
@@ -252,7 +252,7 @@ $_['text_help_drag_and_drop']                           = 'Ziehen Sie dieses Ele
 $_['text_help_generate_payment_links_status']           = 'Weitere Informationen zum Generieren einer Bestellung mit Zahlungslink finden Sie in unserer <a href="https://docs.multisafepay.com/docs/payment-links" target="_blank">Dokumentation</a>';
 $_['text_help_generate_payment_links']                  = 'Wenn Sie eine Bestellung aus der OpenCart-Administration generieren und den im folgenden Feld ausgewählten Bestellstatus zuweisen, erhält der Benutzer die Bestelldetails per E-Mail, einschließlich eines Zahlungslinks';
 $_['text_help_lifetime_payment_link']				    = 'Dies zeigt die Lebensdauer eines Zahlungslinks an. Standardmäßig sind es 30 Tage. Dies bedeutet, dass der Kunde 30 Tage Zeit hat, um die Transaktion über den Zahlungslink abzuschließen';
-$_['text_help_shopping_cart_disabled']				    = 'Wählen Sie "Ja", um die Warenkorbartikel auf der MultiSafepay-Zahlungsseite auszublenden, sodass nur der Gesamtbestellbetrag übrig bleibt. <br />Wenn Sie "Ja" auswählen, funktionieren die Zahlungsmethoden, die einen Warenkorb erfordern, nicht: Afterpay, E-Invoicing, in3, Klarna and Pay After Delivery.';
+$_['text_help_shopping_cart_disabled']				    = 'Wählen Sie "Ja", um die Warenkorbartikel auf der MultiSafepay-Zahlungsseite auszublenden, sodass nur der Gesamtbestellbetrag übrig bleibt. <br />Wenn Sie "Ja" auswählen, funktionieren die Zahlungsmethoden, die einen Warenkorb erfordern, nicht: Riverty, E-Invoicing, in3, Klarna and Pay After Delivery.';
 $_['text_help_custom_order_total_keys']				    = 'Geben Sie den/die benutzerdefinierten Gesamtbestellcode(s) ein, die auf der MultiSafepay-Zahlungsseite nicht sichtbar sein sollen. Verwenden Sie ein Semikolon (;), um Werte zu trennen';
 $_['error_permission']				                    = 'Warnung: Sie haben keine Berechtigung zur Änderung der Zahlungsweise MultiSafepay';
 $_['error_check_form']   		                        = 'Warnung: Bitte das Formular sorgfältig prüfen und nach Fehlermeldungen suchen';

@@ -153,7 +153,7 @@ $_['tab_options']       		 	                    = 'Opciones';
 $_['tab_maintenance']       		                    = 'Mantenimiento';
 $_['button_remove']                                     = 'Eliminar archivos';
 $_['text_title_multisafepay']                           = 'MultiSafepay';
-$_['text_title_afterpay']                               = 'AfterPay';
+$_['text_title_afterpay']                               = 'Riverty';
 $_['text_title_amazon_pay']                             = 'Amazon Pay';
 $_['text_title_american_express']                       = 'American Express';
 $_['text_title_alipay']                                 = 'Alipay';
@@ -253,7 +253,7 @@ $_['text_help_drag_and_drop']                           = 'Arrastre y suelte est
 $_['text_help_generate_payment_links_status']           = 'Más información sobre cómo generar un pedido con enlace de pago en nuestra <a href="https://docs.multisafepay.com/docs/payment-links" target="_blank">documentación</a>';
 $_['text_help_generate_payment_links']                  = 'Si generas un pedido desde la administración de OpenCart, y le asignes el estado de pedido seleccionado en el siguiente campo, el usuario recibira en el correo, los detalles del pedido, incluyendo un enlace de pago';
 $_['text_help_lifetime_payment_link']				    = 'Esto indica la vida útil de un enlace de pago. El valor predeterminado es 30 días. Esto significa que el cliente tiene 30 días para completar la transacción mediante el enlace de pago.';
-$_['text_help_shopping_cart_disabled']				    = 'Seleccione "Sí" para ocultar los artículos del carrito en la página de pago de MultiSafepay, dejando solo el monto total del pedido. <br />Si selecciona "Sí", los métodos de pago que requieren carrito de compras no funcionarán: Afterpay, E-Invoicing, in3, Klarna and Pay After Delivery.';
+$_['text_help_shopping_cart_disabled']				    = 'Seleccione "Sí" para ocultar los artículos del carrito en la página de pago de MultiSafepay, dejando solo el monto total del pedido. <br />Si selecciona "Sí", los métodos de pago que requieren carrito de compras no funcionarán: Riverty, E-Invoicing, in3, Klarna and Pay After Delivery.';
 $_['text_help_custom_order_total_keys']				    = 'Complete con el (los) código(s) de pedido total personalizado que no deberían estar visibles en la página de pago de MultiSafepay. Use un punto y coma (;) para separar valores';
 $_['error_permission']				                    = 'Advertencia: no tiene permiso para modificar la extensión de MultiSafepay!';
 $_['error_check_form']   		                        = 'Advertencia: por favor, revise el formulario cuidadosamente y busque mensajes de error';
