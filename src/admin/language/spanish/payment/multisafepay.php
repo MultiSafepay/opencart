@@ -114,7 +114,6 @@ $_['entry_max_amount']                      			= 'Max. Total';
 $_['entry_currency']                      			    = 'Moneda';
 $_['entry_customer_group']                              = 'Grupo de Cliente';
 $_['entry_multisafepay_order_description']              = 'Descripción del pedido';
-$_['entry_multisafepay_google_analytics_account_id']    = 'ID de cuenta de Google Analytics';
 $_['entry_multisafepay_second_chance']       			= 'Estado de Second Chance';
 $_['entry_multisafepay_days_active']        			= 'Días activo';
 $_['entry_multisafepay_time_active']        			= 'Tiempo activo';
@@ -238,7 +237,6 @@ $_['text_help_total']					                = 'El total de pago que debe alcanzar 
 $_['text_help_min_amount']				                = 'Este método de pago se activa si el total del pago alcanza este monto. Déjelo en blanco si no desea configurar restricciones.';
 $_['text_help_max_amount']				                = 'Este método de pago se desactiva si el total del pago supera este monto. Déjelo en blanco si no desea configurar restricciones.';
 $_['text_help_order_description']                       = 'Un texto que se mostrará con el pedido en MultiSafepay Control. Si el banco del cliente lo admite, esta descripción también se mostrará en el extracto bancario del cliente. Puede incluir el número de pedido usando {order_id}';
-$_['text_help_google_analytics_account_id']             = 'Google Analytics Universal ID. Format: UA-XXXXXXXXX';
 $_['text_help_second_chance']       			        = 'Cuando un cliente inicia un pago, pero no lo finaliza por algún motivo, '
                                                         . 'MultiSafepay enviará un recordatorio por correo electrónico. Incluido en estos correos electrónicos, '
                                                         . 'hay un enlace de pago que permitirá al cliente finalizar el pago.'

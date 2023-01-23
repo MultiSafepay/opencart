@@ -138,13 +138,6 @@
                                     <input type="text" name="multisafepay_order_description" value="<?php echo $multisafepay_order_description; ?>" id="payment-multisafepay-order-description" placeholder="<?php echo $entry_multisafepay_order_description; ?>" class="form-control" />
                                 </div>
                             </div>
-                            <?php // Google Analytics Account ID ?>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label" for="payment-multisafepay-google-analytics-account-id"><span data-toggle="tooltip" title="<?php echo $text_help_google_analytics_account_id; ?>"><?php echo $entry_multisafepay_google_analytics_account_id; ?></span></label>
-                                <div class="col-sm-10">
-                                    <input type="text" name="multisafepay_google_analytics_account_id" value="<?php echo $multisafepay_google_analytics_account_id; ?>" id="payment-multisafepay-google-analytics-account-id" placeholder="<?php echo $entry_multisafepay_google_analytics_account_id; ?>" class="form-control" />
-                                </div>
-                            </div>
                             <?php // Days active ?>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label" for="payment-multisafepay-unit-lifetime-payment-link"><span data-toggle="tooltip" title="<?php echo $text_help_lifetime_payment_link; ?>"><?php echo $entry_multisafepay_lifetime_payment_link; ?></span></label>
