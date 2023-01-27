@@ -6,6 +6,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ***
 
+## 3.16.0
+Release date: Jan, 27th 2023
+
+### Removed
++ DAVAMS-567: Remove Google Analytics tracking ID in the order request and the setting field related.
+
+### Changed
++ DAVAMS-587: Rebrand logo of Pay After Delivery.
++ DAVAMS-539: Rebrand Afterpay - Riverty.
+
+***
+
 ## 3.15.1
 Release date: Oct, 26th 2022
 
