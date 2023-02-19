@@ -1485,13 +1485,13 @@ class Multisafepay {
         }
 
         // Coupons is percentage type and apply for all items in the order.
-        if ($coupon_info && isset($coupon_info['type']) && $coupon_info['type'] == self::PERCENTAGE_TYPE && $coupon_info['is_order_lower_than_taxes'] && empty($coupon_info['product'])) {
+        if ($coupon_info && isset($coupon_info['type']) && $coupon_info['type'] == self::PERCENTAGE_TYPE && empty($coupon_info['product'])) {
 	        $discount_by_product = ($product['price'] * ($coupon_info['discount']/100));
         	$product_price -= $discount_by_product;
             // If coupon is just for free shipping, the name and description is not modified
             if ($coupon_info['discount'] > 0) {
                 $product_name .= ' - ' . sprintf($this->language->get('text_coupon_applied'),
-                        $coupon_info['name']);
+                        $coupon_info['name'].' ('.number_format($coupon_info['discount'],0).'%)');
                 $product_description .= sprintf($this->language->get('text_price_before_coupon'),
                     $this->currency->format($product['price'], $order_info['currency_code'],
                         $order_info['currency_value'], true), $coupon_info['name']);
