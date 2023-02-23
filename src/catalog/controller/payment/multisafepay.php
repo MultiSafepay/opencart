@@ -434,7 +434,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
 		    if($issuers) {
 			    $data['issuers'] = $issuers;
 			    $data['type'] = 'direct';
-			    $data['gateway_info'] = 'Ideal';
+			    $data['gateway_info'] = 'Issuer';
 		    }
 	    }
         return $this->multisafepay_version_control->getViewAccordingWithOcVersion($this->route . $this->view_extension_file, $data);
@@ -491,7 +491,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
             $issuers = $this->multisafepay->getIssuersByGatewayCode($data['gateway']);
             if ($issuers) {
                 $data['issuers'] = $issuers;
-                $data['gateway_info'] = 'MyBank';
+                $data['gateway_info'] = 'Issuer';
             }
         }
         return $this->multisafepay_version_control->getViewAccordingWithOcVersion($this->route . $this->view_extension_file, $data);
@@ -526,6 +526,17 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
 		    );
 	    }
         return $this->multisafepay_version_control->getViewAccordingWithOcVersion($this->route . $this->view_extension_file, $data);
+    }
+
+    /**
+     * Handles the confirm order form for Pay After Delivery Installments payment method
+     *
+     * @return string
+     */
+    public function payAfterDeliveryInstallments(): string
+    {
+        $data = $this->paymentMethodBase('BNPL_INSTM');
+        return $this->load->view($this->route, $data);
     }
 
     /**

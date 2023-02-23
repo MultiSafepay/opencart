@@ -92,6 +92,7 @@ $_['text_brief_description_mybank']                     = '';
 $_['text_brief_description_nationaletuinbon']           = '';
 $_['text_brief_description_parfumcadeaukaart']          = '';
 $_['text_brief_description_payafter']                   = '';
+$_['text_brief_description_payafter_installments']       = '';
 $_['text_brief_description_paypal']                    	= '';
 $_['text_brief_description_podium']                   	= '';
 $_['text_brief_description_paysafecard']                = '';
@@ -182,6 +183,7 @@ $_['text_title_mastercard']                             = 'Mastercard';
 $_['text_title_mybank']                                 = 'MyBank - Bonifico Immediato';
 $_['text_title_parfum_cadeaukaart']                     = 'Parfum Cadeaukaart';
 $_['text_title_pay_after_delivery']                     = 'Betaal na Ontvangst';
+$_['text_title_pay_after_delivery_installments']        = 'Betaal in Termijnen';
 $_['text_title_paypal']                                 = 'PayPal';
 $_['text_title_paysafecard']                            = 'Paysafecard';
 $_['text_title_santander_betaalplan']                   = 'Santander Consumer Finance | Pay per month';
@@ -243,7 +245,7 @@ $_['text_help_second_chance']       			        = 'Wanneer een klant een betaling
                                                         . 'twee Second Chance herinneringsmails sturen. In de e-mails zal MultiSafepay '
                                                         . 'een link toevoegen waarmee de consument de betaling af kan ronden. De eerste Second Chance-e-mail wordt 1 uur '
                                                         . 'na het initiëren van de transactie verstuurd en de tweede na 24 uur. Om tweedekans-e-mails te ontvangen, moet deze optie ook geactiveerd zijn binnen uw MultiSafepay-account, anders werkt het niet.';
-$_['text_help_more_info_second_chance']                 = 'Meer informatie over Second Chance in onze <a href="https://docs.multisafepay.com/tools/second-chance/?utm_source=opencart&utm_medium=opencart-cms&utm_campaign=opencart-cms" target="_blank">documentatie</a>';
+$_['text_help_more_info_second_chance']                 = 'Meer informatie over Second Chance in onze <a href="https://docs.multisafepay.com/docs/second-chance" target="_blank">documentatie</a>';
 $_['text_help_currency']                                = 'U kunt de valuta\'s selecteren waarvoor u deze betaalmethode wilt weergeven. Laat zwart voor geen beperkingen.';
 $_['text_help_initialize_payment_request']              = 'U kunt een bestelling van de beheerder genereren met deze bestelstatus toegewezen, dus deze bestelling bevat een betalingslink in de e-mail die naar de klant wordt gestuurd. We raden aan deze bestelstatus alleen voor dit doel te gebruiken';
 $_['text_help_order_status_id_initialized']             = 'Standaard geïnitialiseerde bestelstatus voor alle betaalmethoden. Later in elke betalingsmethode is het mogelijk om elke andere voor elke instelling aan te passen.';
