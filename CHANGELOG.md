@@ -6,6 +6,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ***
 
+## 3.17.0
+Release date: Feb, 23rd 2023
+
+### Added
++ DAVAMS-577: Add Pay After Delivery Installments payment method
+
+***
+
 ## 3.16.0
 Release date: Jan, 27th 2023
 

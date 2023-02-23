@@ -44,11 +44,11 @@ class Multisafepay {
     /**
      * Returns the plugin version .
      *
-     * @return strong $plugin_version
+     * @return string $plugin_version
      *
      */
     public function getPluginVersion() {
-        $plugin_version = '3.16.0';
+        $plugin_version = '3.17.0';
         return $plugin_version;
     }
 
