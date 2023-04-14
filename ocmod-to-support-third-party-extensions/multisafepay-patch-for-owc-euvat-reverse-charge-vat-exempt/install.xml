@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <modification>
-    <name>MultiSafepay: Patch for EU VAT Compliant from Open Web Creations for OC version 3.0.X</name>
-    <version>1.0</version>
+    <name>MultiSafepay: Patch for EU VAT Compliant from Open Web Creations</name>
+    <version>1.1</version>
     <code>MSP-FOR-EU-VAT-COMPLIANT-FROM-OPEN-WEB-CREATIONS-PATCH</code>
     <author>MultiSafepay</author>
     <link>https://www.multisafepay.com</link>
