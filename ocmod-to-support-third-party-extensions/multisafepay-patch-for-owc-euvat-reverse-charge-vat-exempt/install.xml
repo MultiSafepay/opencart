@@ -7,6 +7,15 @@
     <link>https://www.multisafepay.com</link>
     <file path="system/library/multisafepay.php">
         <operation>
+            <search><![CDATA[$unit_price = $this->getMoneyObject($price, $order_info['currency_code'], $order_info['currency_value']);]]></search>
+            <add position="before"><![CDATA[
+        if ((isset($this->session->data['owc_euvat_reverse_charge_vat_exempt']) && $this->session->data['owc_euvat_reverse_charge_vat_exempt'] == 1) || (isset($this->session->data['owc_euvat_reverse_charge_vat_exempt_uk']) && $this->session->data['owc_euvat_reverse_charge_vat_exempt_uk'] == 1)) {
+            $tax_rate = 0;
+        }
+            ]]>
+            </add>
+        </operation>
+        <operation>
             <search><![CDATA[$shipping_tax_class_id = $this->getShippingTaxClassId($order_info['shipping_code']);]]></search>
             <add position="after"><![CDATA[
         if ((isset($this->session->data['owc_euvat_reverse_charge_vat_exempt']) && $this->session->data['owc_euvat_reverse_charge_vat_exempt'] == 1) || (isset($this->session->data['owc_euvat_reverse_charge_vat_exempt_uk']) && $this->session->data['owc_euvat_reverse_charge_vat_exempt_uk'] == 1)) {

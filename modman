@@ -195,6 +195,9 @@ src/admin/controller/startup/test-startup-3-0.php admin/controller/startup/test_
 # ocmod-to-support-third-party-extensions/multisafepay-patch-for-journal3-opencart-3.0.X/install.xml system/journal3_multisafepay.ocmod.xml
 # ocmod-to-support-third-party-extensions/multisafepay-patch-for-journal3-opencart-3.0.X/upload/catalog/view/theme/journal3/template/extension/payment/multisafepay.twig catalog/view/theme/journal3/template/extension/payment/multisafepay.twig
 
+# EU VAT Compliant
+# ocmod-to-support-third-party-extensions/multisafepay-patch-for-owc-euvat-reverse-charge-vat-exempt/install.xml system/reverse-charge-vat-exempt_multisafepay.ocmod.xml
+
 
 # THIRD PARTY CHECKOUTS OC 2.3.X
 
