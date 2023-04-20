@@ -92,6 +92,7 @@
             $method_data[$method['code']] = $method;
             return $method_data;
         }
+        return array();
     }
             ]]>
             </add>
