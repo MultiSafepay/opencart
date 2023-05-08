@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <modification>
     <name>MultiSafepay: Patch for Journal3 Theme</name>
-    <version>1.0</version>
+    <version>1.0.1</version>
     <code>MSP-PATCH-FOR-JOURNAL3-THEME</code>
     <author>MultiSafepay</author>
     <link>https://www.multisafepay.com</link>
@@ -84,7 +84,7 @@
             $method_data[$method['code']] = $method;
             return $method_data;
         }
-        return array();
+        return $method_data;
     }
             ]]>
             </add>
