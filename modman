@@ -20,6 +20,7 @@ src/catalog/language/nl-nl/extension/payment/multisafepay.php catalog/language/n
 src/catalog/model/extension/payment/multisafepay.php catalog/model/extension/payment/multisafepay.php
 src/catalog/view/theme/default/template/extension/payment/multisafepay.twig catalog/view/theme/default/template/extension/payment/multisafepay.twig
 src/catalog/view/javascript/multisafepay/multisafepay.js catalog/view/javascript/multisafepay/multisafepay.js
+src/catalog/view/javascript/multisafepay/applepay.js catalog/view/javascript/multisafepay/applepay.js
 src/catalog/view/theme/default/stylesheet/multisafepay/multisafepay.css catalog/view/theme/default/stylesheet/multisafepay/multisafepay.css
 src/catalog/view/javascript/multisafepay/select2.min.js catalog/view/javascript/multisafepay/select2.min.js
 src/catalog/view/theme/default/stylesheet/multisafepay/select2.min.css catalog/view/theme/default/stylesheet/multisafepay/select2.min.css
@@ -55,6 +56,7 @@ src/admin/controller/startup/test-startup-3-0.php admin/controller/startup/test_
 # src/catalog/model/extension/payment/multisafepay.php catalog/model/extension/payment/multisafepay.php
 # src/catalog/view/theme/default/template/extension/payment/multisafepay.tpl catalog/view/theme/default/template/extension/payment/multisafepay.tpl
 # src/catalog/view/javascript/multisafepay/multisafepay.js catalog/view/javascript/multisafepay/multisafepay.js
+# src/catalog/view/javascript/multisafepay/applepay.js catalog/view/javascript/multisafepay/applepay.js
 # src/catalog/view/theme/default/stylesheet/multisafepay/multisafepay.css catalog/view/theme/default/stylesheet/multisafepay/multisafepay.css
 # src/catalog/view/javascript/multisafepay/select2.min.js catalog/view/javascript/multisafepay/select2.min.js
 # src/catalog/view/theme/default/stylesheet/multisafepay/select2.min.css catalog/view/theme/default/stylesheet/multisafepay/select2.min.css
@@ -90,6 +92,7 @@ src/admin/controller/startup/test-startup-3-0.php admin/controller/startup/test_
 # src/catalog/model/payment/multisafepay.php catalog/model/payment/multisafepay.php
 # src/catalog/view/theme/default/template/payment/multisafepay.tpl catalog/view/theme/default/template/payment/multisafepay.tpl
 # src/catalog/view/javascript/multisafepay/multisafepay.js catalog/view/javascript/multisafepay/multisafepay.js
+# src/catalog/view/javascript/multisafepay/applepay.js catalog/view/javascript/multisafepay/applepay.js
 # src/catalog/view/theme/default/stylesheet/multisafepay/multisafepay.css catalog/view/theme/default/stylesheet/multisafepay/multisafepay.css
 # src/catalog/view/javascript/multisafepay/select2.min.js catalog/view/javascript/multisafepay/select2.min.js
 # src/catalog/view/theme/default/stylesheet/multisafepay/select2.min.css catalog/view/theme/default/stylesheet/multisafepay/select2.min.css
@@ -126,6 +129,7 @@ src/admin/controller/startup/test-startup-3-0.php admin/controller/startup/test_
 # src/catalog/model/payment/multisafepay.php catalog/model/payment/multisafepay.php
 # src/catalog/view/theme/default/template/payment/multisafepay.tpl catalog/view/theme/default/template/payment/multisafepay.tpl
 # src/catalog/view/javascript/multisafepay/multisafepay.js catalog/view/javascript/multisafepay/multisafepay.js
+# src/catalog/view/javascript/multisafepay/applepay.js catalog/view/javascript/multisafepay/applepay.js
 # src/catalog/view/theme/default/stylesheet/multisafepay/multisafepay.css catalog/view/theme/default/stylesheet/multisafepay/multisafepay.css
 # src/catalog/view/javascript/multisafepay/select2.min.js catalog/view/javascript/multisafepay/select2.min.js
 # src/catalog/view/theme/default/stylesheet/multisafepay/select2.min.css catalog/view/theme/default/stylesheet/multisafepay/select2.min.css
@@ -164,6 +168,7 @@ src/admin/controller/startup/test-startup-3-0.php admin/controller/startup/test_
 # src/catalog/model/payment/multisafepay.php catalog/model/payment/multisafepay.php
 # src/catalog/view/theme/default/template/payment/multisafepay.tpl catalog/view/theme/default/template/payment/multisafepay.tpl
 # src/catalog/view/javascript/multisafepay/multisafepay.js catalog/view/javascript/multisafepay/multisafepay.js
+# src/catalog/view/javascript/multisafepay/applepay.js catalog/view/javascript/multisafepay/applepay.js
 # src/catalog/view/theme/default/stylesheet/multisafepay/multisafepay.css catalog/view/theme/default/stylesheet/multisafepay/multisafepay.css
 # src/catalog/view/javascript/multisafepay/select2.min.js catalog/view/javascript/multisafepay/select2.min.js
 # src/catalog/view/theme/default/stylesheet/multisafepay/select2.min.css catalog/view/theme/default/stylesheet/multisafepay/select2.min.css
@@ -186,7 +191,7 @@ src/admin/controller/startup/test-startup-3-0.php admin/controller/startup/test_
 
 # Ajax Quick Checkout Free by Dreamvention. Version: 7.3.1
 # ocmod-to-support-third-party-extensions/multisafepay-patch-for-ajax-quick-checkout-free-version-7.3.1-opencart-3.0.X/install.xml system/d_quickcheckout_multisafepay.ocmod.xml
-# ocmod-to-support-third-party-extensions/multisafepay-patch-for-ajax-quick-checkout-free-version-7.3.1-opencart-3.0.X/upload/qc_payment_multisafepay.tag catalog/view/theme/default/template/extension/d_quickcheckout/step/qc_payment_multisafepay.tag
+# ocmod-to-support-third-party-extensions/multisafepay-patch-for-ajax-quick-checkout-free-version-7.3.1-opencart-3.0.X/upload/catalog/view/theme/default/template/extension/d_quickcheckout/step/qc_payment_multisafepay.tag catalog/view/theme/default/template/extension/d_quickcheckout/step/qc_payment_multisafepay.tag
 
 # OnePage Checkout by Extensions Bazaar. Version: 4.0.0
 # ocmod-to-support-third-party-extensions/multisafepay-patch-for-onepage-checkout-4.0.0-opencart-3.0.X/install.xml system/onepagecheckout_multisafepay.ocmod.xml
@@ -194,6 +199,9 @@ src/admin/controller/startup/test-startup-3-0.php admin/controller/startup/test_
 # Journal 3 Theme by Digital Atelier
 # ocmod-to-support-third-party-extensions/multisafepay-patch-for-journal3-opencart-3.0.X/install.xml system/journal3_multisafepay.ocmod.xml
 # ocmod-to-support-third-party-extensions/multisafepay-patch-for-journal3-opencart-3.0.X/upload/catalog/view/theme/journal3/template/extension/payment/multisafepay.twig catalog/view/theme/journal3/template/extension/payment/multisafepay.twig
+
+# Quick Checkout 1.0 by Module Points
+# ocmod-to-support-third-party-extensions/multisafepay-patch-for-quick-checkout-from-module-points-opencart-3.0.X/install.xml system/quickcheckout_modulepoints_multisafepay.ocmod.xml
 
 # EU VAT Compliant
 # ocmod-to-support-third-party-extensions/multisafepay-patch-for-owc-euvat-reverse-charge-vat-exempt/install.xml system/reverse-charge-vat-exempt_multisafepay.ocmod.xml
@@ -203,7 +211,7 @@ src/admin/controller/startup/test-startup-3-0.php admin/controller/startup/test_
 
 # Ajax Quick Checkout Free by Dreamvention. Version: 7.3.1
 # ocmod-to-support-third-party-extensions/multisafepay-patch-for-ajax-quick-checkout-free-version-7.3.1-opencart-2.3.X/install.xml system/d_quickcheckout_multisafepay.ocmod.xml
-# ocmod-to-support-third-party-extensions/multisafepay-patch-for-ajax-quick-checkout-free-version-7.3.1-opencart-2.3.X/upload/qc_payment_multisafepay.tag catalog/view/theme/default/template/extension/d_quickcheckout/step/qc_payment_multisafepay.tag
+# ocmod-to-support-third-party-extensions/multisafepay-patch-for-ajax-quick-checkout-free-version-7.3.1-opencart-2.3.X/upload/catalog/view/theme/default/template/extension/d_quickcheckout/step/qc_payment_multisafepay.tag catalog/view/theme/default/template/extension/d_quickcheckout/step/qc_payment_multisafepay.tag
 
 # OnePage Checkout by Extensions Bazaar. Version: 4.0.0
 # ocmod-to-support-third-party-extensions/multisafepay-patch-for-onepage-checkout-4.0.0-opencart-2.3.X/install.xml system/onepagecheckout_multisafepay.ocmod.xml
@@ -211,6 +219,9 @@ src/admin/controller/startup/test-startup-3-0.php admin/controller/startup/test_
 # Journal 3 Theme by Digital Atelier
 # ocmod-to-support-third-party-extensions/multisafepay-patch-for-journal3-opencart-2.3.X/install.xml system/journal3_multisafepay.ocmod.xml
 # ocmod-to-support-third-party-extensions/multisafepay-patch-for-journal3-opencart-2.3.X/upload/catalog/view/theme/journal3/template/extension/payment/multisafepay.tpl catalog/view/theme/journal3/template/extension/payment/multisafepay.tpl
+
+# Quick Checkout 1.0 by Module Points
+# ocmod-to-support-third-party-extensions/multisafepay-patch-for-quick-checkout-from-module-points-opencart-2.3.X/install.xml system/quickcheckout_modulepoints_multisafepay.ocmod.xml
 
 # Quick Checkout by MarketInSG. Version: 11.0.0
 # ocmod-to-support-third-party-extensions/multisafepay-patch-for-quick-checkout-11.0.0-from-marketinsg-opencart-2.3.X/install.xml system/quickcheckout_marketinsg_multisafepay.ocmod.xml

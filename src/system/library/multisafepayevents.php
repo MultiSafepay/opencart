@@ -951,7 +951,7 @@ class Multisafepayevents {
 
             $oc_version = $this->multisafepay_version_control->getOcVersion();
             $js_position = 'header';
-            if ($oc_version === '3.0' && ($this->config->get('config_theme') !== 'journal3')) {
+            if (($oc_version === '3.0') && (strpos($this->config->get('config_theme'), 'journal3') === false)) {
                 $js_position = 'footer';
             }
             $this->document->addScript('https://pay.multisafepay.com/sdk/components/v2/components.js', $js_position);
@@ -960,6 +960,9 @@ class Multisafepayevents {
 
             if ($this->config->get($this->key_prefix . 'multisafepay_googlepay_status')) {
                 $this->document->addScript('https://pay.google.com/gp/p/js/pay.js', $js_position);
+            }
+            if ($this->config->get($this->key_prefix . 'multisafepay_applepay_status')) {
+                $this->document->addScript('catalog/view/javascript/multisafepay/applepay.js', $js_position);
             }
             $args['scripts'] = $this->document->getScripts($js_position);
         }
