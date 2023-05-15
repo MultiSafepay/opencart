@@ -856,6 +856,11 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
 			return;
 		}
 
+        // Check if the notification is related with "pre-transactions", in which case is ignored
+		if($this->isPreTransactionNotification()) {
+			return;
+		}
+
 		// Check if the order exist in the shop and belongs to MultiSafepay.
 		if(!$this->checkIfOrderExistAndBelongsToMultiSafepay()) {
 			return;
@@ -895,6 +900,11 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
 		    return;
 	    }
 
+        // Check if the notification is related with "pre-transactions", in which case is ignored
+		if($this->isPreTransactionNotification()) {
+			return;
+		}
+
 		// Get the transaction information from MultiSafepay via API request
 	    $sdk = $this->multisafepay->getSdkObject($this->config->get('config_store_id'));
 	    $transaction_manager = $sdk->getTransactionManager();
@@ -902,6 +912,20 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
 
 	    // Process the notification
 	    $this->processCallBack($this->request->get['transactionid'], $transaction);
+    }
+
+    /**
+     * Returns true if the notification is a "pretransaction" notification
+     *
+     * @return bool|void
+     */
+    public function isPreTransactionNotification() {
+        if (isset($this->request->get['payload_type']) && $this->request->get['payload_type'] === 'pretransaction') {
+            $this->log->write("A pre-transaction notification has been received but is not going to be processed.");
+            return true;
+        }
+
+        return false;
     }
 
 	/**
