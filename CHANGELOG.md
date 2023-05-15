@@ -6,11 +6,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ***
 
+## 3.18.0
+Release date: May, 15th 2023
+
+### Added
++ PLGOPNS-530: Hide Apple Pay in non supported devices.
++ PLGOPNS-531: Ignore "pre-transaction" notifications, preventing trigger email on order status changes, which happens in rare cases.
+
+***
+
 ## 3.17.0
 Release date: Feb, 23rd 2023
 
 ### Added
-+ DAVAMS-577: Add Pay After Delivery Installments payment method
++ DAVAMS-577: Add Pay After Delivery Installments payment method.
 
 ***
 
