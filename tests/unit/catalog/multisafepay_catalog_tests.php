@@ -92,7 +92,7 @@ class CatalogControllerExtensionPaymentMultiSafePayTest extends MultisafepayTest
     }
 
     public function testFormPaymentMethodCreditCard() {
-        $this->buildSessionPaymentData('multisafepay/creditCard', 'Credit Card');
+        $this->buildSessionPaymentData('multisafepay/creditCard', 'Card payment');
         $this->cart->add(28, 1);
         $multisafepay_response = $this->dispatchAction('checkout/confirm');
         $this->assertRegExp("/order_id/", $multisafepay_response->getOutput());
