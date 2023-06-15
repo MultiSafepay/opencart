@@ -958,7 +958,7 @@ class Multisafepay {
 
         if (!empty($option_data)) {
             foreach($option_data as $option) {
-                $unique_product_id .= '-' .  $option['product_option_id'];
+                $unique_product_id .= '-' .  $option['product_option_id'] . '-' .  $option['product_option_value_id'];
             }
         }
 
@@ -1006,7 +1006,7 @@ class Multisafepay {
 
         $option_data = array();
 
-        $options = $this->{$this->model_call}->getOrderOptions($order_id, $product['product_id']);
+        $options = $this->{$this->model_call}->getOrderOptions($order_id, $product['order_product_id']);
 
         foreach ($options as $option) {
             if ($option['type'] !== 'file') {
@@ -1028,10 +1028,11 @@ class Multisafepay {
      */
     private function extractOptionsData($option) {
         $option_data = array(
-            'name'               => $option['name'],
-            'value'              => $option['value'],
-            'product_option_id'  => $option['product_option_id'],
-            'order_option_id'    => $option['order_option_id']
+            'name'                    => $option['name'],
+            'value'                   => $option['value'],
+            'product_option_id'       => $option['product_option_id'],
+            'order_option_id'         => $option['order_option_id'],
+            'product_option_value_id' => $option['product_option_value_id']
         );
         return $option_data;
     }
