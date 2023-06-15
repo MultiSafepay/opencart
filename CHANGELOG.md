@@ -9,10 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## 3.18.1
 Release date: June, 15th 2023
 
-### Changed
+### Fixed
 + PLGOPNS-535: Fix error 'Invalid or duplicate merchant_item_id', when processing a Klarna order, and the shopping cart contains two items with the same product but different options.
 
-### Fixed
+### Changed
 + DAVAMS-605: Rename "Credit Card" payment method as "Card payment".
 
 ***
