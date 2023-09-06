@@ -467,7 +467,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
     }
 
     /**
-     * Handles the confirm order form for Visa payment method
+     * Handles the confirm order form for Maestro payment method
      */
     public function maestro() {
         $data = $this->paymentMethodBase('MAESTRO');
@@ -617,6 +617,14 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
      */
     public function visa() {
         $data = $this->paymentMethodBase('VISA');
+        return $this->multisafepay_version_control->getViewAccordingWithOcVersion($this->route . $this->view_extension_file, $data);
+    }
+
+    /**
+     * Handles the confirm order form for Zinia payment method
+     */
+    public function zinia() {
+        $data = $this->paymentMethodBase('ZINIA');
         return $this->multisafepay_version_control->getViewAccordingWithOcVersion($this->route . $this->view_extension_file, $data);
     }
 
