@@ -12,6 +12,7 @@
     {% endif %}
     {% if fields.payment_component_enabled %}
         <input type="hidden" name="payload" value="" />
+        <input type="hidden" name="tokenize" value="" />
     {% endif %}
     {% if issuers %}
         <fieldset>
@@ -186,6 +187,9 @@
                     env: '{{ env }}',
                     {% endif %}
                     apiToken: '{{ apiToken }}',
+                    {% if recurring is defined %}
+                    recurring: {{ recurring }},
+                    {% endif %}
                     orderData: {{ order_data }}
                 };
                 var multisafepay_payment_component = new MultiSafepayPaymentComponent(config, '{{ gateway }}');

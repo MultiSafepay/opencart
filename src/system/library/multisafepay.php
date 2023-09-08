@@ -7,7 +7,7 @@ class Multisafepay {
     public const OC_VERSION = VERSION;
     public const CONFIGURABLE_PAYMENT_COMPONENT = array('AMEX', 'CREDITCARD', 'MAESTRO', 'MASTERCARD', 'VISA', 'BNPL_INSTM', 'ZINIA');
     public const CONFIGURABLE_TOKENIZATION = array('AMEX', 'CREDITCARD', 'MAESTRO', 'MASTERCARD', 'VISA');
-    public const CONFIGURABLE_RECURRING_PAYMENT_METHODS = array('AMEX', 'MAESTRO', 'MASTERCARD', 'VISA');
+    public const CONFIGURABLE_RECURRING_PAYMENT_METHODS = array('AMEX', 'CREDITCARD', 'MAESTRO', 'MASTERCARD', 'VISA');
     public const CONFIGURABLE_TYPE_SEARCH = array('AFTERPAY', 'DIRDEB', 'EINVOICE', 'IN3', 'IDEAL', 'MYBANK', 'PAYAFTER', 'SANTANDER');
     public const CONFIGURABLE_GATEWAYS_WITH_ISSUERS = array('IDEAL', 'MYBANK');
 
@@ -276,9 +276,20 @@ class Multisafepay {
             $multisafepay_order->addGatewayInfo($gateway_info);
         }
 
+        // Initialize the variable to add the customer reference to the customer object
+        $add_reference = false;
+
         // If order goes through Payment Component
         if (isset($data['payload']) && $data['payload'] !== '') {
             $multisafepay_order->addData(array('payment_data' => array('payload' => $data['payload'])));
+            if ($this->config->get($this->key_prefix . 'multisafepay_' . strtolower($data['gateway']) . '_tokenization')) {
+                $multisafepay_order->addRecurringModel('cardOnFile');
+            }
+
+            // Tokenize is true, so customer reference is added to the customer object
+            if (isset($data['tokenize']) && filter_var($data['tokenize'], FILTER_VALIDATE_BOOLEAN)) {
+                $add_reference = true;
+            }
         }
 
         // Order Request: Plugin details
@@ -309,12 +320,12 @@ class Multisafepay {
         }
 
         // Order Request: Customer
-        $customer_payment = $this->getCustomerObject($data['order_id'], 'payment');
+        $customer_payment = $this->getCustomerObject($data['order_id'], $add_reference, 'payment');
         $multisafepay_order->addCustomer($customer_payment);
 
         // Order Request: Customer Delivery. Only if the order requires delivery.
         if ($order_info['shipping_method'] != '') {
-            $customer_shipping = $this->getCustomerObject($data['order_id'], 'shipping');
+            $customer_shipping = $this->getCustomerObject($data['order_id'], $add_reference, 'shipping');
             $multisafepay_order->addDelivery($customer_shipping);
         }
 
@@ -461,6 +472,29 @@ class Multisafepay {
     }
 
     /**
+     * Return an array of tokens by gateway code
+     *
+     * @param int $customer_reference
+     * @param string $gateway_code
+     *
+     * @return array
+     * @throws \Psr\Http\Client\ClientExceptionInterface
+     */
+    public function getTokensByGatewayCode($customer_reference, $gateway_code) {
+        $sdk = $this->getSdkObject($this->config->get('config_store_id'));
+        try {
+            $token_manager = $sdk->getTokenManager();
+            $tokens = $token_manager->getListByGatewayCodeAsArray($customer_reference, $gateway_code, true);
+        } catch (\MultiSafepay\Exception\ApiException $apiException) {
+            if ($this->config->get($this->key_prefix . 'multisafepay_debug_mode')) {
+                $this->log->write($apiException->getMessage());
+            }
+            return array();
+        }
+        return $tokens;
+    }
+
+    /**
      * Return Gateway object by code
      *
      * @param string $gateway_code
@@ -490,18 +524,19 @@ class Multisafepay {
      * in addCustomer and addDelivery methods.
      *
      * @param array $order_info Order information.
-     * @param string $type Used to build the object with the order`s shipping or payment information.
+     * @param boolean $add_reference
+     * @param string $type Used to build the object with the order's shipping or payment information.
      * @return CustomerDetails object
      *
      */
-    public function getCustomerObject($order_id, $type = 'payment') {
+    public function getCustomerObject($order_id, $add_reference, $type = 'payment') {
 	    $order_info   = $this->getOrderInfo( $order_id );
 	    $customer_obj = new \MultiSafepay\Api\Transactions\OrderRequest\Arguments\CustomerDetails();
 	    $customer_obj->addIpAddressAsString( $order_info['ip'] );
 	    if ( $order_info['forwarded_ip'] ) {
 		    $customer_obj->addForwardedIpAsString( $order_info['forwarded_ip'] );
 	    }
-        if(isset($order_info[ $type . '_company']) && !empty($order_info[ $type . '_company'])) {
+        if (isset($order_info[ $type . '_company']) && !empty($order_info[ $type . '_company'])) {
 	        $customer_obj->addCompanyName($order_info[ $type . '_company']);
         }
         $customer_obj->addUserAgent($order_info['user_agent']);
@@ -510,6 +545,9 @@ class Multisafepay {
         $customer_obj->addEmailAddressAsString($order_info['email']);
         $customer_obj->addFirstName($order_info[$type . '_firstname']);
         $customer_obj->addLastName($order_info[$type . '_lastname']);
+        if ($add_reference) {
+            $customer_obj->addReference($order_info['customer_id']);
+        }
 
         $customer_address_parser_obj = new \MultiSafepay\ValueObject\Customer\AddressParser();
         $parsed_address = $customer_address_parser_obj->parse($order_info[$type . '_address_1'], $order_info[$type . '_address_2']);

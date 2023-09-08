@@ -11,7 +11,8 @@
         <input type="hidden" name="gateway_info" value="<?php echo $gateway_info; ?>" />
     <?php } ?>
     <?php if(!empty($fields['payment_component_enabled'])) { ?>
-    <input type="hidden" name="payload" value="" />
+        <input type="hidden" name="payload" value="" />
+        <input type="hidden" name="tokenize" value="" />
     <?php } ?>
     <?php if($issuers) { ?>
         <fieldset>
@@ -254,6 +255,9 @@
                 env: '<?php echo $env; ?>',
             <?php } ?>
                 apiToken: '<?php echo $apiToken; ?>',
+            <?php if(isset($recurring)) { ?>
+                recurring: '<?php echo $recurring; ?>',
+            <?php } ?>
                 orderData: <?php echo $order_data; ?>
             };
             var multisafepay_payment_component = new MultiSafepayPaymentComponent(config, '<?php echo $gateway; ?>');
