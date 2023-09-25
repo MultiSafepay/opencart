@@ -97,3 +97,4 @@ $_['text_error_empty_account_holder_iban']       = 'L\'IBAN è obbligatorio';
 $_['text_error_empty_account_holder_name']       = 'Il titolare è obbligatorio';
 $_['text_error_not_valid_iban']                  = 'L\'IBAN non è corretto';
 $_['text_error_empty_afterpay_terms']            = 'I termini di pagamento Riverty devono essere accettati';
+$_['text_error_unavailable_api']                 = 'C\'è stato un problema nell\'elaborazione del tuo pagamento. Per favore, riprova più tardi o contattaci';

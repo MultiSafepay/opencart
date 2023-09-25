@@ -240,6 +240,24 @@ class Multisafepay {
     }
 
     /**
+     * Checks if MultiSafepay is active through the API
+     *
+     * @return array
+     */
+    public function getApiStatus(): array
+    {
+        $sdk = $this->getSdkObject($this->config->get('config_store_id'));
+        $gateways = $sdk->getGatewayManager();
+
+        try {
+            return $gateways->getGateways();
+        } catch ( \Psr\Http\Client\ClientExceptionInterface | \MultiSafepay\Exception\ApiException $exception ) {
+            $this->log->write($exception->getMessage());
+            return array();
+        }
+    }
+
+    /**
      * Return Order Request Object
      *
      * @param int $order_id
@@ -388,7 +406,7 @@ class Multisafepay {
      *
      * @param RefundRequest $multisafepay_order
      * @return RefundRequest object
-     * @throws ApiException
+     * @throws \MultiSafepay\Exception\ApiException
      *
      */
     public function processRefundRequestObject($multisafepay_order, $refund_request) {
@@ -417,7 +435,7 @@ class Multisafepay {
      *
      * @param RefundRequest $multisafepay_order
      * @return RefundRequest object
-     * @throws ApiException
+     * @throws \MultiSafepay\Exception\ApiException
      *
      */
     public function createRefundRequestObject($multisafepay_order) {
@@ -445,8 +463,8 @@ class Multisafepay {
      * Return Issuers by gateway code
      *
      * @param string $gateway_code
-     * @return array Issuers
      *
+     * @return bool|array Issuers
      */
     public function getIssuersByGatewayCode($gateway_code) {
         $sdk = $this->getSdkObject($this->config->get('config_store_id'));
@@ -454,9 +472,9 @@ class Multisafepay {
             $issuer_manager = $sdk->getIssuerManager();
             $issuers = $issuer_manager->getIssuersByGatewayCode($gateway_code);
         }
-        catch (InvalidArgumentException $invalidArgumentException ) {
+        catch (\MultiSafepay\Exception\ApiException | \MultiSafepay\Exception\InvalidApiKeyException | \Psr\Http\Client\ClientExceptionInterface $exception) {
             if ($this->config->get($this->key_prefix . 'multisafepay_debug_mode')) {
-                $this->log->write($invalidArgumentException->getMessage());
+                $this->log->write($exception->getMessage());
             }
             return false;
         }
@@ -2650,23 +2668,19 @@ class Multisafepay {
 
     /**
      * @return false|\MultiSafepay\Api\ApiTokenManager
-     *
-     * @throws \Psr\Http\Client\ClientExceptionInterface
      */
     public function getUserApiTokenManager() {
         $sdk = $this->getSdkObject($this->config->get('config_store_id'));
         try {
             return $sdk->getApiTokenManager();
-        } catch (ClientExceptionInterface $client_exception) {
-            $this->log->write($client_exception->getMessage());
+        } catch (\Psr\Http\Client\ClientExceptionInterface | \MultiSafepay\Exception\ApiException $exception) {
+            $this->log->write($exception->getMessage());
         }
         return false;
     }
 
     /**
      * @return string
-     *
-     * @throws \Psr\Http\Client\ClientExceptionInterface
      * phpcs:disable ObjectCalisthenics.CodeAnalysis.OneObjectOperatorPerLine
      */
     public function getUserApiToken() {
@@ -2675,8 +2689,8 @@ class Multisafepay {
         if ($api_token_manager !== false) {
             try {
                 $token = $api_token_manager->get()->getApiToken();
-            } catch (ClientExceptionInterface $client_exception) {
-                $this->log->write($client_exception->getMessage());
+            } catch (\MultiSafepay\Exception\ApiException | \Psr\Http\Client\ClientExceptionInterface $exception) {
+                $this->log->write($exception->getMessage());
             }
         }
         return $token;

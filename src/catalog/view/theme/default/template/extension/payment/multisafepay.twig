@@ -1,6 +1,21 @@
 {% if test_mode %}
     <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ text_testmode }}</div>
 {% endif %}
+{% if unavailable_api %}
+    <script type="text/javascript"><!--
+        $(document).ready(function() {
+            $('#multisafepay-form').one('click', '#button-confirm', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                $('#multisafepay-form').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i>&nbsp;&nbsp;{{ text_error_unavailable_api }}</div>');
+                $(this).prop('disabled', true);
+            });
+        });
+        //--></script>
+    {% set gateway = '' %}
+    {% set fields = [] %}
+    {% set issuers = [] %}
+{% endif %}
 <form action="{{ action }}" method="post" class="form-horizontal" id="multisafepay-form">
     <input type="hidden" name="order_id" value="{{ order_id }}" />
     <input type="hidden" name="type" value="{{ type }}" />

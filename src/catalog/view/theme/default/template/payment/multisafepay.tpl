@@ -1,6 +1,22 @@
 <?php if($test_mode) { ?>
     <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> <?php echo $text_testmode; ?></div>
 <?php } ?>
+<?php if($unavailable_api) { ?>
+<script type="text/javascript"><!--
+    $(document).ready(function() {
+        $('#multisafepay-form').one('click', '#button-confirm', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            $('#multisafepay-form').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i>&nbsp;&nbsp;<?php echo $text_error_unavailable_api; ?></div>');
+            $(this).prop('disabled', true);
+        });
+    });
+    //--></script>
+<?php
+    $gateway = '';
+    $fields = array();
+    $issuers = array();
+} ?>
 <form action="<?php echo $action; ?>" method="post" class="form-horizontal" id="multisafepay-form">
     <input type="hidden" name="order_id" value="<?php echo $order_id; ?>" />
     <input type="hidden" name="type" value="<?php echo $type; ?>" />

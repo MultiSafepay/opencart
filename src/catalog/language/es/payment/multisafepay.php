@@ -96,3 +96,4 @@ $_['text_error_empty_account_holder_iban']       = 'IBAN es un campo obligatorio
 $_['text_error_empty_account_holder_name']       = 'Títular de la cuenta es un campo obligatorio';
 $_['text_error_not_valid_iban']                  = 'IBAN no parece ser valido';
 $_['text_error_empty_afterpay_terms']            = 'Se deben aceptar las condiciones de pago de Riverty';
+$_['text_error_unavailable_api']                 = 'Hubo un problema procesando su pago. Por favor, inténtelo de nuevo o contacte con nosotros';

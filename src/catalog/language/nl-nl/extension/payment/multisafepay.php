@@ -96,3 +96,4 @@ $_['text_error_empty_account_holder_iban']       = 'IBAN is een verplicht veld';
 $_['text_error_empty_account_holder_name']       = 'Rekeninghouder is een verplicht veld';
 $_['text_error_not_valid_iban']                  = 'IBAN lijkt niet geldig';
 $_['text_error_empty_afterpay_terms']            = 'De betalingsvoorwaarden van Afterpay - Riverty moeten worden geaccepteerd';
+$_['text_error_unavailable_api']                 = 'Er was een probleem met het verwerken van uw betaling. Probeer het later opnieuw of neem contact met ons op';
