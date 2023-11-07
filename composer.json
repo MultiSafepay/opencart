@@ -18,12 +18,6 @@
     "fzaninotto/faker": "^1.9",
     "phpro/grumphp": "^0.19.1"
   },
-  "authors": [{
-    "name": "MultiSafepay",
-    "email": "integration@multisafepay.com",
-    "homepage": "https://www.multisafepay.com",
-    "role": "Developer"
-  }],
   "autoload": {
     "psr-4": {
       "MultiSafepay\\": "src/"
