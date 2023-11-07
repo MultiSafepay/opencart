@@ -8,6 +8,7 @@ $_['text_fixed_product_name']			         = 'Vaste belasting: %s';
 $_['text_coupons_name']					         = 'Kortingscoupon: %s';
 $_['text_coupon_applied']				         = 'Toegepaste coupon: %s';
 $_['text_coupon_applied_to_shipping']	         = '%s - Toegepaste coupon: %s';
+$_['text_price_before_coupon']                   = 'Prijs voor coupon';
 $_['text_reward_applied']	                     = ' - Toegepaste korting: %s met gebruikmaking van %s';
 $_['text_mr']	                                 = 'De heer';
 $_['text_mrs']	                                 = 'Mevrouw';

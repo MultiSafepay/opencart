@@ -8,6 +8,7 @@ $_['text_fixed_product_name']			         = 'Impuesto Fijo: %s';
 $_['text_coupons_name']					         = 'Cupón de descuento: %s';
 $_['text_coupon_applied']				         = 'Cupón de descuento aplicado: %s';
 $_['text_coupon_applied_to_shipping']	         = '%s - Cupón aplicado: %s';
+$_['text_price_before_coupon']                   = 'Precio antes del cupón';
 $_['text_reward_applied']	                     = ' - Descuento aplicado: %s usando %s';
 $_['text_mr']	                                 = 'Señor';
 $_['text_mrs']	                                 = 'Señora';

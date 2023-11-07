@@ -8,6 +8,7 @@ $_['text_fixed_product_name']			         = 'Feste Steuer: %s';
 $_['text_coupons_name']					         = 'Skonto-Coupon: %s';
 $_['text_coupon_applied']				         = 'Coupon angewendet: %s';
 $_['text_coupon_applied_to_shipping']	         = '%- Coupon angewendet: %s';
+$_['text_price_before_coupon']                   = 'Preis vor coupon';
 $_['text_reward_applied']	                     = ' - Skonto angewendet: %s verwendet %s';
 $_['text_mr']	                                 = 'Herr';
 $_['text_mrs']	                                 = 'Frau';
