@@ -527,7 +527,8 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
             $this->key_prefix . 'multisafepay_order_status_id_partial_refunded',
             $this->key_prefix . 'multisafepay_order_status_id_cancelled',
             $this->key_prefix . 'multisafepay_order_status_id_initialize_payment_request',
-            $this->key_prefix . 'multisafepay_custom_order_total_keys'
+            $this->key_prefix . 'multisafepay_custom_order_total_keys',
+            $this->key_prefix . 'multisafepay_payment_component_template_id'
         );
     }
 

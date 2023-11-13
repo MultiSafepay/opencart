@@ -215,6 +215,14 @@
                                     <input type="text" name="multisafepay_custom_order_total_keys" value="<?php echo $multisafepay_custom_order_total_keys; ?>" id="payment-multisafepay-custom-order-totals-keys" placeholder="<?php echo $entry_custom_order_total_keys; ?>" class="form-control" />
                                 </div>
                             </div>
+                            <?php // Set Payment Component Template ID ?>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" for="payment-multisafepay-payment-component-template-id"><?php echo $entry_payment_component_template_id ?></label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="multisafepay_payment_component_template_id" value="<?php echo $multisafepay_payment_component_template_id ?>" id="payment-multisafepay-payment-component-template-id" placeholder="<?php echo $entry_payment_component_template_id ?>" class="form-control" />
+                                    <p class="help-block"><?php echo $text_help_payment_component_template_id ?></p>
+                                </div>
+                            </div>
                         </div>
                         <?php // Tab Order Status ?>
                         <div class="tab-pane" id="tab-status">

@@ -71,6 +71,12 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
             )
         );
 
+        // Payment Component Template ID.
+        $template_id = $this->config->get($this->key_prefix . 'multisafepay_payment_component_template_id') ?? '';
+        if (!empty($template_id)) {
+            $order_template['payment_options']['template_id'] = $template_id;
+        }
+
         // Recurring model is just working when payment components and tokenization are enabled at the same time, and for some specific credit cards
         if ($data['fields']['tokenization'] && $this->customer->isLogged() && in_array($data['gateway'], $this->multisafepay->configurable_recurring_payment_methods)) {
             $recurring['model'] = 'cardOnFile';
