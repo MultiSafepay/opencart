@@ -401,8 +401,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
 	    if($data['type'] === 'direct') {
 		    $data['gateway_info'] = 'Meta';
 		    $data['fields'] = array(
-			    'gender' => true,
-			    'birthday' => true
+			    'gender' => true
 		    );
 	    }
         return $this->multisafepay_version_control->getViewAccordingWithOcVersion($this->route . $this->view_extension_file, $data);
@@ -701,7 +700,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
 
         $json = array();
 
-        if ( (isset($this->request->post['gender'])) && $this->request->post['gender'] == '') {
+        if ((isset($this->request->post['gender'])) && $this->request->post['gender'] == '') {
             $json['error']['gender'] = $this->language->get('text_error_empty_gender');
         }
 
