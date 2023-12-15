@@ -61,7 +61,6 @@ $_['text_title_pay_after_delivery']              = 'Pay After Delivery';
 $_['text_title_pay_after_delivery_installments'] = 'Pay After Delivery Installments';
 $_['text_title_paypal']                          = 'PayPal';
 $_['text_title_paysafecard']                     = 'Paysafecard';
-$_['text_title_santander_betaalplan']            = 'Santander Consumer Finance | Pay per month';
 $_['text_title_sepa_direct_debit']               = 'SEPA Direct Debit';
 $_['text_title_trustly']                         = 'Trustly';
 $_['text_title_visa']                            = 'Visa';

@@ -262,20 +262,6 @@ class CatalogControllerExtensionPaymentMultiSafePayTest extends MultisafepayTest
         $this->assertRegExp("/PSAFECARD/", $multisafepay_response->getOutput());
     }
 
-    public function testFormPaymentMethodBetaalplan() {
-        $this->buildSessionPaymentData('multisafepay/betaalplan', 'Santander Betaalplan');
-        $this->cart->add(28, 1);
-        $multisafepay_response = $this->dispatchAction('checkout/confirm');
-        $this->assertRegExp("/order_id/", $multisafepay_response->getOutput());
-        $this->assertRegExp("/direct/", $multisafepay_response->getOutput());
-        $this->assertRegExp("/gateway_info/", $multisafepay_response->getOutput());
-        $this->assertRegExp("/Meta/", $multisafepay_response->getOutput());
-        $this->assertRegExp("/birthday/", $multisafepay_response->getOutput());
-        $this->assertRegExp("/gender/", $multisafepay_response->getOutput());
-        $this->assertRegExp("/bankaccount/", $multisafepay_response->getOutput());
-        $this->assertRegExp("/SANTANDER/", $multisafepay_response->getOutput());
-    }
-
     public function testFormPaymentMethodSepaDirDeb() {
         $this->buildSessionPaymentData('multisafepay/dirDeb', 'SEPA Direct Debit');
         $this->cart->add(28, 1);

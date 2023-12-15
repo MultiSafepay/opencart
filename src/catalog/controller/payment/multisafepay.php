@@ -572,22 +572,6 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
     }
 
     /**
-     * Handles the confirm order form for betaalplan payment method
-     */
-    public function betaalplan() {
-        $data = $this->paymentMethodBase('SANTANDER');
-	    if($data['type'] === 'direct') {
-		    $data['gateway_info'] = 'Meta';
-		    $data['fields'] = array(
-			    'sex' => true,
-			    'birthday' => true,
-			    'bankaccount' => true
-		    );
-	    }
-        return $this->multisafepay_version_control->getViewAccordingWithOcVersion($this->route . $this->view_extension_file, $data);
-    }
-
-    /**
      * Handles the confirm order form for SEPA Direct Debt payment method
      */
     public function dirDeb() {
