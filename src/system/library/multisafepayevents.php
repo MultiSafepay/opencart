@@ -2,6 +2,14 @@
 
 class Multisafepayevents {
 
+    public $registry;
+    public $route;
+    public $oc_version;
+    public $key_prefix;
+    public $model_call;
+    public $non_standart_model_call;
+    public $extension_directory_route;
+
     public function __construct($registry) {
         $this->registry = $registry;
         $this->registry->set('multisafepay_version_control', new Multisafepayversioncontrol($registry));

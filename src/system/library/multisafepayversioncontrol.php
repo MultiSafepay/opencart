@@ -2,13 +2,20 @@
 
 class Multisafepayversioncontrol {
 
+    public $registry;
+    public $oc_version;
+    public $extension_type;
+    public $extension_key;
+    public $lowest_version_supported;
+    public $higher_version_supported;
+
     public function __construct($registry) {
         $this->registry = $registry;
         $this->oc_version = VERSION;
         $this->extension_type = 'payment';
         $this->extension_key  = 'multisafepay';
         $this->lowest_version_supported = '2.0.0.0';
-        $this->higher_version_supported = '3.0.3.8';
+        $this->higher_version_supported = '3.0.3.9';
     }
 
     /**

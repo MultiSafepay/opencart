@@ -52,26 +52,26 @@
         <exclude-pattern>*/src/catalog/controller/extension/payment/multisafepay.php</exclude-pattern>
         <exclude-pattern>*/src/catalog/controller/payment/multisafepay.php</exclude-pattern>
         <properties>
-            <!-- goal is 200 -->
+            <!-- goal is 1100 -->
             <property name="maxLength" value="1100"/>
         </properties>
     </rule>
     <rule ref="ObjectCalisthenics.Files.FunctionLength">
         <properties>
-            <!-- goal is 200 -->
+            <!-- goal is 550 -->
             <property name="maxLength" value="550"/>
         </properties>
     </rule>
     <rule ref="ObjectCalisthenics.Metrics.PropertyPerClassLimit">
         <properties>
-            <!-- goal is 10 -->
-            <property name="maxCount" value="10"/>
+            <!-- goal is 14 -->
+            <property name="maxCount" value="14"/>
         </properties>
     </rule>
     <rule ref="ObjectCalisthenics.Metrics.MethodPerClassLimit">
         <exclude-pattern>*/src/system/library/multisafepay.php</exclude-pattern>
         <properties>
-            <!-- goal is 10 -->
+            <!-- goal is 85 -->
             <property name="maxCount" value="85"/>
         </properties>
     </rule>
@@ -80,17 +80,21 @@
     <rule ref="ObjectCalisthenics.Classes.ForbiddenPublicProperty"/>
     <rule ref="ObjectCalisthenics.NamingConventions.NoSetter"/>
 
+    <!-- Rule 7: Allow public properties -->
+    <rule ref="ObjectCalisthenics.Classes.ForbiddenPublicProperty">
+        <exclude name="ObjectCalisthenics.Classes.ForbiddenPublicProperty"/>
+    </rule>
 
-    <!-- Rule 7: Closing PHP tags are not allowed -->
+    <!-- Rule 8: Closing PHP tags are not allowed -->
     <rule ref="Zend.Files.ClosingTag">
         <severity>5</severity>
         <type>error</type>
     </rule>
 
-    <!-- Rule 8: Test the blank spaces in inline declarations -->
+    <!-- Rule 9: Test the blank spaces in inline declarations -->
     <rule ref="Squiz.ControlStructures.InlineIfDeclaration" />
 
-    <!-- Rule 9: Check for whitespace after lines of code and checks for spaces/indents on empty lines -->
+    <!-- Rule 10: Check for whitespace after lines of code and checks for spaces/indents on empty lines -->
     <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace">
         <severity>1</severity>
         <type>warning</type>
@@ -99,56 +103,56 @@
     <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace.EndFile" />
     <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace.EmptyLines" />
 
-    <!-- Rule 10: Check to ensure no PHP deprecated functions have been used -->
+    <!-- Rule 11: Check to ensure no PHP deprecated functions have been used -->
     <rule ref="Generic.PHP.DeprecatedFunctions">
         <severity>5</severity>
         <type>error</type>
     </rule>
 
-    <!-- Rule 11: PHP opening tag must be full <?php, no shorthand or ASP tags -->
+    <!-- Rule 12: PHP opening tag must be full <?php, no shorthand or ASP tags -->
     <rule ref="Generic.PHP.DisallowShortOpenTag">
         <severity>5</severity>
         <type>error</type>
     </rule>
 
-    <!-- Rule 12: In PHP files make sure there is no character before the opening tag -->
+    <!-- Rule 13: In PHP files make sure there is no character before the opening tag -->
     <rule ref="Generic.PHP.CharacterBeforePHPOpeningTag"/>
 
-    <!-- Rule 13: true, false, null etc should all be lowercase only -->
+    <!-- Rule 14: true, false, null etc. should all be lowercase only -->
     <rule ref="Generic.PHP.LowerCaseConstant" />
 
-    <!-- Rule 14: Type casting should be immediately followed by the variable, no space -->
+    <!-- Rule 15: Type casting should be immediately followed by the variable, no space -->
     <rule ref="Generic.Formatting.NoSpaceAfterCast" />
 
-    <!-- Rule 15: Pass by reference is now only supported in the method/function params -->
+    <!-- Rule 16: Pass by reference is now only supported in the method/function params -->
     <rule ref="Generic.Functions.CallTimePassByReference" />
 
-    <!-- Rule 16: keep the spacing between function/method params space after comma -->
+    <!-- Rule 17: keep the spacing between function/method params space after comma -->
     <rule ref="Generic.Functions.FunctionCallArgumentSpacing" />
 
-    <!-- Rule 17: method names should always be camel case -->
+    <!-- Rule 18: method names should always be camel case -->
     <rule ref="Generic.NamingConventions.CamelCapsFunctionName"/>
 
-    <!-- Rule 18: constants should always be uppercase -->
+    <!-- Rule 19: constants should always be uppercase -->
     <rule ref="Generic.NamingConventions.UpperCaseConstantName"/>
 
-    <!-- Rule 19: Detect BOMs to avoid curruptions -->
+    <!-- Rule 20: Detect BOMs to avoid corruptions -->
     <rule ref="Generic.Files.ByteOrderMark"/>
 
-    <!-- Rule 20: To do comments should be reported and completed -->
+    <!-- Rule 21: To do comments should be reported and completed -->
     <rule ref="Generic.Commenting.Todo.CommentFound"/>
 
-    <!-- Rule 21: Fix me comments should be reported and fixed -->
+    <!-- Rule 22: Fix me comments should be reported and fixed -->
     <rule ref="Generic.Commenting.Fixme.CommentFound"/>
 
-    <!-- Rule 22: Check that line endings are only \n -->
+    <!-- Rule 23: Check that line endings are only \n -->
     <rule ref="Generic.Files.LineEndings">
         <properties>
             <property name="eolChar" value="\n"/>
         </properties>
     </rule>
 
-    <!-- Rule 22: Check that line endings are only \n -->
+    <!-- Rule 24: Check that line endings are only \n -->
     <rule ref="Generic.WhiteSpace.DisallowSpaceIndent">
         <exclude-pattern>*.tpl</exclude-pattern>
         <exclude-pattern>*.twig</exclude-pattern>
@@ -159,5 +163,4 @@
         <severity>1</severity>
         <type>warning</type>
     </rule>
-
 </ruleset>

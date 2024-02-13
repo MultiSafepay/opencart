@@ -23,10 +23,10 @@ cd "MULTISAFEPAY-OPENCART-EXTENSION"
 git clone git@github.com:MultiSafepay/Opencart.git ./
 ```
 
-* Change directory to "MULTISAFEPAY-OPENCART-EXTENSION" and execute composer install to get all dependencies in place:
+* Change directory to "MULTISAFEPAY-OPENCART-EXTENSION" and execute composer install passing as argument the major version of the PHP to get all dependencies in place:
 ```
 cd "MULTISAFEPAY-OPENCART-EXTENSION"
-composer install
+bash bin/composer-install.sh 8
 ```
 
 * Set hardlinks inside the local environment to avoid the necessity of edit duplicate files. 
