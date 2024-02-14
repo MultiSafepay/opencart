@@ -11,20 +11,20 @@ class Multisafepay {
     public const CONFIGURABLE_TYPE_SEARCH = array('AFTERPAY', 'DIRDEB', 'EINVOICE', 'IN3', 'IDEAL', 'MYBANK', 'PAYAFTER');
     public const CONFIGURABLE_GATEWAYS_WITH_ISSUERS = array('IDEAL', 'MYBANK');
 
-    public $registry;
+    private $registry;
     public $route;
     public $oc_version;
     public $key_prefix;
     public $shipping_key_prefix;
     public $model_call;
     public $non_standart_model_call;
-    public $total_extension_key_prefix;
+    private $total_extension_key_prefix;
     public $extension_directory_route;
     public $configurable_payment_component;
     public $configurable_tokenization;
     public $configurable_type_search;
     public $configurable_recurring_payment_methods;
-    public $configurable_gateways_with_issuers;
+    private $configurable_gateways_with_issuers;
 
     public function __construct($registry) {
         $this->registry = $registry;

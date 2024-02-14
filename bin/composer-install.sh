@@ -40,7 +40,7 @@ get_php_version() {
                 printf "%2sError: PHP_VERSION format is empty or not valid.\n" ""
                 printf "%5sPlease enter (without quotes) the major PHP version manually:  '7' or '8' or 'exit' to quit:\n" ""
                 echo
-                printf "%5sYour choice is: "
+                printf "%5sYour choice is: " ""
                 read -r USER_INPUT
                 if [[ $USER_INPUT == 7 || $USER_INPUT == 8 ]]; then
                     PHP_VERSION=$USER_INPUT
@@ -74,7 +74,7 @@ handle_php_version_arg() {
             printf "%5s3 Use composer.json taking the PHP version $( $IS_USER_DEFINED && echo "from the previous user input" || echo "from your shell" )\n" ""
             printf "%5s4 Exit the script\n" ""
             echo
-            printf "%5sYour choice is: "
+            printf "%5sYour choice is: " ""
             read -r USER_CHOICE
             echo ""
 
@@ -133,12 +133,12 @@ handle_composer() {
         # Run Composer install if composer.lock was successfully removed
         printf "%5s- Running composer install $COMPOSER_DEV_ARG ...\n" ""
         echo
-        cd "$DIR/.." && composer install $COMPOSER_DEV_ARG
+        cd "$DIR/.." && composer install "$COMPOSER_DEV_ARG"
     else
         # Run Composer update if composer.lock was not successfully removed
         printf "%5s- Running composer update $COMPOSER_DEV_ARG ...\n" ""
         echo
-        cd "$DIR/.." && composer update $COMPOSER_DEV_ARG
+        cd "$DIR/.." && composer update "$COMPOSER_DEV_ARG"
     fi
 }
 

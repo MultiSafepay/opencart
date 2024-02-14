@@ -2,13 +2,13 @@
 
 class Multisafepayevents {
 
-    public $registry;
-    public $route;
-    public $oc_version;
-    public $key_prefix;
-    public $model_call;
-    public $non_standart_model_call;
-    public $extension_directory_route;
+    private $registry;
+    private $route;
+    private $oc_version;
+    private $key_prefix;
+    private $model_call;
+    private $non_standart_model_call;
+    private $extension_directory_route;
 
     public function __construct($registry) {
         $this->registry = $registry;
