@@ -133,12 +133,12 @@ handle_composer() {
         # Run Composer install if composer.lock was successfully removed
         printf "%5s- Running composer install $COMPOSER_DEV_ARG ...\n" ""
         echo
-        cd "$DIR/.." && composer install "$COMPOSER_DEV_ARG"
+        cd "$DIR/.." && composer install $COMPOSER_DEV_ARG
     else
         # Run Composer update if composer.lock was not successfully removed
         printf "%5s- Running composer update $COMPOSER_DEV_ARG ...\n" ""
         echo
-        cd "$DIR/.." && composer update "$COMPOSER_DEV_ARG"
+        cd "$DIR/.." && composer update $COMPOSER_DEV_ARG
     fi
 }
 
