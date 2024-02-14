@@ -2310,6 +2310,24 @@ class Multisafepay {
                 'image' => 'mastercard'
             ),
             array(
+                'id' => 'MBWAY',
+                'code' => 'mbway',
+                'route' => 'multisafepay/mbway',
+                'description' => $this->language->get('text_title_mbway'),
+                'type' => 'gateway',
+                'brief_description' => $this->language->get('text_brief_description_mbway'),
+                'image' => 'mbway'
+            ),
+            array(
+                'id' => 'MULTIBANCO',
+                'code' => 'multibanco',
+                'route' => 'multisafepay/multibanco',
+                'description' => $this->language->get('text_title_multibanco'),
+                'type' => 'gateway',
+                'brief_description' => $this->language->get('text_brief_description_multibanco'),
+                'image' => 'multibanco'
+            ),
+            array(
                 'id' => 'MYBANK',
                 'code' => 'mybank',
                 'route' => 'multisafepay/mybank',

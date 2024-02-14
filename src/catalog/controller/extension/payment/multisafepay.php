@@ -490,6 +490,28 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
     }
 
     /**
+     * Handles the confirmation order form for MB WAY payment method
+     *
+     * @return string
+     */
+    public function mbway(): string
+    {
+        $data = $this->paymentMethodBase('MBWAY');
+        return $this->multisafepay_version_control->getViewAccordingWithOcVersion($this->route . $this->view_extension_file, $data);
+    }
+
+    /**
+     * Handles the confirm order form for Multibanco payment method
+     *
+     * @return string
+     */
+    public function multibanco(): string
+    {
+        $data = $this->paymentMethodBase('MULTIBANCO');
+        return $this->multisafepay_version_control->getViewAccordingWithOcVersion($this->route . $this->view_extension_file, $data);
+    }
+
+    /**
      * Handles the confirm order form for Mybank payment method
      */
     public function mybank() {
