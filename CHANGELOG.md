@@ -6,6 +6,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ***
 
+## 3.20.0
+Release date: February, 15th 2024
+
+### Added
++ DAVAMS-682: Add support for MB WAY payment method
++ DAVAMS-683: Add support for Multibanco payment method
++ PLGOPNS-541: Add support for PHP 8 in OpenCart 3.0.3.9
++ DAVAMS-530: Add support for Template ID in the Payment Component
++ PLGOPNS-526: Add missing text string for "text_price_before_coupon"
+
+### Changed
++ DAVAMS-664: Rebrand payment method name and description and remove birthday checkout field within in3 payment method
+
+### Removed
++ DAVAMS-710: Remove Santander Betaal per Maand
++ PLGOPNS-533: Remove authors from composer.json
+
+***
+
 ## 3.19.0
 Release date: September, 26th 2023
 
