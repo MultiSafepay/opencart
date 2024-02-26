@@ -5,7 +5,7 @@ class Multisafepay {
     public const FIXED_TYPE = 'F';
     public const PERCENTAGE_TYPE = 'P';
     public const OC_VERSION = VERSION;
-    public const CONFIGURABLE_PAYMENT_COMPONENT = array('AMEX', 'CREDITCARD', 'MAESTRO', 'MASTERCARD', 'VISA', 'BNPL_INSTM', 'ZINIA');
+    public const CONFIGURABLE_PAYMENT_COMPONENT = array('AMEX', 'CREDITCARD', 'MAESTRO', 'MASTERCARD', 'VISA', 'BNPL_INSTM', 'BNPL_MF', 'ZINIA');
     public const CONFIGURABLE_TOKENIZATION = array('AMEX', 'CREDITCARD', 'MAESTRO', 'MASTERCARD', 'VISA');
     public const CONFIGURABLE_RECURRING_PAYMENT_METHODS = array('AMEX', 'CREDITCARD', 'MAESTRO', 'MASTERCARD', 'VISA');
     public const CONFIGURABLE_TYPE_SEARCH = array('AFTERPAY', 'DIRDEB', 'EINVOICE', 'IN3', 'IDEAL', 'MYBANK', 'PAYAFTER');
@@ -2371,6 +2371,15 @@ class Multisafepay {
                 'type' => 'gateway',
                 'brief_description' => $this->language->get('text_brief_description_payafter_installments'),
                 'image' => 'payafterinstallments'
+            ),
+            array(
+                'id' => 'BNPL_MF',
+                'code' => 'bnpl_mf',
+                'route' => 'multisafepay/payAfterDeliveryMf',
+                'description' => $this->language->get('text_title_pay_after_delivery_mf'),
+                'type' => 'gateway',
+                'brief_description' => $this->language->get('text_brief_description_payafter_mf'),
+                'image' => 'payaftermf'
             ),
             array(
                 'id' => 'PAYPAL',

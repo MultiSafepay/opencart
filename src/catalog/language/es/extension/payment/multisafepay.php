@@ -61,6 +61,7 @@ $_['text_title_mybank']                          = 'MyBank - Bonifico Immediato'
 $_['text_title_parfum_cadeaukaart']              = 'Parfum Cadeaukaart';
 $_['text_title_pay_after_delivery']              = 'Pay After Delivery';
 $_['text_title_pay_after_delivery_installments'] = 'Pay After Delivery installments';
+$_['text_title_pay_after_delivery_mf']           = 'Pay After Delivery';
 $_['text_title_paypal']                          = 'PayPal';
 $_['text_title_paysafecard']                     = 'Paysafecard';
 $_['text_title_sepa_direct_debit']               = 'Orden de domiciliación de adeudo directo SEPA';
