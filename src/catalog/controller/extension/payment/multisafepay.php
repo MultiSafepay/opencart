@@ -64,9 +64,12 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
                 'locale' => $data['locale'],
                 'country' => $data['country'],
             ),
-            'template' => array(
-                'settings' => array(
-                    'embed_mode' => true
+            'payment_options' => array(
+                'template' => array(
+                    'settings' => array(
+                        'embed_mode' => true
+                    ),
+                    'merge' => true,
                 )
             )
         );
