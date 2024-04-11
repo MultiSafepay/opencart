@@ -205,7 +205,7 @@ $_['text_title_fietsenbon']                             = 'Fietsenbon';
 $_['text_title_giva_card']                              = 'GivaCard';
 $_['text_title_good_card']                              = 'Good Card';
 $_['text_title_google_pay']                             = 'Google Pay';
-$_['text_title_in3']                                    = 'in3: Betaal in 3 delen (0% rente)';
+$_['text_title_in3']                                    = 'iDEAL+in3: Betaal in 3 delen (0% rente)';
 $_['text_title_nationale_tuinbon']                      = 'Nationale Tuinbon';
 $_['text_title_podium']                                 = 'Podium';
 $_['text_title_sport_fit']                              = 'Sport & Fit';
@@ -259,7 +259,7 @@ $_['text_help_drag_and_drop']                           = 'Ziehen Sie dieses Ele
 $_['text_help_generate_payment_links_status']           = 'Weitere Informationen zum Generieren einer Bestellung mit Zahlungslink finden Sie in unserer <a href="https://docs.multisafepay.com/docs/payment-links" target="_blank">Dokumentation</a>';
 $_['text_help_generate_payment_links']                  = 'Wenn Sie eine Bestellung aus der OpenCart-Administration generieren und den im folgenden Feld ausgewählten Bestellstatus zuweisen, erhält der Benutzer die Bestelldetails per E-Mail, einschließlich eines Zahlungslinks';
 $_['text_help_lifetime_payment_link']				    = 'Dies zeigt die Lebensdauer eines Zahlungslinks an. Standardmäßig sind es 30 Tage. Dies bedeutet, dass der Kunde 30 Tage Zeit hat, um die Transaktion über den Zahlungslink abzuschließen';
-$_['text_help_shopping_cart_disabled']				    = 'Wählen Sie "Ja", um die Warenkorbartikel auf der MultiSafepay-Zahlungsseite auszublenden, sodass nur der Gesamtbestellbetrag übrig bleibt. <br />Wenn Sie "Ja" auswählen, funktionieren die Zahlungsmethoden, die einen Warenkorb erfordern, nicht: Riverty, E-Invoicing, in3, Klarna and Pay After Delivery.';
+$_['text_help_shopping_cart_disabled']				    = 'Wählen Sie "Ja", um die Warenkorbartikel auf der MultiSafepay-Zahlungsseite auszublenden, sodass nur der Gesamtbestellbetrag übrig bleibt. <br />Wenn Sie "Ja" auswählen, funktionieren die Zahlungsmethoden, die einen Warenkorb erfordern, nicht: Riverty, E-Invoicing, iDEAL+in3, Klarna and Pay After Delivery.';
 $_['text_help_custom_order_total_keys']				    = 'Geben Sie den/die benutzerdefinierten Gesamtbestellcode(s) ein, die auf der MultiSafepay-Zahlungsseite nicht sichtbar sein sollen. Verwenden Sie ein Semikolon (;), um Werte zu trennen';
 $_['text_help_payment_component_template_id']           = 'Wenn leer, wird der Standardwert verwendet werden.';
 $_['error_permission']				                    = 'Warnung: Sie haben keine Berechtigung zur Änderung der Zahlungsweise MultiSafepay';
