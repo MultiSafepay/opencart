@@ -15,7 +15,7 @@ class Multisafepayversioncontrol {
         $this->extension_type = 'payment';
         $this->extension_key  = 'multisafepay';
         $this->lowest_version_supported = '2.0.0.0';
-        $this->higher_version_supported = '3.0.3.9';
+        $this->higher_version_supported = '3.0.4.0';
     }
 
     /**
