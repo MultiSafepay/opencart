@@ -439,14 +439,7 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
      */
     public function ideal() {
         $data = $this->paymentMethodBase('IDEAL');
-	    if($data['type'] === 'direct') {
-		    $issuers = $this->multisafepay->getIssuersByGatewayCode($data['gateway']);
-		    if($issuers) {
-			    $data['issuers'] = $issuers;
-			    $data['type'] = 'direct';
-			    $data['gateway_info'] = 'Issuer';
-		    }
-	    }
+	    $data['type'] = 'direct';
         return $this->multisafepay_version_control->getViewAccordingWithOcVersion($this->route . $this->view_extension_file, $data);
     }
 

@@ -17,7 +17,6 @@ $_['text_legend']                               = 'Fill the following data to co
 $_['text_instructions']                         = 'Payment Instructions';
 $_['text_payment_link']                         = 'Click on the following link and complete the payment: <a href="%s">%s</a>';
 $_['text_payment_link_admin_order_history']     = 'The following payment link has been generated: <a target="_blank" href="%s">%s</a>';
-$_['button_confirm_with_issuer']                = 'Confirm order and pay with iDEAL using ';
 $_['entry_issuer']                              = 'Issuer';
 $_['entry_gender']                              = 'Treatment';
 $_['entry_date_of_birth']                       = 'Date of birth';
@@ -89,7 +88,6 @@ $_['text_title_yourgift']                       = 'YourGift';
 $_['text_comment_callback']                     = 'Notification from MultiSafepay for Order ID %s on %s with status: %s (PSP ID: %s).';
 $_['text_error']                                = 'Unable to process the payment, an error has occurred. Please try again, if the error persist, contact the webshop';
 $_['text_error_on_submit']                      = 'Please, check carefully the payment form looking for errors';
-$_['text_error_issuer_not_selected']            = 'Issuer is a required field';
 $_['text_error_apple_pay']                      = 'Apple Pay is not available for this device. Please, go back and select another payment method';
 $_['text_error_google_pay']                     = 'Google Pay is not available for this device. Please, go back and select another payment method';
 $_['text_error_empty_gender']                   = 'Gender is a required field';

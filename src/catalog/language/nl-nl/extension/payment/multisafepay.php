@@ -17,7 +17,6 @@ $_['text_legend']                                = 'Vul de volgende gegevens in 
 $_['text_instructions']                          = 'Betalingsinstructies';
 $_['text_payment_link']                          = 'Klik op de volgende link en voltooi de betaling: <a href="%s">%s</a>';
 $_['text_payment_link_admin_order_history']      = 'De volgende betalingslink is gegenereerd: <a target="_blank" href="%s">%s</a>';
-$_['button_confirm_with_issuer']                 = 'Bevestig de bestelling en betaal met iDEAL via ';
 $_['entry_issuer']                               = 'Issuer';
 $_['entry_gender']                               = 'Geslacht';
 $_['entry_date_of_birth']                        = 'Geboortedatum';
@@ -89,7 +88,6 @@ $_['text_title_yourgift']                        = 'YourGift';
 $_['text_comment_callback']                      = 'Notificatie van MultiSafepay voor Order ID %s op %s met status: %s (PSP ID: %s).';
 $_['text_error']                                 = 'Als de betaling niet kan worden verwerkt, is er een fout opgetreden. Probeer het opnieuw, als de fout blijft bestaan, neem dan contact op met de webshop.';
 $_['text_error_on_submit']                       = 'Controleer het betalingsformulier zorgvuldig op fouten.';
-$_['text_error_issuer_not_selected']             = 'Issuer is een verplicht veld';
 $_['text_error_apple_pay']                       = 'Apple Pay is niet beschikbaar voor dit apparaat. Ga terug en selecteer een andere betaalmethode';
 $_['text_error_google_pay']                      = 'Google Pay is niet beschikbaar voor dit apparaat. Ga terug en selecteer een andere betaalmethode';
 $_['text_error_empty_gender']                    = 'Geslacht is een verplicht veld';

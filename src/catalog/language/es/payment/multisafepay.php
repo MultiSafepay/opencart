@@ -17,7 +17,6 @@ $_['text_legend']                                = 'Complete los siguientes dato
 $_['text_instructions']                          = 'Instrucciones de pago';
 $_['text_payment_link']                          = 'Haga clic en el siguiente enlace y complete el pago: <a href="%s">%s</a>';
 $_['text_payment_link_admin_order_history']      = 'Se ha generado el siguiente enlace de pago: <a target="_blank" href="%s">%s</a>';
-$_['button_confirm_with_issuer']                 = 'Confirme el pedido y pague con iDEAL usando';
 $_['entry_issuer']                               = 'Emisor';
 $_['entry_gender']                               = 'Tratamiento';
 $_['entry_date_of_birth']                        = 'Fecha de nacimiento';
@@ -89,7 +88,6 @@ $_['text_title_yourgift']                        = 'YourGift';
 $_['text_comment_callback']                      = 'Callback de MultiSafepay para el pedido %s en %s con estado: %s (PSP ID: %s).';
 $_['text_error']                                 = 'No se puede procesar el pago, se ha producido un error. Intente nuevamente, si el error persiste, comuníquese con el comercio';
 $_['text_error_on_submit']                       = 'Por favor, revise cuidadosamente el formulario de pago buscando errores';
-$_['text_error_issuer_not_selected']             = 'El emisor es un campo obligatorio';
 $_['text_error_apple_pay']                       = 'Apple Pay no está disponible para este dispositivo. Por favor, regrese y seleccione otro método de pago';
 $_['text_error_google_pay']                      = 'Google Pay no está disponible para este dispositivo. Por favor, regrese y seleccione otro método de pago';
 $_['text_error_empty_gender']                    = 'El género es un campo obligatorio';
