@@ -6,6 +6,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ***
 
+## 3.21.0
+Release date: September, 3rd 2024
+
+### Added
++ DAVAMS-655: Add BNPL_MF
+
+### Changed
++ DAVAMS-797: Rebrand Afterpay-Riverty Logo
++ DAVAMS-744: Rebrand in3 B2C
+
+### Fixed
++ DAVAMS-750: Fix "Template ID" within the Payment Component
++ DAVAMS-655: Fix BNPL_MF icon
+
+### Removed
++ PLGOPNS-545: Remove iDEAL issuer dropdown
+
+***
+
 ## 3.20.0
 Release date: February, 15th 2024
 
