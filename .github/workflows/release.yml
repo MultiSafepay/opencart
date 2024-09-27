@@ -19,7 +19,7 @@ jobs:
           php-version: '7.2'
       - name: Get the version
         id: get_version
-        run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
+        run: echo "VERSION=${GITHUB_REF/refs\/tags\//}" >> $GITHUB_ENV
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Build project PHP 7.2. Versions 2.0.0.0 - 3.0.3.8
