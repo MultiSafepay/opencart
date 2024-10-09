@@ -23,19 +23,19 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Build project PHP 7.2. Versions 2.0.0.0 - 3.0.3.8
-        run: ./bin/release.sh ${{ steps.get_version.outputs.VERSION }}
+        run: ./bin/release.sh ${{ env.VERSION }}
       - name: Setup PHP 7.3
         uses: shivammathur/setup-php@v2
         with:
           php-version: '7.3'
       - name: Build project PHP 7.3. Version 3.0.3.9
-        run: ./bin/release-oc-3-0-3-9.sh ${{ steps.get_version.outputs.VERSION }} 7
+        run: ./bin/release-oc-3-0-3-9.sh ${{ env.VERSION }} 7
       - name: Setup PHP 8.2
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.2'
       - name: Build project PHP 8.2. Version 3.0.3.9
-        run: ./bin/release-oc-3-0-3-9.sh ${{ steps.get_version.outputs.VERSION }} 8
+        run: ./bin/release-oc-3-0-3-9.sh ${{ env.VERSION }} 8
       - name: Upload Release Asset
         run: |
           set -x
