@@ -281,6 +281,15 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
     /**
      * Handles the confirm order form for CBC payment method
      */
+    public function bizum() {
+        $data = $this->paymentMethodBase('BIZUM');
+        $data['type'] = 'direct';
+        return $this->multisafepay_version_control->getViewAccordingWithOcVersion($this->route . $this->view_extension_file, $data);
+    }
+
+    /**
+     * Handles the confirm order form for CBC payment method
+     */
     public function cbc() {
         $data = $this->paymentMethodBase('CBC');
         $data['type'] = 'direct';

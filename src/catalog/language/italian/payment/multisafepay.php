@@ -38,6 +38,7 @@ $_['text_title_bancontact']                      = 'Bancontact';
 $_['text_title_bank_transfer']                   = 'Trasferimento bancario';
 $_['text_title_belfius']                         = 'Belfius';
 $_['text_title_boekenbon']                       = 'Boekenbon';
+$_['text_title_bizum']                           = 'Bizum';
 $_['text_title_cbc']                             = 'CBC';
 $_['text_title_credit_card']                     = 'Pagamento con carta';
 $_['text_title_dbrtp']                           = 'Request to Pay powered by Deutsche Bank';
