@@ -412,9 +412,6 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
         $data = $this->paymentMethodBase('IN3');
 	    if($data['type'] === 'direct') {
 		    $data['gateway_info'] = 'Meta';
-		    $data['fields'] = array(
-			    'gender' => true
-		    );
 	    }
         return $this->multisafepay_version_control->getViewAccordingWithOcVersion($this->route . $this->view_extension_file, $data);
     }
