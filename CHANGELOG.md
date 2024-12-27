@@ -6,6 +6,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ***
 
+## 3.22.0
+Release date: December, 27th 2024
+
+### Added
++ DAVAMS-805: Add BIZUM
+
+### Removed
++ DAVAMS-838: Remove gender checkout field from iDEAL+in3
+
+***
+
 ## 3.21.0
 Release date: September, 3rd 2024
 
