@@ -279,6 +279,14 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
     }
 
     /**
+     * Handles the confirm order form for Billink payment method
+     */
+    public function billink() {
+        $data = $this->paymentMethodBase('BILLINK');
+        return $this->multisafepay_version_control->getViewAccordingWithOcVersion($this->route . $this->view_extension_file, $data);
+    }
+
+    /**
      * Handles the confirm order form for CBC payment method
      */
     public function bizum() {
