@@ -2163,7 +2163,7 @@ class Multisafepay {
                 'description' => $this->language->get('text_title_dotpay'),
                 'type' => 'gateway',
                 'brief_description' => $this->language->get('text_brief_description_dotpay'),
-                'image' => 'Dotpay'
+                'image' => 'dotpay'
             ),
             array(
                 'id' => 'EPS',
