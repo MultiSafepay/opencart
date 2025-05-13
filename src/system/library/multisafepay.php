@@ -2003,22 +2003,13 @@ class Multisafepay {
                 'image' => 'afterpay'
             ),
             array(
-                'id' => 'ALIPAY',
-                'code' => 'alipay',
-                'route' => 'multisafepay/alipay',
-                'description' => $this->language->get('text_title_alipay'),
-                'type' => 'gateway',
-                'brief_description' => $this->language->get('text_brief_description_alipay'),
-                'image' => 'alipay'
-            ),
-            array(
                 'id' => 'ALIPAYPLUS',
                 'code' => 'alipayplus',
                 'route' => 'multisafepay/alipayplus',
                 'description' => $this->language->get('text_title_alipayplus'),
                 'type' => 'gateway',
                 'redirect_switch' => false,
-                'brief_description' => $this->language->get('text_brief_description_alipay'),
+                'brief_description' => $this->language->get('text_brief_description_alipayplus'),
                 'image' => 'alipayplus'
             ),
             array(

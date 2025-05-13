@@ -31,7 +31,6 @@ $_['text_title_multisafepay']                   = 'MultiSafepay';
 $_['text_title_afterpay']                       = 'Riverty';
 $_['text_title_amazon_pay']                     = 'Amazon Pay';
 $_['text_title_american_express']               = 'American Express';
-$_['text_title_alipay']                         = 'Alipay';
 $_['text_title_alipayplus']                     = 'Alipay+ &trade; Partner';
 $_['text_title_apple_pay']                      = 'Apple Pay';
 $_['text_title_bancontact']                     = 'Bancontact';

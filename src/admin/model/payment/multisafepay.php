@@ -215,7 +215,6 @@ class ModelExtensionPaymentMultiSafePay extends Model {
             'catalog/view/theme/default/template/extension/payment/multisafepay_fastcheckout.twig',
             'catalog/view/theme/default/template/extension/payment/multisafepay_ideal.twig',
             'image/multisafepay/afterpay.svg',
-            'image/multisafepay/alipay.svg',
             'image/multisafepay/amex.svg',
             'image/multisafepay/applepay.svg',
             'image/multisafepay/babygiftcard.svg',
@@ -261,7 +260,6 @@ class ModelExtensionPaymentMultiSafePay extends Model {
     private function getOldExtensionsFiles() {
         return array(
             'multisafepay_afterpay',
-            'multisafepay_alipay',
             'multisafepay_amex',
             'multisafepay_applepay',
             'multisafepay_babygiftcard',
