@@ -6,11 +6,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ***
 
+## 3.23.0
+Release date: August, 8th 2025
+
+### Added
++ DAVAMS-851: Add BILLINK payment method
+
+### Fixed
++ PLUGINSUP-659: Fix the image name for Dotpay
+
+### Removed
++ DAVAMS-898: Remove ALIPAY payment method
+
+***
+
 ## 3.22.0
 Release date: December, 27th 2024
 
 ### Added
-+ DAVAMS-805: Add BIZUM
++ DAVAMS-805: Add BIZUM payment method
 
 ### Removed
 + DAVAMS-838: Remove gender checkout field from iDEAL+in3
@@ -21,7 +35,7 @@ Release date: December, 27th 2024
 Release date: September, 3rd 2024
 
 ### Added
-+ DAVAMS-655: Add BNPL_MF
++ DAVAMS-655: Add BNPL_MF payment method
 
 ### Changed
 + DAVAMS-797: Rebrand Afterpay-Riverty Logo
