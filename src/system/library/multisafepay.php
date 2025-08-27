@@ -2454,15 +2454,6 @@ class Multisafepay {
                 'image' => 'visa'
             ),
             array(
-                'id' => 'ZINIA',
-                'code' => 'zinia',
-                'route' => 'multisafepay/zinia',
-                'description' => $this->language->get('text_title_zinia'),
-                'type' => 'gateway',
-                'brief_description' => $this->language->get('text_brief_description_zinia'),
-                'image' => 'zinia',
-            ),
-            array(
                 'id' => 'VVVGIFTCRD',
                 'code' => 'vvv',
                 'route' => 'multisafepay/vvvGiftCard',

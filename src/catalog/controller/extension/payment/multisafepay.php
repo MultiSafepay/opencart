@@ -646,14 +646,6 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
     }
 
     /**
-     * Handles the confirm order form for Zinia payment method
-     */
-    public function zinia() {
-        $data = $this->paymentMethodBase('ZINIA');
-        return $this->multisafepay_version_control->getViewAccordingWithOcVersion($this->route . $this->view_extension_file, $data);
-    }
-
-    /**
      * Handles the confirm order form for VVV Cadeaukaart payment method
      */
     public function vvvGiftCard() {

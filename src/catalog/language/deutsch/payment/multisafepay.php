@@ -67,7 +67,6 @@ $_['text_title_paysafecard']                     = 'Paysafecard';
 $_['text_title_sepa_direct_debit']               = 'SEPA Direct Debit';
 $_['text_title_trustly']                         = 'Trustly';
 $_['text_title_visa']                            = 'Visa';
-$_['text_title_zinia']                           = 'Zinia';
 $_['text_title_vvv_cadeaukaart']                 = 'VVV Cadeaukaart';
 $_['text_title_webshop_giftcard']                = 'Webshop Giftcard';
 $_['text_title_baby_cad']                        = 'Baby Cadeaubon';
