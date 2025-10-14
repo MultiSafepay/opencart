@@ -312,14 +312,6 @@ class ControllerExtensionPaymentMultiSafePay extends Controller {
     }
 
     /**
-     * Handles the confirm order form for Direct Bank payment method
-     */
-    public function directBank() {
-        $data = $this->paymentMethodBase('DIRECTBANK');
-        return $this->multisafepay_version_control->getViewAccordingWithOcVersion($this->route . $this->view_extension_file, $data);
-    }
-
-    /**
      * Handles the confirm order form for Dotpay payment method
      */
     public function dotpay() {

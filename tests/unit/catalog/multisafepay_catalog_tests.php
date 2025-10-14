@@ -109,15 +109,6 @@ class CatalogControllerExtensionPaymentMultiSafePayTest extends MultisafepayTest
         $this->assertRegExp("/DBRTP/", $multisafepay_response->getOutput());
     }
 
-    public function testFormPaymentMethodDirectBank() {
-        $this->buildSessionPaymentData('multisafepay/directBank', 'Direct Bank');
-        $this->cart->add(28, 1);
-        $multisafepay_response = $this->dispatchAction('checkout/confirm');
-        $this->assertRegExp("/order_id/", $multisafepay_response->getOutput());
-        $this->assertRegExp("/redirect/", $multisafepay_response->getOutput());
-        $this->assertRegExp("/DIRECTBANK/", $multisafepay_response->getOutput());
-    }
-
     public function testFormPaymentMethodDotPay() {
         $this->buildSessionPaymentData('multisafepay/dotpay', 'DotPay');
         $this->cart->add(28, 1);

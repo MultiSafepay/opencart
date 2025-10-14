@@ -42,7 +42,6 @@ $_['text_title_bizum']                           = 'Bizum';
 $_['text_title_cbc']                             = 'CBC';
 $_['text_title_credit_card']                     = 'Kaartbetaling';
 $_['text_title_dbrtp']                           = 'Request to Pay powered by Deutsche Bank';
-$_['text_title_direct_bank']                     = 'Sofort';
 $_['text_title_dotpay']                          = 'Dotpay';
 $_['text_title_eps']                             = 'EPS';
 $_['text_title_e_invoicing']                     = 'E-Invoicing';
