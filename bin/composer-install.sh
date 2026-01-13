@@ -31,6 +31,8 @@ get_php_version() {
     if [[ -n "$PHP_VERSION_ARG" ]]; then
         PHP_VERSION=$PHP_VERSION_ARG
         IS_USER_DEFINED=true
+        # Normalize to major version (e.g. 8.1 -> 8)
+        PHP_MAJOR_VERSION_FROM_SHELL=$(echo "$PHP_VERSION" | cut -d. -f1)
     else
         while true; do
             # Get the exact PHP version
@@ -63,7 +65,7 @@ get_php_version() {
 # Function to handle the PHP version argument
 handle_php_version_arg() {
     if [[ $IS_USER_DEFINED == true ]]; then
-        PHP_MAJOR_VERSION=$PHP_VERSION
+        PHP_MAJOR_VERSION=$PHP_MAJOR_VERSION_FROM_SHELL
     else
         while true; do
             # Ask the user for the PHP version
@@ -111,6 +113,19 @@ handle_php_version_arg() {
 # Function to copy the correct composer.json file
 copy_composer_json() {
     echo
+    if [[ -n "$COMPOSER_TEMPLATE_ARG" ]]; then
+        local template_path
+        if [[ "$COMPOSER_TEMPLATE_ARG" = /* ]]; then
+            template_path="$COMPOSER_TEMPLATE_ARG"
+        else
+            template_path="$DIR/$COMPOSER_TEMPLATE_ARG"
+        fi
+
+        printf "%5s- Copying %s to composer.json ...\n" "" "$(basename "$template_path")"
+        cp "$template_path" "$DIR/../composer.json"
+        return
+    fi
+
     # Check if the PHP version is 8 or higher
     if [[ $PHP_MAJOR_VERSION -ge 8 ]]; then
         printf "%5s- Copying composer-php-8.json to composer.json ...\n" ""
@@ -145,6 +160,7 @@ handle_composer() {
 # Main script
 PHP_VERSION_ARG=$1
 COMPOSER_DEV_ARG=${2:-""}
+COMPOSER_TEMPLATE_ARG=${3:-""}
 get_script_directory
 display_warning_message
 check_php

@@ -36,6 +36,13 @@ jobs:
           php-version: '8.2'
       - name: Build project PHP 8.2. Version 3.0.3.9
         run: ./bin/release-oc-3-0-3-9.sh ${{ env.VERSION }} 8
+
+      - name: Setup PHP 8.1
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+      - name: Build project PHP 8.1. Version 3.0.5.0
+        run: ./bin/release-oc-3-0-5-0.sh ${{ env.VERSION }} 8.1
       - name: Upload Release Asset
         run: |
           set -x
