@@ -6,6 +6,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ***
 
+## 3.24.0
+Release date: January, 23rd 2026
+
+### Added
++ PLGOPNS-551: Add support for OpenCart 3.0.5.0
+
+### Removed
++ DAVAMS-938: Remove Sofort payment method
++ DAVAMS-921: Remove Zinia payment method
+
+***
+
 ## 3.23.0
 Release date: August, 8th 2025
 
